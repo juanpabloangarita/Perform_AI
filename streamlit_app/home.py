@@ -8,7 +8,7 @@ import os
 import boto3
 
 from src.main import main
-from dashboard_plot import *
+#from dashboard_plot import *
 from params import *
 
 # Ensure the parent directory is in the Python path
@@ -43,7 +43,8 @@ if data_source == 'Upload New Data':
 if data_source == 'Use Local Data' or uploaded_files:
     if data_source == 'Use Local Data':
         # Call the main function from src/main.py
-        tss_df, atl_df, ctl_df, tsb_df, w_df = main()
+        print("ho ho")
+        #tss_df, atl_df, ctl_df, tsb_df, w_df = main()
     else:
         try:
             # List to hold DataFrames
@@ -67,7 +68,7 @@ if data_source == 'Use Local Data' or uploaded_files:
             st.write("Files successfully processed and uploaded to S3.")
 
             # Process the data using the main function
-            tss_df, atl_df, ctl_df, tsb_df, w_df = main(workouts_df)
+            #tss_df, atl_df, ctl_df, tsb_df, w_df = main(workouts_df)
 
             # Display a success message or further processing results
             st.write("Processing completed successfully.")
@@ -76,11 +77,11 @@ if data_source == 'Use Local Data' or uploaded_files:
             st.error(f"An error occurred while processing the files: {e}")
 
     # Example usage with Streamlit
-    fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
-    st.plotly_chart(fig)
+    #fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+    #st.plotly_chart(fig)
 
     # Option to display w_df
     if st.checkbox('Show DataFrame'):
-        st.write(w_df)
+        st.write('haha')#st.write(w_df)
 else:
     st.write("Please upload a file")
