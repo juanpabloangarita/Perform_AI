@@ -1,0 +1,10 @@
+# This is a comment in a TOML file
+# Comments can be placed on their own line or at the end of a line
+
+[server]
+headless = false  # Set to true for headless mode, false to display GUI
+port = 8501      # Specify the port for the Streamlit application
+
+[runner]
+pythonPath = "/Users/juanpabloangaritaafricano/code/juanpabloangarita/PerformAI"
+# Specify the path to the directory containing your Streamlit app
