@@ -12,8 +12,15 @@ from dashboard_plot import *
 from params import *
 
 # Ensure the parent directory is in the Python path
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-sys.path.append(parent_dir)
+# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+# sys.path.append(parent_dir)
+from config import setup_paths
+
+# Set up the Python path
+setup_paths()
+
+# Your code here
+
 
 st.title('Health AI Assistant')
 st.write('Welcome to the Health AI Assistant!')
