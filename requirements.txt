@@ -16,6 +16,7 @@ Babel==2.15.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
 blinker==1.8.2
+boto3
 cachetools==5.3.3
 certifi==2024.7.4
 cffi==1.16.0
