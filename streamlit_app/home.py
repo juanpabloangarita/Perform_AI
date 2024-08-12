@@ -19,6 +19,13 @@ from config import setup_paths
 # Set up the Python path
 setup_paths()
 
+# Ensure the src directory is in the Python path
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+src_dir = os.path.join(parent_dir, 'src')
+if src_dir not in sys.path:
+    sys.path.append(src_dir)
+
+from src.main import main  # Import after setting up the path
 # Your code here
 
 
