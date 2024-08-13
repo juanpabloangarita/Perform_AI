@@ -9,7 +9,7 @@ import boto3
 
 #from src.main import main
 #from dashboard_plot import *
-from params import *
+#from params import *
 
 # Ensure the parent directory is in the Python path
 # parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
