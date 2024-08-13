@@ -6,5 +6,5 @@ headless = false  # Set to true for headless mode, false to display GUI
 port = 8501      # Specify the port for the Streamlit application
 
 [runner]
-pythonPath = "/Users/juanpabloangaritaafricano/code/juanpabloangarita/Perform_AI/streamlit_app"
+#pythonPath = "/Users/juanpabloangaritaafricano/code/juanpabloangarita/Perform_AI/streamlit_app"
 # Specify the path to the directory containing your Streamlit app
