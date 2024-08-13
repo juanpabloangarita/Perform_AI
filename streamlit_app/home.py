@@ -7,7 +7,7 @@ import sys
 import os
 import boto3
 
-from src.main import main
+#from src.main import main
 #from dashboard_plot import *
 from params import *
 
@@ -25,7 +25,7 @@ src_dir = os.path.join(parent_dir, 'src')
 if src_dir not in sys.path:
     sys.path.append(src_dir)
 
-from src.main import main  # Import after setting up the path
+#from src.main import main  # Import after setting up the path
 # Your code here
 
 
