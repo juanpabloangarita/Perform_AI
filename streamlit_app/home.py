@@ -14,10 +14,10 @@ import boto3
 # Ensure the parent directory is in the Python path
 # parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 # sys.path.append(parent_dir)
-from config import setup_paths
+#from config import setup_paths
 
 # Set up the Python path
-setup_paths()
+#setup_paths()
 
 # Ensure the src directory is in the Python path
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
