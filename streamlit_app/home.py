@@ -54,11 +54,11 @@ if data_source == 'Use Local Data' or uploaded_files:
             workouts_df = pd.concat(df_list, ignore_index=True)
 
             # Save the concatenated DataFrame to the specified S3 bucket
-            workouts_df.to_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv', index=False) # when uploading one file, i didn't have index = false, i suppose this is why i got to put index_col = 0
+            workouts_df.to_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv')#, index=False) # when uploading one file, i didn't have index = false, i suppose this is why i got to put index_col = 0
 
             # Optionally, re-read the saved file from the S3 bucket (if needed)
             workouts_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv')#, index_col=0)
-
+            print(workouts_df.info())
             st.write("Files successfully processed and uploaded to S3.")
 
             # Process the data using the main function
