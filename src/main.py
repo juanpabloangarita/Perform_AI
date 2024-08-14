@@ -9,6 +9,7 @@ def main(workouts=None):
     print("App is running")
     #tss_df, atl_df, ctl_df, tsb_df, w_df = process_data(workouts)
     #return tss_df, atl_df, ctl_df, tsb_df, w_df
+    return "hello"
 
 if __name__ == "__main__":
     main()
