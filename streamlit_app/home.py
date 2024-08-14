@@ -63,7 +63,7 @@ if data_source == 'Use Local Data' or uploaded_files:
             st.write("Files successfully processed and uploaded to S3.")
 
             # Process the data using the main function
-            tss_df, atl_df, ctl_df, tsb_df, w_df = main(workouts_df)
+            #tss_df, atl_df, ctl_df, tsb_df, w_df = main(workouts_df)
 
             # Display a success message or further processing results
             st.write("Processing completed successfully.")
