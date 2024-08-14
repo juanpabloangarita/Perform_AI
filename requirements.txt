@@ -1,4 +1,5 @@
 boto3==1.34.159
+fsspec
 jupyter==1.0.0
 jupyter-console==6.6.3
 jupyter-events==0.10.0
