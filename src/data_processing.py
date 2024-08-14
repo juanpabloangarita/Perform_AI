@@ -22,14 +22,16 @@ def load_csv(file_path):
     dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
 
-    # Print the paths for debugging
-    # print(f"Original file_path: {file_path}")
-    # print(f"Script_dir: {dir_script_dir}")
-    # print(f"Full_path: {full_path}")
+    # Debugging prints
+    print(f"Script directory: {script_dir}")
+    print(f"Parent directory (PerformAI): {dir_script_dir}")
+    print(f"Constructed full path: {full_path}")
 
-    # # Original file_path: data/raw/csv/
-    # # dir_script_dir: /Users/juanpabloangaritaafricano/code/juanpabloangarita/PerformAI
-    # # Full_path: /Users/juanpabloangaritaafricano/code/juanpabloangarita/PerformAI/data/raw/csv/
+    # Check if the path exists before loading
+    if not os.path.exists(full_path):
+        print(f"Path does not exist: {full_path}")
+    else:
+        print(f"Path exists: {full_path}")
 
     # Training Peaks -- Workout Files
     # from 03 of March to 03 of March next year
