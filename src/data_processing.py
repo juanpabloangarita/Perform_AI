@@ -1,5 +1,5 @@
 # data_processing.py
-
+import streamlit as st
 # Import necessary libraries for data manipulation
 import pandas as pd
 import numpy as np
@@ -22,16 +22,15 @@ def load_csv(file_path):
     dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
 
-    # Debugging prints
-    print(f"Script directory: {script_dir}")
-    print(f"Parent directory (PerformAI): {dir_script_dir}")
-    print(f"Constructed full path: {full_path}")
+    # Debugging output displayed on Streamlit UI
+    st.write(f"Script directory: {script_dir}")
+    st.write(f"Parent directory (PerformAI): {dir_script_dir}")
+    st.write(f"Constructed full path: {full_path}")
 
-    # Check if the path exists before loading
     if not os.path.exists(full_path):
-        print(f"Path does not exist: {full_path}")
+        st.write(f"Path does not exist: {full_path}")
     else:
-        print(f"Path exists: {full_path}")
+        st.write(f"Path exists: {full_path}")
 
     # Training Peaks -- Workout Files
     # from 03 of March to 03 of March next year
