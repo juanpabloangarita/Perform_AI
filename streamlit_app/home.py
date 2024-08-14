@@ -7,7 +7,7 @@ import sys
 import os
 import boto3
 
-#from src.main import main
+from src.main import main
 #from dashboard_plot import *
 #from params import *
 
