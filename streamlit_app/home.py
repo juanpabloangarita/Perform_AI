@@ -10,11 +10,10 @@ import sys
 import os
 
 # Add the parent directory to the Python path
-sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
-print("Current sys.path:")
-for path in sys.path:
-    print(path)
+parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(parent_dir)
 
+from config import setup_paths
 
 from src.main import main
 #from dashboard_plot import *
