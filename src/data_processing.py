@@ -23,14 +23,14 @@ def load_csv(file_path):
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
 
     # Debugging output displayed on Streamlit UI
-    st.write(f"Script directory: {script_dir}")
-    st.write(f"Parent directory (PerformAI): {dir_script_dir}")
-    st.write(f"Constructed full path: {full_path}")
+    # st.write(f"Script directory: {script_dir}")
+    # st.write(f"Parent directory (PerformAI): {dir_script_dir}")
+    # st.write(f"Constructed full path: {full_path}")
 
-    if not os.path.exists(full_path):
-        st.write(f"Path does not exist: {full_path}")
-    else:
-        st.write(f"Path exists: {full_path}")
+    # if not os.path.exists(full_path):
+    #     st.write(f"Path does not exist: {full_path}")
+    # else:
+    #     st.write(f"Path exists: {full_path}")
 
     # Training Peaks -- Workout Files
     # from 03 of March to 03 of March next year
