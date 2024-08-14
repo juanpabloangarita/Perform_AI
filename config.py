@@ -3,7 +3,7 @@ import sys
 
 def setup_paths():
     # Get the absolute path to the root directory
-    root_dir = os.path.abspath(os.path.dirname(__file__))
+    root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
     # Add directories to the Python path
     src_dir = os.path.join(root_dir, 'src')
