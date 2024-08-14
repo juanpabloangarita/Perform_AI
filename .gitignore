@@ -39,4 +39,4 @@ MANIFEST
 .python-version
 
 .DS_Store
-data/
+#data/
