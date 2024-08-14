@@ -14,23 +14,9 @@ parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(parent_dir)
 
 from config import setup_paths
-
 from src.main import main
 #from dashboard_plot import *
 #from params import *
-
-# Ensure the parent directory is in the Python path
-# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-# sys.path.append(parent_dir)
-#from config import setup_paths
-
-# Set up the Python path
-#setup_paths()
-
-
-#from src.main import main  # Import after setting up the path
-# Your code here
-
 
 st.title('Health AI Assistant')
 st.write('Welcome to the Health AI Assistant!')
