@@ -58,8 +58,7 @@ if data_source == 'Use Local Data' or uploaded_files:
 
             # Optionally, re-read the saved file from the S3 bucket (if needed)
             workouts_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv')#, index_col=0)
-            st.write(workouts_df.info())
-            print(workouts_df.info())
+
             st.write("Files successfully processed and uploaded to S3.")
 
             # Process the data using the main function
