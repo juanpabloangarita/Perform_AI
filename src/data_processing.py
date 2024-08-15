@@ -13,7 +13,7 @@ import plotly.graph_objs as go
 import plotly.io as pio
 
 from params import *
-#from src.calorie_calculations import calculate_total_calories
+from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 
@@ -139,19 +139,18 @@ def process_data(workouts=None):
     w_df = calculate_total_tss(w_df)
 
     # Calculate Total Calories from TSS
-    #w_df_calories = calculate_total_calories(w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+    w_df_calories = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
 
     # Calculate ATL, CTL, TSB from TSS calories
-    # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories)
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories)
 
     #return w_df_calories
-    #return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
 
     # # Calculate ATL, CTL, TSB from TSS
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
+    # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
 
-
-    return tss_df, atl_df, ctl_df, tsb_df, w_df
+    # return tss_df, atl_df, ctl_df, tsb_df, w_df
 
 
 # Add other data processing functions as needed

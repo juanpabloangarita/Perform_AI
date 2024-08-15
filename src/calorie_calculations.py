@@ -57,7 +57,6 @@ def calculate_total_calories(weight=80, height=183, age=41, gender='male', vo2_m
     df['TotalActiveCalories'] = df['RunningCalories'] + df['CyclingCalories'] + df['SwimmingCalories']
 
     df['TotalPassiveCalories'] = bmr
-
     # Calculate Total Daily Energy Expenditure
     df['TDEE'] = df['TotalPassiveCalories'] + df['TotalActiveCalories']
 
