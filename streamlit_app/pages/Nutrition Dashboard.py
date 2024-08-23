@@ -65,11 +65,16 @@ if user_option == "New user":
         vo2_max = st.number_input("VO2 Max", min_value=20, max_value=90, value=50)
         resting_hr = st.number_input("Resting Heart Rate", min_value=30, max_value=120, value=42)
 
-#     # Calculate calories burned
-#     calories_burned = calculate_total_calories(
-#         w_df, weight=weight, height=height, age=age, gender=gender,
-#         vo2_max=vo2_max, resting_hr=resting_hr
-# else:
+    # Calculate calories burned
+    calories_burned = calculate_total_calories(
+        weight=weight, height=height, age=age, gender=gender,
+        vo2_max=vo2_max, resting_hr=resting_hr)
+
+else:
+    # Calculate calories burned
+    calories_burned = calculate_total_calories(
+        w_df, weight=weight, height=height, age=age, gender=gender,
+        vo2_max=vo2_max, resting_hr=resting_hr)
 
 
 # Step 4: Process Data and Calculate Calories
