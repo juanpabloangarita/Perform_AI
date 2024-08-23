@@ -13,6 +13,7 @@ import numpy as np
 
 def calculate_total_calories(weight=80, height=183, age=41, gender='male', vo2_max=50, resting_hr=42, given_date = GIVEN_DATE, df=None):
 #def calculate_total_calories(df, weight=80, height=183, age=41, gender='male', vo2_max=50, resting_hr=42, given_date = GIVEN_DATE):
+    # Baseline Metabolic Rate (BMR)
     # Calculate BMR using Mifflin-St Jeor Equation
     if gender.lower() == 'male':
         bmr = 10 * weight + 6.25 * height - 5 * age + 5
@@ -23,9 +24,15 @@ def calculate_total_calories(weight=80, height=183, age=41, gender='male', vo2_m
     def calculate_k_constant(vo2_max, max_hr, resting_hr):
         return vo2_max / (max_hr - resting_hr)
 
+    # Metabolic Equivalent of Task
     # Calculate MET based on the heart rate, resting HR, and K constant
     def calculate_met(avg_hr_during_effort, resting_hr, k_constant):
         return (avg_hr_during_effort * k_constant) / resting_hr
+    
+    # Metabolic Equivalent of Task
+    # Calculate MET based on the heart rate, resting HR, and K constant
+    def calculate_met_2(avg_hr_during_effort, k_constant):
+        return ((avg_hr_during_effort * duration )/weight)* k_constant
 
     # Calorie calculation function from MET
     def calculate_calories(met, weight, duration_hrs):
