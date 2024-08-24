@@ -39,15 +39,15 @@ time.sleep(3)  # Wait for the page to load
 # Add cookies using the Cookie header
 cookies_header = "GarminUserPrefs=fr-FR; notice_behavior=expressed,eu; notice_gdpr_prefs=0:; notice_preferences=0:; notice_poptime=1619726400000; ..."
 # Add cookies using the Cookie header
-# for cookie in cookies_header.split('; '):
-#     if '=' in cookie:  # Check if the cookie has an '=' sign
-#         name, value = cookie.split('=', 1)
-#         driver.add_cookie({'name': name, 'value': value, 'domain': '.garmin.com'})
-#     else:
-#         print(f"Skipping invalid cookie: {cookie}")
+for cookie in cookies_header.split('; '):
+    if '=' in cookie:  # Check if the cookie has an '=' sign
+        name, value = cookie.split('=', 1)
+        driver.add_cookie({'name': name, 'value': value, 'domain': '.garmin.com'})
+    else:
+        print(f"Skipping invalid cookie: {cookie}")
 
-# Refresh the page to ensure cookies are applied
-#driver.refresh()
+#Refresh the page to ensure cookies are applied
+driver.refresh()
 time.sleep(3)  # Wait for the page to reload
 
 # Maximize browser window
