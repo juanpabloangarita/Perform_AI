@@ -43,6 +43,15 @@ custom_headers = {
     "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,it;q=0.6,es;q=0.5",
     "Cookie": "GarminUserPrefs=fr-FR; notice_behavior=expressed,eu; notice_gdpr_prefs=0:; notice_preferences=0:; notice_poptime=1619726400000; notice_poptime=1662667200000; notice_preferences=2:; notice_gdpr_prefs=0,1,2:; cmapi_cookie_privacy=permit 1,2,3; notice_behavior=implied,eu; cmapi_gtm_bl=ga-ms-ua-ta-asp-bzi-sp-awct-cts-csm-img-flc-fls-mpm-mpr-m6d-tc-tdc; _cfuvid=PCxP8JXP32ANQR2aQnfNw2LOWrATcfdNahbcRfoNWH4-1724400533133-0.0.1.1-604800000; __cfruid=676084269766438711271df7ccf654c8017e39d2-1724400534; GARMIN-SSO=1; GARMIN-SSO-CUST-GUID=c11660a0-752e-4d61-95e8-60e16367ad45; utag_main_v_id=0191375659c40020651403a52f4405075003406d00bd0; GarminNoCache=true; GARMIN-SSO-GUID=3EF17351F91C4E6288AAEBBA0ED1F55EB19A4015; SESSIONID=YTI0ZTkwMjctMjI1Ny00YTRlLWIxMTYtOWE5ZWY4YThlODhm; __cflb=02DiuJLbVZHipNWxN8wwnxZhF2QbAv3GYh7o4UFwkiGPN; TAsessionID=aa5d3a59-203b-4ddf-a0d5-ec5d03261bba|EXISTING; utag_main__sn=7; utag_main_ses_id=1724485662815%3Bexp-session; utag_main__ss=0%3Bexp-session; JWT_FGP=f9733f0e-5811-4e37-96f7-05b6c4273e6e; CONSENTMGR=c1:0%7Cc2:0%7Cc3:0%7Cc4:0%7Cc5:0%7Cc6:0%7Cc7:0%7Cc8:0%7Cc9:0%7Cc10:0%7Cc11:0%7Cc12:0%7Cc13:0%7Cc14:0%7Cc15:0%7Cts:1724486751020%7Cconsent:true; utag_main__se=3%3Bexp-session; utag_main__st=1724488551022%3Bexp-session; utag_main__pn=3%3Bexp-session; SameSite=None; ADRUM_BTa=R:38|g:304d768a-b3e3-4154-8f36-0b7f8f19ae51|n:garmin_869629ee-d273-481d-b5a4-f4b0a8c4d5a3; ADRUM_BT1=R:38|i:2694794|e:68|t:1724487302143"
 }
+# Set additional common headers to mimic a typical browser session
+common_headers = {
+    "Referer": "https://www.google.com",
+    "Origin": "https://connect.garmin.com",
+    "DNT": "1",  # Do Not Track header, set as 1 to mimic typical privacy setting
+}
+
+# Combine custom and common headers
+all_headers = {**custom_headers, **common_headers}
 
 # Function to set custom headers using DevTools Protocol
 def set_custom_headers(driver, headers):
@@ -53,7 +62,9 @@ def set_custom_headers(driver, headers):
     driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {"headers": headers})
 
 # Set the custom headers
-set_custom_headers(driver, custom_headers)
+set_custom_headers(driver, all_headers)
+
+
 
 # Open the Garmin Connect login page
 #driver.get("https://sso.garmin.com/portal/sso/fr-FR/sign-in?clientId=GarminConnect&service=https://connect.garmin.com/modern/")
