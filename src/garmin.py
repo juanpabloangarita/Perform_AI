@@ -8,6 +8,8 @@ import time
 from random import uniform
 from params import *
 
+from selenium.common.exceptions import TimeoutException
+
 # Proxy Configuration
 #proxy = "http://67.43.227.227:11023"  # Replace with your proxy server and port
 
@@ -21,58 +23,103 @@ options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-extensions")  # Disable extensions
 # options.add_argument("--headless")  # Run headless, remove this if you want to see the browser
-
+print("ONE")
 # Setting user-agent
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
 options.add_argument(f"user-agent={user_agent}")
-
+print("TWO")
 # Initialize WebDriver with Proxy
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-
+print("THREE")
 # Changing the property of the navigator value for webdriver to undefined
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-
+print("FOUR")
 # Open the Garmin Connect login page
 driver.get("https://sso.garmin.com/portal/sso/fr-FR/sign-in?clientId=GarminConnect&service=https://connect.garmin.com/modern/")
 time.sleep(3)  # Wait for the page to load
-
+print("FIVE")
 # Add cookies using the Cookie header
 cookies_header = "GarminUserPrefs=fr-FR; notice_behavior=expressed,eu; notice_gdpr_prefs=0:; notice_preferences=0:; notice_poptime=1619726400000; ..."
 # Add cookies using the Cookie header
-for cookie in cookies_header.split('; '):
-    if '=' in cookie:  # Check if the cookie has an '=' sign
-        name, value = cookie.split('=', 1)
-        driver.add_cookie({'name': name, 'value': value, 'domain': '.garmin.com'})
-    else:
-        print(f"Skipping invalid cookie: {cookie}")
+# for cookie in cookies_header.split('; '):
+#     if '=' in cookie:  # Check if the cookie has an '=' sign
+#         name, value = cookie.split('=', 1)
+#         driver.add_cookie({'name': name, 'value': value, 'domain': '.garmin.com'})
+#     else:
+#         print(f"Skipping invalid cookie: {cookie}")
 
-#Refresh the page to ensure cookies are applied
-driver.refresh()
+# #Refresh the page to ensure cookies are applied
+# driver.refresh()
 time.sleep(3)  # Wait for the page to reload
-
+print("SIX")
 # Maximize browser window
 driver.maximize_window()
-
+print("SEVEN")
 # Interact with the login form
-user = driver.find_element(By.ID, 'email')
-user.send_keys(EMAIL)
-time.sleep(uniform(2, 5))  # Randomized delay to mimic human behavior
-driver.execute_script('window.scrollTo(0, 700)')
-time.sleep(uniform(1, 3))
+# user = driver.find_element(By.ID, 'email')
+# user.send_keys(EMAIL)
+# print("EIGHT")
+# time.sleep(uniform(2, 5))  # Randomized delay to mimic human behavior
+# driver.execute_script('window.scrollTo(0, 700)')
+# time.sleep(uniform(1, 3))
+# print("NINE")
 
-password = driver.find_element(By.ID, 'password')
-password.send_keys(PASSWORD)
-time.sleep(uniform(2, 5))  # Randomized delay to mimic human behavior
+# password = driver.find_element(By.ID, 'password')
+# password.send_keys(PASSWORD)
+# print("TEN")
+# time.sleep(uniform(2, 5))  # Randomized delay to mimic human behavior
 
-driver.execute_script('window.scrollTo(30, 500)')
-time.sleep(uniform(1, 3))
+# driver.execute_script('window.scrollTo(30, 500)')
+# time.sleep(uniform(1, 3))
+# print("eleven")
+# # Wait for the login button to be clickable and then click it
+# wait = WebDriverWait(driver, 10)
+# print("TENrwo")
 
-# Wait for the login button to be clickable and then click it
-wait = WebDriverWait(driver, 10)
-button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit' and not(@disabled)]")))
-button.click()
 
+# #button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
+# button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[not(@disabled) and @type='submit']")))
 
+# # Additional sleep to give time for potential JavaScript validations
+# time.sleep(2)
+
+# # Scroll to make sure the button is visible
+# driver.execute_script('arguments[0].scrollIntoView(true);', button)
+
+# # Click the button
+# button.click()
+# print("TENthree")
+# #button.click()
+# print("TENfour")
+
+# ##||
+# try:
+#     #button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit' and not(@disabled)]")))
+#     button = driver.find_element(By.XPATH, "//button[@type='submit' and @data-testid='g__button' and not(@disabled)]")
+
+#     print("TENthree")
+#     # Scroll to make sure the button is visible
+#     driver.execute_script('arguments[0].scrollIntoView(true);', button)
+
+#     # Click the button using JavaScript
+#     driver.execute_script("arguments[0].click();", button)
+#     print("TENfour")
+#     #button.click()
+#     print("TENTENTEN")
+# except TimeoutException as e:
+#     print("TimeoutException: The button was not clickable within the allotted time.")
+#     print("Page source for debugging:", driver.page_source)
+# except Exception as e:
+#     print(f"An error occurred: {e}")
+
+# ##||
+
+# Keep the browser window open
+print("Script has completed. Press Enter to close the browser.")
+input()  # Keeps the script running and browser open until Enter is pressed
+
+# If you want to close manually after inspection
+driver.quit()
 
 
 
