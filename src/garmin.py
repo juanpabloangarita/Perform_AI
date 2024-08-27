@@ -13,6 +13,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium_stealth import stealth
 from webdriver_manager.core.os_manager import ChromeType
 
+# import os
+# os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
+
 
 # Proxy Configuration
 #proxy = "http://67.43.227.227:11023"  # Replace with your proxy server and port
@@ -23,10 +26,19 @@ options = webdriver.ChromeOptions()
 options.add_argument("--disable-blink-features=AutomationControlled")  # To prevent detection as a bot
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option("useAutomationExtension", False)
-options.add_argument("--disable-gpu") #??
-options.add_argument("--no-sandbox") #??
-options.add_argument("--disable-extensions") #??  # Disable extensions
-options.add_argument("--start-maximized")  # Open browser in maximized mode
+options.add_argument("--disable-extensions")  # Disable all extensions
+options.add_argument("--disable-popup-blocking")  # Disable popup blocking
+options.add_argument("--start-maximized")
+options.add_argument("--no-first-run")  # Prevents Chrome's first-run setup
+options.add_argument("--no-default-browser-check")  # Disables the default browser check
+options.add_argument("--disable-infobars")  # Disables infobars like "Chrome is being controlled by automated test software"
+options.add_argument("--disable-gpu")
+options.add_argument("--no-sandbox")
+#options.add_argument("--incognito")
+
+
+# Set up a user profile directory (optional, prevents saving of any profile info)
+options.add_argument("--user-data-dir=/tmp/temporary-chrome-profile")  # Use a temporary profile
 
 # options.add_argument("--headless")  # Run headless, remove this if you want to see the browser
 
@@ -39,22 +51,22 @@ options.add_argument(f"user-agent={user_agent}")
 # This is the correct way to specify the version using install() method
 # Specify the correct version of ChromeDriver
 #chrome_driver_path = ChromeDriverManager(version="119.0.6045.105").install()
-#chrome_driver_path = ChromeDriverManager().install()
+chrome_driver_path = ChromeDriverManager().install()
 #chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE, version="119.0.6045.105").install()
-chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
-ChromeDriverManager()
+#chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
 
 # Initialize WebDriver
 driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
 # Apply stealth settings
 stealth(driver,
        user_agent=user_agent,
-       languages=["en-US", "en"],
+       languages=["en-GB", "en"],
        vendor="Google Inc.",
        platform="MacIntel",
        webgl_vendor="Intel Inc.",
        renderer="Intel Iris OpenGL Engine",
-       fix_hairline=True,
+       fix_hairline=True
+       #run_on_insecure_origins=True
 )
 
 # Changing the property of the navigator value for webdriver to undefined
@@ -71,12 +83,13 @@ custom_headers = {
     "Sec-Fetch-Site": "none",
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1",
-    "Referer": "https://www.garmin.com",
+    "Referer": "https://www.garmin.com"
 }
 # Set additional common headers to mimic a typical browser session
 common_headers = {
     "Origin": "https://connect.garmin.com",
-    "DNT": "1",  # Do Not Track header, set as 1 to mimic typical privacy setting
+    "DNT": "1",  # Do Not Track header, set as 1 to mimic typical privacy setting,
+    "Connection": "keep-alive"
 }
 
 # Combine custom and common headers
@@ -92,7 +105,6 @@ def set_custom_headers(driver, headers):
 
 # Set the custom headers
 set_custom_headers(driver, all_headers)
-
 
 
 # Open the Garmin Connect login page
