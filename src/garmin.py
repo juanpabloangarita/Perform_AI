@@ -10,6 +10,8 @@ from params import *
 
 from selenium.common.exceptions import TimeoutException
 
+from selenium_stealth import stealth
+
 # Proxy Configuration
 #proxy = "http://67.43.227.227:11023"  # Replace with your proxy server and port
 
@@ -19,9 +21,9 @@ options = webdriver.ChromeOptions()
 options.add_argument("--disable-blink-features=AutomationControlled")  # To prevent detection as a bot
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option("useAutomationExtension", False)
-options.add_argument("--disable-gpu")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-extensions")  # Disable extensions
+options.add_argument("--disable-gpu") #??
+options.add_argument("--no-sandbox") #??
+options.add_argument("--disable-extensions") #??  # Disable extensions
 options.add_argument("--start-maximized")  # Open browser in maximized mode
 
 # options.add_argument("--headless")  # Run headless, remove this if you want to see the browser
@@ -31,21 +33,43 @@ user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 options.add_argument(f"user-agent={user_agent}")
 
 # Initialize WebDriver with Proxy
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# Specify the exact version of ChromeDriver to match your Chrome browser
+# This is the correct way to specify the version using install() method
+# Specify the correct version of ChromeDriver
+chrome_driver_path = ChromeDriverManager(version="119.0.6045.105").install()
+#chrome_driver_path = ChromeDriverManager().install()
+
+# Initialize WebDriver
+driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
+# Apply stealth settings
+stealth(driver,
+       user_agent=user_agent,
+       languages=["en-US", "en"],
+       vendor="Google Inc.",
+       platform="MacIntel",
+       webgl_vendor="Intel Inc.",
+       renderer="Intel Iris OpenGL Engine",
+       fix_hairline=True,
+)
 
 # Changing the property of the navigator value for webdriver to undefined
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
 # Custom headers
 custom_headers = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    "User-Agent": user_agent,
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-    "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,it;q=0.6,es;q=0.5",
-    "Cookie": "GarminUserPrefs=fr-FR; notice_behavior=expressed,eu; notice_gdpr_prefs=0:; notice_preferences=0:; notice_poptime=1619726400000; notice_poptime=1662667200000; notice_preferences=2:; notice_gdpr_prefs=0,1,2:; cmapi_cookie_privacy=permit 1,2,3; notice_behavior=implied,eu; cmapi_gtm_bl=ga-ms-ua-ta-asp-bzi-sp-awct-cts-csm-img-flc-fls-mpm-mpr-m6d-tc-tdc; _cfuvid=PCxP8JXP32ANQR2aQnfNw2LOWrATcfdNahbcRfoNWH4-1724400533133-0.0.1.1-604800000; __cfruid=676084269766438711271df7ccf654c8017e39d2-1724400534; GARMIN-SSO=1; GARMIN-SSO-CUST-GUID=c11660a0-752e-4d61-95e8-60e16367ad45; utag_main_v_id=0191375659c40020651403a52f4405075003406d00bd0; GarminNoCache=true; GARMIN-SSO-GUID=3EF17351F91C4E6288AAEBBA0ED1F55EB19A4015; SESSIONID=YTI0ZTkwMjctMjI1Ny00YTRlLWIxMTYtOWE5ZWY4YThlODhm; __cflb=02DiuJLbVZHipNWxN8wwnxZhF2QbAv3GYh7o4UFwkiGPN; TAsessionID=aa5d3a59-203b-4ddf-a0d5-ec5d03261bba|EXISTING; utag_main__sn=7; utag_main_ses_id=1724485662815%3Bexp-session; utag_main__ss=0%3Bexp-session; JWT_FGP=f9733f0e-5811-4e37-96f7-05b6c4273e6e; CONSENTMGR=c1:0%7Cc2:0%7Cc3:0%7Cc4:0%7Cc5:0%7Cc6:0%7Cc7:0%7Cc8:0%7Cc9:0%7Cc10:0%7Cc11:0%7Cc12:0%7Cc13:0%7Cc14:0%7Cc15:0%7Cts:1724486751020%7Cconsent:true; utag_main__se=3%3Bexp-session; utag_main__st=1724488551022%3Bexp-session; utag_main__pn=3%3Bexp-session; SameSite=None; ADRUM_BTa=R:38|g:304d768a-b3e3-4154-8f36-0b7f8f19ae51|n:garmin_869629ee-d273-481d-b5a4-f4b0a8c4d5a3; ADRUM_BT1=R:38|i:2694794|e:68|t:1724487302143"
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+    "Referer": "https://www.garmin.com",
 }
 # Set additional common headers to mimic a typical browser session
 common_headers = {
-    "Referer": "https://www.google.com",
     "Origin": "https://connect.garmin.com",
     "DNT": "1",  # Do Not Track header, set as 1 to mimic typical privacy setting
 }
@@ -67,28 +91,27 @@ set_custom_headers(driver, all_headers)
 
 
 # Open the Garmin Connect login page
-#driver.get("https://sso.garmin.com/portal/sso/fr-FR/sign-in?clientId=GarminConnect&service=https://connect.garmin.com/modern/")
-driver.get("https://connect.garmin.com/")
+driver.get("https://sso.garmin.com/portal/sso/en-GB/sign-in?clientId=GarminConnect&service=https%3A%2F%2Fconnect.garmin.com%2Fmodern")
 
 time.sleep(3)  # Wait for the page to load
 
-### COKIES
-# Add cookies using the Cookie header
-#cookies_header = "GarminUserPrefs=fr-FR; notice_behavior=expressed,eu; notice_gdpr_prefs=0:; notice_preferences=0:; notice_poptime=1619726400000; ..."
-# Add cookies using the Cookie header
+# Wait for the page to load and set cookies
+time.sleep(3)
+
+# # Extract and set cookies from a prior session or response
+# cookies_header = "SESSION=NDQ5ZjE0MWEtMTU4ZS00YjUyLTlmNWYtNzM5ODgxMGFkMGEz; __VCAP_ID__=085b90dd-b842-40c2-7c5d-b12d; GarminUserPrefs=en-GB; __cflb=02DiuEofTPbaQ2tyBEVR6YcR5RQYPgpFZ1erLMDvdbay2; _cfuvid=ggLto8vv5yULggbEIcGQCJ5NI8mg8CYIzClkFJPsFKQ-1724605422525-0.0.1.1-604800000; cf_clearance=yhQqEnVG34w15p_3yO_YezG83zwF8vfJNnxGDMwwS9Q-1724672483-1.2.1.1-oYySv2jl4jC_LHsSDusSQKTAfEncKv_zwEjlW.Iq4mlHOJV1ED0BScCdO5qON4LvVgmZ3zpVCm8At6T4e7yXurhWqNJzx8ITK_vBvS3Mnpov._GFgki30NzRnlLuuYQLkFDFnkEjjwh6wUT_GkTvmr574M7V2copwUPDRCajuBIExfOy6y9oDq8FmGD20Jw5KjMDNTXfYmY5tXuClzOU1wGkxzrj_SnDUzlzfUAQFFqcGY9BrXgvy4PpQ6WZl_BmpN.chfFhDx6pspkeqZhNBuuJcmoK4KiZJEaLE.ZJlBo6ledBQVgbxs1hlsMGbQko1hbuWXuIIxGUzaRy6l61vxpYHopI6a7zBf1bnxiLBAa4V_2cinc4sBwObd0epBECf8YeRdgnQTO5S2iVxTrrIw"
 # for cookie in cookies_header.split('; '):
-#     if '=' in cookie:  # Check if the cookie has an '=' sign
+#     if '=' in cookie:
 #         name, value = cookie.split('=', 1)
 #         driver.add_cookie({'name': name, 'value': value, 'domain': '.garmin.com'})
 #     else:
 #         print(f"Skipping invalid cookie: {cookie}")
 
-# #Refresh the page to ensure cookies are applied
+# # Refresh the page to apply cookies and custom headers
 # driver.refresh()
-### END COOKIES
 
-# Maximize browser window
-#driver.maximize_window()
+# # Wait and continue with additional actions
+# time.sleep(5)
 
 # # Interact with the login form
 # user = driver.find_element(By.ID, 'email')
