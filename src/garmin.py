@@ -11,6 +11,8 @@ from params import *
 from selenium.common.exceptions import TimeoutException
 
 from selenium_stealth import stealth
+from webdriver_manager.core.os_manager import ChromeType
+
 
 # Proxy Configuration
 #proxy = "http://67.43.227.227:11023"  # Replace with your proxy server and port
@@ -36,8 +38,11 @@ options.add_argument(f"user-agent={user_agent}")
 # Specify the exact version of ChromeDriver to match your Chrome browser
 # This is the correct way to specify the version using install() method
 # Specify the correct version of ChromeDriver
-chrome_driver_path = ChromeDriverManager(version="119.0.6045.105").install()
+#chrome_driver_path = ChromeDriverManager(version="119.0.6045.105").install()
 #chrome_driver_path = ChromeDriverManager().install()
+#chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE, version="119.0.6045.105").install()
+chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
+ChromeDriverManager()
 
 # Initialize WebDriver
 driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
