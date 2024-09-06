@@ -16,6 +16,7 @@ from params import *
 from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
+from src.algorithms import *
 
 def load_csv(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
@@ -39,7 +40,12 @@ def load_csv(file_path):
     # from 03 of March to 30 of August same year
     workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2024-09-30.csv'))
 
-    return workouts_2022_df, workouts_2023_df, workouts_2024_df
+    # ACTIVITIES GARMIN
+    # Garmin files
+    # From March 12 of 2022 to July 14 2024
+    activities_df = pd.read_csv(os.path.join(full_path,'activities.csv'))
+
+    return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df
 
 
 def clean_data(dfs, date_cols):
@@ -105,32 +111,75 @@ def remove_no_training_days(df, given_date = GIVEN_DATE):
     return w_df
 
 
+def clean_activities(df):
+    columns_to_keep_activities = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
+    df = df[columns_to_keep_activities].copy()
+
+    df = df[df['Fréquence cardiaque moyenne'].notna()].copy()
+
+    sports_types = {
+    'Nat. piscine': 'Swim',
+    'Cyclisme': 'Bike',
+    'Course à pied': 'Run',
+    "Vélo d'intérieur": 'Bike',
+    'Cyclisme virtuel': 'Bike',
+    'Course à pied sur tapis roulant': 'Run',
+    'Natation': 'Swim',
+}
+    df = df[(df["Type d'activité"] != 'HIIT') & (df["Type d'activité"] != 'Exercice de respiration') & (df["Type d'activité"] != 'Musculation')].copy()
+    df["Type d'activité"] = df["Type d'activité"].apply(lambda x: sports_types[x])
+
+    # Convert Durée from 'hh:mm:ss' to total minutes
+    df['Durée'] = pd.to_timedelta(df['Durée']).dt.total_seconds() / 60  # Convert to minutes
+
+    # Convert relevant columns to numeric (remove commas, etc.)
+    df['Distance'] = pd.to_numeric(df['Distance'].str.replace(',', '.'), errors='coerce')
+    df['Calories'] = pd.to_numeric(df['Calories'], errors='coerce')
+
+    # Drop rows with NaN values in critical columns
+    df = df.dropna(subset=['Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne'])
+
+    return df
+
+
 def process_data(workouts=None):
+    ## -
+    # if workouts is not None:
+    #     workouts_df = workouts
+    # else:
+    #     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
+
+    #     # Merge workouts DataFrames into one
+    #     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
+    ## -
+
+    ## --
+    w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
+
+    # Merge workouts DataFrames into one
+    workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
     if workouts is not None:
         workouts_df = workouts
-    else:
-        w_df1, w_df2, w_df3 = load_csv('data/raw/csv/') # WITHOUT THE / behind
-
-        # Merge workouts DataFrames into one
-        workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
+    ## --
 
     dataframes = {
-        #'activities': activities_df,
+        'activities': activities_df,
         #'sleep': sleep_df,
         #'health_metrics': health_metrics_df,
         'workouts': workouts_df
     }
     date_columns = {
-        #'activities': 'Date', # as column
+        'activities': 'Date', # as column
         #'sleep': 'Date', # as column
         #'health_metrics': 'Timestamp', # already as index
         'workouts': 'WorkoutDay' # as column
     }
     clean_data(dataframes, date_columns)
 
-    columns_to_keep = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration']
-    dataframes['workouts'] = dataframes['workouts'][columns_to_keep].copy()
+    # WORKOUTS
+    columns_to_keep_workouts = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration']
+    dataframes['workouts'] = dataframes['workouts'][columns_to_keep_workouts].copy()
 
     # on a separate function than clean_data because different operations on workouts_df
     w_df = remove_no_training_days(dataframes['workouts'])
@@ -143,6 +192,17 @@ def process_data(workouts=None):
 
     # Calculate ATL, CTL, TSB from TSS calories
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories)
+
+
+
+    # ACTIVITIES
+    activities_df = clean_activities(dataframes['activities_df'])
+
+    # Separate past and future workouts
+    past_workouts_df = w_df_calories[w_df_calories['Date'] <= GIVEN_DATE]
+    future_workouts_df = w_df_calories[w_df_calories['Date'] > GIVEN_DATE]
+
+
 
     #return w_df_calories
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
