@@ -202,7 +202,7 @@ def process_data(workouts=None):
     past_workouts_df = w_df_calories[w_df_calories['Date'] <= GIVEN_DATE]
     future_workouts_df = w_df_calories[w_df_calories['Date'] > GIVEN_DATE]
 
-
+    workouts_df = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
 
     #return w_df_calories
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
