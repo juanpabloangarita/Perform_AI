@@ -206,12 +206,32 @@ def process_data(workouts=None):
 
         w_df_calories, models_dict = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
 
-        print("THE DICTIONARY WITH MODELS IS THE FOLLOWING:")
-        for k, v in models_dict.items():
-            print()
-            print(f"Key is: {k} and the value is {v}")
-            print("NEXT ONE")
-            print()
+
+        # Print the results in a descriptive way
+        print("Model Performance Metrics (with Heart Rate Average):\n")
+        print(f"{'Model Type':<25} {'RMSE':<10}")
+        print("-" * 35)
+
+        # Print RMSE values for models using HeartRateAverage
+        print(f"{'Linear Regression':<25} {models_dict['rmse_lr_y_hr']:<10.2f}")
+        print(f"{'Random Forest':<25} {models_dict['rmse_rf_y_hr']:<10.2f}")
+        print(f"{'Gradient Boosting':<25} {models_dict['rmse_gb_y_hr']:<10.2f}")
+        print(f"{'LightGBM':<25} {models_dict['rmse_lgb_y_hr']:<10.2f}")
+        print(f"{'XGBoost':<25} {models_dict['rmse_xgb_y_hr']:<10.2f}")
+
+        print("\nModel Performance Metrics (without Heart Rate Average):\n")
+        print(f"{'Model Type':<25} {'RMSE':<10}")
+        print("-" * 35)
+
+        # Print RMSE values for models without HeartRateAverage
+        print(f"{'Linear Regression':<25} {models_dict['rmse_lr_no_hr']:<10.2f}")
+        print(f"{'Random Forest':<25} {models_dict['rmse_rf_no_hr']:<10.2f}")
+        print(f"{'Gradient Boosting':<25} {models_dict['rmse_gb_no_hr']:<10.2f}")
+        print(f"{'LightGBM':<25} {models_dict['rmse_lgb_no_hr']:<10.2f}")
+        print(f"{'XGBoost':<25} {models_dict['rmse_xgb_no_hr']:<10.2f}")
+
+        print("\nThe DataFrame with estimated calories has been updated.")
+
     else:
         # Calculate Total Calories from TSS
         w_df_calories = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
