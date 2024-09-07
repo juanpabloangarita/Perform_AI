@@ -43,9 +43,9 @@ def load_csv(file_path):
     # ACTIVITIES GARMIN
     # Garmin files
     # From March 12 of 2022 to July 14 2024
-    activities_df = pd.read_csv(os.path.join(full_path,'activities.csv'))
+    activities_df_all_years = pd.read_csv(os.path.join(full_path,'activities.csv'))
 
-    return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df
+    return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
 
 def clean_data(dfs, date_cols):
@@ -125,7 +125,7 @@ def clean_activities(df):
     'Cyclisme virtuel': 'Bike',
     'Course à pied sur tapis roulant': 'Run',
     'Natation': 'Swim',
-}
+    }
     df = df[(df["Type d'activité"] != 'HIIT') & (df["Type d'activité"] != 'Exercice de respiration') & (df["Type d'activité"] != 'Musculation')].copy()
     df["Type d'activité"] = df["Type d'activité"].apply(lambda x: sports_types[x])
 
@@ -178,7 +178,7 @@ def process_data(workouts=None):
     clean_data(dataframes, date_columns)
 
     # WORKOUTS
-    columns_to_keep_workouts = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration']
+    columns_to_keep_workouts = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
     dataframes['workouts'] = dataframes['workouts'][columns_to_keep_workouts].copy()
 
     # on a separate function than clean_data because different operations on workouts_df
@@ -191,17 +191,21 @@ def process_data(workouts=None):
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
 
     # ACTIVITIES
-    activities_df = clean_activities(dataframes['activities_df'])
-
+    activities_df = clean_activities(dataframes['activities'])
+    print()
+    print()
+    print(w_df.columns)
+    print()
+    print()
     calories_model_estimated = True
 
     if calories_model_estimated:
         # Separate past and future workouts
-        past_workouts_df = w_df[w_df['Date'] < GIVEN_DATE]
-        future_workouts_df = w_df[w_df['Date'] >= GIVEN_DATE]
+        past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
+        future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
         w_df_calories, models_dict = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
-        
+
         print("THE DICTIONARY WITH MODELS IS THE FOLLOWING:")
         for k, v in models_dict.items():
             print()

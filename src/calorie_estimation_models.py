@@ -61,10 +61,19 @@ def xgboost_model(X_train, X_test, y_train, y_test):
 def estimate_calories(activities_df, past_workouts, future_workouts):
     # Prepare features and labels for the regression models with HeartRateAverage (for past workouts)
     X_activities_y_hr = activities_df[['Distance', 'Durée', 'Fréquence cardiaque moyenne']].copy()
+    X_activities_y_hr.rename(columns={
+        'Distance': 'DistanceInMeters',
+        'Durée': 'TimeTotalInHours',
+        'Fréquence cardiaque moyenne': 'HeartRateAverage'
+    }, inplace=True)
     y_activities = activities_df['Calories']
 
     # Prepare features and labels without HeartRateAverage (for future workout model)
     X_activities_no_hr = activities_df[['Distance', 'Durée']].copy()
+    X_activities_no_hr.rename(columns={
+        'Distance': 'PlannedDistanceInMeters',
+        'Durée': 'PlannedDuration'
+    }, inplace=True)
 
     # Split data into training and test sets for both models
     X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr, y_activities, test_size=0.2, random_state=42)
@@ -85,12 +94,26 @@ def estimate_calories(activities_df, past_workouts, future_workouts):
     xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
 
     # Use the best model for past workouts (with HeartRateAverage)
-    X_past_workouts = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy().dropna()
-    past_workouts['EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
+    # Identify rows with complete data for prediction
+    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
+
+    # Use the best model for past workouts (with HeartRateAverage) on rows with complete data
+    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+
+    # Predict only for the rows with complete data
+    past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
+
 
     # Use the best model for future workouts (without HeartRateAverage)
-    X_future_workouts = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].copy().dropna()
-    future_workouts['EstimatedCalories'] = gb_model_no_hr.predict(X_future_workouts)
+    # Identify rows with complete data for prediction
+    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
+
+    # Use the best model for future workouts (without HeartRateAverage) on rows with complete data
+    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
+
+    # Predict only for the rows with complete data
+    future_workouts.loc[mask_future, 'EstimatedCalories'] = gb_model_no_hr.predict(X_future_workouts)
+
 
     # Combine past and future workouts back together
     workouts_df = pd.concat([past_workouts, future_workouts])
