@@ -197,10 +197,10 @@ def process_data(workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-    # worse performance
+    # worse performance of models
     #w_df_calories_1, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
-    # better performance
+    # better performance of models
     w_df_calories_1, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
     # Printing the performance metrics
@@ -222,10 +222,6 @@ def process_data(workouts=None):
     # Calculate Total Calories from TSS
     w_df_calories = calculate_total_calories(df=w_df_calories_1) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
 
-    # # Calculate ATL, CTL, TSB from TSS calories
-    # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories) # i moved it before the if, cuz i think it doesn't change anything
-
-    #return w_df_calories
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
 
 

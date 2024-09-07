@@ -143,13 +143,14 @@ def estimate_calories_without_workout_type(activities_df, past_workouts, future_
     X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr, y_activities, test_size=0.2, random_state=42)
     X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr, y_activities, test_size=0.2, random_state=42)
 
-    # Train and evaluate the models
+    # Train and evaluate the models WITH HEART RATE
     linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
     rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
     gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
     lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
     xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
 
+    # WITHOUT HEART RATE
     linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
     rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
     gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
@@ -159,13 +160,14 @@ def estimate_calories_without_workout_type(activities_df, past_workouts, future_
     # Use the best model for past workouts without WorkoutType
     mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
     X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
-    past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
+    #past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
+    past_workouts.loc[mask_past, 'EstimatedCalories'] = xgb_model_y_hr.predict(X_past_workouts)
 
     # Use the best model for future workouts without WorkoutType
     mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
 
     X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
-    future_workouts.loc[mask_future, 'EstimatedCalories'] = gb_model_no_hr.predict(X_future_workouts)
+    future_workouts.loc[mask_future, 'EstimatedCalories'] = rf_model_no_hr.predict(X_future_workouts)
 
     # Combine past and future workouts back together
     workouts_df = pd.concat([past_workouts, future_workouts])
@@ -176,3 +178,41 @@ def estimate_calories_without_workout_type(activities_df, past_workouts, future_
         'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
         'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
     }
+
+
+"""BETTER
+estimate_calories_without_workout_type
+
+With Heart Rate:
+Linear Regression RMSE: 71.39344172120131
+Random Forest RMSE: 76.04153312773663
+Gradient Boosting RMSE: 65.73461347345477
+LIGHTGBM RMSE: 64.21517223921495
+XGBOOST RMSE: 76.5706280497429
+
+Without Heart Rate:
+Linear Regression RMSE: 86.7448131426331
+Random Forest RMSE: 93.76334490225517
+Gradient Boosting RMSE: 90.71393979536293
+LIGHTGBM RMSE: 84.73938121141626
+XGBOOST RMSE: 91.41686969387759
+"""
+
+
+"""
+estimate_calories_with_workout_type
+
+With Heart Rate:
+Linear Regression RMSE: 69.09088489863505
+Random Forest RMSE: 74.8078427330651
+Gradient Boosting RMSE: 63.804675982059706
+LIGHTGBM RMSE: 61.86555013329693
+XGBOOST RMSE: 70.25142062749532
+
+Without Heart Rate:
+Linear Regression RMSE: 84.73259158153283
+Random Forest RMSE: 88.68598038614066
+Gradient Boosting RMSE: 87.20099204368888
+LIGHTGBM RMSE: 77.05421262471275
+XGBOOST RMSE: 82.21859160846236
+"""
