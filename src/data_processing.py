@@ -16,7 +16,7 @@ from params import *
 from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
-from src.algorithms import *
+from src.calorie_estimation_models import estimate_calories
 
 def load_csv(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
@@ -160,7 +160,7 @@ def process_data(workouts=None):
     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
     if workouts is not None:
-        workouts_df = workouts
+        workouts_df = workouts #WARNING
     ## --
 
     dataframes = {
@@ -187,30 +187,36 @@ def process_data(workouts=None):
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(w_df)
 
-    # Calculate Total Calories from TSS
-    w_df_calories = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
-
-    # Calculate ATL, CTL, TSB from TSS calories
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories)
-
-
+    # # Calculate ATL, CTL, TSB from TSS
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities_df'])
 
-    # Separate past and future workouts
-    past_workouts_df = w_df_calories[w_df_calories['Date'] <= GIVEN_DATE]
-    future_workouts_df = w_df_calories[w_df_calories['Date'] > GIVEN_DATE]
+    calories_model_estimated = True
 
-    workouts_df = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
+    if calories_model_estimated:
+        # Separate past and future workouts
+        past_workouts_df = w_df[w_df['Date'] < GIVEN_DATE]
+        future_workouts_df = w_df[w_df['Date'] >= GIVEN_DATE]
+
+        w_df_calories, models_dict = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
+        
+        print("THE DICTIONARY WITH MODELS IS THE FOLLOWING:")
+        for k, v in models_dict.items():
+            print()
+            print(f"Key is: {k} and the value is {v}")
+            print("NEXT ONE")
+            print()
+    else:
+        # Calculate Total Calories from TSS
+        w_df_calories = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+
+    # # Calculate ATL, CTL, TSB from TSS calories
+    # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories) # i moved it before the if, cuz i think it doesn't change anything
 
     #return w_df_calories
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
-
-    # # Calculate ATL, CTL, TSB from TSS
-    # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
-
-    # return tss_df, atl_df, ctl_df, tsb_df, w_df
 
 
 # Add other data processing functions as needed
