@@ -16,7 +16,7 @@ from params import *
 from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
-from src.calorie_estimation_models import estimate_calories
+from src.calorie_estimation_models import estimate_calories_with_workout_type, estimate_calories_without_workout_type
 
 def load_csv(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
@@ -192,49 +192,35 @@ def process_data(workouts=None):
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
-    print()
-    print()
-    print(w_df.columns)
-    print()
-    print()
-    calories_model_estimated = True
 
-    if calories_model_estimated:
-        # Separate past and future workouts
-        past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
-        future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
+    # Separate past and future workouts
+    past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
+    future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-        w_df_calories, models_dict = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
+    # worse performance
+    #w_df_calories_1, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
+    # better performance
+    w_df_calories_1, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
-        # Print the results in a descriptive way
-        print("Model Performance Metrics (with Heart Rate Average):\n")
-        print(f"{'Model Type':<25} {'RMSE':<10}")
-        print("-" * 35)
+    # Printing the performance metrics
+    print("Performance Metrics:")
+    print("\nWith Heart Rate:")
+    print(f"Linear Regression RMSE: {models_dict['rmse_lr_y_hr']}")
+    print(f"Random Forest RMSE: {models_dict['rmse_rf_y_hr']}")
+    print(f"Gradient Boosting RMSE: {models_dict['rmse_gb_y_hr']}")
+    print(f"LIGHTGBM RMSE: {models_dict['rmse_lgb_y_hr']}")
+    print(f"XGBOOST RMSE: {models_dict['rmse_xgb_y_hr']}")
 
-        # Print RMSE values for models using HeartRateAverage
-        print(f"{'Linear Regression':<25} {models_dict['rmse_lr_y_hr']:<10.2f}")
-        print(f"{'Random Forest':<25} {models_dict['rmse_rf_y_hr']:<10.2f}")
-        print(f"{'Gradient Boosting':<25} {models_dict['rmse_gb_y_hr']:<10.2f}")
-        print(f"{'LightGBM':<25} {models_dict['rmse_lgb_y_hr']:<10.2f}")
-        print(f"{'XGBoost':<25} {models_dict['rmse_xgb_y_hr']:<10.2f}")
+    print("\nWithout Heart Rate:")
+    print(f"Linear Regression RMSE: {models_dict['rmse_lr_no_hr']}")
+    print(f"Random Forest RMSE: {models_dict['rmse_rf_no_hr']}")
+    print(f"Gradient Boosting RMSE: {models_dict['rmse_gb_no_hr']}")
+    print(f"LIGHTGBM RMSE: {models_dict['rmse_lgb_no_hr']}")
+    print(f"XGBOOST RMSE: {models_dict['rmse_xgb_no_hr']}")
 
-        print("\nModel Performance Metrics (without Heart Rate Average):\n")
-        print(f"{'Model Type':<25} {'RMSE':<10}")
-        print("-" * 35)
-
-        # Print RMSE values for models without HeartRateAverage
-        print(f"{'Linear Regression':<25} {models_dict['rmse_lr_no_hr']:<10.2f}")
-        print(f"{'Random Forest':<25} {models_dict['rmse_rf_no_hr']:<10.2f}")
-        print(f"{'Gradient Boosting':<25} {models_dict['rmse_gb_no_hr']:<10.2f}")
-        print(f"{'LightGBM':<25} {models_dict['rmse_lgb_no_hr']:<10.2f}")
-        print(f"{'XGBoost':<25} {models_dict['rmse_xgb_no_hr']:<10.2f}")
-
-        print("\nThe DataFrame with estimated calories has been updated.")
-
-    else:
-        # Calculate Total Calories from TSS
-        w_df_calories = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+    # Calculate Total Calories from TSS
+    w_df_calories = calculate_total_calories(df=w_df_calories_1) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
 
     # # Calculate ATL, CTL, TSB from TSS calories
     # tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df_calories) # i moved it before the if, cuz i think it doesn't change anything
