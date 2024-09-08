@@ -69,6 +69,10 @@ def estimate_calories_with_workout_type(activities_df, past_workouts, future_wor
         'Type d\'activité': 'WorkoutType'
     }, inplace=True)
     X_activities_y_hr = pd.get_dummies(X_activities_y_hr)
+    
+    X_activities_y_hr['HeartRateAverage'] = pd.to_numeric(X_activities_y_hr['HeartRateAverage'], errors='coerce')
+
+    
     y_activities = activities_df['Calories']
 
     # Prepare features and labels for future workouts with WorkoutType
