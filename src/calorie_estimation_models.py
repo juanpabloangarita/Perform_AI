@@ -202,7 +202,7 @@ XGBOOST RMSE: 91.41686969387759
 """
 estimate_calories_with_workout_type
 
-With Heart Rate:
+With Heart Rate: PAST NO NEED CUZ I HAVE THEM
 Linear Regression RMSE: 69.09088489863505
 Random Forest RMSE: 74.8078427330651
 Gradient Boosting RMSE: 63.804675982059706

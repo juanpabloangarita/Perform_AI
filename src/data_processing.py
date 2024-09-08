@@ -38,7 +38,7 @@ def load_csv(file_path):
     workouts_2022_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2022-03-03_to_2023-03-03.csv'))
     workouts_2023_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2023-03-03_to_2024-03-03.csv'))
     # from 03 of March to 30 of August same year
-    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2024-09-30.csv'))
+    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2024-11-24.csv'))
 
     # ACTIVITIES GARMIN
     # Garmin files REAL CALORIES

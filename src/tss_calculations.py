@@ -103,7 +103,7 @@ def calculate_metrics_from_tss(df, given_date = GIVEN_DATE):
 
     # TSB is the difference between CTL and ATL
     tsb_series = ctl_series - atl_series
-    tss_df.loc[:given_date] = tss_df.loc[:given_date].replace(0, np.nan)
+    tss_df.loc[:given_date] = tss_df.loc[:given_date].replace(0, np.nan) #WARNING DOES THIS EQUAL TO <given_date as it should be?
 
     # Convert Series to DataFrames with corresponding columns
     atl_df = atl_series.to_frame(name='ATL')
