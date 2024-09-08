@@ -130,6 +130,9 @@ def estimate_calories_without_workout_type(activities_df, past_workouts, future_
         'Durée': 'TimeTotalInHours',
         'Fréquence cardiaque moyenne': 'HeartRateAverage'
     }, inplace=True)
+
+    X_activities_y_hr['HeartRateAverage'] = pd.to_numeric(X_activities_y_hr['HeartRateAverage'], errors='coerce')
+
     y_activities = activities_df['Calories']
 
     # Prepare features and labels for future workouts without WorkoutType

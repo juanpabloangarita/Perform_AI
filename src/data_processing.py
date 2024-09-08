@@ -16,6 +16,7 @@ from params import *
 from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
+from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_workout_type, estimate_calories_without_workout_type
 
 def load_csv(file_path):
@@ -69,6 +70,7 @@ def clean_data(dfs, date_cols):
 
         # Remove columns with high > threshold % NaN values
         # drop_high_na_columns(df, threshold) # WARNING - REMOVED THIS ONE
+
         # Remove duplicates
         df.drop_duplicates(inplace=True)
         # Change date format & place it as index
@@ -169,6 +171,10 @@ def process_data(workouts=None):
 
     # Merge workouts DataFrames into one
     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
+
+    # Replace '--' with NaN
+    activities_df.replace('--', np.nan, inplace=True)
+    workouts_df.replace('--', np.nan, inplace=True)
 
     if workouts is not None:
         workouts_df = workouts #WARNING
