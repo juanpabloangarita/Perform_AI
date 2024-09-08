@@ -40,3 +40,6 @@ MANIFEST
 
 .DS_Store
 #data/
+
+# csv/ -> the folder
+# *.csv -> or anything that finishes in .csv

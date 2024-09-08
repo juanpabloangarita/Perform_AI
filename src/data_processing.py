@@ -41,11 +41,22 @@ def load_csv(file_path):
     workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2024-09-30.csv'))
 
     # ACTIVITIES GARMIN
-    # Garmin files
+    # Garmin files REAL CALORIES
     # From March 12 of 2022 to July 14 2024
     activities_df_all_years = pd.read_csv(os.path.join(full_path,'activities.csv'))
 
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
+
+
+def save_csv(file_path, w_df, a_df):
+    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
+    dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
+    full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
+
+    # save workouts_df
+    w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'))
+    # save activities_df
+    a_df.to_csv(os.path.join(full_path, 'activities_df.csv'))
 
 
 def clean_data(dfs, date_cols):
@@ -201,7 +212,7 @@ def process_data(workouts=None):
     #w_df_calories_1, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
     # better performance of models
-    w_df_calories_1, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
+    w_df_calories_estimated, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
     # Printing the performance metrics
     print("Performance Metrics:")
@@ -220,9 +231,11 @@ def process_data(workouts=None):
     print(f"XGBOOST RMSE: {models_dict['rmse_xgb_no_hr']}")
 
     # Calculate Total Calories from TSS
-    w_df_calories = calculate_total_calories(df=w_df_calories_1) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+    w_df_calories_estimated_plus_calculated = calculate_total_calories(df=w_df_calories_estimated) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories, activities_df
+    save_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df)
+
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df
 
 
 # Add other data processing functions as needed
