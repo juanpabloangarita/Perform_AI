@@ -222,7 +222,7 @@ def process_data(workouts=None):
     # Calculate Total Calories from TSS
     w_df_calories = calculate_total_calories(df=w_df_calories_1) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories, activities_df
 
 
 # Add other data processing functions as needed
