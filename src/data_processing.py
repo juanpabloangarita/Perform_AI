@@ -156,17 +156,6 @@ def clean_activities(df):
 
 
 def process_data(workouts=None):
-    ## -
-    # if workouts is not None:
-    #     workouts_df = workouts
-    # else:
-    #     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
-
-    #     # Merge workouts DataFrames into one
-    #     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
-    ## -
-
-    ## --
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
     # Merge workouts DataFrames into one
