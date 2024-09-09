@@ -71,6 +71,8 @@ def clean_data(dfs, date_cols):
         # Remove columns with high > threshold % NaN values
         # drop_high_na_columns(df, threshold) # WARNING - REMOVED THIS ONE
 
+        # Replace '--' with NaN
+        df.replace('--', np.nan, inplace=True)
         # Remove duplicates
         df.drop_duplicates(inplace=True)
         # Change date format & place it as index
@@ -162,6 +164,37 @@ def clean_activities(df):
 
     return df
 
+def print_performances(models):
+    # Printing the performance metrics
+    print("Performance Metrics:")
+    print("\nWith Heart Rate:")
+    print(f"Linear Regression RMSE: {models['rmse_lr_y_hr']}")
+    print(f"Random Forest RMSE: {models['rmse_rf_y_hr']}")
+    print(f"Gradient Boosting RMSE: {models['rmse_gb_y_hr']}")
+    print(f"LIGHTGBM RMSE: {models['rmse_lgb_y_hr']}")
+    print(f"XGBOOST RMSE: {models['rmse_xgb_y_hr']}")
+
+    print("\nWithout Heart Rate:")
+    print(f"Linear Regression RMSE: {models['rmse_lr_no_hr']}")
+    print(f"Random Forest RMSE: {models['rmse_rf_no_hr']}")
+    print(f"Gradient Boosting RMSE: {models['rmse_gb_no_hr']}")
+    print(f"LIGHTGBM RMSE: {models['rmse_lgb_no_hr']}")
+    print(f"XGBOOST RMSE: {models['rmse_xgb_no_hr']}")
+
+
+def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
+    cal_estimated_df.index = pd.to_datetime(cal_estimated_df.index).normalize()
+    cal_calculated_df.index = pd.to_datetime(cal_calculated_df.index).normalize()
+    activities.index = pd.to_datetime(activities.index).normalize()# HAD IT BEEN A NORMAL COLUMN - meaning 'Date' not as index, WE WOULD HAVE NEEDED TO DO THE FOLLOWING
+    # activities['Date'] = pd.to_datetime(activities['Date']).dt.normalize()
+
+    # aggregate by date
+    cal_estimated_df_agg = cal_estimated_df.groupby('Date').agg('sum')
+    cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg('sum')
+    activities_agg = activities.groupby('Date').agg('sum')
+
+    return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
+
 
 def process_data(workouts=None):
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
@@ -171,17 +204,6 @@ def process_data(workouts=None):
 
     if workouts is not None:
         workouts_df = workouts #WARNING
-    ## --
-
-    # Replace '--' with NaN
-    activities_df = activities_df.replace('--', np.nan)
-    workouts_df = workouts_df.replace('--', np.nan)
-
-    if activities_df is None:
-        raise ValueError("activities_df is None. Ensure the file is loaded properly.")
-
-    activities_df
-
 
     dataframes = {
         'activities': activities_df,
@@ -217,30 +239,22 @@ def process_data(workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-    # worse performance of models
-    #w_df_calories_1, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
+    workout_type = False
+    if workout_type:
+        # worse performance of models
+        w_df_calories_estimated, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
+    else:
+        # CURRENTLY WORKING WITH THIS ONE
+        # better performance of models
+        w_df_calories_estimated, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
 
-    # better performance of models
-    w_df_calories_estimated, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
-
-    # Printing the performance metrics
-    print("Performance Metrics:")
-    print("\nWith Heart Rate:")
-    print(f"Linear Regression RMSE: {models_dict['rmse_lr_y_hr']}")
-    print(f"Random Forest RMSE: {models_dict['rmse_rf_y_hr']}")
-    print(f"Gradient Boosting RMSE: {models_dict['rmse_gb_y_hr']}")
-    print(f"LIGHTGBM RMSE: {models_dict['rmse_lgb_y_hr']}")
-    print(f"XGBOOST RMSE: {models_dict['rmse_xgb_y_hr']}")
-
-    print("\nWithout Heart Rate:")
-    print(f"Linear Regression RMSE: {models_dict['rmse_lr_no_hr']}")
-    print(f"Random Forest RMSE: {models_dict['rmse_rf_no_hr']}")
-    print(f"Gradient Boosting RMSE: {models_dict['rmse_gb_no_hr']}")
-    print(f"LIGHTGBM RMSE: {models_dict['rmse_lgb_no_hr']}")
-    print(f"XGBOOST RMSE: {models_dict['rmse_xgb_no_hr']}")
+    print_performances(models_dict)
 
     # Calculate Total Calories from TSS
-    w_df_calories_estimated_plus_calculated = calculate_total_calories(df=w_df_calories_estimated) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+    w_df_calories_calculated = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+
+    w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
+    w_df_calories_estimated_plus_calculated = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
 
     save_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df)
 

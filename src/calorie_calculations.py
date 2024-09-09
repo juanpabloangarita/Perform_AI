@@ -28,7 +28,7 @@ def calculate_total_calories(weight=80, height=183, age=41, gender='male', vo2_m
     # Calculate MET based on the heart rate, resting HR, and K constant
     def calculate_met(avg_hr_during_effort, resting_hr, k_constant):
         return (avg_hr_during_effort * k_constant) / resting_hr
-    
+
     # Metabolic Equivalent of Task
     # Calculate MET based on the heart rate, resting HR, and K constant
     def calculate_met_2(avg_hr_during_effort, k_constant):
@@ -65,6 +65,6 @@ def calculate_total_calories(weight=80, height=183, age=41, gender='male', vo2_m
 
     df['TotalPassiveCalories'] = bmr
     # Calculate Total Daily Energy Expenditure
-    df['TDEE'] = df['TotalPassiveCalories'] + df['TotalActiveCalories']
+    df['TotalCalories'] = df['TotalPassiveCalories'] + df['TotalActiveCalories']
 
-    return df
+    return df[['RunningCalories','CyclingCalories', 'SwimmingCalories' ,'TotalPassiveCalories', 'TotalActiveCalories', 'TotalCalories']]
