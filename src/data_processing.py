@@ -242,17 +242,18 @@ def process_data(workouts=None):
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
     workout_type = True
+    best_models = True
     if workout_type:
-        # worse performance of models
-        w_df_calories_estimated, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df)
-        print(models_dict)
+        # BEST PERFORMANCE
+        w_df_calories_estimated, models_dict = estimate_calories_with_workout_type(activities_df, past_workouts_df, future_workouts_df, best_models)
     else:
-        # CURRENTLY WORKING WITH THIS ONE
-        # better performance of models
-        w_df_calories_estimated, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df)
-        print(models_dict)
+        # WORST PERFORMANCE
+        w_df_calories_estimated, models_dict= estimate_calories_without_workout_type(activities_df, past_workouts_df, future_workouts_df, best_models)
 
-    # print_performances(models_dict)
+    if best_models == False:
+        print_performances(models_dict)
+    else:
+        print("\nMODELS TRAINED")
 
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?

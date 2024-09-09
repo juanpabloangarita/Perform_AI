@@ -87,78 +87,9 @@ def xgboost_model(X_train, X_test, y_train, y_test):
     print(f"Tuned XGBoost RMSE: {rmse}")
     return best_model, rmse
 
-def estimate_calories_without_workout_type(activities_df, past_workouts, future_workouts):
-    # Prepare features and labels for the regression models without WorkoutType (for past workouts)
-    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
-    y_activities = activities_df['Calories']
 
-    # Prepare features and labels for future workouts without WorkoutType
-    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours']].copy()
-    X_activities_no_hr.rename(columns={
-        'DistanceInMeters': 'PlannedDistanceInMeters',
-        'TimeTotalInHours': 'PlannedDuration'
-    }, inplace=True)
-
-    # Handle missing values
-    # Impute missing values for features with HeartRateAverage
-    imputer_y_hr = KNNImputer()
-    X_activities_y_hr_imputed = imputer_y_hr.fit_transform(X_activities_y_hr)
-
-    # Impute missing values for features without HeartRateAverage
-    imputer_no_hr = KNNImputer()
-    X_activities_no_hr_imputed = imputer_no_hr.fit_transform(X_activities_no_hr)
-
-    # Add polynomial features
-    poly_y_hr = PolynomialFeatures(degree=2, include_bias=False)
-    X_activities_y_hr_poly = poly_y_hr.fit_transform(X_activities_y_hr_imputed)
-    poly_no_hr = PolynomialFeatures(degree=2, include_bias=False)
-    X_activities_no_hr_poly = poly_no_hr.fit_transform(X_activities_no_hr_imputed)
-
-    # Split data into training and test sets
-    X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
-    X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
-
-    # Train and evaluate the models WITH HEART RATE
-    # linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-
-    # Train and evaluate the models WITHOUT HEART RATE
-    linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-
-    # Use the best model for past workouts without WorkoutType
-    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
-    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
-    X_past_workouts_imputed = imputer_y_hr.transform(X_past_workouts)
-    X_past_workouts_poly = poly_y_hr.transform(X_past_workouts_imputed)
-    past_workouts.loc[mask_past, 'EstimatedCalories'] = xgb_model_y_hr.predict(X_past_workouts_poly)
-
-    # Use the best model for future workouts without WorkoutType
-    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
-    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
-    X_future_workouts_imputed = imputer_no_hr.transform(X_future_workouts)
-    X_future_workouts_poly = poly_no_hr.transform(X_future_workouts_imputed)
-    future_workouts.loc[mask_future, 'EstimatedCalories'] =  linear_model_no_hr.predict(X_future_workouts_poly)
-
-    # Combine past and future workouts back together
-    workouts_df = pd.concat([past_workouts, future_workouts])
-
-    return workouts_df, {'rmse_xgb_y_hr': rmse_xgb_y_hr,'rmse_lr_no_hr': rmse_lr_no_hr}
-
-    # {
-    #     'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
-    #     'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
-    #     'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
-    #     'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
-    # }
-
-def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts):
+def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts, best):
+    # BEST PERFORMANCE
     # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
     one_hot_encoder = OneHotEncoder()
 
@@ -198,19 +129,34 @@ def estimate_calories_with_workout_type(activities_df, past_workouts, future_wor
     X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
     X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
 
-    # Train and evaluate the models WITH WorkoutType and HeartRateAverage
-    # linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    # xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+    if best:
+        # Train and evaluate the models WITH WorkoutType and HeartRateAverage
+        # linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
 
-    # Train and evaluate the models WITH WorkoutType and without HeartRateAverage
-    # linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    # lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # Train and evaluate the models WITH WorkoutType and without HeartRateAverage
+        # linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    else:
+        # Train and evaluate the models WITH WorkoutType and HeartRateAverage
+        linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+
+        # Train and evaluate the models WITH WorkoutType and without HeartRateAverage
+        linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
 
     # Use the best model for past workouts with WorkoutType
     mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
@@ -237,20 +183,125 @@ def estimate_calories_with_workout_type(activities_df, past_workouts, future_wor
     # Combine past and future workouts back together
     workouts_df = pd.concat([past_workouts, future_workouts])
 
-    return workouts_df,  {'rmse_gb_y_hr': rmse_gb_y_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr}
+    if best:
+        return workouts_df,  {'rmse_gb_y_hr': rmse_gb_y_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr}
+    else:
+        return workouts_df, {
+        'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
+        'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
+        'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
+        'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
+    }
 
-    # {
-    #     'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
-    #     'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
-    #     'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
-    #     'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
-    # }
 
+def estimate_calories_without_workout_type(activities_df, past_workouts, future_workouts, best):
+    # Prepare features and labels for the regression models without WorkoutType (for past workouts)
+    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    y_activities = activities_df['Calories']
+
+    # Prepare features and labels for future workouts without WorkoutType
+    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours']].copy()
+    X_activities_no_hr.rename(columns={
+        'DistanceInMeters': 'PlannedDistanceInMeters',
+        'TimeTotalInHours': 'PlannedDuration'
+    }, inplace=True)
+
+    # Handle missing values
+    # Impute missing values for features with HeartRateAverage
+    imputer_y_hr = KNNImputer()
+    X_activities_y_hr_imputed = imputer_y_hr.fit_transform(X_activities_y_hr)
+
+    # Impute missing values for features without HeartRateAverage
+    imputer_no_hr = KNNImputer()
+    X_activities_no_hr_imputed = imputer_no_hr.fit_transform(X_activities_no_hr)
+
+    # Add polynomial features
+    poly_y_hr = PolynomialFeatures(degree=2, include_bias=False)
+    X_activities_y_hr_poly = poly_y_hr.fit_transform(X_activities_y_hr_imputed)
+    poly_no_hr = PolynomialFeatures(degree=2, include_bias=False)
+    X_activities_no_hr_poly = poly_no_hr.fit_transform(X_activities_no_hr_imputed)
+
+    # Split data into training and test sets
+    X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
+    X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
+
+    if best:
+        # Train and evaluate the models WITH HEART RATE
+        # linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        # lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+
+        # Train and evaluate the models WITHOUT HEART RATE
+        linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        # xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    else:
+        # Train and evaluate the models WITH HEART RATE
+        linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+        xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+
+        # Train and evaluate the models WITHOUT HEART RATE
+        linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+        xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+
+    # Use the best model for past workouts without WorkoutType
+    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
+    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    X_past_workouts_imputed = imputer_y_hr.transform(X_past_workouts)
+    X_past_workouts_poly = poly_y_hr.transform(X_past_workouts_imputed)
+    past_workouts.loc[mask_past, 'EstimatedCalories'] = xgb_model_y_hr.predict(X_past_workouts_poly)
+
+    # Use the best model for future workouts without WorkoutType
+    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
+    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
+    X_future_workouts_imputed = imputer_no_hr.transform(X_future_workouts)
+    X_future_workouts_poly = poly_no_hr.transform(X_future_workouts_imputed)
+    future_workouts.loc[mask_future, 'EstimatedCalories'] =  linear_model_no_hr.predict(X_future_workouts_poly)
+
+    # Combine past and future workouts back together
+    workouts_df = pd.concat([past_workouts, future_workouts])
+
+    if best:
+        return workouts_df, {'rmse_xgb_y_hr': rmse_xgb_y_hr,'rmse_lr_no_hr': rmse_lr_no_hr}
+    else:
+        return workouts_df, {
+        'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
+        'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
+        'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
+        'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
+    }
 
 
 """
-Performance Analysis from V2 to current V
+BEST PERFORMANCE
+WITH WORKOUTTYPE
+With Heart Rate:
+Linear Regression: Improved from RMSE 69.09 to 63.75
+Random Forest: Improved from RMSE 74.81 to 63.99
+Gradient Boosting: Improved from RMSE 63.80 to 53.49 # THIS ONE
+LIGHTGBM: Improved from RMSE 61.87 to 54.38
+XGBOOST: Improved from RMSE 70.25 to 53.67
 
+Without Heart Rate:
+Linear Regression: Worsened from RMSE 84.73 to 87.77
+Random Forest: Improved from RMSE 88.69 to 88.38
+Gradient Boosting: Improved from RMSE 87.20 to 87.12
+LIGHTGBM: Worsened from RMSE 77.05 to 87.06
+XGBOOST: Improved from RMSE 82.22 to 83.58 #THIS ONE
+"""
+
+
+"""
 WITHOUT WORKOUTTYPE
 With Heart Rate:
 Linear Regression: Improved from RMSE 79.34 to 66.93
@@ -268,23 +319,6 @@ XGBOOST: Improved from RMSE 101.85 to 93.88
 
 """
 
-
-"""
-WITH WORKOUTTYPE
-With Heart Rate:
-Linear Regression: Improved from RMSE 69.09 to 63.75
-Random Forest: Improved from RMSE 74.81 to 63.99
-Gradient Boosting: Improved from RMSE 63.80 to 53.49 # THIS ONE
-LIGHTGBM: Improved from RMSE 61.87 to 54.38
-XGBOOST: Improved from RMSE 70.25 to 53.67
-
-Without Heart Rate:
-Linear Regression: Worsened from RMSE 84.73 to 87.77
-Random Forest: Improved from RMSE 88.69 to 88.38
-Gradient Boosting: Improved from RMSE 87.20 to 87.12
-LIGHTGBM: Worsened from RMSE 77.05 to 87.06
-XGBOOST: Improved from RMSE 82.22 to 83.58 #THIS ONE
-"""
 
 
 """
