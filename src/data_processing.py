@@ -127,8 +127,17 @@ def remove_no_training_days(df, given_date = GIVEN_DATE):
 def clean_activities(df):
     columns_to_keep_activities = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
     df = df[columns_to_keep_activities].copy()
+    df = df.rename(columns={
+        'Distance': 'DistanceInMeters',
+        'Durée': 'TimeTotalInHours',
+        'Fréquence cardiaque moyenne': 'HeartRateAverage',
+        'Type d\'activité': 'WorkoutType'
+    })
+    df['HeartRateAverage'] = pd.to_numeric(df['HeartRateAverage'])
 
-    df = df[df['Fréquence cardiaque moyenne'].notna()].copy()
+    df = df[df['HeartRateAverage'].notna()].copy()
+
+    df = df[(df["WorkoutType"] != 'HIIT') & (df["WorkoutType"] != 'Exercice de respiration') & (df["WorkoutType"] != 'Musculation')].copy()
 
     sports_types = {
     'Nat. piscine': 'Swim',
@@ -139,18 +148,17 @@ def clean_activities(df):
     'Course à pied sur tapis roulant': 'Run',
     'Natation': 'Swim',
     }
-    df = df[(df["Type d'activité"] != 'HIIT') & (df["Type d'activité"] != 'Exercice de respiration') & (df["Type d'activité"] != 'Musculation')].copy()
-    df["Type d'activité"] = df["Type d'activité"].apply(lambda x: sports_types[x])
+    df["WorkoutType"] = df["WorkoutType"].apply(lambda x: sports_types[x])
 
     # Convert Durée from 'hh:mm:ss' to total minutes
-    df['Durée'] = pd.to_timedelta(df['Durée']).dt.total_seconds() / 60  # Convert to minutes
+    df['TimeTotalInHours'] = pd.to_timedelta(df['TimeTotalInHours']).dt.total_seconds() / 60  # Convert to minutes
 
     # Convert relevant columns to numeric (remove commas, etc.)
-    df['Distance'] = pd.to_numeric(df['Distance'].str.replace(',', '.'), errors='coerce')
+    df['DistanceInMeters'] = pd.to_numeric(df['DistanceInMeters'].str.replace(',', '.'), errors='coerce')
     df['Calories'] = pd.to_numeric(df['Calories'], errors='coerce')
 
     # Drop rows with NaN values in critical columns
-    df = df.dropna(subset=['Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne'])
+    df = df.dropna(subset=['DistanceInMeters', 'Calories', 'TimeTotalInHours', 'HeartRateAverage'])
 
     return df
 
@@ -161,13 +169,19 @@ def process_data(workouts=None):
     # Merge workouts DataFrames into one
     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
-    # Replace '--' with NaN
-    activities_df.replace('--', np.nan, inplace=True)
-    workouts_df.replace('--', np.nan, inplace=True)
-
     if workouts is not None:
         workouts_df = workouts #WARNING
     ## --
+
+    # Replace '--' with NaN
+    activities_df = activities_df.replace('--', np.nan)
+    workouts_df = workouts_df.replace('--', np.nan)
+
+    if activities_df is None:
+        raise ValueError("activities_df is None. Ensure the file is loaded properly.")
+
+    activities_df
+
 
     dataframes = {
         'activities': activities_df,

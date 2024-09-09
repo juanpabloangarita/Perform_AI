@@ -59,91 +59,17 @@ def xgboost_model(X_train, X_test, y_train, y_test):
     return model, rmse
 
 
-def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts):
-    # Prepare features and labels for the regression models with HeartRateAverage and WorkoutType (for past workouts)
-    X_activities_y_hr = activities_df[['Distance', 'Durée', 'Fréquence cardiaque moyenne', 'Type d\'activité']].copy()
-    X_activities_y_hr.rename(columns={
-        'Distance': 'DistanceInMeters',
-        'Durée': 'TimeTotalInHours',
-        'Fréquence cardiaque moyenne': 'HeartRateAverage',
-        'Type d\'activité': 'WorkoutType'
-    }, inplace=True)
-    X_activities_y_hr = pd.get_dummies(X_activities_y_hr)
-
-    X_activities_y_hr['HeartRateAverage'] = pd.to_numeric(X_activities_y_hr['HeartRateAverage'], errors='coerce')
-
-
-    y_activities = activities_df['Calories']
-
-    # Prepare features and labels for future workouts with WorkoutType
-    X_activities_no_hr = activities_df[['Distance', 'Durée', 'Type d\'activité']].copy()
-    X_activities_no_hr.rename(columns={
-        'Distance': 'PlannedDistanceInMeters',
-        'Durée': 'PlannedDuration',
-        'Type d\'activité': 'WorkoutType'
-    }, inplace=True)
-    X_activities_no_hr = pd.get_dummies(X_activities_no_hr)
-
-    # Split data into training and test sets
-    X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr, y_activities, test_size=0.2, random_state=42)
-    X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr, y_activities, test_size=0.2, random_state=42)
-
-    # Train and evaluate the models
-    linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-    xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
-
-    linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-    xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
-
-    # Use the best model for past workouts with WorkoutType
-    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage', 'WorkoutType']].notna().all(axis=1)
-    past_workouts = pd.get_dummies(past_workouts, columns=['WorkoutType'])
-    workout_type_columns_past = past_workouts.columns[past_workouts.columns.str.startswith('WorkoutType')]
-    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage'] + list(workout_type_columns_past)].copy()
-    past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
-
-    # Use the best model for future workouts with WorkoutType
-    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration', 'WorkoutType']].notna().all(axis=1)
-    future_workouts = pd.get_dummies(future_workouts, columns=['WorkoutType'])
-    workout_type_columns_future = future_workouts.columns[future_workouts.columns.str.startswith('WorkoutType')]
-    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration'] + list(workout_type_columns_future)].copy()
-    future_workouts.loc[mask_future, 'EstimatedCalories'] = gb_model_no_hr.predict(X_future_workouts)
-
-    # Combine past and future workouts back together
-    workouts_df = pd.concat([past_workouts, future_workouts])
-
-    return workouts_df, {
-        'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
-        'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
-        'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
-        'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
-    }
-
-
 def estimate_calories_without_workout_type(activities_df, past_workouts, future_workouts):
     # Prepare features and labels for the regression models without WorkoutType (for past workouts)
-    X_activities_y_hr = activities_df[['Distance', 'Durée', 'Fréquence cardiaque moyenne']].copy()
-    X_activities_y_hr.rename(columns={
-        'Distance': 'DistanceInMeters',
-        'Durée': 'TimeTotalInHours',
-        'Fréquence cardiaque moyenne': 'HeartRateAverage'
-    }, inplace=True)
-
-    X_activities_y_hr['HeartRateAverage'] = pd.to_numeric(X_activities_y_hr['HeartRateAverage'], errors='coerce')
+    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
 
     y_activities = activities_df['Calories']
 
     # Prepare features and labels for future workouts without WorkoutType
-    X_activities_no_hr = activities_df[['Distance', 'Durée']].copy()
+    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours']].copy()
     X_activities_no_hr.rename(columns={
-        'Distance': 'PlannedDistanceInMeters',
-        'Durée': 'PlannedDuration'
+        'DistanceInMeters': 'PlannedDistanceInMeters',
+        'TimeTotalInHours': 'PlannedDuration'
     }, inplace=True)
 
     # Split data into training and test sets
@@ -226,3 +152,59 @@ Gradient Boosting RMSE: 87.20099204368888
 LIGHTGBM RMSE: 77.05421262471275
 XGBOOST RMSE: 82.21859160846236
 """
+def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts):
+    # Prepare features and labels for the regression models with HeartRateAverage and WorkoutType (for past workouts)
+    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage', 'WorkoutType']].copy()
+
+    X_activities_y_hr = pd.get_dummies(X_activities_y_hr)
+
+    y_activities = activities_df['Calories']
+
+    # Prepare features and labels for future workouts with WorkoutType
+    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'WorkoutType']].copy()
+    X_activities_no_hr.rename(columns={
+        'DistanceInMeters': 'PlannedDistanceInMeters',
+        'TimeTotalInHours': 'PlannedDuration'
+    }, inplace=True)
+    X_activities_no_hr = pd.get_dummies(X_activities_no_hr)
+
+    # Split data into training and test sets
+    X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr, y_activities, test_size=0.2, random_state=42)
+    X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr, y_activities, test_size=0.2, random_state=42)
+
+    # Train and evaluate the models
+    linear_model_y_hr, rmse_lr_y_hr = linear_regression_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+    rf_model_y_hr, rmse_rf_y_hr = random_forest_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+    gb_model_y_hr, rmse_gb_y_hr = gradient_boosting_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+    lgb_model_y_hr, rmse_lgb_y_hr = lightgbm_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+    xgb_model_y_hr, rmse_xgb_y_hr = xgboost_model(X_train_y_hr, X_test_y_hr, y_train, y_test)
+
+    linear_model_no_hr, rmse_lr_no_hr = linear_regression_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    rf_model_no_hr, rmse_rf_no_hr = random_forest_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    gb_model_no_hr, rmse_gb_no_hr = gradient_boosting_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    lgb_model_no_hr, rmse_lgb_no_hr = lightgbm_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+    xgb_model_no_hr, rmse_xgb_no_hr = xgboost_model(X_train_no_hr, X_test_no_hr, y_train, y_test)
+
+    # Use the best model for past workouts with WorkoutType
+    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage', 'WorkoutType']].notna().all(axis=1)
+    past_workouts = pd.get_dummies(past_workouts, columns=['WorkoutType'])
+    workout_type_columns_past = past_workouts.columns[past_workouts.columns.str.startswith('WorkoutType')]
+    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage'] + list(workout_type_columns_past)].copy()
+    past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts)
+
+    # Use the best model for future workouts with WorkoutType
+    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration', 'WorkoutType']].notna().all(axis=1)
+    future_workouts = pd.get_dummies(future_workouts, columns=['WorkoutType'])
+    workout_type_columns_future = future_workouts.columns[future_workouts.columns.str.startswith('WorkoutType')]
+    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration'] + list(workout_type_columns_future)].copy()
+    future_workouts.loc[mask_future, 'EstimatedCalories'] = gb_model_no_hr.predict(X_future_workouts)
+
+    # Combine past and future workouts back together
+    workouts_df = pd.concat([past_workouts, future_workouts])
+
+    return workouts_df, {
+        'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
+        'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
+        'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
+        'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
+    }
