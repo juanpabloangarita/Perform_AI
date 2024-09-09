@@ -69,10 +69,10 @@ def estimate_calories_with_workout_type(activities_df, past_workouts, future_wor
         'Type d\'activité': 'WorkoutType'
     }, inplace=True)
     X_activities_y_hr = pd.get_dummies(X_activities_y_hr)
-    
+
     X_activities_y_hr['HeartRateAverage'] = pd.to_numeric(X_activities_y_hr['HeartRateAverage'], errors='coerce')
 
-    
+
     y_activities = activities_df['Calories']
 
     # Prepare features and labels for future workouts with WorkoutType
@@ -190,19 +190,22 @@ def estimate_calories_without_workout_type(activities_df, past_workouts, future_
 """BETTER
 estimate_calories_without_workout_type
 
+
 With Heart Rate:
-Linear Regression RMSE: 71.39344172120131
-Random Forest RMSE: 76.04153312773663
-Gradient Boosting RMSE: 65.73461347345477
-LIGHTGBM RMSE: 64.21517223921495
-XGBOOST RMSE: 76.5706280497429
+Linear Regression RMSE: 79.33538641583827
+Random Forest RMSE: 84.0087350171616
+Gradient Boosting RMSE: 75.86140919738551
+LIGHTGBM RMSE: 75.37150839370808
+XGBOOST RMSE: 79.11720568354129
 
 Without Heart Rate:
-Linear Regression RMSE: 86.7448131426331
-Random Forest RMSE: 93.76334490225517
-Gradient Boosting RMSE: 90.71393979536293
-LIGHTGBM RMSE: 84.73938121141626
-XGBOOST RMSE: 91.41686969387759
+Linear Regression RMSE: 98.44755737772297
+Random Forest RMSE: 96.13127611614661
+Gradient Boosting RMSE: 98.35461364126367
+LIGHTGBM RMSE: 90.32195331635167
+XGBOOST RMSE: 101.84941904422894
+
+
 """
 
 
