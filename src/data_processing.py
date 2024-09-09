@@ -49,7 +49,7 @@ def load_csv(file_path):
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
 
-def save_csv(file_path, w_df, a_df):
+def save_csv(file_path, w_df, a_df, df):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
     dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
@@ -58,6 +58,8 @@ def save_csv(file_path, w_df, a_df):
     w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'))
     # save activities_df
     a_df.to_csv(os.path.join(full_path, 'activities_df.csv'))
+    # save final_df
+    df.to_csv(os.path.join(full_path, 'final_df.csv'))
 
 
 def clean_data(dfs, date_cols):
@@ -256,9 +258,12 @@ def process_data(workouts=None):
     w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
     w_df_calories_estimated_plus_calculated = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
 
-    save_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df)
+    final_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'TotalPassiveCalories', 'EstimatedCalories']
+    final_df = pd.concat([w_df_calories_estimated_plus_calculated[final_columns], activities_df['Calories']], axis=1)
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df
+    save_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df)
+
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
 
 
 # Add other data processing functions as needed

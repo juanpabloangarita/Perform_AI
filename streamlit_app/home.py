@@ -38,7 +38,7 @@ if data_source == 'Upload New Data':
 if data_source == 'Use Local Data' or uploaded_files:
     if data_source == 'Use Local Data':
         # Call the main function from src/main.py
-        tss_df, atl_df, ctl_df, tsb_df, w_df, a_df = main()
+        tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main()
     else:
         try:
             # List to hold DataFrames
@@ -62,7 +62,7 @@ if data_source == 'Use Local Data' or uploaded_files:
             st.write("Files successfully processed and uploaded to S3.")
 
             # Process the data using the main function
-            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df = main(workouts_df)
+            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(workouts_df)
 
             # Display a success message or further processing results
             st.write("Processing completed successfully.")
@@ -74,6 +74,8 @@ if data_source == 'Use Local Data' or uploaded_files:
     fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
     st.plotly_chart(fig)
 
+    if st.checkbox('Show FINAL DataFrame'):
+        st.write(final_df)
     # Option to display w_df
     if st.checkbox('Show Workouts DataFrame'):
         st.write(w_df)
