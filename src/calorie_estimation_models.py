@@ -203,6 +203,69 @@ def prepare_features_for_calorie_estimation(activities_df, past_workouts, future
 
     return X_activities_y_hr_poly, X_activities_no_hr_poly, y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future
 
+def prepare_features_for_calorie_estimation_test(activities_df, past_workouts, future_workouts):
+    ## ACTIVITIES
+    # BEST PERFORMANCE WITH WORKOUTTYPE = WITH ENCODER
+    # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
+    one_hot_encoder = OneHotEncoder()
+
+    # One-hot encode WorkoutType in activities_df
+    activities_encoded = pd.DataFrame(one_hot_encoder.fit_transform(activities_df[['WorkoutType']]).toarray(),
+                                      columns=one_hot_encoder.get_feature_names_out(['WorkoutType']),
+                                      index=activities_df.index)
+
+    ### WITHOUT WorkoutType
+    # Prepare features and labels for the regression models without WorkoutType (for past workouts)
+    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    y_activities = activities_df['Calories']
+
+    # Prepare features and labels for future workouts without WorkoutType
+    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours']].copy()
+    X_activities_no_hr.rename(columns={
+        'DistanceInMeters': 'PlannedDistanceInMeters',
+        'TimeTotalInHours': 'PlannedDuration'
+    }, inplace=True)
+
+
+    # ### WITH WorkoutType
+    # X_activities_y_hr_workout_type = pd.concat([X_activities_y_hr, activities_encoded], axis=1)
+    # X_activities_no_hr_workout_type = pd.concat([X_activities_no_hr, activities_encoded], axis=1)
+
+    # Initialize preproc_dict to store data for both y_hr and no_hr feature sets
+    preproc_dict = {
+        "X_activities_y_hr": X_activities_y_hr,
+        "X_activities_no_hr": X_activities_no_hr
+    }
+
+    feature_groups = ['_y_hr', '_no_hr']
+
+    # Loop through each feature group (e.g., '_y_hr' and '_no_hr')
+    for group in feature_groups:
+        # Step 1: Impute missing values
+        imputer = KNNImputer()
+        preproc_dict[f"imputer{group}"] = imputer
+        preproc_dict[f"X_activities{group}_imputed"] = imputer.fit_transform(preproc_dict[f"X_activities{group}"])
+
+        # Step 2: Add polynomial features
+        poly_features = PolynomialFeatures(degree=2, include_bias=False)
+        preproc_dict[f"poly{group}"] = poly_features
+        preproc_dict[f"X_activities{group}_poly"] = poly_features.fit_transform(preproc_dict[f"X_activities{group}_imputed"])
+
+    ## PAST WORKOUTS
+    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
+    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    X_past_workouts_imputed = preproc_dict[f"imputer_y_hr"].transform(X_past_workouts)
+    X_past_workouts_poly = preproc_dict[f"poly_y_hr"].transform(X_past_workouts_imputed)
+
+    ## FUTURE WORKOUTS
+    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
+    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
+    X_future_workouts_imputed = preproc_dict[f"imputer_no_hr"].transform(X_future_workouts)
+    X_future_workouts_poly = preproc_dict[f"poly_no_hr"].transform(X_future_workouts_imputed)
+
+
+    return preproc_dict['X_activities_y_hr_poly'], preproc_dict['X_activities_no_hr_poly'], y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future
+
 
 def estimate_calories(activities_df, past_workouts, future_workouts):
     (
@@ -213,7 +276,7 @@ def estimate_calories(activities_df, past_workouts, future_workouts):
         mask_past,
         X_future_workouts_poly,
         mask_future
-    ) = prepare_features_for_calorie_estimation(
+    ) = prepare_features_for_calorie_estimation_test(
         activities_df, past_workouts, future_workouts
     )
     # Split data into training and test sets
@@ -222,6 +285,7 @@ def estimate_calories(activities_df, past_workouts, future_workouts):
 
     def create_model_configs(models, X_train_hr, X_test_hr, X_train_no_hr, X_test_no_hr):
         configs = []
+        # WITHOUT WorkoutType
         # First add configurations with HR
         for model_name, model_func in models:
             configs.append({
@@ -279,7 +343,12 @@ def estimate_calories(activities_df, past_workouts, future_workouts):
 
 
 
+
+
+
+
 def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts, best):
+
     # BEST PERFORMANCE
     # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
     one_hot_encoder = OneHotEncoder()
@@ -371,18 +440,7 @@ def estimate_calories_with_workout_type(activities_df, past_workouts, future_wor
     X_future_workouts_poly = poly_no_hr.transform(X_future_workouts_imputed)
     future_workouts.loc[mask_future, 'EstimatedCalories'] = xgb_model_no_hr.predict(X_future_workouts_poly)
 
-    # Combine past and future workouts back together
-    workouts_df = pd.concat([past_workouts, future_workouts])
 
-    if best:
-        return workouts_df,  {'rmse_gb_y_hr': rmse_gb_y_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr}
-    else:
-        return workouts_df, {
-        'rmse_lr_y_hr': rmse_lr_y_hr, 'rmse_rf_y_hr': rmse_rf_y_hr, 'rmse_gb_y_hr': rmse_gb_y_hr,
-        'rmse_lgb_y_hr': rmse_lgb_y_hr, 'rmse_xgb_y_hr': rmse_xgb_y_hr,
-        'rmse_lr_no_hr': rmse_lr_no_hr, 'rmse_rf_no_hr': rmse_rf_no_hr, 'rmse_gb_no_hr': rmse_gb_no_hr,
-        'rmse_lgb_no_hr': rmse_lgb_no_hr, 'rmse_xgb_no_hr': rmse_xgb_no_hr
-    }
 
 
 def estimate_calories_without_workout_type(activities_df, past_workouts, future_workouts, best):
