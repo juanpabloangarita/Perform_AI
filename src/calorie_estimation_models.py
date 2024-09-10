@@ -1,6 +1,7 @@
 # calorie_estimation_models.py
 
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split, GridSearchCV, KFold
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, VotingRegressor
 from sklearn.linear_model import LinearRegression
@@ -14,78 +15,239 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
 
 from src.data_processing import *
+import joblib
 
-# Linear Regression model with scaling
-def linear_regression_model(X_train, X_test, y_train, y_test):
-    pipeline = Pipeline([
-        ('scaler', StandardScaler()),
-        ('model', LinearRegression())
-    ])
-    pipeline.fit(X_train, y_train)
+file_path = 'data/processed/models/'
+script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
+dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
+full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
+
+
+# Helper function to save models
+def save_model(model, model_name):
+    model_file = os.path.join(full_path, f"{model_name}.pkl")
+    joblib.dump(model, model_file)
+    print(f"Model {model_name} saved successfully.")
+    print(f"Model {model_name} saved successfully at {model_file}.")
+
+# Helper function to load models
+def load_model(model_name):
+    try:
+        model_file = os.path.join(full_path, f"{model_name}.pkl")
+        model = joblib.load(model_file)
+        print(f"Model {model_name} loaded successfully from {model_file}.")
+        return model
+    except FileNotFoundError:
+        print(f"Model {model_name} not found. Training a new one.")
+        return None
+
+
+# Modify each model function to check for saved models
+def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)  # Try loading the saved model
+
+    if model is None:  # If the model is not saved, train and save it
+        pipeline = Pipeline([
+            ('scaler', StandardScaler()),
+            ('model', LinearRegression())
+        ])
+        pipeline.fit(X_train, y_train)
+        save_model(pipeline, model_name)  # Save the trained model
+    else:
+        pipeline = model  # Use the loaded model
+
     y_pred = pipeline.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"Linear Regression RMSE: {rmse}")
     return pipeline, rmse
 
-# Random Forest model with hyperparameter tuning
-def random_forest_model(X_train, X_test, y_train, y_test):
-    param_grid = {
-        'n_estimators': [50, 100, 200],
-        'max_depth': [10, 20, 30],
-        'min_samples_split': [2, 5, 10]
-    }
-    grid_search = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_model = grid_search.best_estimator_
+
+# Modify the Random Forest function similarly
+def random_forest_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)  # Try loading the saved model
+
+    if model is None:
+        param_grid = {
+            'n_estimators': [50, 100, 200],
+            'max_depth': [10, 20, 30],
+            'min_samples_split': [2, 5, 10]
+        }
+        grid_search = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)  # Save the model
+    else:
+        best_model = model
+
     y_pred = best_model.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"Tuned Random Forest RMSE: {rmse}")
     return best_model, rmse
 
-# Gradient Boosting model with scaling and tuning
-def gradient_boosting_model(X_train, X_test, y_train, y_test):
-    param_grid = {
-        'n_estimators': [50, 100, 150],
-        'learning_rate': [0.01, 0.1, 0.2],
-        'max_depth': [3, 5, 7]
-    }
-    grid_search = GridSearchCV(GradientBoostingRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_model = grid_search.best_estimator_
+
+# Apply the same logic for Gradient Boosting
+def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)  # Try loading the saved model
+
+    if model is None:
+        param_grid = {
+            'n_estimators': [50, 100, 150],
+            'learning_rate': [0.01, 0.1, 0.2],
+            'max_depth': [3, 5, 7]
+        }
+        grid_search = GridSearchCV(GradientBoostingRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+    else:
+        best_model = model
+
     y_pred = best_model.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"Tuned Gradient Boosting RMSE: {rmse}")
     return best_model, rmse
 
-# LightGBM model with scaling and tuning
-def lightgbm_model(X_train, X_test, y_train, y_test):
-    param_grid = {
-        'n_estimators': [100, 200, 300],
-        'max_depth': [10, 20, 30],
-        'learning_rate': [0.01, 0.05, 0.1]
-    }
-    grid_search = GridSearchCV(lgb.LGBMRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_model = grid_search.best_estimator_
+
+# Apply the same logic for LightGBM
+def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)  # Try loading the saved model
+
+    if model is None:
+        param_grid = {
+            'n_estimators': [100, 200, 300],
+            'max_depth': [10, 20, 30],
+            'learning_rate': [0.01, 0.05, 0.1]
+        }
+        grid_search = GridSearchCV(lgb.LGBMRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+    else:
+        best_model = model
+
     y_pred = best_model.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"Tuned LightGBM RMSE: {rmse}")
     return best_model, rmse
 
-# XGBoost model with scaling and tuning
-def xgboost_model(X_train, X_test, y_train, y_test):
-    param_grid = {
-        'n_estimators': [100, 200, 300],
-        'learning_rate': [0.01, 0.1, 0.2],
-        'max_depth': [3, 5, 7]
-    }
-    grid_search = GridSearchCV(xgb.XGBRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    best_model = grid_search.best_estimator_
+
+# Apply the same logic for XGBoost
+def xgboost_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)  # Try loading the saved model
+
+    if model is None:
+        param_grid = {
+            'n_estimators': [100, 200, 300],
+            'learning_rate': [0.01, 0.1, 0.2],
+            'max_depth': [3, 5, 7]
+        }
+        grid_search = GridSearchCV(xgb.XGBRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+    else:
+        best_model = model
+
     y_pred = best_model.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"Tuned XGBoost RMSE: {rmse}")
     return best_model, rmse
+
+
+# Define a function to handle training and evaluation
+def train_and_evaluate(model_name, X_train, X_test, y_train, y_test, model_func):
+    model, rmse = model_func(model_name, X_train, X_test, y_train, y_test)
+    print(f"{model_name} RMSE: {rmse}")
+    return model
+
+
+def prepare_features_for_calorie_estimation(activities_df, past_workouts, future_workouts):
+    ## ACTIVITIES
+    # Prepare features and labels for the regression models without WorkoutType (for past workouts)
+    X_activities_y_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    y_activities = activities_df['Calories']
+
+    # Prepare features and labels for future workouts without WorkoutType
+    X_activities_no_hr = activities_df[['DistanceInMeters', 'TimeTotalInHours']].copy()
+    X_activities_no_hr.rename(columns={
+        'DistanceInMeters': 'PlannedDistanceInMeters',
+        'TimeTotalInHours': 'PlannedDuration'
+    }, inplace=True)
+
+    # Handle missing values
+    # Impute missing values for features with HeartRateAverage
+    imputer_y_hr = KNNImputer()
+    X_activities_y_hr_imputed = imputer_y_hr.fit_transform(X_activities_y_hr)
+
+    # Impute missing values for features without HeartRateAverage
+    imputer_no_hr = KNNImputer()
+    X_activities_no_hr_imputed = imputer_no_hr.fit_transform(X_activities_no_hr)
+
+    # Add polynomial features
+    poly_y_hr = PolynomialFeatures(degree=2, include_bias=False)
+    X_activities_y_hr_poly = poly_y_hr.fit_transform(X_activities_y_hr_imputed)
+    poly_no_hr = PolynomialFeatures(degree=2, include_bias=False)
+    X_activities_no_hr_poly = poly_no_hr.fit_transform(X_activities_no_hr_imputed)
+
+    ## PAST WORKOUTS
+    mask_past = past_workouts[['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].notna().all(axis=1)
+    X_past_workouts = past_workouts.loc[mask_past, ['DistanceInMeters', 'TimeTotalInHours', 'HeartRateAverage']].copy()
+    X_past_workouts_imputed = imputer_y_hr.transform(X_past_workouts)
+    X_past_workouts_poly = poly_y_hr.transform(X_past_workouts_imputed)
+
+    ## FUTURE WORKOUTS
+    mask_future = future_workouts[['PlannedDistanceInMeters', 'PlannedDuration']].notna().all(axis=1)
+    X_future_workouts = future_workouts.loc[mask_future, ['PlannedDistanceInMeters', 'PlannedDuration']].copy()
+    X_future_workouts_imputed = imputer_no_hr.transform(X_future_workouts)
+    X_future_workouts_poly = poly_no_hr.transform(X_future_workouts_imputed)
+
+    return X_activities_y_hr_poly, X_activities_no_hr_poly, y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future
+
+
+def estimate_calories(activities_df, past_workouts, future_workouts):
+    X_activities_y_hr_poly, X_activities_no_hr_poly, y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future = prepare_features_for_calorie_estimation(activities_df, past_workouts, future_workouts)
+    # Split data into training and test sets
+    X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
+    X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
+
+    # Define model configurations with different datasets (with and without HeartRateAverage)
+    model_configs = [
+        {"name": "Linear Regression with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": linear_regression_model},
+        {"name": "Random Forest with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": random_forest_model},
+        {"name": "Gradient Boosting with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": gradient_boosting_model},
+        {"name": "LightGBM with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": lightgbm_model},
+        {"name": "XGBoost with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": xgboost_model},
+
+        {"name": "Linear Regression without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": linear_regression_model},
+        {"name": "Random Forest without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": random_forest_model},
+        {"name": "Gradient Boosting without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": gradient_boosting_model},
+        {"name": "LightGBM without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": lightgbm_model},
+        {"name": "XGBoost without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": xgboost_model}
+    ]
+
+    # Iterate through each model configuration and train
+    for config in model_configs:
+        model = train_and_evaluate(config["name"], config["X_train"], config["X_test"], y_train, y_test, config["model_func"])
+        config['model'] = model
+
+    xgb_model_y_hr = model_configs[4]['model']
+    linear_model_no_hr = model_configs[5]['model']
+
+    # Use the best model for past workouts without WorkoutType
+    past_workouts.loc[mask_past, 'EstimatedCalories'] = xgb_model_y_hr.predict(X_past_workouts_poly)
+
+    # Use the best model for future workouts without WorkoutType
+    future_workouts.loc[mask_future, 'EstimatedCalories'] =  linear_model_no_hr.predict(X_future_workouts_poly)
+
+    # Combine past and future workouts back together
+    workouts_df = pd.concat([past_workouts, future_workouts])
+
+    return workouts_df
+
+
+###################
+
+
 
 
 def estimate_calories_with_workout_type(activities_df, past_workouts, future_workouts, best):
