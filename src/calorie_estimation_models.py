@@ -372,7 +372,6 @@ def estimate_calories(activities_df, past_workouts, future_workouts, w_type):
 
 
 
-
 ###################
 
 ### RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS -----
