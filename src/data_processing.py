@@ -17,7 +17,7 @@ from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
-from src.calorie_estimation_models import estimate_calories_with_workout_type, estimate_calories_without_workout_type, estimate_calories
+from src.calorie_estimation_models import estimate_calories
 
 def load_csv(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
@@ -166,22 +166,20 @@ def clean_activities(df):
 
     return df
 
-def print_performances(models):
+
+def print_performances(rmse_results):
+    print()
+    print()
     # Printing the performance metrics
     print("Performance Metrics:")
-    print("\nWith Heart Rate:")
-    print(f"Linear Regression RMSE: {models['rmse_lr_y_hr']}")
-    print(f"Random Forest RMSE: {models['rmse_rf_y_hr']}")
-    print(f"Gradient Boosting RMSE: {models['rmse_gb_y_hr']}")
-    print(f"LIGHTGBM RMSE: {models['rmse_lgb_y_hr']}")
-    print(f"XGBOOST RMSE: {models['rmse_xgb_y_hr']}")
 
-    print("\nWithout Heart Rate:")
-    print(f"Linear Regression RMSE: {models['rmse_lr_no_hr']}")
-    print(f"Random Forest RMSE: {models['rmse_rf_no_hr']}")
-    print(f"Gradient Boosting RMSE: {models['rmse_gb_no_hr']}")
-    print(f"LIGHTGBM RMSE: {models['rmse_lgb_no_hr']}")
-    print(f"XGBOOST RMSE: {models['rmse_xgb_no_hr']}")
+    for result in rmse_results:
+        model_name = result['name']
+        rmse_value = result['rmse']
+        print(f"{model_name} RMSE: {rmse_value}")
+
+    print()
+    print()
 
 
 def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
@@ -241,8 +239,12 @@ def process_data(workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
+    workout_type = "with WorkoutType"
+    #workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
-    w_df_calories_estimated = estimate_calories(activities_df, past_workouts_df, future_workouts_df)
+    w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
+
+    print_performances(rmse_results)
 
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
