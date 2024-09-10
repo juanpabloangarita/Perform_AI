@@ -205,7 +205,17 @@ def prepare_features_for_calorie_estimation(activities_df, past_workouts, future
 
 
 def estimate_calories(activities_df, past_workouts, future_workouts):
-    X_activities_y_hr_poly, X_activities_no_hr_poly, y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future = prepare_features_for_calorie_estimation(activities_df, past_workouts, future_workouts)
+    (
+        X_activities_y_hr_poly,
+        X_activities_no_hr_poly,
+        y_activities,
+        X_past_workouts_poly,
+        mask_past,
+        X_future_workouts_poly,
+        mask_future
+    ) = prepare_features_for_calorie_estimation(
+        activities_df, past_workouts, future_workouts
+    )
     # Split data into training and test sets
     X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
     X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
