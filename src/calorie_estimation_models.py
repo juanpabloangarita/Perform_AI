@@ -220,20 +220,39 @@ def estimate_calories(activities_df, past_workouts, future_workouts):
     X_train_y_hr, X_test_y_hr, y_train, y_test = train_test_split(X_activities_y_hr_poly, y_activities, test_size=0.2, random_state=42)
     X_train_no_hr, X_test_no_hr, _, _ = train_test_split(X_activities_no_hr_poly, y_activities, test_size=0.2, random_state=42)
 
-    # Define model configurations with different datasets (with and without HeartRateAverage)
-    model_configs = [
-        {"name": "Linear Regression with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": linear_regression_model},
-        {"name": "Random Forest with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": random_forest_model},
-        {"name": "Gradient Boosting with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": gradient_boosting_model},
-        {"name": "LightGBM with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": lightgbm_model},
-        {"name": "XGBoost with HR", "X_train": X_train_y_hr, "X_test": X_test_y_hr, "model_func": xgboost_model},
+    def create_model_configs(models, X_train_hr, X_test_hr, X_train_no_hr, X_test_no_hr):
+        configs = []
+        # First add configurations with HR
+        for model_name, model_func in models:
+            configs.append({
+                "name": f"{model_name} with HR",
+                "X_train": X_train_hr,
+                "X_test": X_test_hr,
+                "model_func": model_func
+            })
 
-        {"name": "Linear Regression without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": linear_regression_model},
-        {"name": "Random Forest without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": random_forest_model},
-        {"name": "Gradient Boosting without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": gradient_boosting_model},
-        {"name": "LightGBM without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": lightgbm_model},
-        {"name": "XGBoost without HR", "X_train": X_train_no_hr, "X_test": X_test_no_hr, "model_func": xgboost_model}
+        # Then add configurations without HR
+        for model_name, model_func in models:
+            configs.append({
+                "name": f"{model_name} without HR",
+                "X_train": X_train_no_hr,
+                "X_test": X_test_no_hr,
+                "model_func": model_func
+            })
+
+        return configs
+
+    # Define model names and corresponding functions
+    models = [
+        ("Linear Regression", linear_regression_model),
+        ("Random Forest", random_forest_model),
+        ("Gradient Boosting", gradient_boosting_model),
+        ("LightGBM", lightgbm_model),
+        ("XGBoost", xgboost_model)
     ]
+
+    # Create model configurations
+    model_configs = create_model_configs(models, X_train_y_hr, X_test_y_hr, X_train_no_hr, X_test_no_hr)
 
     # Iterate through each model configuration and train
     for config in model_configs:
