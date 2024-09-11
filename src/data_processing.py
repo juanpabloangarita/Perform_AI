@@ -239,9 +239,9 @@ def process_data(workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-    #workout_type = "with WorkoutType"
+    workout_type = "with WorkoutType"
     # workout_type = "duration with WorkoutType"
-    workout_type = "without WorkoutType"
+    # workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
 
     if workout_type == "duration with WorkoutType":
