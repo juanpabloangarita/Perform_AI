@@ -17,7 +17,7 @@ from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
-from src.calorie_estimation_models import estimate_calories
+from src.calorie_estimation_models import estimate_calories, estimate_calories_with_duration
 
 def load_csv(file_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
@@ -239,10 +239,15 @@ def process_data(workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-    workout_type = "with WorkoutType"
-    #workout_type = "without WorkoutType"
+    #workout_type = "with WorkoutType"
+    # workout_type = "duration with WorkoutType"
+    workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
-    w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
+
+    if workout_type == "duration with WorkoutType":
+        w_df_calories_estimated, rmse_results = estimate_calories_with_duration(activities_df, past_workouts_df, future_workouts_df)
+    else:
+        w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
 
     print_performances(rmse_results)
 
