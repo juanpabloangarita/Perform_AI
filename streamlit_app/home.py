@@ -18,8 +18,6 @@ from params import *
 
 st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
 # Define your credentials here (use environment variables or a secure method in production)
-USERNAME = "juanpa"
-PASSWORD = "1234"
 
 # Initialize session state for authentication and username
 if 'authenticated' not in st.session_state:
@@ -33,7 +31,7 @@ def show_login_form():
     username = st.text_input('Username')
     password = st.text_input('Password', type='password')
     if st.button('Login'):
-        if username == USERNAME and password == PASSWORD:
+        if username == USERNAME_STREAMLIT and password == PASSWORD_STREAMLIT:
             st.session_state['authenticated'] = True
             st.session_state['username'] = username
             st.success('Login successful!')
