@@ -3,7 +3,6 @@
 import pandas as pd
 import bcrypt
 import os
-from dotenv import load_dotenv
 
 from params import *
 
