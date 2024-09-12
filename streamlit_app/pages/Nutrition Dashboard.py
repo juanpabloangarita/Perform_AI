@@ -5,6 +5,17 @@ import numpy as np
 from src.data_processing import *
 from src.calorie_calculations import *
 
+# Load user-specific data from session state or set default values
+if 'user_data' not in st.session_state:
+    st.session_state['user_data'] = {
+        'weight': 80,
+        'height': 183,
+        'age': 41,
+        'gender': 'male',
+        'vo2_max': 50,
+        'resting_hr': 42
+    }
+
 # Step 1: Choose the goal (Weight Loss or Maintenance)
 st.title("Calorie Calculation Dashboard")
 
@@ -23,8 +34,6 @@ st.write("## Exercise Information")
 
 # Create a layout with three columns
 col1, col2, col3 = st.columns(3)
-
-# COPY PASTE TO HAVE ANOTHER ROW
 
 with col1:
     exercise_type = st.selectbox("Type of exercise:", ["Running", "Cycling", "Swimming"])
@@ -56,29 +65,41 @@ if user_option == "New user":
     col1, col2 = st.columns(2)
 
     with col1:
-        weight = st.number_input("Weight (kg)", min_value=30, max_value=200, value=80)
-        height = st.number_input("Height (cm)", min_value=120, max_value=250, value=183)
-        age = st.number_input("Age (years)", min_value=10, max_value=100, value=41)
+        weight = st.number_input("Weight (kg)", min_value=30, max_value=200, value=st.session_state['user_data']['weight'])
+        height = st.number_input("Height (cm)", min_value=120, max_value=250, value=st.session_state['user_data']['height'])
+        age = st.number_input("Age (years)", min_value=10, max_value=100, value=st.session_state['user_data']['age'])
 
     with col2:
-        gender = st.selectbox("Gender", options=["male", "female"], index=0)
-        vo2_max = st.number_input("VO2 Max", min_value=20, max_value=90, value=50)
-        resting_hr = st.number_input("Resting Heart Rate", min_value=30, max_value=120, value=42)
+        gender = st.selectbox("Gender", options=["male", "female"], index=0 if st.session_state['user_data']['gender'] == 'male' else 1)
+        vo2_max = st.number_input("VO2 Max", min_value=20, max_value=90, value=st.session_state['user_data']['vo2_max'])
+        resting_hr = st.number_input("Resting Heart Rate", min_value=30, max_value=120, value=st.session_state['user_data']['resting_hr'])
 
-    # Calculate calories burned
-    calories_burned = calculate_total_calories(
-        weight=weight, height=height, age=age, gender=gender,
-        vo2_max=vo2_max, resting_hr=resting_hr)
+    # Update session state with new values
+    st.session_state['user_data'] = {
+        'weight': weight,
+        'height': height,
+        'age': age,
+        'gender': gender,
+        'vo2_max': vo2_max,
+        'resting_hr': resting_hr
+    }
 
-else:
-    # Calculate calories burned
-    calories_burned = calculate_total_calories(
-        w_df, weight=weight, height=height, age=age, gender=gender,
-        vo2_max=vo2_max, resting_hr=resting_hr)
-
+# Use saved user data if selected
+if user_option == "Use saved data":
+    weight = st.session_state['user_data']['weight']
+    height = st.session_state['user_data']['height']
+    age = st.session_state['user_data']['age']
+    gender = st.session_state['user_data']['gender']
+    vo2_max = st.session_state['user_data']['vo2_max']
+    resting_hr = st.session_state['user_data']['resting_hr']
 
 # Step 4: Process Data and Calculate Calories
 st.write("## Calculate Calories Burned")
+
+# Calculate calories burned
+calories_burned = calculate_total_calories(
+    weight=weight, height=height, age=age, gender=gender,
+    vo2_max=vo2_max, resting_hr=resting_hr)
 
 # Simulate a DataFrame to represent the workout data for this session
 w_df = pd.DataFrame({
@@ -88,8 +109,6 @@ w_df = pd.DataFrame({
     "TSS": [np.nan],  # You can calculate TSS based on the inputs if needed
     "Calories": [np.nan]
 })
-
-calories_burned = 0
 
 st.write(f"Total calories burned: {calories_burned:.2f} kcal")
 

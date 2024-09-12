@@ -41,5 +41,7 @@ MANIFEST
 .DS_Store
 #data/
 
+# Ignore user data file
+data/user_data.csv
 # csv/ -> the folder
 # *.csv -> or anything that finishes in .csv

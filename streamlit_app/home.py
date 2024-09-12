@@ -11,10 +11,13 @@ import boto3
 parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(parent_dir)
 
-from config import setup_paths
-from src.main import main
+from config import setup_paths # WARNING
+
 from dashboard_plot import *
 from params import *
+
+from src.main import main
+from src.user_data import *
 
 st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
 # Define your credentials here (use environment variables or a secure method in production)
@@ -25,27 +28,46 @@ if 'authenticated' not in st.session_state:
 if 'username' not in st.session_state:
     st.session_state['username'] = ''
 
-# Function to display the login form
+# Function to display the login and sign-up form
 def show_login_form():
-    st.subheader('Login')
+    st.subheader('Login / Sign Up')
+
+    # Option to switch between login and sign up
+    option = st.radio("Select Option", ("Login", "Sign Up"))
+
     username = st.text_input('Username')
     password = st.text_input('Password', type='password')
-    if st.button('Login'):
-        if username == USERNAME_STREAMLIT and password == PASSWORD_STREAMLIT:
-            st.session_state['authenticated'] = True
-            st.session_state['username'] = username
-            st.success('Login successful!')
-            st.session_state['show_home_button'] = True
-        else:
-            st.session_state['authenticated'] = False
-            st.error('Invalid username or password')
+
+    if option == "Sign Up":
+        secret_code = st.text_input('Secret Code', type='password')
+        if st.button('Sign Up'):
+            if secret_code == CODE_PROMO:
+                if not check_user_exists(username):
+                    save_user_data(username, password)
+                    st.success('Sign up successful! You can now log in.')
+                else:
+                    st.error('Username already exists.')
+            else:
+                st.error('Invalid secret code.')
+    else:  # Login
+        if st.button('Login'):
+            if authenticate_user(username, password):
+                st.session_state['authenticated'] = True
+                st.session_state['username'] = username
+                st.success('Login successful!')
+                st.session_state['user_data']= load_user_data(username)
+            else:
+                st.session_state['authenticated'] = False
+                st.error('Invalid username or password')
+
 
 # Check if user is authenticated
 if not st.session_state['authenticated']:
     show_login_form()
     # Button to go to the main app
     if st.button('Go to the App'):
-        st.session_state['show_login'] = False  # Ensure login form is not shown
+        pass #WEIRD BEHAVIOUR, WITHOUT THIS ST.BUTTON IT DOESN'T WORK
+        #st.session_state['show_login'] = False  # Ensure login form is not shown
 
 else:
     # Display main app content if authenticated
