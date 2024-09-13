@@ -44,7 +44,7 @@ def show_login_form():
         if st.button('Sign Up'):
             if secret_code == CODE_PROMO:
                 if not check_user_exists(username):
-                    save_user_data(username, password)
+                    create_user_data(username, password)
                     st.success('Sign up successful! You can now log in.')
                 else:
                     st.error('Username already exists.')
@@ -76,7 +76,7 @@ def show_login_form_cloud():
         if st.button('Sign Up'):
             if secret_code == CODE_PROMO:
                 if not check_user_exists_cloud(username):
-                    save_user_data_cloud(username, password)
+                    create_user_data_cloud(username, password)
                     st.success('Sign up successful! You can now log in.')
                 else:
                     st.error('Username already exists.')

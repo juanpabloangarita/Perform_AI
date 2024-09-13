@@ -16,26 +16,14 @@ def check_user_exists_cloud(username):
 
 
 #def save_user_data(username, first_name, password, weight, height, age, gender, vo2_max, resting_hr, goal, bmr, passive_calories):
-def save_user_data_cloud(**kwargs):
-    username = kwargs['username']
-    password = kwargs['password']
-
+def create_user_data_cloud(username, password):
     # Hash the password using bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     # Create a DataFrame with the new user's data
     new_user_df = pd.DataFrame({
         'username': [username],
-        'password': [hashed_password.decode('utf-8')],  # Save the hashed password
-        'weight': kwargs.get('weight', None),
-        'height': kwargs.get('height', None),
-        'age': kwargs.get('age', None),
-        'gender': kwargs.get('gender', None),
-        'vo2_max': kwargs.get('vo2_max', None),
-        'resting_hr': kwargs.get('resting_hr', None),
-        'goal': kwargs.get('goal', None),
-        'bmr': kwargs.get('bmr', None),
-        'passive_calories': kwargs.get('passive_calories', None)
+        'password': [hashed_password.decode('utf-8')]  # Save the hashed password
     })
 
     # Read the existing user data
@@ -50,6 +38,30 @@ def save_user_data_cloud(**kwargs):
 
     # Save the updated DataFrame to CSV
     user_data_df.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
+
+
+def update_user_data_cloud(**kwargs):
+    username = kwargs['username']
+
+    # Load existing user data
+    user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
+
+    # Check if the user exists in the DataFrame based on 'username'
+    if username in user_data_df['username'].values:
+        # Find the row index for the user
+        user_index = user_data_df[user_data_df['username'] == username].index[0]
+
+        # Update the user's data in the DataFrame
+        for key, value in kwargs.items():
+            if key in user_data_df.columns:
+                user_data_df.at[user_index, key] = value  # Update value in the DataFrame
+
+        # Save the updated DataFrame back to CSV
+        user_data_df.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
+        print(f"User '{username}' data updated successfully.")
+
+    else:
+        print(f"User '{username}' not found in the database.")
 
 
 def load_user_data_cloud(username):
