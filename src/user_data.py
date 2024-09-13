@@ -3,6 +3,7 @@
 import pandas as pd
 import bcrypt
 import os
+import streamlit as st
 
 from params import *
 
@@ -38,6 +39,10 @@ def save_user_data(username, password, **kwargs):
     # Read the existing user data
     try:
         user_data_df = pd.read_csv(USER_DATA_FILE)
+        if not user_data_df:
+            print("NO CSV FILE")
+            st.write("NO CSV FILE !!!")
+
         # Append the new user's data
         user_data_df = pd.concat([user_data_df, new_user_df], ignore_index=True)
     except FileNotFoundError:
