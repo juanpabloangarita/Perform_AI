@@ -88,6 +88,7 @@ if st.button('Update'):
         'resting_hr': resting_hr,
         'goal': goal
     }
-    update_user_data_cloud(**st.session_state['user_data'])
+    # Call the update_user_data_cloud function by merging both dictionaries
+    update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
     # Display a message indicating successful update
     st.success("Your information has been updated!")
