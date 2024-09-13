@@ -18,6 +18,7 @@ from params import *
 
 from src.main import main
 from src.user_data import *
+from src.user_data_cloud import *
 
 st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
 # Define your credentials here (use environment variables or a secure method in production)
@@ -60,10 +61,43 @@ def show_login_form():
                 st.session_state['authenticated'] = False
                 st.error('Invalid username or password')
 
+# Function to display the login and sign-up form
+def show_login_form_cloud():
+    st.subheader('Login / Sign Up')
+
+    # Option to switch between login and sign up
+    option = st.radio("Select Option", ("Login", "Sign Up"))
+
+    username = st.text_input('Username')
+    password = st.text_input('Password', type='password')
+
+    if option == "Sign Up":
+        secret_code = st.text_input('Secret Code', type='password')
+        if st.button('Sign Up'):
+            if secret_code == CODE_PROMO:
+                if not check_user_exists_cloud(username):
+                    save_user_data_cloud(username, password)
+                    st.success('Sign up successful! You can now log in.')
+                else:
+                    st.error('Username already exists.')
+            else:
+                st.error('Invalid secret code.')
+    else:  # Login
+        if st.button('Login'):
+            if authenticate_user_cloud(username, password):
+                st.session_state['authenticated'] = True
+                st.session_state['username'] = username
+                st.success('Login successful!')
+                st.session_state['user_data']= load_user_data_cloud(username)
+            else:
+                st.session_state['authenticated'] = False
+                st.error('Invalid username or password')
+
 
 # Check if user is authenticated
 if not st.session_state['authenticated']:
-    show_login_form()
+    # show_login_form()
+    show_login_form_cloud()
     # Button to go to the main app
     if st.button('Go to the App'):
         pass #WEIRD BEHAVIOUR, WITHOUT THIS ST.BUTTON IT DOESN'T WORK

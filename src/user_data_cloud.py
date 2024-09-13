@@ -3,21 +3,20 @@
 import pandas as pd
 import bcrypt
 import os
-import streamlit as st
 
 from params import *
 
 # Function to check if a user already exists
-def check_user_exists(username):
+def check_user_exists_cloud(username):
     try:
-        user_data_df = pd.read_csv(USER_DATA_FILE)
+        user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
         return username in user_data_df['username'].values
     except FileNotFoundError:
         return False
 
 
 #def save_user_data(username, first_name, password, weight, height, age, gender, vo2_max, resting_hr, goal, bmr, passive_calories):
-def save_user_data(username, password, **kwargs):
+def save_user_data_cloud(username, password, **kwargs):
     # Hash the password using bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -38,7 +37,7 @@ def save_user_data(username, password, **kwargs):
 
     # Read the existing user data
     try:
-        user_data_df = pd.read_csv(USER_DATA_FILE)
+        user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
 
         # Append the new user's data
         user_data_df = pd.concat([user_data_df, new_user_df], ignore_index=True)
@@ -47,11 +46,12 @@ def save_user_data(username, password, **kwargs):
         user_data_df = new_user_df
 
     # Save the updated DataFrame to CSV
-    user_data_df.to_csv(USER_DATA_FILE, index=False)
+    user_data_df.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
 
-def load_user_data(username):
+
+def load_user_data_cloud(username):
     try:
-        user_data_df = pd.read_csv(USER_DATA_FILE)
+        user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
         user_row = user_data_df[user_data_df['username'] == username]
         if not user_row.empty:
             return user_row.iloc[0].to_dict()
@@ -59,9 +59,10 @@ def load_user_data(username):
     except FileNotFoundError:
         return None
 
-def authenticate_user(username, password):
+
+def authenticate_user_cloud(username, password):
     try:
-        user_data_df = pd.read_csv(USER_DATA_FILE)
+        user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
         user_row = user_data_df[user_data_df['username'] == username]
 
         if user_row.empty:
