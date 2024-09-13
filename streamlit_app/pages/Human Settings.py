@@ -14,6 +14,7 @@ from src.data_processing import *
 from src.calorie_calculations import *
 from src.user_data import *
 from src.user_data_cloud import *
+from params import *
 
 # Display current user data in editable form
 st.title("Human Settings")
@@ -96,8 +97,10 @@ if st.button('Update'):
         'resting_hr': resting_hr,
         'goal': goal
     }
-    # Call the update_user_data_cloud function by merging both dictionaries
-    #update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
-    update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
+    if CLOUD_ON == 'yes':
+        # Call the update_user_data_cloud function by merging both dictionaries
+        update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
+    else:
+        update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
     # Display a message indicating successful update
     st.success("Your information has been updated!")
