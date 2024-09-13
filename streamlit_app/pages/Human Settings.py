@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+import sys
+import os
+# Add the 'src' directory to sys.path
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))) # DIDN'T WORK, WHY? WARNING
+script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
+dir_script_dir = os.path.dirname(script_dir)
 from src.data_processing import *
 from src.calorie_calculations import *
 from src.user_data import *
