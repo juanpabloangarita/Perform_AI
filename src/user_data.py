@@ -47,7 +47,7 @@ def save_user_data(username, password, **kwargs):
         user_data_df = new_user_df
 
     # Save the updated DataFrame to CSV
-    user_data_df.to_csv(USER_DATA_FILE, index=False)
+    user_data_df.to_csv(USER_DATA_FILE, index=False)  # -> data/user_data.csv WHERE DOES IT GO? WARNING
 
 def load_user_data(username):
     try:
