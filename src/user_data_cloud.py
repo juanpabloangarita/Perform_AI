@@ -16,7 +16,10 @@ def check_user_exists_cloud(username):
 
 
 #def save_user_data(username, first_name, password, weight, height, age, gender, vo2_max, resting_hr, goal, bmr, passive_calories):
-def save_user_data_cloud(username, password, **kwargs):
+def save_user_data_cloud(**kwargs):
+    username = kwargs['username']
+    password = kwargs['password']
+
     # Hash the password using bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 

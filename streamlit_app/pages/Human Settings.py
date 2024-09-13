@@ -4,18 +4,8 @@ import numpy as np
 
 from src.data_processing import *
 from src.calorie_calculations import *
-
-# Load user-specific data from session state or set default values
-if 'user_data' not in st.session_state:
-    st.session_state['user_data'] = {
-        'weight': 80,
-        'height': 183,
-        'age': 41,
-        'gender': 'male',
-        'vo2_max': 50,
-        'resting_hr': 42,
-        'goal': 'Maintain weight'
-    }
+from src.user_data import *
+from src.user_data_cloud import *
 
 # Display current user data in editable form
 st.title("Human Settings")
@@ -86,22 +76,18 @@ with col2:
                   else 42)  # Handle NaN or None
     )
 
-# Update the session state when user modifies the information
-st.session_state['user_data'] = {
-    'weight': weight,
-    'height': height,
-    'age': age,
-    'gender': gender,
-    'vo2_max': vo2_max,
-    'resting_hr': resting_hr,
-    'goal': goal
-}
 
-# Display a message indicating successful update
-st.success("Your information has been updated!")
-
-# Step 3: Display the user's current data
-st.write("## Updated Information")
-st.write(st.session_state['user_data'])
-
-# Optionally, you can save this updated data to a file or database if needed.
+if st.button('Update'):
+    # Update the session state when user modifies the information
+    st.session_state['user_data'] = {
+        'weight': weight,
+        'height': height,
+        'age': age,
+        'gender': gender,
+        'vo2_max': vo2_max,
+        'resting_hr': resting_hr,
+        'goal': goal
+    }
+    save_user_data_cloud(st.session_state['user_data'])
+    # Display a message indicating successful update
+    st.success("Your information has been updated!")
