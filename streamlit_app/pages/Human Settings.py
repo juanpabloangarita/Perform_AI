@@ -88,6 +88,6 @@ if st.button('Update'):
         'resting_hr': resting_hr,
         'goal': goal
     }
-    save_user_data_cloud(st.session_state['user_data'])
+    save_user_data_cloud(**st.session_state['user_data'])
     # Display a message indicating successful update
     st.success("Your information has been updated!")
