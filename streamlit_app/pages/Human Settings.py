@@ -87,6 +87,7 @@ with col2:
 
 
 if st.button('Update'):
+    passive_calories, bmr = calculate_total_calories(weight, height, age, gender, vo2_max, resting_hr, 'streamlit')
     # Update the session state when user modifies the information
     st.session_state['user_data'] = {
         'weight': weight,
@@ -95,8 +96,11 @@ if st.button('Update'):
         'gender': gender,
         'vo2_max': vo2_max,
         'resting_hr': resting_hr,
-        'goal': goal
+        'goal': goal,
+        'BMR': bmr,
+        'passive_calories': passive_calories
     }
+
     if CLOUD_ON == 'yes':
         # Call the update_user_data_cloud function by merging both dictionaries
         update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})

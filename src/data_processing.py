@@ -252,7 +252,7 @@ def process_data(workouts=None):
     print_performances(rmse_results)
 
     # Calculate Total Calories from TSS
-    w_df_calories_calculated = calculate_total_calories(df=w_df) #, weight, height, age, gender, vo2_max, resting_hr) # WARNING, WHY WITHOUT THIS?
+    w_df_calories_calculated = calculate_total_calories(df=w_df) # WARNING I COULD CHECK HERE IF USER IS LOGGED IN, TO BRING ITS INFO
 
     w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
     w_df_calories_estimated_plus_calculated = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
