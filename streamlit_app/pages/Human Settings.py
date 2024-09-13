@@ -97,6 +97,7 @@ if st.button('Update'):
         'goal': goal
     }
     # Call the update_user_data_cloud function by merging both dictionaries
-    update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
+    #update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
+    update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
     # Display a message indicating successful update
     st.success("Your information has been updated!")

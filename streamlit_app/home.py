@@ -96,8 +96,8 @@ def show_login_form_cloud():
 
 # Check if user is authenticated
 if not st.session_state['authenticated']:
-    # show_login_form()
-    show_login_form_cloud()
+    show_login_form()
+    #show_login_form_cloud()
     # Button to go to the main app
     if st.button('Go to the App'):
         pass #WEIRD BEHAVIOUR, WITHOUT THIS ST.BUTTON IT DOESN'T WORK
