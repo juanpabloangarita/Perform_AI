@@ -77,6 +77,8 @@ if st.button('Update'):
     # Update the session state when user modifies the information
     st.session_state['user_data']['BMR'] = bmr
     st.session_state['user_data']['passive_calories'] = passive_calories
+    # Update the session_state when the user changes their goal
+    st.session_state['user_data']['goal'] = goal
 
     if CLOUD_ON == 'yes':
         # Call the update_user_data_cloud function by merging both dictionaries

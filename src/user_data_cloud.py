@@ -30,7 +30,9 @@ def create_user_data_cloud(username, password):
         'gender': ['male'],  # Default value for gender
         'vo2_max': [50], # Default value for VO2 max
         'resting_hr': [50], # Default value for resting heart rate
-        'BMR': [None]
+        'BMR': [None],
+        'goal': ["Lose weight"],
+        'passive_calories': [50]
     })
 
     # Read the existing user data
@@ -76,7 +78,13 @@ def load_user_data_cloud(username):
         user_data_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
         user_row = user_data_df[user_data_df['username'] == username]
         if not user_row.empty:
-            return user_row.iloc[0].to_dict()
+            user_data = user_row.iloc[0].to_dict()
+
+            # Remove the password from the dictionary for security reasons
+            if 'password' in user_data:
+                del user_data['password']
+
+            return user_data
         return None
     except FileNotFoundError:
         return None
