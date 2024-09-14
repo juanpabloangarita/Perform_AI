@@ -45,7 +45,10 @@ def show_login_form():
             if secret_code == CODE_PROMO:
                 if not check_user_exists(username):
                     create_user_data(username, password)
-                    st.success('Sign up successful! You can now log in.')
+                    st.success('Sign up successful!')
+                    st.session_state['authenticated'] = True
+                    st.session_state['username'] = username
+                    st.session_state['user_data']= load_user_data(username)
                 else:
                     st.error('Username already exists.')
             else:
@@ -65,7 +68,7 @@ def show_login_form():
 def show_login_form_cloud():
     st.subheader('Login / Sign Up')
 
-    # Option to switch between login and sign up
+    # Option to switch between lofgin and sign up
     option = st.radio("Select Option", ("Login", "Sign Up"))
 
     username = st.text_input('Username')
@@ -77,7 +80,10 @@ def show_login_form_cloud():
             if secret_code == CODE_PROMO:
                 if not check_user_exists_cloud(username):
                     create_user_data_cloud(username, password)
-                    st.success('Sign up successful! You can now log in.')
+                    st.success('Sign up successful!')
+                    st.session_state['authenticated'] = True
+                    st.session_state['username'] = username
+                    st.session_state['user_data']= load_user_data(username)
                 else:
                     st.error('Username already exists.')
             else:

@@ -1,9 +1,9 @@
 # user_data.py
 
 import pandas as pd
+import numpy as np
 import bcrypt
 import os
-import streamlit as st
 
 from params import *
 
@@ -28,12 +28,12 @@ def create_user_data(username, password):
         'weight': [50],  # Default value for weight
         'height': [50],  # Default value for height
         'age': [50],     # Default value for age
-        'gender': ['male'],  # Default value for gender
+        'gender': ['Male'],  # Default value for gender
         'vo2_max': [50], # Default value for VO2 max
         'resting_hr': [50], # Default value for resting heart rate
-        'BMR': [None],
+        'BMR': [np.nan],
         'goal': ["Lose weight"],
-        'passive_calories': [50]
+        'passive_calories': [np.nan]
     })
 
     # Read the existing user data
