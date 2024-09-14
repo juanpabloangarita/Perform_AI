@@ -37,69 +37,46 @@ st.write("## Your Information")
 col1, col2 = st.columns(2)
 
 with col1:
-    weight = st.number_input(
+    st.session_state['user_data']['weight'] = st.number_input(
         "Weight (kg)",
         min_value=30,
         max_value=200,
-        value=int(st.session_state['user_data'].get('weight', 80)
-                  if pd.notna(st.session_state['user_data'].get('weight'))
-                  else 80)  # Handle NaN or None
+        value=int(st.session_state['user_data']['weight'])
     )
-    height = st.number_input(
+    st.session_state['user_data']['height'] = st.number_input(
         "Height (cm)",
-        min_value=120,
+        min_value=50,
         max_value=250,
-        value=int(st.session_state['user_data'].get('height', 183)
-                  if pd.notna(st.session_state['user_data'].get('height'))
-                  else 183)  # Handle NaN or None
+        value=int(st.session_state['user_data']['height'])
     )
-    age = st.number_input(
+    st.session_state['user_data']['age'] = st.number_input(
         "Age (years)",
         min_value=10,
         max_value=100,
-        value=int(st.session_state['user_data'].get('age', 41)
-                  if pd.notna(st.session_state['user_data'].get('age'))
-                  else 41)  # Handle NaN or None
+        value=int(st.session_state['user_data']['age'])
     )
 
 with col2:
-    gender = st.selectbox(
-        "Gender",
-        options=["male", "female"],
-        index=0 if st.session_state['user_data']['gender'] == 'male' else 1
-    )
-    vo2_max = st.number_input(
+    st.session_state['user_data']['gender'] = st.text_input("Gender", value=st.session_state['user_data']['gender'])
+
+    st.session_state['user_data']['vo2_max'] = st.number_input(
         "VO2 Max",
         min_value=20,
         max_value=90,
-        value=int(st.session_state['user_data'].get('vo2_max', 50)
-                    if pd.notna(st.session_state['user_data'].get('vo2_max'))
-                    else 50)  # Handle NaN or None
+        value=int(st.session_state['user_data']['vo2_max'])
     )
-    resting_hr = st.number_input(
+    st.session_state['user_data']['resting_hr'] = st.number_input(
         "Resting Heart Rate",
         min_value=30,
         max_value=120,
-        value=int(st.session_state['user_data'].get('resting_hr', 42)
-                  if pd.notna(st.session_state['user_data'].get('resting_hr'))
-                  else 42)  # Handle NaN or None
+        value=int(st.session_state['user_data']['resting_hr'])
     )
 
-
 if st.button('Update'):
-    passive_calories, bmr = calculate_total_calories(weight, height, age, gender, vo2_max, resting_hr, 'streamlit')
+    passive_calories, bmr = calculate_total_calories(st.session_state['user_data'], 'streamlit')
     # Update the session state when user modifies the information
-    st.session_state['user_data'] = {
-        'weight': weight,
-        'height': height,
-        'age': age,
-        'gender': gender,
-        'vo2_max': vo2_max,
-        'resting_hr': resting_hr,
-        'goal': goal,
-        'BMR': bmr,
-        'passive_calories': passive_calories
-    }
+    st.session_state['user_data']['BMR'] = bmr
+    st.session_state['user_data']['passive_calories'] = passive_calories
 
     if CLOUD_ON == 'yes':
         # Call the update_user_data_cloud function by merging both dictionaries

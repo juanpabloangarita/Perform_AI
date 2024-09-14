@@ -196,7 +196,7 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
 
 
-def process_data(workouts=None):
+def process_data(user_data, workouts=None):
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
     # Merge workouts DataFrames into one
@@ -252,7 +252,7 @@ def process_data(workouts=None):
     print_performances(rmse_results)
 
     # Calculate Total Calories from TSS
-    w_df_calories_calculated = calculate_total_calories(df=w_df) # WARNING I COULD CHECK HERE IF USER IS LOGGED IN, TO BRING ITS INFO
+    w_df_calories_calculated = calculate_total_calories(user_data, df=w_df) # WARNING I COULD CHECK HERE IF USER IS LOGGED IN, TO BRING ITS INFO
 
     w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
     w_df_calories_estimated_plus_calculated = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')

@@ -11,13 +11,22 @@ import numpy as np
 # OBLIGATORY PARAMETERS COME FIRST
 # OPTIONAL COME AFTER
 
-def calculate_total_calories(weight=None, height=None, age=None, gender=None, vo2_max=None, resting_hr=None, from_where=None, df=None):
+def calculate_total_calories(user_data, from_where=None, df=None):
+    # Unpack user_data dictionary without default values (since they're already set elsewhere)
+    weight = user_data['weight']
+    height = user_data['height']
+    age = user_data['age']
+    gender = user_data['gender']
+    vo2_max = user_data['vo2_max']
+    resting_hr = user_data['resting_hr']
+
     # Baseline Metabolic Rate (BMR)
     # Calculate BMR using Mifflin-St Jeor Equation
     if gender.lower() == 'male':
         bmr = 10 * weight + 6.25 * height - 5 * age + 5
     else:
         bmr = 10 * weight + 6.25 * height - 5 * age - 161
+
     # Estimate NEAT (Non-Exercise Activity Thermogenesis)
     # Sedentary: NEAT is about 10% of BMR.
     # Lightly active: NEAT is about 15-20% of BMR.

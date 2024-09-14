@@ -25,12 +25,12 @@ def create_user_data(username, password):
     new_user_df = pd.DataFrame({
         'username': [username],
         'password': [hashed_password.decode('utf-8')],  # Save the hashed password
-        'weight': [None],  # Default value for weight
-        'height': [None],  # Default value for height
-        'age': [None],     # Default value for age
-        'gender': [None],  # Default value for gender
-        'vo2_max': [None], # Default value for VO2 max
-        'resting_hr': [None], # Default value for resting heart rate
+        'weight': [50],  # Default value for weight
+        'height': [50],  # Default value for height
+        'age': [50],     # Default value for age
+        'gender': ['male'],  # Default value for gender
+        'vo2_max': [50], # Default value for VO2 max
+        'resting_hr': [50], # Default value for resting heart rate
         'BMR': [None]
     })
 
@@ -77,6 +77,13 @@ def load_user_data(username):
         user_data_df = pd.read_csv(USER_DATA_FILE)
         user_row = user_data_df[user_data_df['username'] == username]
         if not user_row.empty:
+            print()
+            print()
+            print()
+            print(user_row)
+            print()
+            print()
+            print()
             return user_row.iloc[0].to_dict()
         return None
     except FileNotFoundError:

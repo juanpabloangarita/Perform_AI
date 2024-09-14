@@ -15,17 +15,6 @@ sys.path.append(dir_script_dir)
 from src.data_processing import *
 from src.calorie_calculations import *
 
-# Load user-specific data from session state or set default values
-if 'user_data' not in st.session_state:
-    st.session_state['user_data'] = {
-        'weight': 80,
-        'height': 183,
-        'age': 41,
-        'gender': 'male',
-        'vo2_max': 50,
-        'resting_hr': 42
-    }
-
 # Step 1: Choose the goal (Weight Loss or Maintenance)
 st.title("Calorie Calculation Dashboard")
 

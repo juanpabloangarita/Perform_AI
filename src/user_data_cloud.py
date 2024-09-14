@@ -24,12 +24,12 @@ def create_user_data_cloud(username, password):
     new_user_df = pd.DataFrame({
         'username': [username],
         'password': [hashed_password.decode('utf-8')],  # Save the hashed password
-        'weight': [None],  # Default value for weight
-        'height': [None],  # Default value for height
-        'age': [None],     # Default value for age
-        'gender': [None],  # Default value for gender
-        'vo2_max': [None], # Default value for VO2 max
-        'resting_hr': [None], # Default value for resting heart rate
+        'weight': [50],  # Default value for weight
+        'height': [50],  # Default value for height
+        'age': [50],     # Default value for age
+        'gender': ['male'],  # Default value for gender
+        'vo2_max': [50], # Default value for VO2 max
+        'resting_hr': [50], # Default value for resting heart rate
         'BMR': [None]
     })
 

@@ -129,7 +129,7 @@ else:
     if data_source == 'Use Local Data' or uploaded_files:
         if data_source == 'Use Local Data':
             # Call the main function from src/main.py
-            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main()
+            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'])
         else:
             try:
                 # List to hold DataFrames
@@ -153,7 +153,7 @@ else:
                 st.write("Files successfully processed and uploaded to S3.")
 
                 # Process the data using the main function
-                tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(workouts_df)
+                tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'], workouts_df)
 
                 # Display a success message or further processing results
                 st.write("Processing completed successfully.")
