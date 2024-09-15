@@ -196,7 +196,7 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
 
 
-def process_data(user_data=None, workouts=None):
+def process_data(user_data, workouts=None):
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
     # Merge workouts DataFrames into one
