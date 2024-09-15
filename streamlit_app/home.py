@@ -32,72 +32,70 @@ if 'username' not in st.session_state:
 # Function to display the login and sign-up form
 def show_login_form():
     st.subheader('Login / Sign Up')
-
     # Option to switch between login and sign up
     option = st.radio("Select Option", ("Login", "Sign Up"))
+    with st.container(border=True):
+        username = st.text_input('Username')
+        password = st.text_input('Password', type='password')
 
-    username = st.text_input('Username')
-    password = st.text_input('Password', type='password')
-
-    if option == "Sign Up":
-        secret_code = st.text_input('Secret Code', type='password')
-        if st.button('Sign Up'):
-            if secret_code == CODE_PROMO:
-                if not check_user_exists(username):
-                    create_user_data(username, password)
-                    st.success('Sign up successful!')
+        if option == "Sign Up":
+            secret_code = st.text_input('Secret Code', type='password')
+            if st.button('Sign Up'):
+                if secret_code == CODE_PROMO:
+                    if not check_user_exists(username):
+                        create_user_data(username, password)
+                        st.success('Sign up successful!')
+                        st.session_state['authenticated'] = True
+                        st.session_state['username'] = username
+                        st.session_state['user_data']= load_user_data(username)
+                    else:
+                        st.error('Username already exists.')
+                else:
+                    st.error('Invalid secret code.')
+        else:  # Login
+            if st.button('Login'):
+                if authenticate_user(username, password):
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = username
+                    st.success('Login successful!')
                     st.session_state['user_data']= load_user_data(username)
                 else:
-                    st.error('Username already exists.')
-            else:
-                st.error('Invalid secret code.')
-    else:  # Login
-        if st.button('Login'):
-            if authenticate_user(username, password):
-                st.session_state['authenticated'] = True
-                st.session_state['username'] = username
-                st.success('Login successful!')
-                st.session_state['user_data']= load_user_data(username)
-            else:
-                st.session_state['authenticated'] = False
-                st.error('Invalid username or password')
+                    st.session_state['authenticated'] = False
+                    st.error('Invalid username or password')
 
 # Function to display the login and sign-up form
 def show_login_form_cloud():
     st.subheader('Login / Sign Up')
-
     # Option to switch between lofgin and sign up
     option = st.radio("Select Option", ("Login", "Sign Up"))
+    with st.container(border=True):
+        username = st.text_input('Username')
+        password = st.text_input('Password', type='password')
 
-    username = st.text_input('Username')
-    password = st.text_input('Password', type='password')
-
-    if option == "Sign Up":
-        secret_code = st.text_input('Secret Code', type='password')
-        if st.button('Sign Up'):
-            if secret_code == CODE_PROMO:
-                if not check_user_exists_cloud(username):
-                    create_user_data_cloud(username, password)
-                    st.success('Sign up successful!')
+        if option == "Sign Up":
+            secret_code = st.text_input('Secret Code', type='password')
+            if st.button('Sign Up'):
+                if secret_code == CODE_PROMO:
+                    if not check_user_exists_cloud(username):
+                        create_user_data_cloud(username, password)
+                        st.success('Sign up successful!')
+                        st.session_state['authenticated'] = True
+                        st.session_state['username'] = username
+                        st.session_state['user_data']= load_user_data(username)
+                    else:
+                        st.error('Username already exists.')
+                else:
+                    st.error('Invalid secret code.')
+        else:  # Login
+            if st.button('Login'):
+                if authenticate_user_cloud(username, password):
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = username
-                    st.session_state['user_data']= load_user_data(username)
+                    st.success('Login successful!')
+                    st.session_state['user_data']= load_user_data_cloud(username)
                 else:
-                    st.error('Username already exists.')
-            else:
-                st.error('Invalid secret code.')
-    else:  # Login
-        if st.button('Login'):
-            if authenticate_user_cloud(username, password):
-                st.session_state['authenticated'] = True
-                st.session_state['username'] = username
-                st.success('Login successful!')
-                st.session_state['user_data']= load_user_data_cloud(username)
-            else:
-                st.session_state['authenticated'] = False
-                st.error('Invalid username or password')
+                    st.session_state['authenticated'] = False
+                    st.error('Invalid username or password')
 
 
 # Check if user is authenticated
