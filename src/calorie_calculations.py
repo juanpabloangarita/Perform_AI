@@ -11,35 +11,39 @@ import numpy as np
 # OBLIGATORY PARAMETERS COME FIRST
 # OPTIONAL COME AFTER
 
-def calculate_total_calories(user_data, from_where=None, df=None):
-    # Unpack user_data dictionary without default values (since they're already set elsewhere)
-    weight = user_data['weight']
-    height = user_data['height']
-    age = user_data['age']
-    gender = user_data['gender']
-    vo2_max = user_data['vo2_max']
-    resting_hr = user_data['resting_hr']
+def calculate_total_calories(user_data=None, from_where=None, df=None):
 
-    # Baseline Metabolic Rate (BMR)
-    # Calculate BMR using Mifflin-St Jeor Equation
-    if gender.lower() == 'male':
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5
-    else:
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161
+    if user_data is not None:
+        # Unpack user_data dictionary without default values (since they're already set elsewhere)
+        weight = user_data['weight']
+        height = user_data['height']
+        age = user_data['age']
+        gender = user_data['gender']
+        vo2_max = user_data['vo2_max']
+        resting_hr = user_data['resting_hr']
 
-    # Estimate NEAT (Non-Exercise Activity Thermogenesis)
-    # Sedentary: NEAT is about 10% of BMR.
-    # Lightly active: NEAT is about 15-20% of BMR.
-    # if activity_level == 'sedentary':
-    #     neat = 0.10 * bmr
-    # elif activity_level == 'lightly active':
-    #     neat = 0.15 * bmr  # Use 15% as the lower estimate for lightly active
-    # else:
-    #     neat = 0.20 * bmr  # Use 20% for a higher estimate of light activity
+        # Baseline Metabolic Rate (BMR)
+        # Calculate BMR using Mifflin-St Jeor Equation
+        if gender.lower() == 'male':
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5
+        else:
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161
 
-    neat = 0.216 * bmr # Mine given Garmin
-    # Total passive calories (BMR + NEAT)
-    passive_calories = bmr + neat
+        # Estimate NEAT (Non-Exercise Activity Thermogenesis)
+        # Sedentary: NEAT is about 10% of BMR.
+        # Lightly active: NEAT is about 15-20% of BMR.
+        # if activity_level == 'sedentary':
+        #     neat = 0.10 * bmr
+        # elif activity_level == 'lightly active':
+        #     neat = 0.15 * bmr  # Use 15% as the lower estimate for lightly active
+        # else:
+        #     neat = 0.20 * bmr  # Use 20% for a higher estimate of light activity
+
+        neat = 0.216 * bmr # Mine given Garmin
+        # Total passive calories (BMR + NEAT)
+        passive_calories = bmr + neat
+
+        df['TotalPassiveCalories'] = passive_calories
 
     if from_where == 'streamlit':
         return passive_calories, bmr
@@ -87,7 +91,7 @@ def calculate_total_calories(user_data, from_where=None, df=None):
         # Sum up the active calories
         df['TotalActiveCalories'] = df['RunningCalories'] + df['CyclingCalories'] + df['SwimmingCalories']
 
-        df['TotalPassiveCalories'] = passive_calories
+
         # Calculate Total Daily Energy Expenditure
         df['TotalCalories'] = df['TotalPassiveCalories'] + df['TotalActiveCalories']
 

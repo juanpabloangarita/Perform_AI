@@ -132,8 +132,10 @@ else:
 
     if data_source == 'Use Local Data' or uploaded_files:
         if data_source == 'Use Local Data':
-            # Call the main function from src/main.py
-            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'])
+            if 'user_data' in st.session_state:
+                tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'])
+            else:
+                tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main()
         else:
             try:
                 # List to hold DataFrames
