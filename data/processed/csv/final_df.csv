@@ -1,4 +1,4 @@
-Date,WorkoutType,HeartRateAverage,TimeTotalInHours,DistanceInMeters,PlannedDuration,PlannedDistanceInMeters,TotalPassiveCalories,EstimatedCalories,Calories
+,WorkoutType,HeartRateAverage,TimeTotalInHours,DistanceInMeters,PlannedDuration,PlannedDistanceInMeters,TotalPassiveCalories,EstimatedCalories,Calories
 2022-03-13,Run,147.0,0.227821677923203,2190.78002929688,0.0,0.0,2120.4,74.29592153022354,200.0
 2022-03-14,Run,126.0,0.317826956510544,2363.75,0.0,0.0,2120.4,75.64183823789858,216.0
 2022-03-15,Run,162.0,0.366062223911285,3018.330078125,0.0,0.0,2120.4,83.83654038622733,351.0

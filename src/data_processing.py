@@ -49,7 +49,7 @@ def load_csv(file_path):
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
 
-def save_csv(file_path, w_df, a_df, df):
+def save_final_csv(file_path, w_df, a_df, df):
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
     dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
@@ -59,7 +59,74 @@ def save_csv(file_path, w_df, a_df, df):
     # save activities_df
     a_df.to_csv(os.path.join(full_path, 'activities_df.csv'))
     # save final_df
-    df.to_csv(os.path.join(full_path, 'final_df.csv'))
+    df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
+
+
+def update_final_csv(file_path, time_added, data_to_update, from_where):
+    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
+    dir_script_dir = os.path.dirname(script_dir)  # Get the directory where the previous dir is located - PerformAI
+    full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
+
+    # Load final_df
+    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
+
+    # Ensure time_added is in the right format
+    time_added = pd.to_datetime(time_added)
+    time_added = time_added.strftime('%Y-%m-%d')
+
+    # Ensure the necessary columns are present in the DataFrame
+    required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
+    for col in required_columns:
+        if col not in df.columns:
+            df[col] = 0.0  # Add the missing columns with None or NaN values
+
+    # Check where the update is coming from
+    if from_where == "input_activities":
+        # Loop through each activity and update the relevant columns
+        for activity, details in data_to_update.items():
+            workout_type = activity  # Corresponds to 'Bike', 'Run', 'Swim'
+            heart_rate = details['heart_rate']
+            duration_hours = details['duration'] / 60  # Convert duration from minutes to hours
+            distance = details['distance']
+            calories_spent = details['calories_spent']
+
+            # If the timestamp already exists, update the row; otherwise, add a new row
+            if time_added in df.index:
+                df.loc[time_added, 'WorkoutType'] = workout_type
+                df.loc[time_added, 'HeartRateAverage'] = heart_rate
+                df.loc[time_added, 'TimeTotalInHours'] += duration_hours
+                df.loc[time_added, 'DistanceInMeters'] += distance
+                df.loc[time_added, 'CaloriesSpent'] += calories_spent
+            else:
+                # Create a new row with NaN for other columns
+                new_row = pd.DataFrame({
+                    'WorkoutType': [workout_type],
+                    'HeartRateAverage': [heart_rate],
+                    'TimeTotalInHours': [duration_hours],
+                    'DistanceInMeters': [distance],
+                    'CaloriesSpent': [calories_spent],
+                    'CaloriesConsumed': [None]  # Set to None or NaN for other columns
+                }, index=[time_added])
+                df = pd.concat([df, new_row])
+
+    elif from_where == "calories_consumed":
+        # Update the CaloriesConsumed column
+        if time_added in df.index:
+            df.loc[time_added, 'CaloriesConsumed'] += data_to_update  # Add new calories consumed
+        else:
+            # Create a new row with NaN for other columns
+            new_row = pd.DataFrame({
+                'WorkoutType': [None],
+                'HeartRateAverage': [None],
+                'TimeTotalInHours': [None],
+                'DistanceInMeters': [None],
+                'CaloriesSpent': [None],
+                'CaloriesConsumed': [data_to_update]
+            }, index=[time_added])
+            df = pd.concat([df, new_row])
+
+    # Save the updated DataFrame back to CSV
+    df.to_csv(os.path.join(full_path, 'final_df_2.csv'), index=True)
 
 
 def clean_data(dfs, date_cols):
@@ -260,7 +327,11 @@ def process_data(user_data, workouts=None):
     final_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'TotalPassiveCalories', 'EstimatedCalories']
     final_df = pd.concat([w_df_calories_estimated_plus_calculated[final_columns], activities_df['Calories']], axis=1)
 
-    save_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df)
+    final_df.index = pd.to_datetime(final_df.index)
+    final_df.index = final_df.index.date
+
+    # NOTE: I AM ALWAYS, DESPITE OF CLOUD OR NOT, SAVING HERE
+    save_final_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df)
 
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
 

@@ -4,6 +4,8 @@ import numpy as np
 import sys
 import os
 
+from datetime import datetime
+
 from PIL import Image
 # Add the 'src' directory to sys.path
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))) # DIDN'T WORK, WHY? WARNING
@@ -16,10 +18,6 @@ sys.path.append(dir_script_dir)
 from src.data_processing import *
 from src.calorie_calculations import *
 
-
-import streamlit as st
-import pandas as pd
-import numpy as np
 
 # Define a function to calculate active calories based on activities
 def calculate_active_calories(activities):
@@ -118,7 +116,8 @@ with st.container(border=True):
                         'distance': distance
                     }
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
-
+                timestamp = datetime.now().strftime('%Y-%m-%d')
+                update_final_csv('data/processed/csv/', timestamp, st.session_state['activities'], "input_activities")
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
@@ -171,6 +170,8 @@ with st.container(border=True):
             if submit_button:
                 st.session_state['calories_consumed'] += calories
                 st.success(f"Added {calories} calories")
+                timestamp = datetime.now().strftime('%Y-%m-%d')
+                update_final_csv('data/processed/csv/', timestamp, calories, 'calories_consumed')
 
         # Ensure space is balanced between columns
         with st.empty():

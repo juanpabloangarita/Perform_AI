@@ -118,8 +118,6 @@ with st.container(border=True):
         help="Select your gender for accurate calorie and fitness calculations."
     )
 
-# Step 5: Update Button (Centrally located for better workflow)
-st.write("### Finalize your changes")
 if st.button('Update Information'):
     passive_calories, bmr = calculate_total_calories(st.session_state['user_data'], 'streamlit')
     # Update the session state when user modifies the information
