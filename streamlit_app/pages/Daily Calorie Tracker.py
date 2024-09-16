@@ -117,7 +117,7 @@ with st.container(border=True):
                     }
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
                 timestamp = datetime.now().strftime('%Y-%m-%d')
-                update_final_csv('data/processed/csv/', timestamp, st.session_state['activities'], "input_activities")
+                load_and_update_final_csv('data/processed/csv/', "input_activities", timestamp, st.session_state['activities'])
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
@@ -171,7 +171,7 @@ with st.container(border=True):
                 st.session_state['calories_consumed'] += calories
                 st.success(f"Added {calories} calories")
                 timestamp = datetime.now().strftime('%Y-%m-%d')
-                update_final_csv('data/processed/csv/', timestamp, calories, 'calories_consumed')
+                load_and_update_final_csv('data/processed/csv/', 'calories_consumed', timestamp, calories)
 
         # Ensure space is balanced between columns
         with st.empty():

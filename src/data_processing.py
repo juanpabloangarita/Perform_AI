@@ -19,21 +19,16 @@ from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories, estimate_calories_with_duration
 
-def load_csv(file_path):
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
-    dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
+
+def get_full_path(file_path):
+    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
+    dir_script_dir = os.path.dirname(script_dir)  # Get the directory where the previous dir is located
     full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
+    return full_path
 
-    # Debugging output displayed on Streamlit UI
-    # st.write(f"Script directory: {script_dir}")
-    # st.write(f"Parent directory (PerformAI): {dir_script_dir}")
-    # st.write(f"Constructed full path: {full_path}")
 
-    # if not os.path.exists(full_path):
-    #     st.write(f"Path does not exist: {full_path}")
-    # else:
-    #     st.write(f"Path exists: {full_path}")
-
+def load_csv(file_path):
+    full_path = get_full_path(file_path)
     # Training Peaks -- Workout Files
     # from 03 of March to 03 of March next year
     workouts_2022_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2022-03-03_to_2023-03-03.csv'))
@@ -50,10 +45,7 @@ def load_csv(file_path):
 
 
 def save_final_csv(file_path, w_df, a_df, df):
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
-    dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
-    full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
-
+    full_path = get_full_path(file_path)
     # save workouts_df
     w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'))
     # save activities_df
@@ -62,71 +54,87 @@ def save_final_csv(file_path, w_df, a_df, df):
     df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
 
 
-def update_final_csv(file_path, time_added, data_to_update, from_where):
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
-    dir_script_dir = os.path.dirname(script_dir)  # Get the directory where the previous dir is located - PerformAI
-    full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
-
+def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
+    full_path = get_full_path(file_path)
     # Load final_df
     df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
+    if from_where == 'home':
+        return df
+    else:
+        # Ensure time_added is in the right format
+        time_added = pd.to_datetime(time_added)
+        time_added = time_added.strftime('%Y-%m-%d')
 
-    # Ensure time_added is in the right format
-    time_added = pd.to_datetime(time_added)
-    time_added = time_added.strftime('%Y-%m-%d')
+        # Ensure the necessary columns are present in the DataFrame
+        required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
+        for col in required_columns:
+            if col not in df.columns:
+                df[col] = 0.0  # Add the missing columns with None or NaN values
 
-    # Ensure the necessary columns are present in the DataFrame
-    required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
-    for col in required_columns:
-        if col not in df.columns:
-            df[col] = 0.0  # Add the missing columns with None or NaN values
+        # Check where the update is coming from
+        if from_where == "input_activities":
+            # Loop through each activity and update the relevant columns
+            for activity, details in data_to_update.items():
+                workout_type = activity  # Corresponds to 'Bike', 'Run', 'Swim'
+                heart_rate = details['heart_rate']
+                duration_hours = details['duration'] / 60  # Convert duration from minutes to hours
+                distance = details['distance']
+                calories_spent = details['calories_spent']
 
-    # Check where the update is coming from
-    if from_where == "input_activities":
-        # Loop through each activity and update the relevant columns
-        for activity, details in data_to_update.items():
-            workout_type = activity  # Corresponds to 'Bike', 'Run', 'Swim'
-            heart_rate = details['heart_rate']
-            duration_hours = details['duration'] / 60  # Convert duration from minutes to hours
-            distance = details['distance']
-            calories_spent = details['calories_spent']
+                # If the timestamp already exists, update the row; otherwise, add a new row
+                if time_added in df.index:
+                    df.loc[time_added, 'WorkoutType'] = workout_type
+                    df.loc[time_added, 'HeartRateAverage'] = heart_rate
+                    df.loc[time_added, 'TimeTotalInHours'] += duration_hours
+                    df.loc[time_added, 'DistanceInMeters'] += distance
+                    df.loc[time_added, 'CaloriesSpent'] += calories_spent
+                else:
+                    # Create a new row with NaN for other columns
+                    new_row = pd.DataFrame({
+                        'WorkoutType': [workout_type],
+                        'HeartRateAverage': [heart_rate],
+                        'TimeTotalInHours': [duration_hours],
+                        'DistanceInMeters': [distance],
+                        'CaloriesSpent': [calories_spent],
+                        'CaloriesConsumed': [None]  # Set to None or NaN for other columns
+                    }, index=[time_added])
+                    df = pd.concat([df, new_row])
 
-            # If the timestamp already exists, update the row; otherwise, add a new row
+        elif from_where == "calories_consumed":
+            # Update the CaloriesConsumed column
             if time_added in df.index:
-                df.loc[time_added, 'WorkoutType'] = workout_type
-                df.loc[time_added, 'HeartRateAverage'] = heart_rate
-                df.loc[time_added, 'TimeTotalInHours'] += duration_hours
-                df.loc[time_added, 'DistanceInMeters'] += distance
-                df.loc[time_added, 'CaloriesSpent'] += calories_spent
+                df.loc[time_added, 'CaloriesConsumed'] += data_to_update  # Add new calories consumed
             else:
                 # Create a new row with NaN for other columns
                 new_row = pd.DataFrame({
-                    'WorkoutType': [workout_type],
-                    'HeartRateAverage': [heart_rate],
-                    'TimeTotalInHours': [duration_hours],
-                    'DistanceInMeters': [distance],
-                    'CaloriesSpent': [calories_spent],
-                    'CaloriesConsumed': [None]  # Set to None or NaN for other columns
+                    'WorkoutType': [None],
+                    'HeartRateAverage': [None],
+                    'TimeTotalInHours': [None],
+                    'DistanceInMeters': [None],
+                    'CaloriesSpent': [None],
+                    'CaloriesConsumed': [data_to_update]
                 }, index=[time_added])
                 df = pd.concat([df, new_row])
 
-    elif from_where == "calories_consumed":
-        # Update the CaloriesConsumed column
-        if time_added in df.index:
-            df.loc[time_added, 'CaloriesConsumed'] += data_to_update  # Add new calories consumed
-        else:
-            # Create a new row with NaN for other columns
-            new_row = pd.DataFrame({
-                'WorkoutType': [None],
-                'HeartRateAverage': [None],
-                'TimeTotalInHours': [None],
-                'DistanceInMeters': [None],
-                'CaloriesSpent': [None],
-                'CaloriesConsumed': [data_to_update]
-            }, index=[time_added])
-            df = pd.concat([df, new_row])
+        df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
 
-    # Save the updated DataFrame back to CSV
-    df.to_csv(os.path.join(full_path, 'final_df_2.csv'), index=True)
+
+def save_tss_values_for_dashboard(file_path, tss, atl, ctl, tsb):
+    full_path = get_full_path(file_path)
+    tss.to_csv(os.path.join(full_path, 'tss.csv'), index=True)
+    ctl.to_csv(os.path.join(full_path, 'ctl.csv'), index=True)
+    atl.to_csv(os.path.join(full_path, 'atl.csv'), index=True)
+    tsb.to_csv(os.path.join(full_path, 'tsb.csv'), index=True)
+
+
+def load_tss_values_for_dashboard(file_path):
+    full_path = get_full_path(file_path)
+    tss = pd.read_csv(os.path.join(full_path, 'tss.csv'), index_col=0)
+    ctl = pd.read_csv(os.path.join(full_path, 'ctl.csv'), index_col=0)
+    atl = pd.read_csv(os.path.join(full_path, 'atl.csv'), index_col=0)
+    tsb = pd.read_csv(os.path.join(full_path, 'tsb.csv'), index_col=0)
+
+    return tss, atl, ctl, tsb
 
 
 def clean_data(dfs, date_cols):
@@ -294,10 +302,10 @@ def process_data(user_data, workouts=None):
     w_df = remove_no_training_days(dataframes['workouts'])
 
     # Calculate TSS per discipline and TOTAL TSS
-    w_df = calculate_total_tss(w_df)
+    w_df = calculate_total_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts, as below, DON'T KNOW IF IT NEEDS UPDATING
 
     # # Calculate ATL, CTL, TSB from TSS
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
@@ -329,9 +337,6 @@ def process_data(user_data, workouts=None):
 
     final_df.index = pd.to_datetime(final_df.index)
     final_df.index = final_df.index.date
-
-    # NOTE: I AM ALWAYS, DESPITE OF CLOUD OR NOT, SAVING HERE
-    save_final_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df)
 
     return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
 

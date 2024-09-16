@@ -19,6 +19,7 @@ from params import *
 from src.main import main
 from src.user_data import *
 from src.user_data_cloud import *
+from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
 
 st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
 # Define your credentials here (use environment variables or a secure method in production)
@@ -44,10 +45,11 @@ def show_login_form():
                 if secret_code == CODE_PROMO:
                     if not check_user_exists(username):
                         create_user_data(username, password)
-                        st.success('Sign up successful!')
                         st.session_state['authenticated'] = True
                         st.session_state['username'] = username
                         st.session_state['user_data']= load_user_data(username)
+                        response_main = main(st.session_state['user_data'])
+                        st.success(f"Sign up successful! {response_main}")
                     else:
                         st.error('Username already exists.')
                 else:
@@ -57,8 +59,9 @@ def show_login_form():
                 if authenticate_user(username, password):
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = username
-                    st.success('Login successful!')
                     st.session_state['user_data']= load_user_data(username)
+                    response_main = main(st.session_state['user_data'])
+                    st.success(f"Login successful! {response_main}")
                 else:
                     st.session_state['authenticated'] = False
                     st.error('Invalid username or password')
@@ -104,11 +107,9 @@ if not st.session_state['authenticated']:
         show_login_form_cloud()
     else:
         show_login_form()
-    # Button to go to the main app
-    if st.button('Go to the App'):
-        pass #WEIRD BEHAVIOUR, WITHOUT THIS ST.BUTTON IT DOESN'T WORK
-        #st.session_state['show_login'] = False  # Ensure login form is not shown
 
+    if st.button('Go to the App'):
+        pass # NOTE: weird behaviour, the way streamlit manages the state, it seems that as soon as this button is clicked, nothing below this line is read
 else:
     # Display main app content if authenticated
     st.title('PERFORM_AI')
@@ -117,12 +118,12 @@ else:
 
     # Option for user to select data source
     data_source = st.radio(
-        "Select Data Source",
-        ('Use Local Data', 'Upload New Data')
+        f"Select Data Source for your Workouts {st.session_state['username']}",
+        ('Use Pre-Saved Data', 'Upload New Data')
     )
 
     uploaded_files = None
-    if data_source == 'Upload New Data':
+    if data_source == 'Upload New Data': # NOTE: For the moment, i have to upload all files simultaneously, i don't know how to handle loading one file, and then the next.
         uploaded_files = st.file_uploader(
             label="Please insert your CSV Files",
             type=['csv', 'xlsx'],
@@ -130,11 +131,9 @@ else:
             key="fileUploader"
         )
 
-    if data_source == 'Use Local Data' or uploaded_files:
-        if data_source == 'Use Local Data':
+    if data_source == 'Use Pre-Saved Data' or uploaded_files:
+        if data_source != 'Use Pre-Saved Data':
             # Call the main function from src/main.py
-            tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'])
-        else:
             try:
                 # List to hold DataFrames
                 df_list = []
@@ -149,43 +148,37 @@ else:
                 workouts_df = pd.concat(df_list, ignore_index=False)
 
                 # Save the concatenated DataFrame to the specified S3 bucket
-                workouts_df.to_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv', index=False)
+                workouts_df.to_csv(f"s3://{BUCKET_NAME}/csv/{st.session_state['username']}workouts.csv", index=False)
 
                 # Optionally, re-read the saved file from the S3 bucket (if needed)
-                workouts_df = pd.read_csv(f's3://{BUCKET_NAME}/csv/workout_test_02.csv')
+                workouts_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/{st.session_state['username']}workouts.csv")
 
                 st.write("Files successfully processed and uploaded to S3.")
 
                 # Process the data using the main function
-                tss_df, atl_df, ctl_df, tsb_df, w_df, a_df, final_df = main(st.session_state['user_data'], workouts_df)
+                response_main = main(st.session_state['user_data'], workouts_df)
 
                 # Display a success message or further processing results
-                st.write("Processing completed successfully.")
+                st.write(f"{response_main} Processing completed successfully.")
 
             except Exception as e:
                 st.error(f"An error occurred while processing the files: {e}")
 
-        # Make sure the chart uses the full container width
-        # Your Plotly chart code
-        fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+        if st.checkbox("Show Dashboard"):
+            tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/') # NOTE: values has been done only once, they are not updated
+            fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
-        # Set figure size by updating the layout
-        fig.update_layout(
-            autosize=True,
-            width=1200,  # Adjust width as needed
-            height=600   # Adjust height as needed
-        )
+            # Set figure size by updating the layout
+            fig.update_layout(
+                autosize=True,
+                width=1200,  # Adjust width as needed
+                height=600   # Adjust height as needed
+            )
 
-        st.plotly_chart(fig, use_container_width=True)
-
+            st.plotly_chart(fig, use_container_width=True)
 
         if st.checkbox('Show FINAL DataFrame'):
+            final_df = load_and_update_final_csv('data/processed/csv/', 'home')
             st.write(final_df)
-        # Option to display w_df
-        if st.checkbox('Show Workouts DataFrame'):
-            st.write(w_df)
-        # Option to display a_df
-        if st.checkbox('Show Activities DataFrame'):
-            st.write(a_df)
     else:
         st.write("Please upload a file")

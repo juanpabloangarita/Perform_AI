@@ -11,7 +11,7 @@ def plot_dashboard(tss, atl, ctl, tsb):
     merged_df.columns = ['CTL', 'ATL', 'TSB']
 
     # Convert the date strings to datetime objects
-    start_date = pd.to_datetime('2023-03-03')
+    start_date = pd.to_datetime('2023-03-03') # FIXME: to change according to today's date
     end_date = tss.index.max()
     given_date = GIVEN_DATE  # Example date, update as needed
 
