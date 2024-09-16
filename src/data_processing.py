@@ -8,6 +8,7 @@ from datetime import timedelta
 
 import csv
 import os
+import sys
 
 import plotly.graph_objs as go
 import plotly.io as pio
@@ -98,7 +99,8 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                         'CaloriesSpent': [calories_spent],
                         'CaloriesConsumed': [0.0]  # Set to None or NaN for other columns
                     }, index=[time_added])
-                    df = pd.concat([df, new_row])
+                    df = pd.concat([df, new_row])  # TODO: I can organize the dataframe according to date index
+                    df = df.sort_index()
 
         elif from_where == "calories_consumed":
             # Update the CaloriesConsumed column
@@ -114,9 +116,17 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                     'CaloriesSpent': [0.0],
                     'CaloriesConsumed': [data_to_update]
                 }, index=[time_added])
-                df = pd.concat([df, new_row])
+                df = pd.concat([df, new_row]) # TODO: I can organize the dataframe according to date index
+                df = df.sort_index()
 
-        df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
+        #df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
+        try:
+            df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w')
+            sys.stdout.flush()
+            print("File saved successfully")
+        except Exception as e:
+            print(f"Error saving final_df: {e}")
+
 
 
 def save_tss_values_for_dashboard(file_path, tss, atl, ctl, tsb):

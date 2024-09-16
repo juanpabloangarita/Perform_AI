@@ -10,4 +10,4 @@ EMAIL=os.getenv('EMAIL')
 PASSWORD=os.getenv('PASSWORD')
 USER_DATA_FILE=os.getenv('USER_DATA_FILE')
 CODE_PROMO=os.getenv('CODE_PROMO')
-CLOUD_ON="no"
+CLOUD_ON="yes"

@@ -89,6 +89,26 @@ with st.container(border=True):
             # st.write("")  # Creates additional empty space
             submit_button = st.form_submit_button(label='Add Activity')
             if submit_button:
+                temp_activity_dict = {}
+
+                # Map the activity input to the standardized activity names
+                if activity == 'Running':
+                    temp_activity = 'Run'
+                elif activity == 'Cycling':
+                    temp_activity = 'Bike'
+                elif activity == 'Swimming':
+                    temp_activity = 'Swim'
+                else:
+                    temp_activity = activity
+
+                # Store the new activity details in the temporary dictionary
+                temp_activity_dict[temp_activity] = {
+                    'duration': duration,
+                    'calories_spent': calories_spent,
+                    'heart_rate': heart_rate,
+                    'distance': distance
+                }
+
                 if activity in st.session_state['activities']:
                     # Retrieve previous data
                     prev_data = st.session_state['activities'][activity]
@@ -117,7 +137,7 @@ with st.container(border=True):
                     }
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
                 timestamp = datetime.now().strftime('%Y-%m-%d')
-                load_and_update_final_csv('data/processed/csv/', "input_activities", timestamp, st.session_state['activities'])
+                load_and_update_final_csv('data/processed/csv/', "input_activities", timestamp, temp_activity_dict)
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
