@@ -62,8 +62,8 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
         return df
     else:
         # Ensure time_added is in the right format
-        time_added = pd.to_datetime(time_added)
-        time_added = time_added.strftime('%Y-%m-%d')
+        time_added = pd.to_datetime(time_added) # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
+        time_added = time_added.strftime('%Y-%m-%d') # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
 
         # Ensure the necessary columns are present in the DataFrame
         required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
@@ -96,7 +96,7 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                         'TimeTotalInHours': [duration_hours],
                         'DistanceInMeters': [distance],
                         'CaloriesSpent': [calories_spent],
-                        'CaloriesConsumed': [None]  # Set to None or NaN for other columns
+                        'CaloriesConsumed': [0.0]  # Set to None or NaN for other columns
                     }, index=[time_added])
                     df = pd.concat([df, new_row])
 
@@ -107,11 +107,11 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
             else:
                 # Create a new row with NaN for other columns
                 new_row = pd.DataFrame({
-                    'WorkoutType': [None],
-                    'HeartRateAverage': [None],
-                    'TimeTotalInHours': [None],
-                    'DistanceInMeters': [None],
-                    'CaloriesSpent': [None],
+                    'WorkoutType': [''],
+                    'HeartRateAverage': [0.0],
+                    'TimeTotalInHours': [0.0],
+                    'DistanceInMeters': [0.0],
+                    'CaloriesSpent': [0.0],
                     'CaloriesConsumed': [data_to_update]
                 }, index=[time_added])
                 df = pd.concat([df, new_row])

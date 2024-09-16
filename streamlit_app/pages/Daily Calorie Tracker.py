@@ -15,7 +15,7 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import *
+from src.data_processing import load_and_update_final_csv
 from src.calorie_calculations import *
 
 
@@ -169,7 +169,7 @@ with st.container(border=True):
 
             if submit_button:
                 st.session_state['calories_consumed'] += calories
-                st.success(f"Added {calories} calories")
+                st.success(f"Added {calories} calories") # NOTE: MAYBE I ALWAYS HAVE TO PRINT STUFF ON THE SCREEN TO HANDLE STREAMLIT STATES
                 timestamp = datetime.now().strftime('%Y-%m-%d')
                 load_and_update_final_csv('data/processed/csv/', 'calories_consumed', timestamp, calories)
 
