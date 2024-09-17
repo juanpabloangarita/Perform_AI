@@ -21,8 +21,18 @@ from src.user_data import *
 from src.user_data_cloud import *
 from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
 
+
 st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
 # Define your credentials here (use environment variables or a secure method in production)
+
+# Capture the 'main' argument if provided
+main_arg = None
+if len(sys.argv) > 1:
+    main_arg = sys.argv[1]
+
+if main_arg:
+    # Print or log main_arg for debugging
+    st.write(f"MAIN_ARG: {main_arg}")
 
 # Initialize session state for authentication and username
 if 'authenticated' not in st.session_state:
@@ -48,7 +58,7 @@ def show_login_form():
                         st.session_state['authenticated'] = True
                         st.session_state['username'] = username
                         st.session_state['user_data']= load_user_data(username)
-                        response_main = main(st.session_state['user_data'])
+                        response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
                         st.success(f"Sign up successful! {response_main}")
                     else:
                         st.error('Username already exists.')
@@ -60,7 +70,7 @@ def show_login_form():
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = username
                     st.session_state['user_data']= load_user_data(username)
-                    response_main = main(st.session_state['user_data'])
+                    response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
                     st.success(f"Login successful! {response_main}")
                 else:
                     st.session_state['authenticated'] = False

@@ -58,7 +58,7 @@ def save_final_csv(file_path, w_df, a_df, df):
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
     full_path = get_full_path(file_path)
     # Load final_df
-    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
+    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0) # NOTE: I IMAGINE IT IS UPLOADING THE UPDATED FILE
     if from_where == 'home':
         return df
     else:
@@ -83,9 +83,9 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                 calories_spent = details['calories_spent']
 
                 # If the timestamp already exists, update the row; otherwise, add a new row
-                if time_added in df.index:
-                    df.loc[time_added, 'WorkoutType'] = workout_type
-                    df.loc[time_added, 'HeartRateAverage'] = heart_rate
+                if time_added in df.index: # NOTE: IN THE FOLLOWING LINE THE ' -' means everything coming after that is a real exercise done, this is a patch solution
+                    df.loc[time_added, 'WorkoutType'] += ' -' + workout_type # FIXME: crashes the previous activity at each call. not a problem?, since this is the real exo done.
+                    df.loc[time_added, 'HeartRateAverage'] = heart_rate # FIXME: above line, yes a problem cuz crashes newly input done exos. heart rate has been accum before.
                     df.loc[time_added, 'TimeTotalInHours'] += duration_hours
                     df.loc[time_added, 'DistanceInMeters'] += distance
                     df.loc[time_added, 'CaloriesSpent'] += calories_spent
@@ -114,7 +114,12 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                     'TimeTotalInHours': [0.0],
                     'DistanceInMeters': [0.0],
                     'CaloriesSpent': [0.0],
-                    'CaloriesConsumed': [data_to_update]
+                    'CaloriesConsumed': [data_to_update],
+                    'PlannedDuration': [0.0],
+                    'PlannedDistanceInMeters': [0.0],
+                    'TotalPassiveCalories': [0.0],
+                    'EstimatedCalories': [0.0],
+                    'Calories': [0.0]
                 }, index=[time_added])
                 df = pd.concat([df, new_row]) # TODO: I can organize the dataframe according to date index
                 df = df.sort_index()
@@ -268,14 +273,67 @@ def print_performances(rmse_results):
 
 
 def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
+    # HAD IT BEEN A NORMAL COLUMN - meaning 'Date' not as index, WE WOULD HAVE NEEDED TO DO THE FOLLOWING
+    # activities['Date'] = pd.to_datetime(activities['Date']).dt.normalize()
     cal_estimated_df.index = pd.to_datetime(cal_estimated_df.index).normalize()
     cal_calculated_df.index = pd.to_datetime(cal_calculated_df.index).normalize()
-    activities.index = pd.to_datetime(activities.index).normalize()# HAD IT BEEN A NORMAL COLUMN - meaning 'Date' not as index, WE WOULD HAVE NEEDED TO DO THE FOLLOWING
-    # activities['Date'] = pd.to_datetime(activities['Date']).dt.normalize()
+    activities.index = pd.to_datetime(activities.index).normalize()
 
-    # aggregate by date
-    cal_estimated_df_agg = cal_estimated_df.groupby('Date').agg('sum')
-    cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg('sum')
+    ### FOR cal_estimated_df ###
+    def weighted_heart_rate_average(df):
+        # Choose the duration column: use 'TimeTotalInHours' if available, else 'PlannedDuration'
+        duration_col = df['TimeTotalInHours'].fillna(df['PlannedDuration']).fillna(0)
+
+        # Perform the weighted average
+        total_duration = duration_col.sum()
+        if total_duration > 0:
+            weighted_hr = (df['HeartRateAverage'] * duration_col).sum() / total_duration
+        else:
+            weighted_hr = 0  # Handle the case where no valid durations are present
+        return weighted_hr
+
+    def concatenate_workout_types(series):
+        return ', '.join(series.dropna().unique())
+
+    def aggregate_group(group):
+        # Special aggregation
+        special_agg = pd.Series({
+            'WorkoutType': concatenate_workout_types(group['WorkoutType']),
+            'HeartRateAverage': weighted_heart_rate_average(group)
+        })
+
+        # Default aggregation (sum for other columns)
+        default_agg = group.drop(columns=['WorkoutType', 'HeartRateAverage']).sum()
+
+        # Combine special and default aggregations
+        return pd.concat([special_agg, default_agg])
+
+
+    # Apply aggregation
+    cal_estimated_df_agg = cal_estimated_df.groupby(cal_estimated_df.index).apply(aggregate_group)
+
+
+
+
+    ### FOR cal_calculated_df ###
+    # Define the special aggregation for 'TotalPassiveCalories' (take the last value)
+    special_aggregation_calculated = {
+        'TotalPassiveCalories': 'last'
+    }
+
+    # Default aggregation: sum for all other columns
+    default_aggregation_calculated = {col: 'sum' for col in cal_calculated_df.columns if col != 'TotalPassiveCalories'}
+
+    # Merge the aggregation rules
+    aggregation_rules_calculated = {**default_aggregation_calculated, **special_aggregation_calculated}
+
+    # Apply aggregation
+    cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg(aggregation_rules_calculated)
+
+
+
+    # cal_estimated_df_agg = cal_estimated_df.groupby('Date').agg('sum')
+    # cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg('sum')
     activities_agg = activities.groupby('Date').agg('sum')
 
     return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg

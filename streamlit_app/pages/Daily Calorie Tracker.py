@@ -27,6 +27,7 @@ def calculate_active_calories(activities):
 
     return total_calories
 
+
 # Initialize or load session state
 if 'activities' not in st.session_state:
     st.session_state['activities'] = {}
@@ -110,6 +111,7 @@ with st.container(border=True):
                 }
 
                 if activity in st.session_state['activities']:
+                    # /* TODO: IN THE FOLLOWING CODE, I AM ONLY AVERAGING HEART RATE, IF for example 'Bike' already exists, and so, averaging only with 'Bike' activity
                     # Retrieve previous data
                     prev_data = st.session_state['activities'][activity]
                     prev_duration = prev_data['duration']
@@ -120,6 +122,7 @@ with st.container(border=True):
                         (prev_heart_rate * prev_duration + heart_rate * duration) /
                         (prev_duration + duration)
                     )
+                    # */
 
                     # Update the session state with new values
                     st.session_state['activities'][activity] = {
@@ -173,7 +176,6 @@ with st.container(border=True):
                 pass
 
 
-
 with st.container(border=True):
     # Create two columns for layout
     col1, col2 = st.columns(2)
@@ -206,8 +208,8 @@ with st.container(border=True):
         st.write(f"**Calories Consumed Today:** {st.session_state['calories_consumed']} kcal")
 
         # Calculate total daily calorie needs
-        total_daily_calories = st.session_state['user_data']['BMR'] + st.session_state['user_data']['passive_calories']
-        calories_remaining = total_daily_calories - st.session_state['calories_consumed'] - total_active_calories
+        total_daily_calories = st.session_state['user_data']['passive_calories'] + total_active_calories
+        calories_remaining = total_daily_calories - st.session_state['calories_consumed']
         st.write(f"**Calories Remaining for Today:** {calories_remaining} kcal")
 
         # FIXME: Calculations wrong, above and below

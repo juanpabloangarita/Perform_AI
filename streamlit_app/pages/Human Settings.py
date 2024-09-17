@@ -72,7 +72,7 @@ with st.container(border=True):
     cal_col1, cal_col2 = st.columns(2)
 
     with cal_col1: # FIXME: is not user friendly to show false values from the beginning, people will think these are their values when it is not.
-        st.session_state['user_data']['passive_calories'] = st.number_input(
+        st.session_state['user_data']['passive_calories'] = st.number_input( # NOTE: IT SEEMS STATE IS PERSISTING WHEN LOGGING IN AGAIN, because default value is correct
             "Passive Calories",
             value=float(st.session_state['user_data']['passive_calories']),
             help="Your estimated passive calories for the day, including basic daily activities."
@@ -121,8 +121,8 @@ with st.container(border=True):
 if st.button('Update Information'):
     passive_calories, bmr = calculate_total_calories(st.session_state['user_data'], 'streamlit')
     # Update the session state when user modifies the information
-    st.session_state['user_data']['BMR'] = bmr
-    st.session_state['user_data']['passive_calories'] = passive_calories
+    st.session_state['user_data']['BMR'] = bmr # FIXME: this is wrong, as well as passive_calories, because despite inputing values in the above section
+    st.session_state['user_data']['passive_calories'] = passive_calories # FIXME: it will still retrieve the same values from the function and putting them again
     # Update the session_state when the user changes their goal
     st.session_state['user_data']['goal'] = goal
 

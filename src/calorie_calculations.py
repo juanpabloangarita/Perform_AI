@@ -56,6 +56,7 @@ def calculate_total_calories(user_data, from_where=None, df=None):
         # Metabolic Equivalent of Task
         # Calculate MET based on the heart rate, resting HR, and K constant
         def calculate_met_2(avg_hr_during_effort, k_constant):
+            duration = 0 # FIXME: this is an unfinished function that i am not using
             return ((avg_hr_during_effort * duration )/weight)* k_constant
 
         # Calorie calculation function from MET
