@@ -12,13 +12,14 @@ def main(user_data, workouts=None, main_arg=None):
 
     if os.path.exists(final_csv_path) and main_arg != 'main': # TODO: i still need to check as well for atl ctl tsb, tss, activities_df and workouts
         print("File already exists. Loading existing final_df.csv")
+        return "You got this!"
     else:
         print("App is running")
         tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df = process_data(user_data, workouts)
 
         save_tss_values_for_dashboard('data/processed/csv/', tss_df, atl_df, ctl_df, tsb_df) # TODO: here should be sourcer
         save_final_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df) # TODO: here should be sourcer
-    return "You got this!"
+
 
 if __name__ == "__main__":
     main()

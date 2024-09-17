@@ -11,7 +11,7 @@ import boto3
 parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(parent_dir)
 
-from config import setup_paths # WARNING
+from config import setup_paths # TODO: decide to erase it or to implement it
 
 from dashboard_plot import *
 from params import *
@@ -120,14 +120,33 @@ if not st.session_state['authenticated']:
     else:
         show_login_form()
 
-    if st.button('Go to the App'):
+    if st.button('GAME ON!'):
         pass # NOTE: weird behaviour, the way streamlit manages the state, it seems that as soon as this button is clicked, nothing below this line is read
 else:
     # Display main app content if authenticated
     st.title('PERFORM_AI')
-    st.title('Your Health AI Assistant')
-    st.write(f'Welcome {st.session_state["username"]}!')
+    st.markdown("<h3 style='margin-top: -20px;'>Your Health AI Assistant</h3>", unsafe_allow_html=True)
+    st.write("")
+    with st.container(border=True):
+        # Display user information in one row
+        st.write(f'### Welcome {st.session_state["username"]}!')
 
+        # Create a row with four columns
+        col1, col2, col3, col4 = st.columns(4)
+
+        # Display the information in each column
+        with col1:
+            st.write(f"**Sports Scheduled:** Yes.")
+
+        with col2:
+            st.write(f"**Goal:** {st.session_state['user_data']['goal']}")
+
+        with col3:
+            st.write(f"**Maintenance Calories:** {st.session_state['user_data']['passive_calories']} kcal")
+        with col4:
+            st.write(f"**Meals Pending:** Yes")
+
+    st.write("")
     # Option for user to select data source
     data_source = st.radio(
         f"Select Data Source for your Workouts {st.session_state['username']}",
@@ -175,7 +194,8 @@ else:
 
             except Exception as e:
                 st.error(f"An error occurred while processing the files: {e}")
-
+        st.write("")
+        st.write("### Performance Training")
         if st.checkbox("Show Dashboard"):
             tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/') # NOTE: values has been done only once, they are not updated
             fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
@@ -189,7 +209,7 @@ else:
 
             st.plotly_chart(fig, use_container_width=True)
 
-        if st.checkbox('Show FINAL DataFrame'):
+        if st.checkbox('Show Data'):
             final_df = load_and_update_final_csv('data/processed/csv/', 'home')
             st.write(final_df)
     else:

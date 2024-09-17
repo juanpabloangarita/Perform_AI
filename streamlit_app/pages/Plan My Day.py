@@ -34,27 +34,7 @@ if 'activities' not in st.session_state:
 if 'calories_consumed' not in st.session_state:
     st.session_state['calories_consumed'] = 0
 
-st.title("Daily Calorie Tracker")
-
-with st.container(border=True):
-    # Display user information in one row
-    st.write("### User Information")
-
-    # Create a row with four columns
-    col1, col2, col3, col4 = st.columns(4)
-
-    # Display the information in each column
-    with col1:
-        st.write(f"**Username:** {st.session_state['user_data']['username']}")
-
-    with col2:
-        st.write(f"**Goal:** {st.session_state['user_data']['goal']}")
-
-    with col3:
-        st.write(f"**BMR:** {st.session_state['user_data']['BMR']} kcal")
-
-    with col4:
-        st.write(f"**Passive Calories:** {st.session_state['user_data']['passive_calories']} kcal")
+st.title("Plan My Day")
 
 with st.container(border=True):
     # Create two columns
@@ -63,7 +43,7 @@ with st.container(border=True):
 
     # First column: Improved Input Form for Activities
     with col1:
-        st.write("### Input Today's Activities")
+        st.write("### Input Today's Training")
         activity_options = ['Running', 'Cycling', 'Swimming']  # TODO: Calculate strength training calories
 
         with st.form(key='activity_form'):
@@ -148,7 +128,7 @@ with st.container(border=True):
 
    # Second column: Display activities and active calories with enhanced UI
     with col2:
-        st.write("#### Today's Activities")
+        st.write("#### Today's Training")
 
         # Add a container-like background for consistency
         with st.container():
@@ -182,7 +162,7 @@ with st.container(border=True):
 
     # First column: Input calories consumed
     with col1:
-        st.write("### Input Calories Consumed")
+        st.write("### Nutrition")
 
         # Form to input calories consumed
         with st.form(key='food_form'):
@@ -202,7 +182,7 @@ with st.container(border=True):
 
     # Second column: Display calories and remaining calories
     with col2:
-        st.write("#### Today's Calorie Summary")
+        st.write("#### Today's Calories")
 
         # Display calories consumed
         st.write(f"**Calories Consumed Today:** {st.session_state['calories_consumed']} kcal")
