@@ -1,11 +1,10 @@
 # data_processing.py
 import streamlit as st
-# Import necessary libraries for data manipulation
-import pandas as pd
-import numpy as np
 from datetime import datetime
 from datetime import timedelta
 
+import pandas as pd
+import numpy as np
 import csv
 import os
 import sys
@@ -15,7 +14,7 @@ import plotly.io as pio
 
 from params import *
 from src.calorie_calculations import calculate_total_calories
-from src.tss_calculations import * #WARNING WHY IT WORKED WITH .tss_calculations before
+from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories, estimate_calories_with_duration
@@ -117,8 +116,8 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                     'CaloriesConsumed': [data_to_update],
                     'PlannedDuration': [0.0],
                     'PlannedDistanceInMeters': [0.0],
-                    'TotalPassiveCalories': [0.0],
-                    'EstimatedCalories': [0.0],
+                    'TotalPassiveCal': [0.0],
+                    'EstimatedActiveCal': [0.0],
                     'Calories': [0.0]
                 }, index=[time_added])
                 df = pd.concat([df, new_row]) # TODO: I can organize the dataframe according to date index
@@ -318,11 +317,11 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     ### FOR cal_calculated_df ###
     # Define the special aggregation for 'TotalPassiveCalories' (take the last value)
     special_aggregation_calculated = {
-        'TotalPassiveCalories': 'last'
+        'TotalPassiveCal': 'last'
     }
 
     # Default aggregation: sum for all other columns
-    default_aggregation_calculated = {col: 'sum' for col in cal_calculated_df.columns if col != 'TotalPassiveCalories'}
+    default_aggregation_calculated = {col: 'sum' for col in cal_calculated_df.columns if col != 'TotalPassiveCal'}
 
     # Merge the aggregation rules
     aggregation_rules_calculated = {**default_aggregation_calculated, **special_aggregation_calculated}
@@ -362,7 +361,7 @@ def process_data(user_data, workouts=None):
     }
     clean_data(dataframes, date_columns)
 
-    # WORKOUTS
+    # WORKOUTS # NOTE: IS THIS NEEDED?
     columns_to_keep_workouts = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
     dataframes['workouts'] = dataframes['workouts'][columns_to_keep_workouts].copy()
 
@@ -395,18 +394,63 @@ def process_data(user_data, workouts=None):
     print_performances(rmse_results)
 
     # Calculate Total Calories from TSS
-    w_df_calories_calculated = calculate_total_calories(user_data, df=w_df) # WARNING I COULD CHECK HERE IF USER IS LOGGED IN, TO BRING ITS INFO
+    w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
-    w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
-    w_df_calories_estimated_plus_calculated = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
+    aggregate_by_date_path = False
+    final_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters',
+                     'Run_Cal', 'Bike_Cal', 'Swim_Cal', 'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'Calories']
+    if aggregate_by_date_path:
+        ### DATAFRAMES AGGREGATED BY DATE ###
+        w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
 
-    final_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'TotalPassiveCalories', 'EstimatedCalories']
-    final_df = pd.concat([w_df_calories_estimated_plus_calculated[final_columns], activities_df['Calories']], axis=1)
+        w_df_calories_estimated_plus_calculated_agg = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
 
-    final_df.index = pd.to_datetime(final_df.index)
-    final_df.index = final_df.index.date
+        final_df = pd.concat([w_df_calories_estimated_plus_calculated_agg, activities_df['Calories']], axis=1)
+        final_df = final_df.loc[:,~final_df.columns.duplicated()]
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
+        final_df.index = pd.to_datetime(final_df.index)
+        final_df.index = final_df.index.date
+
+        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df[final_columns]
+    else:
+        ### DATAFRAMES NOT AGGREGATED BY DATE ###
 
 
-# Add other data processing functions as needed
+        def standardize_date_index(df):
+            """
+            Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
+
+            Parameters:
+            df (pd.DataFrame): DataFrame with a date index to be standardized.
+
+            Returns:
+            pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
+            """
+            # Convert index to datetime
+            df.index = pd.to_datetime(df.index)
+            # Format index as 'YYYY-MM-DD'
+            df.index = df.index.strftime('%Y-%m-%d')
+            return df
+
+
+        w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
+        w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
+        activities_df = standardize_date_index(activities_df)
+
+
+        # Reset the index to ensure the 'date' is a column and not part of the index
+        w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
+        w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
+        activities_df_reset = activities_df.reset_index()
+
+        # # Concatenate the two dataframes, now using columns and not index
+        w_df_calories_estimated_plus_calculated = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
+
+        final_df = pd.concat([w_df_calories_estimated_plus_calculated, activities_df_reset[['Date', 'Calories']]], axis=1)
+
+        # Drop duplicate 'Date' columns if they exist
+        final_df = final_df.loc[:,~final_df.columns.duplicated()]
+
+        final_df = final_df.set_index('Date')
+
+        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df[final_columns].fillna(0.0)

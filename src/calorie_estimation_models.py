@@ -355,15 +355,15 @@ def estimate_calories(activities_df, past_workouts, future_workouts, w_type):
         xgb_model_y_hr = model_configs[4]['model']
         linear_model_no_hr = model_configs[5]['model']
         # Use the best model for past workouts without WorkoutType
-        past_workouts.loc[mask_past, 'EstimatedCalories'] = xgb_model_y_hr.predict(X_past_workouts_poly)
+        past_workouts.loc[mask_past, 'EstimatedActiveCal'] = xgb_model_y_hr.predict(X_past_workouts_poly)
 
         # Use the best model for future workouts without WorkoutType
-        future_workouts.loc[mask_future, 'EstimatedCalories'] =  linear_model_no_hr.predict(X_future_workouts_poly)
+        future_workouts.loc[mask_future, 'EstimatedActiveCal'] =  linear_model_no_hr.predict(X_future_workouts_poly)
     else:
         gb_model_y_hr = model_configs[2]['model']
         xgb_model_no_hr = model_configs[8]['model']
-        past_workouts.loc[mask_past, 'EstimatedCalories'] = gb_model_y_hr.predict(X_past_workouts_poly)
-        future_workouts.loc[mask_future, 'EstimatedCalories'] = xgb_model_no_hr.predict(X_future_workouts_poly)
+        past_workouts.loc[mask_past, 'EstimatedActiveCal'] = gb_model_y_hr.predict(X_past_workouts_poly)
+        future_workouts.loc[mask_future, 'EstimatedActiveCal'] = xgb_model_no_hr.predict(X_future_workouts_poly)
 
     # Combine past and future workouts back together
     workouts_df = pd.concat([past_workouts, future_workouts])
@@ -465,7 +465,7 @@ def estimate_calories_with_duration(activities_df, past_workouts, future_workout
 
     linear_model = model_configs[0]['model']
     # Use the best model for past workouts without WorkoutType
-    total_workouts.loc[mask_total, 'EstimatedCalories'] = linear_model.predict(total_workouts_poly)
+    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_poly)
 
     return total_workouts, model_configs
 

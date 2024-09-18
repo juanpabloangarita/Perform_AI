@@ -81,15 +81,16 @@ def calculate_total_calories(user_data, from_where=None, df=None):
             return calculate_calories(met, weight, duration_hrs)
 
         # Apply the calculation for running, cycling, and swimming
-        df['RunningCalories'] = df.apply(lambda row: calculate_calories_from_tss(row['rTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
-        df['CyclingCalories'] = df.apply(lambda row: calculate_calories_from_tss(row['cTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
-        df['SwimmingCalories'] = df.apply(lambda row: calculate_calories_from_tss(row['sTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
+        df['Run_Cal'] = df.apply(lambda row: calculate_calories_from_tss(row['rTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
+        df['Bike_Cal'] = df.apply(lambda row: calculate_calories_from_tss(row['cTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
+        df['Swim_Cal'] = df.apply(lambda row: calculate_calories_from_tss(row['sTSS Calculated'], row['HeartRateAverage'], resting_hr, weight, k_constant), axis=1)
 
         # Sum up the active calories
-        df['TotalActiveCalories'] = df['RunningCalories'] + df['CyclingCalories'] + df['SwimmingCalories']
+        df['CalculatedActiveCal'] = df['Run_Cal'] + df['Bike_Cal'] + df['Swim_Cal']
 
-        df['TotalPassiveCalories'] = passive_calories
-        # Calculate Total Daily Energy Expenditure
-        df['TotalCalories'] = df['TotalPassiveCalories'] + df['TotalActiveCalories']
+        df['TotalPassiveCal'] = passive_calories
+        # # Calculate Total Daily Energy Expenditure # NOTE: I DON'T THINK I NEED THIS
+        # df['TotalCal'] = df['TotalPassiveCal'] + df['TotalCalculatedActiveCal']
 
-        return df[['RunningCalories','CyclingCalories', 'SwimmingCalories' ,'TotalPassiveCalories', 'TotalActiveCalories', 'TotalCalories']]
+        return df
+        #return df[['RunningCalories','CyclingCalories', 'SwimmingCalories' ,'TotalPassiveCalories', 'TotalActiveCalories', 'TotalCalories']]

@@ -44,7 +44,7 @@ with st.container(border=True):
     # First column: Improved Input Form for Activities
     with col1:
         st.write("### Input Today's Training")
-        activity_options = ['Running', 'Cycling', 'Swimming']  # TODO: Calculate strength training calories
+        activity_options = ['Run', 'Bike', 'Swim']  # TODO: Calculate strength training calories
 
         with st.form(key='activity_form'):
             # Create a grid layout for input fields
@@ -72,18 +72,8 @@ with st.container(border=True):
             if submit_button:
                 temp_activity_dict = {}
 
-                # Map the activity input to the standardized activity names
-                if activity == 'Running':
-                    temp_activity = 'Run'
-                elif activity == 'Cycling':
-                    temp_activity = 'Bike'
-                elif activity == 'Swimming':
-                    temp_activity = 'Swim'
-                else:
-                    temp_activity = activity
-
                 # Store the new activity details in the temporary dictionary
-                temp_activity_dict[temp_activity] = {
+                temp_activity_dict[activity] = {
                     'duration': duration,
                     'calories_spent': calories_spent,
                     'heart_rate': heart_rate,
@@ -128,7 +118,7 @@ with st.container(border=True):
 
    # Second column: Display activities and active calories with enhanced UI
     with col2:
-        st.write("#### Today's Training")
+        st.write("#### Today's Trainings")
 
         # Add a container-like background for consistency
         with st.container():
