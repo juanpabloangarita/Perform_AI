@@ -46,26 +46,21 @@ def load_csv(file_path):
 
 def save_final_csv(file_path, w_df, a_df, df):
     full_path = get_full_path(file_path)
-    # save workouts_df
     w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'))
-    # save activities_df
     a_df.to_csv(os.path.join(full_path, 'activities_df.csv'))
-    # save final_df
     df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
     full_path = get_full_path(file_path)
-    # Load final_df
-    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0) # NOTE: I IMAGINE IT IS UPLOADING THE UPDATED FILE
+    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
     if from_where == 'home':
         return df
     else:
-        # Ensure time_added is in the right format
         time_added = pd.to_datetime(time_added) # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
         time_added = time_added.strftime('%Y-%m-%d') # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
 
-        # Ensure the necessary columns are present in the DataFrame
+        # Ensure the necessary columns are present in the DataFrame  # TODO: I CAN CREATE THESE TWO COLUMNS ONCE AND TAHT'S IT, INSTEAD OF DOING IT CONSTANTLY
         required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
         for col in required_columns:
             if col not in df.columns:
@@ -151,16 +146,16 @@ def load_tss_values_for_dashboard(file_path):
     return tss, atl, ctl, tsb
 
 
-def clean_data(dfs, date_cols):
+def clean_data_basic(dfs, date_cols):
     # Threshold of % of NaN's per column we want to accept
     threshold = 0.5
 
     for df_name, df in dfs.items():
 
-        #REMOVED DROP_HIGH_NA_COLUMNS CUZ WEIRD BEHAVIOUR, WILL NEED TO UPDATE CUZ NO NEED
+        # REMOVED DROP_HIGH_NA_COLUMNS CUZ WEIRD BEHAVIOUR, WILL NEED TO UPDATE CUZ NO NEED
 
         # Remove columns with high > threshold % NaN values
-        # drop_high_na_columns(df, threshold) # WARNING - REMOVED THIS ONE
+        # drop_high_na_columns(df, threshold) # NOTE: - REMOVED THIS ONE
 
         # Replace '--' with NaN
         df.replace('--', np.nan, inplace=True)
@@ -338,6 +333,13 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
 
 
+def process_columns_and_nans_workouts(df):
+    columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
+    df = df[columns_to_keep_workouts].copy()
+    df[['Title', 'WorkoutDescription', 'CoachComments']] = df[['Title', 'WorkoutDescription', 'CoachComments']].fillna('')
+    return df
+
+
 def process_data(user_data, workouts=None):
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
@@ -359,18 +361,14 @@ def process_data(user_data, workouts=None):
         #'health_metrics': 'Timestamp', # already as index
         'workouts': 'WorkoutDay' # as column
     }
-    clean_data(dataframes, date_columns)
+    # For Workouts and Activities For the moment
+    clean_data_basic(dataframes, date_columns)
 
-    # WORKOUTS # NOTE: IS THIS NEEDED?
-    columns_to_keep_workouts = ['Title', 'WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
-    dataframes['workouts'] = dataframes['workouts'][columns_to_keep_workouts].copy()
-
-    # on a separate function than clean_data because different operations on workouts_df
+    ### WORKOUTS
+    dataframes['workouts'] = process_columns_and_nans_workouts(dataframes['workouts'])
     w_df = remove_no_training_days(dataframes['workouts'])
-
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts, as below, DON'T KNOW IF IT NEEDS UPDATING
-
     # # Calculate ATL, CTL, TSB from TSS
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts
 
@@ -397,7 +395,7 @@ def process_data(user_data, workouts=None):
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
     aggregate_by_date_path = False
-    final_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters',
+    final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters',
                      'Run_Cal', 'Bike_Cal', 'Swim_Cal', 'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'Calories']
     if aggregate_by_date_path:
         ### DATAFRAMES AGGREGATED BY DATE ###
@@ -452,5 +450,11 @@ def process_data(user_data, workouts=None):
         final_df = final_df.loc[:,~final_df.columns.duplicated()]
 
         final_df = final_df.set_index('Date')
+        final_df = final_df[final_columns].fillna(0.0)
+        print()
+        print()
+        print(final_df.head(10))
+        print()
+        print()
 
-        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df[final_columns].fillna(0.0)
+        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
