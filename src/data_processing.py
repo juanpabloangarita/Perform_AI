@@ -195,22 +195,6 @@ def convert_to_datetime(df, date_col):
         df.drop(columns=date_col, inplace=True)
     #return df
 
-def remove_no_training_days(df, given_date = GIVEN_DATE):
-    before_df = df[df.index < given_date].copy()
-    after_df = df[df.index >= given_date].copy()
-    # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
-    before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy()
-
-    # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
-    after_df = after_df[after_df['PlannedDuration'].notna()]
-
-    # Concatenate before and after dataframes
-    w_df = pd.concat([before_df_cleaned, after_df])
-    # Keep dates where there was a Run Swim or Bike training Plan
-    w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
-
-    return w_df
-
 
 def clean_activities(df):
     columns_to_keep_activities = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
@@ -333,11 +317,28 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
 
 
-def process_columns_and_nans_workouts(df):
+def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
     df = df[columns_to_keep_workouts].copy()
-    df[['Title', 'WorkoutDescription', 'CoachComments']] = df[['Title', 'WorkoutDescription', 'CoachComments']].fillna('')
-    return df
+
+    before_df = df[df.index < given_date].copy()
+    after_df = df[df.index >= given_date].copy()
+    # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
+    before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy()
+
+    # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
+    after_df = after_df[after_df['PlannedDuration'].notna()]
+
+    # Concatenate before and after dataframes
+    w_df = pd.concat([before_df_cleaned, after_df])
+    # Keep dates where there was a Run Swim or Bike training Plan
+    w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
+
+        # Fill NaN values in object columns with an empty string
+    object_cols = w_df.select_dtypes(include=['object']).columns
+    w_df[object_cols] = w_df[object_cols].fillna('No Info')
+
+    return w_df
 
 
 def process_data(user_data, workouts=None):
@@ -365,8 +366,8 @@ def process_data(user_data, workouts=None):
     clean_data_basic(dataframes, date_columns)
 
     ### WORKOUTS
-    dataframes['workouts'] = process_columns_and_nans_workouts(dataframes['workouts'])
-    w_df = remove_no_training_days(dataframes['workouts'])
+    w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
+
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts, as below, DON'T KNOW IF IT NEEDS UPDATING
     # # Calculate ATL, CTL, TSB from TSS
@@ -409,7 +410,14 @@ def process_data(user_data, workouts=None):
         final_df.index = pd.to_datetime(final_df.index)
         final_df.index = final_df.index.date
 
-        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df[final_columns]
+
+        final_df = final_df[final_columns]
+
+        # Fill NaN values in numeric columns with 0.0
+        numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
+        final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
+
+        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df
     else:
         ### DATAFRAMES NOT AGGREGATED BY DATE ###
 
@@ -450,11 +458,13 @@ def process_data(user_data, workouts=None):
         final_df = final_df.loc[:,~final_df.columns.duplicated()]
 
         final_df = final_df.set_index('Date')
-        final_df = final_df[final_columns].fillna(0.0)
-        print()
-        print()
-        print(final_df.head(10))
-        print()
-        print()
+
+        # Assuming final_df is your DataFrame and final_columns is defined
+        final_df = final_df[final_columns]
+
+        # Fill NaN values in numeric columns with 0.0
+        numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
+        final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
+
 
         return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
