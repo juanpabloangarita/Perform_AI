@@ -371,7 +371,6 @@ def estimate_calories(activities_df, past_workouts, future_workouts, w_type):
     return workouts_df, model_configs
 
 
-### WORKING ON THIS ONE. THE IDEA IS TO USE ONLY DURATION, SO THINKING ABOUT MERGING PAST AND FUTURE WORKOUTS AND CREATE ONE COLUMN WITH DURATION
 def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df, total_workouts):
     # BEST PERFORMANCE
     # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
@@ -473,29 +472,24 @@ def estimate_calories_with_duration(activities_df, past_workouts, future_workout
 
 ###################
 
-### RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS ----- RESULTS -----
-"""
-               Model  With WorkoutType & HR  Without WorkoutType & HR  With WorkoutType & without HR  Without WorkoutType & without HR
-0  Linear Regression                  63.75                     66.93                          87.77                             88.35
-1      Random Forest                  63.99                     67.65                          88.38                             93.03
-2  Gradient Boosting                  53.49                     65.10                          87.12                             94.26
-3           LightGBM                  54.38                     63.72                          87.06                             91.52
-4            XGBoost                  53.67                     62.56                          83.58                             93.88
 
 """
-"""
-Performance Metrics:
-Linear Regression with Duration with WorkoutTYpe RMSE: 89.1857565118402
-Random Forest with Duration with WorkoutTYpe RMSE: 92.34478432460085
-Gradient Boosting with Duration with WorkoutTYpe RMSE: 91.99436505984426
-LightGBM with Duration with WorkoutTYpe RMSE: 91.04776976158855
-XGBoost with Duration with WorkoutTYpe RMSE: 91.26319865609005
+Model Performance Results
+
+| Model               | With Duration & WorkoutType | With WorkoutType & HR | With WorkoutType & without HR | Without WorkoutType & HR | Without WorkoutType & without HR |
+|---------------------|-----------------------------|-----------------------|-------------------------------|--------------------------|----------------------------------|
+| Linear Regression    | 89.19                       | 63.75                 | 87.77                         | 66.93                    | 88.35                            |
+| Random Forest        | 92.34                       | 63.99                 | 88.38                         | 67.65                    | 93.03                            |
+| Gradient Boosting    | 91.99                       | 53.49                 | 87.12                         | 65.10                    | 94.26                            |
+| LightGBM             | 91.05                       | 54.38                 | 87.06                         | 63.72                    | 91.52                            |
+| XGBoost              | 91.26                       | 53.67                 | 83.58                         | 62.56                    | 93.88                            |
 """
 
 
 
 
 
+"""
 # THE FOLLOWING FUNCTION WAS REPLACED BY prepare_features_without_workout_type_for_calorie_estimation
 # I AM LEAVING IT IN LEARNING TO UNDERSTAND WHAT HAPPENED AND WHAT WAS CHANGED
 def prepare_features_for_calorie_estimation_learning(activities_df, past_workouts, future_workouts):
@@ -539,3 +533,4 @@ def prepare_features_for_calorie_estimation_learning(activities_df, past_workout
     X_future_workouts_poly = poly_no_hr.transform(X_future_workouts_imputed)
 
     return X_activities_y_hr_poly, X_activities_no_hr_poly, y_activities, X_past_workouts_poly, mask_past, X_future_workouts_poly, mask_future
+"""

@@ -223,7 +223,7 @@ def clean_activities(df):
     df["WorkoutType"] = df["WorkoutType"].apply(lambda x: sports_types[x])
 
     # Convert Durée from 'hh:mm:ss' to total minutes
-    df['TimeTotalInHours'] = pd.to_timedelta(df['TimeTotalInHours']).dt.total_seconds() / 60  # Convert to minutes
+    df['TimeTotalInHours'] = pd.to_timedelta(df['TimeTotalInHours']).dt.total_seconds() / 3600  # Convert to Hours
 
     # Convert relevant columns to numeric (remove commas, etc.)
     df['DistanceInMeters'] = pd.to_numeric(df['DistanceInMeters'].str.replace(',', '.'), errors='coerce')
@@ -370,11 +370,20 @@ def process_data(user_data, workouts=None):
 
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts, as below, DON'T KNOW IF IT NEEDS UPDATING
+
     # # Calculate ATL, CTL, TSB from TSS
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
+
+    def micro_agression(work_df, acti_df):
+        full_path = get_full_path('data/processed/csv/')
+        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'))
+        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'))
+
+
+    micro_agression(w_df, activities_df)
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
