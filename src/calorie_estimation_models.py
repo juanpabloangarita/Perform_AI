@@ -371,7 +371,7 @@ def estimate_calories(activities_df, past_workouts, future_workouts, w_type):
     return workouts_df, model_configs
 
 
-def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df, total_workouts):
+def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df, total_workouts, use_poly = True):
     # BEST PERFORMANCE
     # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
     one_hot_encoder = OneHotEncoder()
@@ -394,13 +394,30 @@ def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df
     imputer = KNNImputer()
     X_activities_imputed = imputer.fit_transform(X_activities)
 
-    # Step 2: Add polynomial features
-    poly_features = PolynomialFeatures(degree=2, include_bias=False)
-    X_activities_poly = poly_features.fit_transform(X_activities_imputed)
 
-    total_workouts['TotalDuration'] = total_workouts['PlannedDuration'] + total_workouts['TimeTotalInHours']
+    # Step 2: Optionally add polynomial features
+    if use_poly:
+        poly_features = PolynomialFeatures(degree=2, include_bias=False)
+        X_activities_transformed = poly_features.fit_transform(X_activities_imputed)
+    else:
+        X_activities_transformed = X_activities_imputed
 
-    ## PAST WORKOUTS
+
+    ######### CHANGE THIS
+    # total_workouts['TotalDuration'] = total_workouts['PlannedDuration'] + total_workouts['TimeTotalInHours']
+    ########
+
+    ##### FOR THIS
+    total_workouts[['TimeTotalInHours', 'DistanceInMeters']] = total_workouts[['TimeTotalInHours', 'DistanceInMeters']].fillna({
+    'TimeTotalInHours': total_workouts['PlannedDuration'],
+    'DistanceInMeters': total_workouts['PlannedDistanceInMeters']
+    })
+    total_workouts = total_workouts.rename(columns={'TimeTotalInHours': 'TotalDuration'})
+    ########
+
+
+
+    ## WORKOUTS
     # Use the best model for past workouts with WorkoutType
     mask_total = total_workouts[['TotalDuration']].notna().all(axis=1)
     total_workouts_encoded = pd.DataFrame(one_hot_encoder.transform(total_workouts[['WorkoutType']]).toarray(),
@@ -410,25 +427,31 @@ def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df
                                  total_workouts_encoded.loc[mask_total]], axis=1)
 
     total_workouts_imputed = imputer.transform(total_workouts_tmp)
-    total_workouts_poly = poly_features.transform(total_workouts_imputed)
 
-    return X_activities_poly, y_activities, total_workouts_poly, mask_total
+
+    # Apply optional polynomial transformation to future workouts
+    if use_poly:
+        total_workouts_transformed = poly_features.transform(total_workouts_imputed)
+    else:
+        total_workouts_transformed = total_workouts_imputed
+
+    return X_activities_transformed, y_activities, total_workouts_transformed, mask_total
 
 
 def estimate_calories_with_duration(activities_df, past_workouts, future_workouts):
     total_workouts = pd.concat([past_workouts, future_workouts])
 
     (
-        X_activities_poly,
+        X_activities,
         y_activities,
-        total_workouts_poly,
+        total_workouts_transformed,
         mask_total
     ) = prepare_duration_only_with_workout_type_for_calorie_estimation(
         activities_df, total_workouts
     )
 
     # Split data into training and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X_activities_poly, y_activities, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X_activities, y_activities, test_size=0.2, random_state=42)
 
     def create_model_configs(models, X_train, X_test):
         configs = []
@@ -464,7 +487,7 @@ def estimate_calories_with_duration(activities_df, past_workouts, future_workout
 
     linear_model = model_configs[0]['model']
     # Use the best model for past workouts without WorkoutType
-    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_poly)
+    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
     return total_workouts, model_configs
 
@@ -485,7 +508,15 @@ Model Performance Results
 | XGBoost              | 91.26                       | 53.67                 | 83.58                         | 62.56                    | 93.88                            |
 """
 
+"""
 
+Performance Metrics WITH DURATION & WORKOUTTYPE without poly:
+Linear Regression with Duration with WorkoutTYpe RMSE: 99.89309317090766
+Random Forest with Duration with WorkoutTYpe RMSE: 92.06899183202154
+Gradient Boosting with Duration with WorkoutTYpe RMSE: 90.97004409283143
+LightGBM with Duration with WorkoutTYpe RMSE: 90.54056355551425
+XGBoost with Duration with WorkoutTYpe RMSE: 91.37666255801469
+"""
 
 
 

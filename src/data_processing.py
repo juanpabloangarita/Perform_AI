@@ -232,6 +232,8 @@ def clean_activities(df):
     # Drop rows with NaN values in critical columns
     df = df.dropna(subset=['DistanceInMeters', 'Calories', 'TimeTotalInHours', 'HeartRateAverage'])
 
+    # df = df[df['DistanceInMeters']>0].copy() # NOTE: not needed since, i will be using only TotalDuration or TimeTotalInHours
+
     return df
 
 
@@ -389,8 +391,8 @@ def process_data(user_data, workouts=None):
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
-    workout_type = "with WorkoutType"
-    # workout_type = "duration with WorkoutType"
+    # workout_type = "with WorkoutType"
+    workout_type = "duration with WorkoutType"
     # workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
 
