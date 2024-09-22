@@ -385,7 +385,7 @@ def process_data(user_data, workouts=None):
         acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'))
 
 
-    micro_agression(w_df, activities_df)
+    # micro_agression(w_df, activities_df)
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
