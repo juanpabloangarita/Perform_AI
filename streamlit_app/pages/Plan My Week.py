@@ -11,6 +11,7 @@ sys.path.append(dir_script_dir)
 
 
 from src.data_processing import load_and_update_final_csv
+from src.training_peaks import navigate_to_login
 from params import *
 
 # Helper function to get the start of the week (Monday)
@@ -34,7 +35,6 @@ final_df.index = pd.to_datetime(final_df.index).strftime('%Y-%m-%d')
 
 # Main function to handle the calendar view
 def main():
-
     # Set the default date to today
     current_date = datetime.now()
 
@@ -46,27 +46,49 @@ def main():
         st.session_state.temp_data = {}
 
     # Create the header with 'Today', '<', '>', and the month/year on the same row, aligned to the left
-    col1, _, col3, col4, col5 = st.columns(5, gap="small")  # Left aligned using columns
+    col1, col2, col3, col4, col5 = st.columns(5, gap="small")  # Left aligned using columns
 
     with col1:
         st.markdown("<h1 style='margin-bottom: 0;'>Calendar</h1>", unsafe_allow_html=True)
 
-    # Today Button
+    # # Today Button
+    # with col3:
+    #     if st.button("Today"):
+    #         st.session_state.week_start = get_monday(current_date)
+
+    # # Navigation Buttons (< and >)
+    # with col4:
+    #     prev_week, next_week = st.columns([1, 1], gap="small")
+
+    #     with prev_week:
+    #         if st.button("<"):
+    #             st.session_state.week_start -= timedelta(weeks=1)
+
+    #     with next_week:
+    #         if st.button("\>"):
+    #             st.session_state.week_start += timedelta(weeks=1)
+
+    with col2:
+        if st.button("Training Peaks Reload"):
+            tp_data_update = navigate_to_login('both')
+            load_and_update_final_csv('data/processed/csv/', "training_peaks", tp_data_update)
+
     with col3:
-        if st.button("Today"):
-            st.session_state.week_start = get_monday(current_date)
+        st.write("")
 
     # Navigation Buttons (< and >)
     with col4:
-        prev_week, next_week = st.columns([1, 1], gap="small")
-
+        button_1, prev_week, next_week = st.columns([1, 1, 1], gap="small")
+        with button_1:
+            if st.button("Today"):
+                st.session_state.week_start = get_monday(current_date)
         with prev_week:
             if st.button("<"):
                 st.session_state.week_start -= timedelta(weeks=1)
-
         with next_week:
             if st.button("\>"):
                 st.session_state.week_start += timedelta(weeks=1)
+
 
     # Current Month and Year
     with col5:
@@ -103,7 +125,7 @@ def main():
                 if not day_data.empty:
                     # Loop through each workout and display the main columns (WorkoutType, Title, Time)
                     for idx, row in day_data.iterrows():
-                        header_text = f"{row['WorkoutType']}  \n{row['Title']} {row['PlannedDuration']} hours"
+                        header_text = f"**{row['WorkoutType']}**  \n{row['Title']}  \n{row['PlannedDuration']} hours"
                         with st.expander(header_text, expanded=False):
                             workout_type = st.text_input("Workout Type", row['WorkoutType'], key=f"WorkoutType_{idx}{row}")
                             planned_duration = st.text_input("Time", row['PlannedDuration'], key=f"Time_{idx}{row}")
@@ -118,7 +140,7 @@ def main():
                             st.markdown(f"**Coach Comments**: {coach_comments}")
 
                             # Save the modifications to session_state temp dictionary
-                            if st.button("Update Information", key=f"update_{idx}{row}"):
+                            if st.button("Update Training", key=f"update_{idx}{row}"):
                                 st.session_state.temp_data[idx] = {
                                     'WorkoutType': workout_type,
                                     'PlannedDuration': planned_duration,

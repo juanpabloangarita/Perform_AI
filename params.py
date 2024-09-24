@@ -11,3 +11,5 @@ PASSWORD=os.getenv('PASSWORD')
 USER_DATA_FILE=os.getenv('USER_DATA_FILE')
 CODE_PROMO=os.getenv('CODE_PROMO')
 CLOUD_ON="no"
+USER_TP=os.getenv('USER_TP')
+PASSWORD_TP=os.getenv('PASSWORD_TP')

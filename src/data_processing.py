@@ -56,6 +56,69 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
     df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
     if from_where == 'home':
         return df
+    elif from_where == 'training_peaks':
+        # Iterate through each dictionary in the list and extract the required values
+        for activity_dict in data_to_update:
+            # Extracting values from the activity_dict
+            date_str = activity_dict.get('Date', 'Unknown Date')
+            compliance_status = activity_dict.get('compliance_status', 'Unknown')
+            workout_type = activity_dict.get('WorkoutType', 'Unknown')  # 'Bike', 'Run', 'Swim'
+            title = activity_dict.get('Title', '')
+            description = activity_dict.get('WorkoutDescription', '')
+            coach_comments = activity_dict.get('CoachComments', '')
+            duration = float(activity_dict.get('duration', 0.0))  # Duration in minutes # FIXME: TRANSFORM CALCULATE
+            tss = float(activity_dict.get('tss', 0.0))  # TSS value
+
+            # Calculate duration in hours
+            duration_hours = duration / 60
+
+            # Check if a row with the same 'Date' exists
+            if date_str in df.index:
+                # Check if the 'WorkoutType' matches
+                if df.loc[date_str, 'WorkoutType'] == workout_type:
+                    # Replace all values in the existing row
+                    df.loc[date_str] = {
+                        'Date': date_str,
+                        'compliance_status': compliance_status,
+                        'WorkoutType': workout_type,
+                        'Title': title,
+                        'WorkoutDescription': description,
+                        'CoachComments': coach_comments,
+                        'TimeTotalInHours': duration_hours,
+                        'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
+                        'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0), # FIXME: WE DON'T HAVE CALORIES
+                        'TSS': tss  # Assuming you have a TSS column
+                    }
+                else:
+                    # If the 'WorkoutType' doesn't match, create a new row
+                    new_index = f"{date_str} - {workout_type}"  # Optional: differentiate entries by workout type
+                    df.loc[new_index] = {
+                        'Date': date_str,
+                        'compliance_status': compliance_status,
+                        'WorkoutType': workout_type,
+                        'Title': title,
+                        'WorkoutDescription': description,
+                        'CoachComments': coach_comments,
+                        'TimeTotalInHours': duration_hours,
+                        'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
+                        'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0),
+                        'TSS': tss  # Assuming you have a TSS column
+                    }
+            else:
+                # If the 'Date' is new, add a new row
+                df.loc[date_str] = {
+                    'Date': date_str,
+                    'compliance_status': compliance_status,
+                    'WorkoutType': workout_type,
+                    'Title': title,
+                    'WorkoutDescription': description,
+                    'CoachComments': coach_comments,
+                    'TimeTotalInHours': duration_hours,
+                    'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
+                    'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0),
+                    'TSS': tss  # Assuming you have a TSS column
+                }
+
     else:
         time_added = pd.to_datetime(time_added) # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
         time_added = time_added.strftime('%Y-%m-%d') # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
