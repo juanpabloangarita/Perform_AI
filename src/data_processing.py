@@ -123,13 +123,6 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
         time_added = pd.to_datetime(time_added) # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
         time_added = time_added.strftime('%Y-%m-%d') # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
 
-        # Ensure the necessary columns are present in the DataFrame  # TODO: I CAN CREATE THESE TWO COLUMNS ONCE AND TAHT'S IT, INSTEAD OF DOING IT CONSTANTLY
-        required_columns = ['WorkoutType', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'CaloriesSpent', 'CaloriesConsumed']
-        for col in required_columns:
-            if col not in df.columns:
-                df[col] = 0.0  # Add the missing columns with None or NaN values
-
-        # Check where the update is coming from
         if from_where == "input_activities":
             # Loop through each activity and update the relevant columns
             for activity, details in data_to_update.items():
@@ -446,8 +439,6 @@ def process_data(user_data, workouts=None):
         full_path = get_full_path('data/processed/csv/')
         work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'))
         acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'))
-
-
     # micro_agression(w_df, activities_df)
 
     # Separate past and future workouts
@@ -470,8 +461,9 @@ def process_data(user_data, workouts=None):
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
     aggregate_by_date_path = False
-    final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters',
-                     'Run_Cal', 'Bike_Cal', 'Swim_Cal', 'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'Calories']
+    final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours',
+                     'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
+                     'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
     if aggregate_by_date_path:
         ### DATAFRAMES AGGREGATED BY DATE ###
         w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
@@ -484,10 +476,8 @@ def process_data(user_data, workouts=None):
         final_df.index = pd.to_datetime(final_df.index)
         final_df.index = final_df.index.date
 
+        final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
 
-        final_df = final_df[final_columns]
-
-        # Fill NaN values in numeric columns with 0.0
         numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
         final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
 
@@ -533,10 +523,8 @@ def process_data(user_data, workouts=None):
 
         final_df = final_df.set_index('Date')
 
-        # Assuming final_df is your DataFrame and final_columns is defined
-        final_df = final_df[final_columns]
+        final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
 
-        # Fill NaN values in numeric columns with 0.0
         numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
         final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
 
