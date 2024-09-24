@@ -46,14 +46,14 @@ def load_csv(file_path):
 
 def save_final_csv(file_path, w_df, a_df, df):
     full_path = get_full_path(file_path)
-    w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'))
-    a_df.to_csv(os.path.join(full_path, 'activities_df.csv'))
-    df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
+    w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
+    a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
+    df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
     full_path = get_full_path(file_path)
-    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0)
+    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0, na_filter=False)
     if from_where == 'home':
         return df
     elif from_where == 'training_peaks':
@@ -140,43 +140,63 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                     df.loc[time_added, 'DistanceInMeters'] += distance
                     df.loc[time_added, 'CaloriesSpent'] += calories_spent
                 else:
-                    # Create a new row with NaN for other columns
                     new_row = pd.DataFrame({
                         'WorkoutType': [workout_type],
+                        'Title': [''],  # Set default or placeholder for other columns
+                        'WorkoutDescription': [''],
+                        'CoachComments': [''],
                         'HeartRateAverage': [heart_rate],
                         'TimeTotalInHours': [duration_hours],
                         'DistanceInMeters': [distance],
+                        'PlannedDuration': [0.0],
+                        'PlannedDistanceInMeters': [0.0],
+                        'Run_Cal': [0.0],
+                        'Bike_Cal': [0.0],
+                        'Swim_Cal': [0.0],
+                        'TotalPassiveCal': [0.0],
+                        'CalculatedActiveCal': [0.0],
+                        'EstimatedActiveCal': [0.0],
+                        'Calories': [0.0],
                         'CaloriesSpent': [calories_spent],
-                        'CaloriesConsumed': [0.0]  # Set to None or NaN for other columns
+                        'CaloriesConsumed': [0.0]  # Set default values for all columns
                     }, index=[time_added])
-                    df = pd.concat([df, new_row])  # TODO: I can organize the dataframe according to date index
+
+                    df = pd.concat([df, new_row])
                     df = df.sort_index()
+
 
         elif from_where == "calories_consumed":
             # Update the CaloriesConsumed column
             if time_added in df.index:
                 df.loc[time_added, 'CaloriesConsumed'] += data_to_update  # Add new calories consumed
             else:
-                # Create a new row with NaN for other columns
                 new_row = pd.DataFrame({
-                    'WorkoutType': [''],
-                    'HeartRateAverage': [0.0],
+                    'WorkoutType': [''],  # Keep as an empty string for WorkoutType
+                    'Title': [''],  # Empty string for Title
+                    'WorkoutDescription': [''],  # Empty string for WorkoutDescription
+                    'CoachComments': [''],  # Empty string for CoachComments
+                    'HeartRateAverage': [0.0],  # Default value for numeric columns
                     'TimeTotalInHours': [0.0],
                     'DistanceInMeters': [0.0],
-                    'CaloriesSpent': [0.0],
-                    'CaloriesConsumed': [data_to_update],
                     'PlannedDuration': [0.0],
                     'PlannedDistanceInMeters': [0.0],
+                    'Run_Cal': [0.0],  # Default values for calories
+                    'Bike_Cal': [0.0],
+                    'Swim_Cal': [0.0],
                     'TotalPassiveCal': [0.0],
+                    'CalculatedActiveCal': [0.0],
                     'EstimatedActiveCal': [0.0],
-                    'Calories': [0.0]
+                    'Calories': [0.0],
+                    'CaloriesSpent': [0.0],
+                    'CaloriesConsumed': [data_to_update]  # Value you want to update
                 }, index=[time_added])
-                df = pd.concat([df, new_row]) # TODO: I can organize the dataframe according to date index
+
+                # Concatenate and sort the dataframe by the date index
+                df = pd.concat([df, new_row])
                 df = df.sort_index()
 
-        #df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True)
         try:
-            df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w')
+            df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
             sys.stdout.flush()
             print("File saved successfully")
         except Exception as e:
@@ -394,7 +414,7 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
         # Fill NaN values in object columns with an empty string
     object_cols = w_df.select_dtypes(include=['object']).columns
-    w_df[object_cols] = w_df[object_cols].fillna('No Info')
+    w_df[object_cols] = w_df[object_cols].fillna('')
 
     return w_df
 
@@ -435,10 +455,11 @@ def process_data(user_data, workouts=None):
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
 
+
     def micro_agression(work_df, acti_df):
         full_path = get_full_path('data/processed/csv/')
-        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'))
-        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'))
+        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
+        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
     # micro_agression(w_df, activities_df)
 
     # Separate past and future workouts
@@ -484,8 +505,6 @@ def process_data(user_data, workouts=None):
         return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df
     else:
         ### DATAFRAMES NOT AGGREGATED BY DATE ###
-
-
         def standardize_date_index(df):
             """
             Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
