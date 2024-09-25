@@ -3,6 +3,7 @@ import tempfile
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType  # Keep this import if needed
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -44,8 +45,12 @@ def setup_driver(options):
     options.add_experimental_option("useAutomationExtension", False)
 
     # Set up the ChromeDriver
-    chrome_driver_path = ChromeDriverManager().install()
+    # chrome_driver_path = ChromeDriverManager().install()
+    # service = Service(chrome_driver_path)
+
+    chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
     service = Service(chrome_driver_path)
+
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
