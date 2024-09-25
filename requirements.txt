@@ -23,4 +23,5 @@ setuptools==63.2.0
 scikit-learn
 streamlit==1.37.1
 s3fs
+webdriver-manager
 xgboost
