@@ -1,0 +1,6 @@
+chromedriver-autoinstaller==0.6.4
+chromedriver-binary-auto==0.3.1
+selenium==4.23.1
+selenium-stealth==1.0.6
+webdriver-manager==4.0.2
+webdrivermanager==0.10.0
