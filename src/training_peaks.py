@@ -217,9 +217,6 @@ def fetch_activities_for_date(driver, date_str):
     # Step 3: Scroll into view if necessary
     ActionChains(driver).move_to_element(date_element).perform()
 
-    # Step 4: Find the 'activities' div that is a child of today's dayContainer
-    # activities_element = date_element.find_element(By.XPATH, ".//div[contains(@class, 'activities')]") # changed by safe_find_child_element
-
     try:
         # Use the safe method to find the 'activities' element within 'date_element'
         activities_element = safe_find_child_element(date_element, By.XPATH, ".//div[contains(@class, 'activities')]")
@@ -260,31 +257,31 @@ def fetch_activities_for_date(driver, date_str):
         if sport_type in ['Bike', 'Run', 'Swim']:
             try:
                 title = activity.find_element(By.CSS_SELECTOR, "span.newActivityUItitle").text
-            except Exception as e:
+            except NoSuchElementException as e:
                 title = ''  # Default value if the element is not found
                 print(f"Error fetching title: {e}")
 
             try:
                 duration = activity.find_element(By.CSS_SELECTOR, "div.duration span.value").text
-            except Exception as e:
+            except NoSuchElementException as e:
                 duration = 0.0  # Default value if the element is not found
                 print(f"Error fetching duration: {e}")
 
             try:
                 tss = activity.find_element(By.CSS_SELECTOR, "div.tss span.value").text
-            except Exception as e:
+            except NoSuchElementException as e:
                 tss = 0.0  # Default value if the element is not found
                 print(f"Error fetching TSS: {e}")
 
             try:
                 description = activity.find_element(By.CSS_SELECTOR, "p.description").text
-            except Exception as e:
+            except NoSuchElementException as e:
                 description = ''  # Default value if the element is not found
                 print(f"Error fetching description: {e}")
 
             try:
                 coach_comments = activity.find_element(By.CSS_SELECTOR, "p.coachComments").text
-            except Exception as e:
+            except NoSuchElementException as e:
                 coach_comments = ''  # Default value if the element is not found
                 print(f"Error fetching coach comments: {e}")
 

@@ -57,68 +57,77 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
     if from_where == 'home':
         return df
     elif from_where == 'training_peaks':
-        # Iterate through each dictionary in the list and extract the required values
         for activity_dict in data_to_update:
             # Extracting values from the activity_dict
-            date_str = activity_dict.get('Date', 'Unknown Date')
-            compliance_status = activity_dict.get('compliance_status', 'Unknown')
-            workout_type = activity_dict.get('WorkoutType', 'Unknown')  # 'Bike', 'Run', 'Swim'
+            date_str = activity_dict.get('Date', '')
+            compliance_status = activity_dict.get('compliance_status', '')
+            workout_type = activity_dict.get('WorkoutType', '')  # 'Bike', 'Run', 'Swim'
             title = activity_dict.get('Title', '')
             description = activity_dict.get('WorkoutDescription', '')
             coach_comments = activity_dict.get('CoachComments', '')
-            duration = float(activity_dict.get('duration', 0.0))  # Duration in minutes # FIXME: TRANSFORM CALCULATE
+            duration = activity_dict.get('duration', 0.0)  # Duration in minutes # FIXME: TRANSFORM CALCULATE
             tss = float(activity_dict.get('tss', 0.0))  # TSS value
 
-            # Calculate duration in hours
-            duration_hours = duration / 60
+            date_str = pd.to_datetime(date_str)
+            date_str = date_str.strftime('%Y-%m-%d')
 
-            # Check if a row with the same 'Date' exists
-            if date_str in df.index:
-                # Check if the 'WorkoutType' matches
-                if df.loc[date_str, 'WorkoutType'] == workout_type:
-                    # Replace all values in the existing row
-                    df.loc[date_str] = {
-                        'Date': date_str,
-                        'compliance_status': compliance_status,
-                        'WorkoutType': workout_type,
-                        'Title': title,
-                        'WorkoutDescription': description,
-                        'CoachComments': coach_comments,
-                        'TimeTotalInHours': duration_hours,
-                        'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
-                        'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0), # FIXME: WE DON'T HAVE CALORIES
-                        'TSS': tss  # Assuming you have a TSS column
-                    }
-                else:
-                    # If the 'WorkoutType' doesn't match, create a new row
-                    new_index = f"{date_str} - {workout_type}"  # Optional: differentiate entries by workout type
-                    df.loc[new_index] = {
-                        'Date': date_str,
-                        'compliance_status': compliance_status,
-                        'WorkoutType': workout_type,
-                        'Title': title,
-                        'WorkoutDescription': description,
-                        'CoachComments': coach_comments,
-                        'TimeTotalInHours': duration_hours,
-                        'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
-                        'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0),
-                        'TSS': tss  # Assuming you have a TSS column
-                    }
+            # Calculate duration in hours
+            duration_hours = pd.to_timedelta(duration).total_seconds() / 3600
+
+            existing_row_mask = (df.index == date_str) & (df['WorkoutType'] == workout_type)
+            existing_row = df[existing_row_mask]
+
+            if not existing_row.empty:
+                # Update the specific row(s) with the correct column-value pairs
+                df.loc[existing_row_mask, ['WorkoutType', 'Title',
+                                        'WorkoutDescription', 'CoachComments', 'TimeTotalInHours']] = [
+                    workout_type,
+                    title,
+                    description,
+                    coach_comments,
+                    duration_hours
+                ]   # compliance_status, # tss
             else:
                 # If the 'Date' is new, add a new row
                 df.loc[date_str] = {
                     'Date': date_str,
-                    'compliance_status': compliance_status,
+                    #'compliance_status': compliance_status,
                     'WorkoutType': workout_type,
                     'Title': title,
                     'WorkoutDescription': description,
                     'CoachComments': coach_comments,
                     'TimeTotalInHours': duration_hours,
-                    'DistanceInMeters': activity_dict.get('DistanceInMeters', 0.0),
-                    'CaloriesSpent': activity_dict.get('CaloriesSpent', 0.0),
-                    'TSS': tss  # Assuming you have a TSS column
+                    'DistanceInMeters': 0.0,
+                    'CaloriesSpent': 0.0
                 }
+            try:
+                df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
+                sys.stdout.flush()
+                print("File saved successfully")
+            except Exception as e:
+                print(f"Error saving final_df: {e}")
 
+    elif from_where == 'plan_my_week':
+        workout_type = data_to_update.get('WorkoutType', '')
+        duration_hours = data_to_update.get('TimeTotalInHours', 0.0)
+        distance = data_to_update.get('DistanceInMeters', 0.0)
+        calories_spent = data_to_update.get('CaloriesSpent', 0.0)
+
+
+        # Filter rows for the specific workout type on the given date
+        existing_row_mask = (df.index == time_added) & (df['WorkoutType'] == workout_type)
+        existing_row = df[existing_row_mask]
+
+        if not existing_row.empty:
+            df.loc[existing_row_mask, 'TimeTotalInHours'] = duration_hours
+            df.loc[existing_row_mask, 'DistanceInMeters'] = distance
+            df.loc[existing_row_mask, 'CaloriesSpent'] = calories_spent
+            try:
+                df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
+                sys.stdout.flush()
+                print("File saved successfully")
+            except Exception as e:
+                print(f"Error saving final_df: {e}")
     else:
         time_added = pd.to_datetime(time_added) # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
         time_added = time_added.strftime('%Y-%m-%d') # NOTE: IT SEEMS REDUNDANT, CUZ before sending it i am already doing this
@@ -132,13 +141,16 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                 distance = details['distance']
                 calories_spent = details['calories_spent']
 
-                # If the timestamp already exists, update the row; otherwise, add a new row
-                if time_added in df.index: # NOTE: IN THE FOLLOWING LINE THE ' -' means everything coming after that is a real exercise done, this is a patch solution
-                    df.loc[time_added, 'WorkoutType'] += ' -' + workout_type # FIXME: crashes the previous activity at each call. not a problem?, since this is the real exo done.
-                    df.loc[time_added, 'HeartRateAverage'] = heart_rate # FIXME: above line, yes a problem cuz crashes newly input done exos. heart rate has been accum before.
-                    df.loc[time_added, 'TimeTotalInHours'] += duration_hours
-                    df.loc[time_added, 'DistanceInMeters'] += distance
-                    df.loc[time_added, 'CaloriesSpent'] += calories_spent
+                # Filter rows for the specific workout type on the given date
+                existing_row_mask = (df.index == time_added) & (df['WorkoutType'] == workout_type)
+                existing_row = df[existing_row_mask]
+
+                if not existing_row.empty:
+                    # Update the existing row for the specified WorkoutType
+                    df.loc[existing_row_mask, 'HeartRateAverage'] += heart_rate  # Accumulate heart rates if needed
+                    df.loc[existing_row_mask, 'TimeTotalInHours'] += duration_hours
+                    df.loc[existing_row_mask, 'DistanceInMeters'] += distance
+                    df.loc[existing_row_mask, 'CaloriesSpent'] += calories_spent
                 else:
                     new_row = pd.DataFrame({
                         'WorkoutType': [workout_type],
@@ -148,8 +160,6 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                         'HeartRateAverage': [heart_rate],
                         'TimeTotalInHours': [duration_hours],
                         'DistanceInMeters': [distance],
-                        'PlannedDuration': [0.0],
-                        'PlannedDistanceInMeters': [0.0],
                         'Run_Cal': [0.0],
                         'Bike_Cal': [0.0],
                         'Swim_Cal': [0.0],
@@ -178,8 +188,6 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                     'HeartRateAverage': [0.0],  # Default value for numeric columns
                     'TimeTotalInHours': [0.0],
                     'DistanceInMeters': [0.0],
-                    'PlannedDuration': [0.0],
-                    'PlannedDistanceInMeters': [0.0],
                     'Run_Cal': [0.0],  # Default values for calories
                     'Bike_Cal': [0.0],
                     'Swim_Cal': [0.0],
@@ -201,7 +209,6 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
             print("File saved successfully")
         except Exception as e:
             print(f"Error saving final_df: {e}")
-
 
 
 def save_tss_values_for_dashboard(file_path, tss, atl, ctl, tsb):
@@ -343,7 +350,7 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
         # Perform the weighted average
         total_duration = duration_col.sum()
         if total_duration > 0:
-            weighted_hr = (df['HeartRateAverage'] * duration_col).sum() / total_duration
+            weighted_hr = (df['HeartRateAverage'] * duration_col).sum() / total_duration # NOTE: MAYBE THIS IS NOT NEEDED ANYMORE
         else:
             weighted_hr = 0  # Handle the case where no valid durations are present
         return weighted_hr
@@ -501,6 +508,7 @@ def process_data(user_data, workouts=None):
 
         numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
         final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
+        final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
 
         return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df
     else:
@@ -546,6 +554,8 @@ def process_data(user_data, workouts=None):
 
         numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
         final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
+
+        final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
 
 
         return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df

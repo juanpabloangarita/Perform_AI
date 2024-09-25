@@ -51,27 +51,10 @@ def main():
     with col1:
         st.markdown("<h1 style='margin-bottom: 0;'>Calendar</h1>", unsafe_allow_html=True)
 
-    # # Today Button
-    # with col3:
-    #     if st.button("Today"):
-    #         st.session_state.week_start = get_monday(current_date)
-
-    # # Navigation Buttons (< and >)
-    # with col4:
-    #     prev_week, next_week = st.columns([1, 1], gap="small")
-
-    #     with prev_week:
-    #         if st.button("<"):
-    #             st.session_state.week_start -= timedelta(weeks=1)
-
-    #     with next_week:
-    #         if st.button("\>"):
-    #             st.session_state.week_start += timedelta(weeks=1)
-
     with col2:
         if st.button("Training Peaks Reload"):
             tp_data_update = navigate_to_login('both')
-            load_and_update_final_csv('data/processed/csv/', "training_peaks", tp_data_update)
+            load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=tp_data_update)
 
     with col3:
         st.write("")
@@ -125,12 +108,18 @@ def main():
                 if not day_data.empty:
                     # Loop through each workout and display the main columns (WorkoutType, Title, Time)
                     for idx, row in day_data.iterrows():
-                        header_text = f"**{row['WorkoutType']}**  \n{row['Title']}  \n{row['PlannedDuration']} hours"
+                        header_text = f"**{row['WorkoutType']}**  \n{row['Title']}  \n{row['TimeTotalInHours']} hours"
                         with st.expander(header_text, expanded=False):
-                            workout_type = st.text_input("Workout Type", row['WorkoutType'], key=f"WorkoutType_{idx}{row}")
-                            planned_duration = st.text_input("Time", row['PlannedDuration'], key=f"Time_{idx}{row}")
-                            planned_distance = st.number_input("Planned Distance (m)", row['PlannedDistanceInMeters'], key=f"Distance_{idx}{row}")
-                            calories_spent = st.number_input("Calories Spent", row['CaloriesSpent'], key=f"Calories_{idx}{row}")
+                            workout_type = st.text_input("Workout Type", value = row['WorkoutType'], key=f"WorkoutType_{idx}{row}")
+                            duration = st.text_input("Time", value = row['TimeTotalInHours'], key=f"Time_{idx}{row}")
+                            distance = st.number_input(
+                                "Distance (m)",
+                                value=row['DistanceInMeters'],  # Default value
+                                min_value=0.0,  # Set minimum value to 0 or any other lower limit you prefer
+                                max_value=None,  # No maximum limit
+                                key=f"Distance_{idx}{row}"
+                            )
+                            calories_spent = st.number_input("Calories Spent", value = row['CaloriesSpent'], key=f"Calories_{idx}{row}")
 
                             # Editable description and comments
                             description = row['WorkoutDescription']
@@ -140,13 +129,17 @@ def main():
                             st.markdown(f"**Coach Comments**: {coach_comments}")
 
                             # Save the modifications to session_state temp dictionary
-                            if st.button("Update Training", key=f"update_{idx}{row}"):
-                                st.session_state.temp_data[idx] = {
+                            if st.button("Update", key=f"update_{idx}{row}"):
+                                tmp_dict_week = {
                                     'WorkoutType': workout_type,
-                                    'PlannedDuration': planned_duration,
-                                    'PlannedDistanceInMeters': planned_distance,
+                                    'TimeTotalInHours': duration,
+                                    'DistanceInMeters': distance,
                                     'CaloriesSpent': calories_spent
                                 }
+                                st.session_state.temp_data[idx] = tmp_dict_week
+                                load_and_update_final_csv('data/processed/csv/', "plan_my_week", day_date_str, tmp_dict_week)
+                            # if st.button("Delete", key=f"delete_{idx}{row}"):
+                            #     load_and_update_final_csv('data/processed/csv/', "plan_my_week")
 
                 else:
                     st.markdown("<span style='font-size:16px;'>No workout data.</span>", unsafe_allow_html=True)
