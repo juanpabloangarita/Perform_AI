@@ -47,7 +47,7 @@ def setup_driver(options):
     # Set up the ChromeDriver
     # chrome_driver_path = ChromeDriverManager().install()
     # service = Service(chrome_driver_path)
-
+    os.system('webdriver-manager install chrome')
     chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
     service = Service(chrome_driver_path)
 
