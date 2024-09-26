@@ -21,6 +21,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 from params import *
 import chromedriver_autoinstaller
 
+import logging
+
+# Set up logging configuration
+logging.basicConfig(
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
+
+
 headless_mode = (CLOUD_ON == 'yes')
 
 # Set environment variable for browser (for debugging purposes)
@@ -61,11 +70,9 @@ def setup_driver(options):
     chromedriver_autoinstaller.install()
     driver = webdriver.Chrome(options=options)
 
-    print()
-    print()
-    print(f"FINISHING SETUP_DRIVER")
-    print()
-    print()
+    # Use logging
+    logging.info("I AM EXITING SETUP_DRIVER")
+    logging.error(f"DRIVER IS {driver == True}")
 
     return driver
 
