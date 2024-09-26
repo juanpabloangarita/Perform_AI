@@ -1,3 +1,27 @@
+"""
+# Ensure ChromeDriver is installed before starting the script
+os.system('webdriver-manager install chrome')  # Pre-install ChromeDriver via shell
+
+# Continue with ChromeDriver setup in Python
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+service = Service('/path/to/chromedriver')  # Use the pre-installed ChromeDriver
+driver = webdriver.Chrome(service=service, options=options)
+
+When to Use This Approach?
+CI/CD pipelines: In environments where Python’s execution might be separate from system-level package installation.
+You could run this command once during setup and use the installed driver for multiple scripts.
+Pre-script Setup: If you want to pre-install drivers via shell commands in Docker or virtual environments before running the Python script itself.
+
+Is This Best Practice?
+No—for typical Python automation. This approach is less portable and less Pythonic compared to managing the installation directly in Python
+with libraries like webdriver_manager or chromedriver_autoinstaller.
+Yes—in specific cases like cloud environments or Docker containers where pre-installation of system-level dependencies is common and
+Python runtime is decoupled from package installations.
+"""
+
+
 import os
 import tempfile
 from selenium import webdriver
@@ -21,19 +45,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 from params import *
 import chromedriver_autoinstaller
 
-import logging
-
-# Set up logging configuration
-logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    level=logging.INFO
-)
-
 
 headless_mode = (CLOUD_ON == 'yes')
 
 # Set environment variable for browser (for debugging purposes)
-os.environ["BROWSER"] = "chrome"
+
+# os.environ["BROWSER"] = "chrome" # NOTE: FOR CHROME
+os.environ["BROWSER"] = "chromium" # NOTE: FOR CHROMIUM
 os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
 
 def setup_driver(options):
@@ -55,25 +73,25 @@ def setup_driver(options):
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
 
-    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 1
+    ##### CHROME #####
+    # # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 1
     # chrome_driver_path = ChromeDriverManager().install()
     # service = Service(chrome_driver_path)
     # driver = webdriver.Chrome(service=service, options=options)
 
-    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 2
-    # os.system('webdriver-manager install chrome')
+    # # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 2
     # chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
     # service = Service(chrome_driver_path)
     # driver = webdriver.Chrome(service=service, options=options)
 
-    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 3
+    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 3 - best
+    # chromedriver_autoinstaller.install()
+    # driver = webdriver.Chrome(options=options)
+
+    ##### CHROMIUM #####
     chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome(options=options)
-
-    # Use logging
-    logging.info("I AM EXITING SETUP_DRIVER")
-    logging.error(f"DRIVER IS {driver == True}")
-
+    service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    driver = webdriver.Chrome(service=service, options=options)
     return driver
 
 

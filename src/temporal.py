@@ -1,3 +1,4 @@
+
 import os
 import tempfile
 from selenium import webdriver
@@ -19,14 +20,17 @@ from selenium.common.exceptions import TimeoutException, StaleElementReferenceEx
 from selenium.webdriver.common.action_chains import ActionChains
 
 from params import *
+import chromedriver_autoinstaller
+
 
 headless_mode = (CLOUD_ON == 'yes')
 
 # Set environment variable for browser (for debugging purposes)
-os.environ["BROWSER"] = "chrome"
+os.environ["BROWSER"] = "chromium"
 os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
 
 def setup_driver(options):
+
     # Add headless mode options if needed
     if headless_mode:
         options.add_argument("--headless")
@@ -43,25 +47,9 @@ def setup_driver(options):
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-
-    # Set up the ChromeDriver
-    # chrome_driver_path = ChromeDriverManager().install()
-    # service = Service(chrome_driver_path)
-
-    chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
-    service = Service(chrome_driver_path)
-
+    
+    chromedriver_autoinstaller.install()
+    service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
     driver = webdriver.Chrome(service=service, options=options)
+
     return driver
-
-
-# Create Chrome options instance
-options = webdriver.ChromeOptions()
-options.add_argument("--disable-blink-features=AutomationControlled")
-options.add_argument("--start-maximized")
-
-# Initialize WebDriver
-driver = setup_driver(options)
-
-# Open the login page
-driver.get("https://home.trainingpeaks.com/login")
