@@ -51,7 +51,7 @@ headless_mode = (CLOUD_ON == 'yes')
 # Set environment variable for browser (for debugging purposes)
 
 # os.environ["BROWSER"] = "chrome" # NOTE: FOR CHROME
-os.environ["BROWSER"] = "chromium" # NOTE: FOR CHROMIUM
+os.environ["BROWSER"] = "chromium" # NOTE: FOR CHROMIUM TO INSTALL -> brew install chromium --no-quarantine
 os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
 
 def setup_driver(options):
@@ -84,14 +84,16 @@ def setup_driver(options):
     # service = Service(chrome_driver_path)
     # driver = webdriver.Chrome(service=service, options=options)
 
-    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 3 - best
-    # chromedriver_autoinstaller.install()
-    # driver = webdriver.Chrome(options=options)
+    if headless_mode:
+        #### CHROMIUM #####
+        chromedriver_autoinstaller.install()
+        service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+        driver = webdriver.Chrome(service=service, options=options)
+    else:
+        # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 3 - best
+        chromedriver_autoinstaller.install()
+        driver = webdriver.Chrome(options=options)
 
-    ##### CHROMIUM #####
-    chromedriver_autoinstaller.install()
-    service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-    driver = webdriver.Chrome(service=service, options=options)
     return driver
 
 
