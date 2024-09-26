@@ -136,7 +136,7 @@ else:
 
         # Display the information in each column
         with col1:
-            st.write(f"**Sports Scheduled:** Yes.")
+            st.write(f"**Sports Scheduled Today:** Yes.")
 
         with col2:
             st.write(f"**Goal:** {st.session_state['user_data']['goal']}")

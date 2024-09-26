@@ -19,6 +19,7 @@ from selenium.common.exceptions import TimeoutException, StaleElementReferenceEx
 from selenium.webdriver.common.action_chains import ActionChains
 
 from params import *
+import chromedriver_autoinstaller
 
 headless_mode = (CLOUD_ON == 'yes')
 
@@ -27,6 +28,7 @@ os.environ["BROWSER"] = "chrome"
 os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
 
 def setup_driver(options):
+
     # Add headless mode options if needed
     if headless_mode:
         options.add_argument("--headless")
@@ -44,14 +46,27 @@ def setup_driver(options):
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
 
-    # Set up the ChromeDriver
+    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 1
     # chrome_driver_path = ChromeDriverManager().install()
     # service = Service(chrome_driver_path)
-    os.system('webdriver-manager install chrome')
-    chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
-    service = Service(chrome_driver_path)
+    # driver = webdriver.Chrome(service=service, options=options)
 
-    driver = webdriver.Chrome(service=service, options=options)
+    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 2
+    # os.system('webdriver-manager install chrome')
+    # chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
+    # service = Service(chrome_driver_path)
+    # driver = webdriver.Chrome(service=service, options=options)
+
+    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 3
+    chromedriver_autoinstaller.install()
+    driver = webdriver.Chrome(options=options)
+
+    print()
+    print()
+    print(f"FINISHING SETUP_DRIVER")
+    print()
+    print()
+
     return driver
 
 

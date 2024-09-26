@@ -119,7 +119,7 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
         existing_row = df[existing_row_mask]
 
         if not existing_row.empty:
-            df.loc[existing_row_mask, 'TimeTotalInHours'] = duration_hours
+            df.loc[existing_row_mask, 'TimeTotalInHours'] = pd.to_numeric(duration_hours, errors='coerce')
             df.loc[existing_row_mask, 'DistanceInMeters'] = distance
             df.loc[existing_row_mask, 'CaloriesSpent'] = calories_spent
             try:
@@ -148,7 +148,7 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                 if not existing_row.empty:
                     # Update the existing row for the specified WorkoutType
                     df.loc[existing_row_mask, 'HeartRateAverage'] += heart_rate  # Accumulate heart rates if needed
-                    df.loc[existing_row_mask, 'TimeTotalInHours'] += duration_hours
+                    df.loc[existing_row_mask, 'TimeTotalInHours'] += pd.to_numeric(duration_hours, errors='coerce')
                     df.loc[existing_row_mask, 'DistanceInMeters'] += distance
                     df.loc[existing_row_mask, 'CaloriesSpent'] += calories_spent
                 else:
