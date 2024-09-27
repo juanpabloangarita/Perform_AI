@@ -57,56 +57,93 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
     if from_where == 'home':
         return df
     elif from_where == 'training_peaks':
-        for activity_dict in data_to_update:
-            # Extracting values from the activity_dict
-            date_str = activity_dict.get('Date', '')
-            compliance_status = activity_dict.get('compliance_status', '')
-            workout_type = activity_dict.get('WorkoutType', '')  # 'Bike', 'Run', 'Swim'
-            title = activity_dict.get('Title', '')
-            description = activity_dict.get('WorkoutDescription', '')
-            coach_comments = activity_dict.get('CoachComments', '')
-            duration = activity_dict.get('duration', 0.0)  # Duration in minutes # FIXME: TRANSFORM CALCULATE
-            tss = float(activity_dict.get('tss', 0.0))  # TSS value
+        if isinstance(data_to_update, pd.DataFrame):
+            # If data_to_update is a DataFrame, iterate over its rows
+            for i, row in data_to_update.iterrows():
+                date_str = row['Date']
+                workout_type = row['WorkoutType']
+                title = row['Title']
+                description = row['WorkoutDescription']
+                coach_comments = row['CoachComments']
+                duration = row['duration']  # Assume this column exists
+                tss = row['tss']
 
-            date_str = pd.to_datetime(date_str)
-            date_str = date_str.strftime('%Y-%m-%d')
+                existing_row_mask = (df.index == date_str) & (df['WorkoutType'] == workout_type)
+                existing_row = df[existing_row_mask]
 
-            # Calculate duration in hours
-            duration_hours = pd.to_timedelta(duration).total_seconds() / 3600
+                if not existing_row.empty:
+                    # Update the specific row(s) with the correct column-value pairs
+                    df.loc[existing_row_mask, ['WorkoutType', 'Title',
+                                                'WorkoutDescription', 'CoachComments', 'TimeTotalInHours']] = [
+                        workout_type,
+                        title,
+                        description,
+                        coach_comments,
+                        duration
+                    ]  # compliance_status, # tss
+                else:
+                    # If the 'Date' is new, add a new row
+                    df.loc[date_str] = {
+                        'Date': date_str,
+                        # 'compliance_status': compliance_status,
+                        'WorkoutType': workout_type,
+                        'Title': title,
+                        'WorkoutDescription': description,
+                        'CoachComments': coach_comments,
+                        'TimeTotalInHours': duration,
+                        'DistanceInMeters': 0.0,
+                        'CaloriesSpent': 0.0
+                    }
+        else:
+            for activity_dict in data_to_update:
+                # Extracting values from the activity_dict
+                date_str = activity_dict.get('Date', '')
+                compliance_status = activity_dict.get('compliance_status', '')
+                workout_type = activity_dict.get('WorkoutType', '')  # 'Bike', 'Run', 'Swim'
+                title = activity_dict.get('Title', '')
+                description = activity_dict.get('WorkoutDescription', '')
+                coach_comments = activity_dict.get('CoachComments', '')
+                duration = activity_dict.get('duration', 0.0)  # Duration in minutes # FIXME: TRANSFORM CALCULATE
+                tss = float(activity_dict.get('tss', 0.0))  # TSS value
 
-            existing_row_mask = (df.index == date_str) & (df['WorkoutType'] == workout_type)
-            existing_row = df[existing_row_mask]
+                date_str = pd.to_datetime(date_str)
+                date_str = date_str.strftime('%Y-%m-%d')
 
-            if not existing_row.empty:
-                # Update the specific row(s) with the correct column-value pairs
-                df.loc[existing_row_mask, ['WorkoutType', 'Title',
-                                        'WorkoutDescription', 'CoachComments', 'TimeTotalInHours']] = [
-                    workout_type,
-                    title,
-                    description,
-                    coach_comments,
-                    duration_hours
-                ]   # compliance_status, # tss
-            else:
-                # If the 'Date' is new, add a new row
-                df.loc[date_str] = {
-                    'Date': date_str,
-                    #'compliance_status': compliance_status,
-                    'WorkoutType': workout_type,
-                    'Title': title,
-                    'WorkoutDescription': description,
-                    'CoachComments': coach_comments,
-                    'TimeTotalInHours': duration_hours,
-                    'DistanceInMeters': 0.0,
-                    'CaloriesSpent': 0.0
-                }
-            try:
-                df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
-                sys.stdout.flush()
-                print("File saved successfully")
-            except Exception as e:
-                print(f"Error saving final_df: {e}")
+                # Calculate duration in hours
+                duration_hours = pd.to_timedelta(duration).total_seconds() / 3600
 
+                existing_row_mask = (df.index == date_str) & (df['WorkoutType'] == workout_type)
+                existing_row = df[existing_row_mask]
+
+                if not existing_row.empty:
+                    # Update the specific row(s) with the correct column-value pairs
+                    df.loc[existing_row_mask, ['WorkoutType', 'Title',
+                                            'WorkoutDescription', 'CoachComments', 'TimeTotalInHours']] = [
+                        workout_type,
+                        title,
+                        description,
+                        coach_comments,
+                        duration_hours
+                    ]   # compliance_status, # tss
+                else:
+                    # If the 'Date' is new, add a new row
+                    df.loc[date_str] = {
+                        'Date': date_str,
+                        #'compliance_status': compliance_status,
+                        'WorkoutType': workout_type,
+                        'Title': title,
+                        'WorkoutDescription': description,
+                        'CoachComments': coach_comments,
+                        'TimeTotalInHours': duration_hours,
+                        'DistanceInMeters': 0.0,
+                        'CaloriesSpent': 0.0
+                    }
+        try:
+            df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
+            sys.stdout.flush()
+            print("File saved successfully")
+        except Exception as e:
+            print(f"Error saving final_df: {e}")
     elif from_where == 'plan_my_week':
         workout_type = data_to_update.get('WorkoutType', '')
         duration_hours = data_to_update.get('TimeTotalInHours', 0.0)

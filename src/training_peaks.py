@@ -44,6 +44,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 from params import *
 import chromedriver_autoinstaller
+import pandas as pd
 
 
 headless_mode = (CLOUD_ON == 'yes')
@@ -86,6 +87,7 @@ def setup_driver(options):
     # chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
     # service = Service(chrome_driver_path)
     # driver = webdriver.Chrome(service=service, options=options)
+    # return driver
 
     if headless_mode:
         #### CHROMIUM #####
@@ -269,6 +271,40 @@ def safe_find_child_element(parent_element, by, value, max_retries=3, delay=1):
     raise Exception(f"Failed to find child element after {max_retries} retries due to stale element reference.")
 
 
+def update_tp_dataframe(activities):
+    """
+    Create a new DataFrame from the activities list (list of dictionaries).
+    Perform transformations before saving.
+    """
+    # Create a DataFrame from the list of activity dictionaries
+    tp_update_df = pd.DataFrame(activities)
+
+    # Ensure all columns are present, and fill missing columns with empty strings if not present
+    string_columns = ['Date', 'compliance_status', 'WorkoutType', 'Title',
+                        'WorkoutDescription', 'CoachComments']
+    numeric_columns = ['duration', 'tss']
+    for col in string_columns:
+        if col not in tp_update_df.columns:
+            tp_update_df[col] = ''
+    for col in numeric_columns:
+        if col not in tp_update_df.columns:
+            tp_update_df[col] = 0.0
+
+    # Perform transformations before saving:
+    # 1. Convert 'Date' to datetime format
+    tp_update_df['Date'] = pd.to_datetime(tp_update_df['Date'], errors='coerce')
+    tp_update_df['Date'] = tp_update_df['Date'].dt.strftime('%Y-%m-%d')
+
+    # 2. Convert 'tss' and 'duration' to float (coercing errors to NaN)
+    tp_update_df['tss'] = pd.to_numeric(tp_update_df['tss'], errors='coerce').fillna(0.0)
+
+    # Calculate duration in hours
+    tp_update_df['duration'] = pd.to_timedelta(tp_update_df['duration']).dt.total_seconds() / 3600
+
+    return tp_update_df
+
+
+
 def fetch_activities_for_date(driver, date_str):
     # Scroll to the previous week
     # scroll_to_previous_week(driver) # NOTE: -> selenium.common.exceptions.MoveTargetOutOfBoundsException: Message: move target out of bounds
@@ -312,7 +348,7 @@ def fetch_activities_for_date(driver, date_str):
         try:
             compliance_status_class = activity.find_element(By.CSS_SELECTOR, "div.workoutComplianceStatus").get_attribute("class")
             # Map the class to a more user-friendly term
-            compliance_status = compliance_mapping.get(compliance_status_class, "Unknown")  # Default to 'Unknown' if class not found
+            compliance_status = compliance_mapping.get(compliance_status_class, "Unknown")
         except Exception as e:
             compliance_status = "Unknown"  # Default value if the element is not found
             print(f"Error fetching compliance status: {e}")
@@ -321,7 +357,7 @@ def fetch_activities_for_date(driver, date_str):
         try:
             sport_type = activity.find_element(By.CSS_SELECTOR, "div.printOnly.sportType").get_attribute("innerText")
         except Exception as e:
-            sport_type = 'Unknown'  # Default value if the element is not found
+            sport_type = ''  # Default value if the element is not found
             print(f"Error fetching sport type: {e}")
 
         if sport_type in ['Bike', 'Run', 'Swim']:
@@ -456,7 +492,13 @@ def navigate_to_login(to_do):
 
     time.sleep(uniform(2, 5))
     driver.quit()
-    return data_scraped
+    if headless_mode:
+        tp_update_df = update_tp_dataframe(data_scraped)
+        tp_update_df.to_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", index=False, na_rep='')
+        scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False)
+        return scraped_df
+    else:
+        return data_scraped
 
 if __name__ == '__main__':
     print(navigate_to_login('both'))

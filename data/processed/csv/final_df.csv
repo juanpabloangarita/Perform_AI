@@ -592,11 +592,15 @@ Date,WorkoutType,Title,WorkoutDescription,CoachComments,HeartRateAverage,TimeTot
 
 4x50 kick Zone 1
 
-500 Zone 3 free broken done a... ","P: This workout requires paddles to be completed as written, but can be done without. You may kick w... ",0.0,1.0019444444444445,60.0,0.0,0.0,0.0,2120.4,0.0,583.9181272562065,0.0,60.0,0.0
+500 Zone 3 free broken done a... ","P: This workout requires paddles to be completed as written, but can be done without. You may kick w... ",0.0,1.0019444444444443,60.0,0.0,0.0,0.0,2120.4,0.0,583.9181272562065,0.0,60.0,0.0
 2024-09-26,Run,Zone 2b Long Run,"Warm up in zone 1-2 for 10 minutes then do:
 
 4x20 minutes in zone 2b with 3 minutes zone 1-2 re... ",,0.0,1.8666666666666667,60.0,0.0,0.0,0.0,2120.4,0.0,989.7590623210904,0.0,60.0,0.0
-2024-09-27,Bike,Muscular Endurance,Warm Up: -9 minutes Zone 1 Main Set: -3 x 12 minutes in Zone 3 with 5 minutes of recovery in Zone 1 after each interval,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,0.0,1.0,0.0,0.0,0.0,0.0,2120.4,0.0,587.7248975329406,0.0,0.0,0.0
+2024-09-27,Bike,Muscular Endurance,"Warm Up:
+-9 minutes Zone 1
+
+Main Set:
+-3 x 12 minutes in Zone 3 with 5 minutes of recovery in... ",P: Longer steady Muscular endurance sets working on strengthening your maximum sustained power ,0.0,1.0,60.0,0.0,0.0,0.0,2120.4,0.0,587.7248975329406,0.0,60.0,0.0
 2024-09-28,Swim,Endurance Swim,Warm up: 200 Zone 1 easy 8x50 Zone 5 sprint 2x1000 Zone 2b Race Pace! Record your time! 100 easy Zone 1 cool down,2700 yards,0.0,0.974095554351807,2468.88012695313,0.0,0.0,0.0,2120.4,0.0,571.3327575448916,0.0,0.0,0.0
 2024-09-29,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -4 x 35 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down: -85 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be slightly above the pace you plan on racing at.",0.0,5.0,0.0,0.0,0.0,0.0,2120.4,0.0,539.0733234487643,0.0,0.0,0.0
 2024-09-29,Run,Brick Run,"5 minutes in zone 1, 50 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,0.0,1.0,0.0,0.0,0.0,0.0,2120.4,0.0,632.0824480655522,0.0,0.0,0.0

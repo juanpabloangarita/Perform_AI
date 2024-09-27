@@ -53,6 +53,8 @@ def main():
 
     with col2:
         if st.button("Training Peaks Reload"):
+            # scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False) # NOTE: to test if df in s3
+            # load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
             tp_data_update = navigate_to_login('both')
             load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=tp_data_update)
 
