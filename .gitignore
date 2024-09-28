@@ -1,3 +1,5 @@
+# key.pem to access virtual machine EC2 AWS
+training_peaks_key.pem
 
 # Virtual environment
 .env
