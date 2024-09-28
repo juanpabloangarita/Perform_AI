@@ -180,7 +180,7 @@ with st.container(border=True):
         # Calculate total daily calorie needs
         total_daily_calories = st.session_state['user_data']['passive_calories'] + total_active_calories
         calories_remaining = total_daily_calories - st.session_state['calories_consumed']
-        st.write(f"**Calories Remaining for Today:** {calories_remaining} kcal")
+        st.write(f"**Calories To Consume Today:** {calories_remaining} kcal")
 
         # FIXME: Calculations wrong, above and below
         st.progress(min(st.session_state['calories_consumed'] / total_daily_calories, 1.0))  # To ensure progress stays between 0 and 1

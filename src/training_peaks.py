@@ -83,12 +83,13 @@ def setup_driver(options):
     # service = Service(chrome_driver_path)
     # driver = webdriver.Chrome(service=service, options=options)
 
-    # # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 2
-    # chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
-    # service = Service(chrome_driver_path)
-    # driver = webdriver.Chrome(service=service, options=options)
-    # return driver
+    # NOTE: SETTING UP CHROME DRIVER ALTERNATIVE 2
+    chrome_driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()  # Specify Google Chrome
+    service = Service(chrome_driver_path)
+    driver = webdriver.Chrome(service=service, options=options)
+    return driver
 
+    """
     if headless_mode:
         #### CHROMIUM #####
         chromedriver_autoinstaller.install()
@@ -100,7 +101,7 @@ def setup_driver(options):
         driver = webdriver.Chrome(options=options)
 
     return driver
-
+    """
 
 # Function to add cookies to the driver
 def add_cookies(driver, cookies):

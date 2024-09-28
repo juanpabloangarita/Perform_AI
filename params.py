@@ -13,3 +13,4 @@ CODE_PROMO=os.getenv('CODE_PROMO')
 CLOUD_ON="yes"
 USER_TP=os.getenv('USER_TP')
 PASSWORD_TP=os.getenv('PASSWORD_TP')
+INSTANCE_ID=os.getenv('INSTANCE_ID')
