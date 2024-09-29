@@ -83,15 +83,14 @@ def main():
                     # Step 5: Fetch the scraped data from S3
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)  # Display the DataFrame in Streamlit
-
-                    # Step 6: Reset the S3 CSV file for the next run
+                    load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 elif command_status == "Partial Success":
                     st.warning("Partial success: Some data was scraped but not all.")
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)
-
+                    load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 else:

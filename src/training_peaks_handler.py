@@ -83,7 +83,15 @@ def run_script_via_ssh(instance_ip):
 
         # Execute the training_peaks.py script
         stdin, stdout, stderr = ssh.exec_command('python3 /home/ec2-user/Perform_AI/training_peaks.py')
+        # Read the output and error messages
+        output = stdout.read().decode()
+        error_output = stderr.read().decode()
 
+        # Print the outputs for debugging
+        print("Output:")
+        print(output)
+        print("Error Output:")
+        print(error_output)
         # Wait for the command to complete
         exit_status = stdout.channel.recv_exit_status()
 

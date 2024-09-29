@@ -45,9 +45,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 from params import *
 import chromedriver_autoinstaller
 import pandas as pd
+import boto3
 
 
 headless_mode = (CLOUD_ON == 'yes')
+vm_ec2_mode = True
 
 # Set environment variable for browser (for debugging purposes)
 
@@ -494,10 +496,32 @@ def navigate_to_login(to_do):
     time.sleep(uniform(2, 5))
     driver.quit()
     if headless_mode:
-        tp_update_df = update_tp_dataframe(data_scraped)
-        tp_update_df.to_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", index=False, na_rep='')
-        scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False)
-        return scraped_df
+        if vm_ec2_mode:
+            tp_update_df = update_tp_dataframe(data_scraped)
+            # Use boto3 to save the DataFrame to S3
+            s3_client = boto3.client('s3')
+
+            # Convert DataFrame to CSV and save it to S3
+            tp_update_df = update_tp_dataframe(data_scraped)
+
+            # Saving directly to S3
+            csv_buffer = tp_update_df.to_csv(index=False, na_rep='')
+            try:
+                s3_client.put_object(
+                    Bucket=BUCKET_NAME,
+                    Key='csv/tp_scraped.csv',
+                    Body=csv_buffer
+                )
+                print("Upload Successful")
+            except Exception as e:
+                print("Upload Failed:", e)
+            scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False)
+            return scraped_df
+        else:
+            tp_update_df = update_tp_dataframe(data_scraped)
+            tp_update_df.to_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", index=False, na_rep='')
+            scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False)
+            return scraped_df
     else:
         return data_scraped
 
