@@ -18,6 +18,7 @@ jupyterlab_widgets==3.0.11
 lightgbm
 notebook==7.2.1
 pandas==2.2.2
+paramiko
 plotly==5.23.0
 selenium==4.23.1
 selenium-stealth==1.0.6

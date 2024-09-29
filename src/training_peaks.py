@@ -51,11 +51,11 @@ headless_mode = (CLOUD_ON == 'yes')
 
 # Set environment variable for browser (for debugging purposes)
 
-if headless_mode:
-    os.environ["BROWSER"] = "chromium" # NOTE: FOR CHROMIUM TO INSTALL -> brew install chromium --no-quarantine
-else:
-    os.environ["BROWSER"] = "chrome" # NOTE: FOR CHROME
-
+# if headless_mode:
+#     os.environ["BROWSER"] = "chromium" # NOTE: FOR CHROMIUM TO INSTALL -> brew install chromium --no-quarantine
+# else:
+#     os.environ["BROWSER"] = "chrome" # NOTE: FOR CHROME
+os.environ["BROWSER"] = "chrome" # NOTE: FOR CHROME
 os.environ['WDM_SKIP_VERSION_CHECK'] = 'true'
 
 def setup_driver(options):
@@ -501,5 +501,6 @@ def navigate_to_login(to_do):
     else:
         return data_scraped
 
+
 if __name__ == '__main__':
-    print(navigate_to_login('both'))
+    navigate_to_login('both')
