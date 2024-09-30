@@ -15,6 +15,20 @@ sys.path.append(dir_script_dir)
 
 from params import *
 
+def training_peaks_button_helper():
+    # Step 1: Start EC2 instance if not running
+    trigger_ec2_instance(INSTANCE_ID)
+    time.sleep(30)  # Wait to ensure the instance is fully started
+
+    # Step 2: Run the training_peaks.py script on EC2 via SSM
+    # command_status, exit_code = run_script_on_ec2(INSTANCE_ID)
+    command_status = run_script_via_ssh(INSTANCE_IP)
+
+    # Step 3: Stop the EC2 instance to save costs
+    # stop_ec2_instance(INSTANCE_ID) # NOTE: THE EC2 WILL RUN INDEFINITELY
+
+    return command_status
+
 
 # Function to stop the EC2 instance if it's running
 def stop_ec2_instance(instance_id):

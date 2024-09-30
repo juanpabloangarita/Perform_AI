@@ -21,31 +21,117 @@ Yes—in specific cases like cloud environments or Docker containers where pre-i
 Python runtime is decoupled from package installations.
 """
 
-
+###########
+from dotenv import load_dotenv
+# Standard Library Imports:
 import os
+import time
 import tempfile
+from datetime import datetime, timedelta, date
+from random import uniform
+
+
+# Third-Party Imports:
+import pandas as pd
+import boto3
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.os_manager import ChromeType  # Keep this import if needed
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-from datetime import datetime, timedelta, date
-
-from random import uniform
-
-from selenium.common.exceptions import TimeoutException, StaleElementReferenceException, NoSuchElementException, ElementClickInterceptedException
-
-
 from selenium.webdriver.common.action_chains import ActionChains
-
-from params import *
+from selenium.common.exceptions import (
+    TimeoutException,
+    StaleElementReferenceException,
+    NoSuchElementException,
+    ElementClickInterceptedException,
+    ElementNotInteractableException
+)
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
 import chromedriver_autoinstaller
-import pandas as pd
-import boto3
+
+
+
+# Load environment variables from .env file
+load_dotenv()
+# Local imports
+from params import *
+
+
+def close_one_trust_consent(driver, wait):
+    """
+    Attempts to close the OneTrust cookie consent pop-up.
+    """
+    try:
+        # Wait for the consent pop-up to appear
+        consent_button = wait.until(EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, 'button.onetrust-close-btn-handler'))
+        )
+        consent_button.click()
+        print("Closed OneTrust cookie consent pop-up.")
+        # Allow some time for the pop-up to close
+        time.sleep(1)
+    except TimeoutException:
+        print("No OneTrust cookie consent pop-up detected.")
+    except Exception as e:
+        print(f"An error occurred while closing OneTrust consent: {e}")
+
+
+def click_login_button(driver, wait, max_retries=3):
+    """
+    Attempts to click the login button, handling potential overlays and pop-ups.
+    Retries up to `max_retries` times if necessary.
+    """
+    retries = 0
+    while retries < max_retries:
+        try:
+            # First, attempt to close any OneTrust cookie consent pop-up
+            close_one_trust_consent(driver, wait)
+
+            # Wait for the login button to be visible
+            login_button = wait.until(EC.visibility_of_element_located((By.ID, 'btnSubmit')))
+            print("Login button is visible.")
+
+            # Ensure the login button is clickable
+            login_button = wait.until(EC.element_to_be_clickable((By.ID, 'btnSubmit')))
+            print("Login button is clickable.")
+
+            # Scroll the login button into view
+            driver.execute_script('arguments[0].scrollIntoView({block: "center", inline: "nearest"});', login_button)
+            print("Scrolled to the login button.")
+
+            # Small pause to allow any animations or transitions to complete
+            time.sleep(1)
+
+            try:
+                # Attempt to click the login button using ActionChains
+                actions = ActionChains(driver)
+                actions.move_to_element(login_button).click().perform()
+                print("Clicked the login button using ActionChains.")
+            except (ElementClickInterceptedException, ElementNotInteractableException):
+                print("Standard click failed, attempting JavaScript click.")
+                # Click the button using JavaScript as a fallback
+                driver.execute_script("arguments[0].click();", login_button)
+                print("Clicked the login button using JavaScript.")
+            break
+
+        except TimeoutException:
+            retries += 1
+            time.sleep(2)  # Small delay before retrying
+            if retries == max_retries:
+                print("Max retries reached. Could not click the login button.")
+                driver.save_screenshot(f'timeout_exception_{retries}.png')
+                print(f"Screenshot saved as 'timeout_exception_{retries}.png'.")
+                print("Page source for debugging:", driver.page_source)
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
+
+
+
+
+
 
 
 headless_mode = (CLOUD_ON == 'yes')
@@ -158,7 +244,11 @@ def click_calendar_button_1(driver):
 def click_calendar_button_2(driver):
     try:
         # Attempt to click the calendar button
-        calendar_button = driver.find_element(By.CSS_SELECTOR, "button.appHeaderMainNavigationButtons.calendar")
+        # calendar_button = driver.find_element(By.CSS_SELECTOR, "button.appHeaderMainNavigationButtons.calendar") # NOTE: THIS WAS WORKING BEFORE
+                # Wait for the calendar button to be clickable
+        calendar_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button.appHeaderMainNavigationButtons.calendar"))
+        )
         calendar_button.click()
         print("Clicked calendar button.")
     except ElementClickInterceptedException:
@@ -314,10 +404,18 @@ def fetch_activities_for_date(driver, date_str):
     # Get today's date as a datetime object
 
     today = datetime.now()
+    print(f"THE DATE IS: ")
+    print()
+    print(f"date_str = {date_str}")
+    print()
+    print()
     # Check if today is a Monday
     if today.weekday() == 0 and date_str == (datetime.now() - timedelta(1)).strftime('%Y-%m-%d'):
         # scroll_up(driver) # prior version
         date_element = scroll_and_retry(driver, f"div.dayContainer[data-date='{date_str}']", max_retries=3, scroll_amount=-300, delay=1)
+        # Re-fetch the date element to avoid stale reference
+        date_element = safe_find_element(driver, By.CSS_SELECTOR, f"div.dayContainer[data-date='{date_str}']")
+
     else:
         # Use the safe_find_element function to get today's dayContainer
         date_element = safe_find_element(driver, By.CSS_SELECTOR, f"div.dayContainer[data-date='{date_str}']")
@@ -325,13 +423,29 @@ def fetch_activities_for_date(driver, date_str):
 
     # Step 3: Scroll into view if necessary
     ActionChains(driver).move_to_element(date_element).perform()
-
+    """
     try:
         # Use the safe method to find the 'activities' element within 'date_element'
         activities_element = safe_find_child_element(date_element, By.XPATH, ".//div[contains(@class, 'activities')]")
     except TimeoutException:
         print("Timed out waiting for the activities element.")
+    """
+    retries = 0
+    max_retries = 3
+    while retries < max_retries:
+        try:
+            # Re-locate the parent element before looking for the child to avoid staleness
+            #date_element = safe_find_element(driver, By.CSS_SELECTOR, f"div.dayContainer[data-date='{date_str}']")
 
+            # Use the safe method to find the 'activities' element within 'date_element'
+            activities_element = safe_find_child_element(date_element, By.XPATH, ".//div[contains(@class, 'activities')]")
+        except StaleElementReferenceException:
+            print(f"StaleElementReferenceException while fetching activities: Retrying... attempt {retries + 1}")
+            retries += 1
+            time.sleep(1)
+
+    if retries == max_retries:
+        raise Exception(f"Failed to locate activities element after {max_retries} attempts.")
 
     # Compliance status mapping
     compliance_mapping = {
@@ -459,7 +573,7 @@ def navigate_to_login(to_do):
 
     # Wait for the login button to be clickable and then click it
     wait = WebDriverWait(driver, 10)
-
+    """
     try:
         # Find the login button
         login_button = wait.until(EC.element_to_be_clickable((By.ID, 'btnSubmit')))
@@ -476,6 +590,10 @@ def navigate_to_login(to_do):
         print("Page source for debugging:", driver.page_source)
     except Exception as e:
         print(f"An error occurred: {e}")
+    """
+
+    click_login_button(driver, wait)
+
 
     # Wait for additional actions if needed
     time.sleep(5)
