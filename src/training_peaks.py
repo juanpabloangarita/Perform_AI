@@ -404,11 +404,6 @@ def fetch_activities_for_date(driver, date_str):
     # Get today's date as a datetime object
 
     today = datetime.now()
-    print(f"THE DATE IS: ")
-    print()
-    print(f"date_str = {date_str}")
-    print()
-    print()
     # Check if today is a Monday
     if today.weekday() == 0 and date_str == (datetime.now() - timedelta(1)).strftime('%Y-%m-%d'):
         # scroll_up(driver) # prior version
@@ -423,29 +418,12 @@ def fetch_activities_for_date(driver, date_str):
 
     # Step 3: Scroll into view if necessary
     ActionChains(driver).move_to_element(date_element).perform()
-    """
+
     try:
         # Use the safe method to find the 'activities' element within 'date_element'
         activities_element = safe_find_child_element(date_element, By.XPATH, ".//div[contains(@class, 'activities')]")
     except TimeoutException:
         print("Timed out waiting for the activities element.")
-    """
-    retries = 0
-    max_retries = 3
-    while retries < max_retries:
-        try:
-            # Re-locate the parent element before looking for the child to avoid staleness
-            #date_element = safe_find_element(driver, By.CSS_SELECTOR, f"div.dayContainer[data-date='{date_str}']")
-
-            # Use the safe method to find the 'activities' element within 'date_element'
-            activities_element = safe_find_child_element(date_element, By.XPATH, ".//div[contains(@class, 'activities')]")
-        except StaleElementReferenceException:
-            print(f"StaleElementReferenceException while fetching activities: Retrying... attempt {retries + 1}")
-            retries += 1
-            time.sleep(1)
-
-    if retries == max_retries:
-        raise Exception(f"Failed to locate activities element after {max_retries} attempts.")
 
     # Compliance status mapping
     compliance_mapping = {
