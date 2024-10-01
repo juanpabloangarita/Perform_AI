@@ -29,10 +29,8 @@ st.set_page_config(layout="wide")  # Set the layout to wide to utilize more spac
 main_arg = None
 if len(sys.argv) > 1:
     main_arg = sys.argv[1]
-
-if main_arg:
-    # Print or log main_arg for debugging
-    st.write(f"MAIN_ARG: {main_arg}")
+if CLOUD_ON == 'yes':
+    main_arg = 'main'
 
 # Initialize session state for authentication and username
 if 'authenticated' not in st.session_state:
