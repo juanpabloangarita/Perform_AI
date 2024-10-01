@@ -92,7 +92,7 @@ def show_login_form_cloud():
                         st.session_state['authenticated'] = True
                         st.session_state['username'] = username
                         st.session_state['user_data']= load_user_data(username)
-                        response_main = main(st.session_state['user_data'])
+                        response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
                         st.success(f"Sign up successful! {response_main}")
                     else:
                         st.error('Username already exists.')
@@ -104,7 +104,7 @@ def show_login_form_cloud():
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = username
                     st.session_state['user_data']= load_user_data_cloud(username)
-                    response_main = main(st.session_state['user_data'])
+                    response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
                     st.success(f"Login successful! {response_main}")
                 else:
                     st.session_state['authenticated'] = False
