@@ -10,7 +10,7 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import *
+from src.data_processing_true import *
 from src.calorie_calculations import *
 from src.user_data import *
 from src.user_data_cloud import *
