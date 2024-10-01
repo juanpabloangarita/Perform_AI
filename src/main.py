@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 
-from src.data_processing_true import process_data, save_final_csv, save_tss_values_for_dashboard, get_full_path  # Use relative import # WARNING, WHY A DOT BEFORE DATA_PROCESSING
+from src.data_processing import process_data, save_final_csv, save_tss_values_for_dashboard, get_full_path  # Use relative import # WARNING, WHY A DOT BEFORE DATA_PROCESSING
 
 #def main(*uploaded_workouts):
 def main(user_data, workouts=None, main_arg=None):

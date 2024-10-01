@@ -3,27 +3,27 @@
 import numpy as np
 import pandas as pd
 
-from src.data_processing_true import *
+from src.data_processing import *
 from params import *
 
 
-def calculate_total_tss(df, given_date = GIVEN_DATE):
+def calculate_total_tss(df, from_where, given_date = GIVEN_DATE):
     # calculate running tss
     r_mask = df['WorkoutType']=='Run'
     average_hr_running = 140
-    calculating_running_tss(df, r_mask, average_hr_running, given_date)
+    calculating_running_tss(df, r_mask, average_hr_running, given_date, from_where)
 
     # calculate cycling tss
     c_mask = df['WorkoutType']=='Bike'
     average_hr_cycling = 136
-    calculating_cycling_tss(df, c_mask, average_hr_cycling, given_date)
+    calculating_cycling_tss(df, c_mask, average_hr_cycling, given_date, from_where)
 
     # calculate swimming tss
     s_mask = df['WorkoutType']=='Swim'
     # swimming threshold is meters per minutes
     s_thrs = 100/(2 + 17/60)
     average_pace_swimming = 30
-    calculating_swimming_tss(df, s_mask, average_pace_swimming, given_date, s_thrs)
+    calculating_swimming_tss(df, s_mask, average_pace_swimming, given_date, s_thrs, from_where)
 
     # Calculate TOTAL TSS
     df['TOTAL TSS'] = df['rTSS Calculated']+ df['cTSS Calculated']+ df['sTSS Calculated']
@@ -31,20 +31,31 @@ def calculate_total_tss(df, given_date = GIVEN_DATE):
     return df
 
 
-def calculating_running_tss(df, mask, average, date, discipline='r'):
+def calculating_running_tss(df, mask, average, date, from_where, discipline='r'):
     # calculating running TSS
     df[f'{discipline}TSS Calculated'] = float(0)
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(163-42))**2
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(163-42))**2
+
+    if from_where == 'data_processing':
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(163-42))**2
+    else:
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'TimeTotalInHours']*60 * ((average- 42)/(163-42))**2
+
+
     df.fillna({f'{discipline}TSS Calculated': float(0)}, inplace=True)
     #return df
 
 
-def calculating_cycling_tss(df, mask, average, date, discipline='c'):
+def calculating_cycling_tss(df, mask, average, date, from_where, discipline='c'):
     # calculating cycling TSS
     df[f'{discipline}TSS Calculated'] = float(0)
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(157-42))**2
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(157-42))**2
+
+    if from_where == 'data_processing':
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(157-42))**2
+    else:
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'TimeTotalInHours']*60 * ((average- 42)/(157-42))**2
+
     df.fillna({f'{discipline}TSS Calculated': float(0)}, inplace=True)
 
     # after this, there will be cTSS 0 values on bike, of heart rate that wasn't detected, correction here
@@ -53,7 +64,7 @@ def calculating_cycling_tss(df, mask, average, date, discipline='c'):
     #return df
 
 
-def calculating_swimming_tss(df, mask, average, date, s_thrs ,discipline='s'):
+def calculating_swimming_tss(df, mask, average, date, s_thrs , from_where, discipline='s'):
     # calculating swimming TSS
     df[f'{discipline}TSS Calculated'] = float(0)
 
@@ -68,7 +79,10 @@ def calculating_swimming_tss(df, mask, average, date, s_thrs ,discipline='s'):
 
     # Calculate the TSS
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio ** 3) * df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 100
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), 'PlannedDuration'] * 100
+    if from_where == 'data_processing':
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), 'PlannedDuration'] * 100
+    else:
+        df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), 'TimeTotalInHours'] * 100
 
 
     df.fillna({f'{discipline}TSS Calculated': float(0)}, inplace=True)

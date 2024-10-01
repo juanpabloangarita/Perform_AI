@@ -1,6 +1,6 @@
 # calorie_calculations.py
 
-from src.data_processing_true import *
+from src.data_processing import *
 from src.tss_calculations import *
 from params import *
 
