@@ -587,10 +587,8 @@ def navigate_to_login(to_do):
     driver.quit()
     if headless_mode:
         if vm_ec2_mode:
-            tp_update_df = update_tp_dataframe(data_scraped)
             # Use boto3 to save the DataFrame to S3
             s3_client = boto3.client('s3')
-
             # Convert DataFrame to CSV and save it to S3
             tp_update_df = update_tp_dataframe(data_scraped)
 
@@ -606,6 +604,7 @@ def navigate_to_login(to_do):
             except Exception as e:
                 print("Upload Failed:", e)
             scraped_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", na_filter=False)
+            print(f"printing scraped_df {scraped_df}")
             return scraped_df
         else:
             tp_update_df = update_tp_dataframe(data_scraped)
