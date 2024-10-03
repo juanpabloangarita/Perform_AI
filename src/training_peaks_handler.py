@@ -50,33 +50,7 @@ def trigger_ec2_instance(instance_id):
         instance.wait_until_running()
         print("EC2 instance started.")
 
-""" # NOTE: FOR SSM SERVICE
-# Function to run the training_peaks.py script on EC2 via SSM
-def run_script_on_ec2(instance_id):
-    ssm_client = boto3.client('ssm')
 
-    response = ssm_client.send_command(
-        InstanceIds=[instance_id],
-        DocumentName='AWS-RunShellScript',
-        Parameters={'commands': ['python3 /home/ec2-user/Perform_AI/training_peaks.py']}
-    )
-
-    # Retrieve the Command ID to track the execution
-    command_id = response['Command']['CommandId']
-
-    # Wait for the command to complete successfully
-    ssm_client.get_waiter('command_succeeded').wait(CommandId=command_id, InstanceId=instance_id)
-
-    # Retrieve the overall status of the command
-    command_status = response['Command']['Status']
-    print(f"Script executed on EC2 instance with status: {command_status}")
-
-    # Retrieve the exit code to determine the script's execution outcome
-    output = ssm_client.list_command_invocations(CommandId=command_id, Details=True)
-    exit_code = output['CommandInvocations'][0]['CommandPlugins'][0]['ResponseCode']
-
-    return command_status, exit_code
-"""
 # # NOTE: INSTEAD OF PREVIOUS FUNCTION
 # Function to run the training_peaks.py script on EC2 via SSH
 def run_script_via_ssh(instance_ip):
@@ -144,3 +118,33 @@ def reset_scraped_data():
     # Overwrite the existing CSV with the empty DataFrame
     empty_df.to_csv(f"s3://{BUCKET_NAME}/csv/tp_scraped.csv", index=False, na_rep='')
     print("S3 CSV file has been reset for the next run.")
+
+
+
+""" # NOTE: FOR SSM SERVICE
+# Function to run the training_peaks.py script on EC2 via SSM
+def run_script_on_ec2(instance_id):
+    ssm_client = boto3.client('ssm')
+
+    response = ssm_client.send_command(
+        InstanceIds=[instance_id],
+        DocumentName='AWS-RunShellScript',
+        Parameters={'commands': ['python3 /home/ec2-user/Perform_AI/training_peaks.py']}
+    )
+
+    # Retrieve the Command ID to track the execution
+    command_id = response['Command']['CommandId']
+
+    # Wait for the command to complete successfully
+    ssm_client.get_waiter('command_succeeded').wait(CommandId=command_id, InstanceId=instance_id)
+
+    # Retrieve the overall status of the command
+    command_status = response['Command']['Status']
+    print(f"Script executed on EC2 instance with status: {command_status}")
+
+    # Retrieve the exit code to determine the script's execution outcome
+    output = ssm_client.list_command_invocations(CommandId=command_id, Details=True)
+    exit_code = output['CommandInvocations'][0]['CommandPlugins'][0]['ResponseCode']
+
+    return command_status, exit_code
+"""
