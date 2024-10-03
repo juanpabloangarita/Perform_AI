@@ -14,5 +14,7 @@ CLOUD_ON="yes"
 USER_TP=os.getenv('USER_TP')
 PASSWORD_TP=os.getenv('PASSWORD_TP')
 INSTANCE_ID=os.getenv('INSTANCE_ID')
-SSH_KEY_STR=os.getenv('SSH_KEY_STR')
+SSH_KEY_STR=os.getenv('SSH_KEY_STR').replace("\\n", "\n")
 INSTANCE_IP=os.getenv('INSTANCE_IP')
+
+# os.getenv('SSH_KEY_STR')

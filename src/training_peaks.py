@@ -57,6 +57,9 @@ import chromedriver_autoinstaller
 load_dotenv()
 # Local imports
 from params import *
+import os
+
+
 
 
 def close_one_trust_consent(driver, wait):
