@@ -128,12 +128,6 @@ def click_login_button(driver, wait, max_retries=3):
             print(f"An unexpected error occurred: {e}")
 
 
-
-
-
-
-
-
 headless_mode = (CLOUD_ON == 'yes')
 vm_ec2_mode = True
 

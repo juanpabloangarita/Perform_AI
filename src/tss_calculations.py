@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-from src.data_processing import *
+# from src.data_processing import *
 from params import *
 
 
@@ -26,19 +26,19 @@ def calculate_total_tss(df, from_where, given_date = GIVEN_DATE):
     calculating_swimming_tss(df, s_mask, average_pace_swimming, given_date, s_thrs, from_where)
 
     # Calculate TOTAL TSS
-    df['TOTAL TSS'] = df['rTSS Calculated']+ df['cTSS Calculated']+ df['sTSS Calculated']
+    df['TOTAL TSS'] = df['Run_TSS Calculated']+ df['Bike_TSS Calculated']+ df['Swim_TSS Calculated']
 
     return df
 
 
-def calculating_running_tss(df, mask, average, date, from_where, discipline='r'):
+def calculating_running_tss(df, mask, average, date, from_where, discipline = 'Run_'):
     # calculating running TSS
     df[f'{discipline}TSS Calculated'] = float(0)
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(163-42))**2
 
     if from_where == 'data_processing':
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(163-42))**2
-    else:
+    else: # NOTE: load_and_update_final_csv'
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'TimeTotalInHours']*60 * ((average- 42)/(163-42))**2
 
 
@@ -46,14 +46,14 @@ def calculating_running_tss(df, mask, average, date, from_where, discipline='r')
     #return df
 
 
-def calculating_cycling_tss(df, mask, average, date, from_where, discipline='c'):
+def calculating_cycling_tss(df, mask, average, date, from_where, discipline='Bike_'):
     # calculating cycling TSS
     df[f'{discipline}TSS Calculated'] = float(0)
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(157-42))**2
 
     if from_where == 'data_processing':
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'PlannedDuration']*60 * ((average- 42)/(157-42))**2
-    else:
+    else: # NOTE: load_and_update_final_csv'
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date),'TimeTotalInHours']*60 * ((average- 42)/(157-42))**2
 
     df.fillna({f'{discipline}TSS Calculated': float(0)}, inplace=True)
@@ -64,7 +64,7 @@ def calculating_cycling_tss(df, mask, average, date, from_where, discipline='c')
     #return df
 
 
-def calculating_swimming_tss(df, mask, average, date, s_thrs , from_where, discipline='s'):
+def calculating_swimming_tss(df, mask, average, date, s_thrs , from_where, discipline='Swim_'):
     # calculating swimming TSS
     df[f'{discipline}TSS Calculated'] = float(0)
 
@@ -81,7 +81,7 @@ def calculating_swimming_tss(df, mask, average, date, s_thrs , from_where, disci
     df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio ** 3) * df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 100
     if from_where == 'data_processing':
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), 'PlannedDuration'] * 100
-    else:
+    else: # NOTE: load_and_update_final_csv'
         df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), 'TimeTotalInHours'] * 100
 
 
@@ -90,7 +90,8 @@ def calculating_swimming_tss(df, mask, average, date, s_thrs , from_where, disci
 
 
 def calculate_metrics_from_tss(df, given_date = GIVEN_DATE):
-    calc_df = df.groupby('Date').agg({'TOTAL TSS': 'sum', 'HeartRateAverage': 'mean'})
+    group_by = 'Date' if 'Date' in df.columns else df.index
+    calc_df = df.groupby(group_by).agg({'TOTAL TSS': 'sum', 'HeartRateAverage': 'mean'})
 
     # Resampling TSS on a daily basis, summing the values
     tss_df = calc_df[['TOTAL TSS']].resample('D').sum()
