@@ -70,14 +70,14 @@ def main():
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)  # Display the DataFrame in Streamlit
                     load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
-                    reset_scraped_data()
+                    #reset_scraped_data()
 
                 elif command_status == "Partial Success":
                     st.warning("Partial success: Some data was scraped but not all.")
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)
                     load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
-                    reset_scraped_data()
+                    #reset_scraped_data()
 
                 else:
                     st.error("Script execution failed; skipping data retrieval.")
