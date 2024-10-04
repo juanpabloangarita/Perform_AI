@@ -19,6 +19,20 @@ from src.data_processing import load_and_update_final_csv
 from src.calorie_calculations import *
 
 
+# Define a function to calculate active calories based on activities
+def calculate_active_calories(activities):
+    total_calories = 0
+    for activity in activities.keys():
+        total_calories += activities[activity]['calories_spent']
+
+    return total_calories
+
+
+# Initialize or load session state
+if 'activities' not in st.session_state:
+    st.session_state['activities'] = {}
+if 'calories_consumed' not in st.session_state:
+    st.session_state['calories_consumed'] = 0
 
 st.title("Plan My Day")
 
@@ -53,44 +67,65 @@ with st.container(border=True):
 
             submit_button = st.form_submit_button(label='Add Activity')
             if submit_button:
-                temp_activity_dict = {
-                    activity: {
+                temp_activity_dict = {}
+
+                # Store the new activity details in the temporary dictionary
+                temp_activity_dict[activity] = {
+                    'duration': duration,
+                    'calories_spent': calories_spent,
+                    'heart_rate': heart_rate,
+                    'distance': distance
+                }
+
+                if activity in st.session_state['activities']:
+                    # /* TODO: IN THE FOLLOWING CODE, I AM ONLY AVERAGING HEART RATE, IF for example 'Bike' already exists, and so, averaging only with 'Bike' activity
+                    # Retrieve previous data
+                    prev_data = st.session_state['activities'][activity]
+                    prev_duration = prev_data['duration']
+                    prev_heart_rate = prev_data['heart_rate']
+
+                    # Compute new average heart rate
+                    new_avg_heart_rate = (
+                        (prev_heart_rate * prev_duration + heart_rate * duration) /
+                        (prev_duration + duration)
+                    )
+                    # */
+
+                    # Update the session state with new values
+                    st.session_state['activities'][activity] = {
+                        'duration': prev_duration + duration,
+                        'calories_spent': prev_data['calories_spent'] + calories_spent,
+                        'heart_rate': new_avg_heart_rate,
+                        'distance': prev_data['distance'] + distance
+                    }
+                else:
+                    st.session_state['activities'][activity] = {
                         'duration': duration,
                         'calories_spent': calories_spent,
                         'heart_rate': heart_rate,
                         'distance': distance
                     }
-                }
-
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
-                load_and_update_final_csv('data/processed/csv/', "input_activities", GIVEN_DATE, temp_activity_dict)
+                timestamp = datetime.now().strftime('%Y-%m-%d')
+                load_and_update_final_csv('data/processed/csv/', "input_activities", timestamp, temp_activity_dict)
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
 
 
+   # Second column: Display activities and active calories with enhanced UI
     with col2:
         st.write("#### Today's Trainings")
 
         # Add a container-like background for consistency
         with st.container():
-            df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
-            total_active_calories = 0
-
-            if GIVEN_DATE in df.index:
-                data_for_date = df.loc[GIVEN_DATE]
-
-                if isinstance(data_for_date, pd.Series):
-                    # Handle case when there's only one entry (Series)
-                    data_for_date = data_for_date.to_frame().T
-
-                for i, row in data_for_date.iterrows():
-                    activity = row['WorkoutType']
-                    avg_heart_rate = row['HeartRateAverage']
-                    total_duration = row['TimeTotalInHours']
-                    total_distance = row['DistanceInMeters']
-                    total_calories = row['CaloriesSpent']
-                    total_active_calories += total_calories
+            if st.session_state['activities']:
+                for activity, details in st.session_state['activities'].items():
+                    # Extract details
+                    total_duration = details['duration']
+                    total_calories = details['calories_spent']
+                    avg_heart_rate = details['heart_rate']
+                    total_distance = details['distance']
 
                     # Using bullet points with icons for activities
                     st.write(f"🟢 **{activity}**")
@@ -99,6 +134,8 @@ with st.container(border=True):
             else:
                 st.write("No activities added today.")
 
+            # Calculate and display total active calories
+            total_active_calories = calculate_active_calories(st.session_state['activities'])
             st.write(f"**Total Active Calories Burned Today:** {total_active_calories:.1f} kcal")
 
             # Ensure that the form has enough space, add a placeholder if necessary
@@ -120,8 +157,10 @@ with st.container(border=True):
             submit_button = st.form_submit_button(label='Add Calories')
 
             if submit_button:
-                st.success(f"Added {calories} calories")
-                load_and_update_final_csv('data/processed/csv/', 'calories_consumed', GIVEN_DATE, calories)
+                st.session_state['calories_consumed'] += calories
+                st.success(f"Added {calories} calories") # NOTE: MAYBE I ALWAYS HAVE TO PRINT STUFF ON THE SCREEN TO HANDLE STREAMLIT STATES
+                timestamp = datetime.now().strftime('%Y-%m-%d')
+                load_and_update_final_csv('data/processed/csv/', 'calories_consumed', timestamp, calories)
 
         # Ensure space is balanced between columns
         with st.empty():
@@ -131,27 +170,17 @@ with st.container(border=True):
     # Second column: Display calories and remaining calories
     with col2:
         st.write("#### Today's Calories")
-        df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
-
-        calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed']
-
-        if isinstance(calories_data, pd.Series):
-            # If it's a Series, drop NaNs and take the first non-empty value
-            calories_consumed = calories_data.dropna().iloc[0] if not calories_data.dropna().empty else None
-        else:
-            # If it's a single value (numpy.float64), use it directly (it could be NaN)
-            calories_consumed = calories_data if not pd.isna(calories_data) else None
 
         # Display calories consumed
-        st.write(f"**Calories Consumed Today:** {calories_consumed} kcal")
+        st.write(f"**Calories Consumed Today:** {st.session_state['calories_consumed']} kcal")
 
         # Calculate total daily calorie needs
-        total_daily_calories = st.session_state['user_data']['passive_calories'] + total_active_calories # NOTE: NOT SURE ABOUT total_active_calories that was created before
-        calories_remaining = total_daily_calories - calories_consumed
+        total_daily_calories = st.session_state['user_data']['passive_calories'] + total_active_calories
+        calories_remaining = total_daily_calories - st.session_state['calories_consumed']
         st.write(f"**Calories To Consume Today:** {calories_remaining} kcal")
 
         # FIXME: Calculations wrong, above and below
-        st.progress(min(calories_consumed / total_daily_calories, 1.0))  # To ensure progress stays between 0 and 1
+        st.progress(min(st.session_state['calories_consumed'] / total_daily_calories, 1.0))  # To ensure progress stays between 0 and 1
 
         # Provide guidance on managing remaining calories
         if calories_remaining > 0:

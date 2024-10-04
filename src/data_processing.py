@@ -56,8 +56,9 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
     full_path = get_full_path(file_path)
     df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0, na_filter=False)
 
-    if from_where == 'home':
+    if from_where in ['home', 'plan_my_day']:
         return df
+
     elif from_where == 'training_peaks' and isinstance(data_to_update, pd.DataFrame):
         df = process_data_to_update(df, data_to_update)
 
@@ -323,7 +324,7 @@ def process_data(user_data, workouts=None):
     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
     if workouts is not None:
-        workouts_df = workouts 
+        workouts_df = workouts
 
     dataframes = {
         'activities': activities_df,
@@ -344,10 +345,10 @@ def process_data(user_data, workouts=None):
     w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
 
     # Calculate TSS per discipline and TOTAL TSS
-    w_df = calculate_total_tss(w_df, 'data_processing') 
+    w_df = calculate_total_tss(w_df, 'data_processing')
 
     # # Calculate ATL, CTL, TSB from TSS
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) 
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
