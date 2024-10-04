@@ -19,6 +19,7 @@ lightgbm
 notebook==7.2.1
 pandas==2.2.2
 paramiko
+python-dotenv
 plotly==5.23.0
 selenium==4.23.1
 selenium-stealth==1.0.6

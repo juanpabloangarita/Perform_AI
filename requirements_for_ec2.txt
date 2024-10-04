@@ -1,0 +1,48 @@
+# AWS SDK for Python
+boto3>=1.35.33,<1.36.0
+
+# Security and Authentication
+bcrypt
+paramiko
+
+# Web Drivers
+chromedriver-autoinstaller==0.6.4
+chromedriver-binary-auto==0.3.1
+webdriver-manager==4.0.2
+webdrivermanager==0.10.0
+
+# Data Handling and Storage
+fsspec>=2024.9.0
+pandas==2.2.2
+# lightgbm
+# scikit-learn
+# xgboost
+
+# Jupyter and Related Tools
+# jupyter>=1.0.0,<2.0.0
+# jupyter-console==6.6.3
+# jupyter-events==0.10.0
+# jupyter-lsp==2.2.5
+# jupyter_client==8.6.2
+# jupyter_core==5.7.2
+# jupyter_server==2.14.1
+# jupyter_server_terminals==0.5.3
+# jupyterlab==4.2.3
+# jupyterlab_pygments==0.3.0
+# jupyterlab_server==2.27.2
+# jupyterlab_widgets==3.0.11
+# notebook>=7.2.1,<8.0.0
+
+# Environment and Configuration
+python-dotenv
+setuptools>=63.2.0
+
+# Data Visualization
+plotly==5.23.0
+
+# Web Automation
+selenium==4.23.1
+selenium-stealth==1.0.6
+
+# Web Applications
+streamlit==1.37.1

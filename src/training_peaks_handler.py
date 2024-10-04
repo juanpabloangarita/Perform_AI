@@ -70,8 +70,16 @@ def run_script_via_ssh(instance_ip):
         ssh.connect(hostname=instance_ip, username='ec2-user', pkey=private_key)
 
         # Execute the training_peaks.py script
-        stdin, stdout, stderr = ssh.exec_command('python3 /home/ec2-user/Perform_AI/training_peaks.py')
+        # stdin, stdout, stderr = ssh.exec_command('python3 /home/ec2-user/Perform_AI/training_peaks.py')
         # Read the output and error messages
+
+        # Update the command to use the correct Python interpreter from the virtual environment
+        command = '/home/ec2-user/Perform_AI/venv/bin/python /home/ec2-user/Perform_AI/training_peaks.py'
+
+        # Execute the command
+        stdin, stdout, stderr = ssh.exec_command(command)
+
+
         output = stdout.read().decode()
         error_output = stderr.read().decode()
 
