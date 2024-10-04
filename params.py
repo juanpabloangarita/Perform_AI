@@ -1,7 +1,11 @@
 # variable names or variable data
 import os
 
-GIVEN_DATE = '2024-09-08'
+# GIVEN_DATE = '2024-09-08'
+from datetime import datetime
+
+# Set today's date in the format 'YYYY-MM-DD'
+GIVEN_DATE = datetime.today().strftime('%Y-%m-%d')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 BUCKET_NAME = os.getenv('BUCKET_NAME') # same name as env file
 #data bucket juan csv
