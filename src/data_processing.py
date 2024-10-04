@@ -35,7 +35,7 @@ def load_csv(file_path):
     workouts_2022_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2022-03-03_to_2023-03-03.csv'))
     workouts_2023_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2023-03-03_to_2024-03-03.csv'))
     # from 03 of March to 30 of August same year
-    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2024-11-24.csv'))
+    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2025-01-25.csv'))
 
     # ACTIVITIES GARMIN
     # Garmin files REAL CALORIES
@@ -323,7 +323,7 @@ def process_data(user_data, workouts=None):
     workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
     if workouts is not None:
-        workouts_df = workouts #WARNING
+        workouts_df = workouts 
 
     dataframes = {
         'activities': activities_df,
@@ -344,10 +344,10 @@ def process_data(user_data, workouts=None):
     w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
 
     # Calculate TSS per discipline and TOTAL TSS
-    w_df = calculate_total_tss(w_df, 'data_processing') # FIXME: i am creating this only once, despite updating the df with new workouts, as below, DON'T KNOW IF IT NEEDS UPDATING
+    w_df = calculate_total_tss(w_df, 'data_processing') 
 
     # # Calculate ATL, CTL, TSB from TSS
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) # FIXME: i am creating this only once, despite updating the df with new workouts
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df) 
 
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
