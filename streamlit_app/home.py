@@ -195,8 +195,39 @@ else:
         st.write("")
         st.write("### Performance Training")
         if st.checkbox("Show Dashboard"):
-            tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/') # NOTE: values has been done only once, they are not updated
-            fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+            # Load data
+            tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/')
+
+            # Ensure index is in datetime format
+            tss_df.index = pd.to_datetime(tss_df.index)
+
+            st.write("##### Select Date Range to Filter Dashboard")
+
+            # Date selection widgets with default values
+            col1, col2 = st.columns(2)
+
+            with col1:
+                start_date = st.date_input(
+                    "Start Date",
+                    value=tss_df.index.min().date(),  # Default to the earliest date in tss_df
+                    min_value=tss_df.index.min().date(),
+                    max_value=tss_df.index.max().date()
+                )
+
+            with col2:
+                end_date = st.date_input(
+                    "End Date",
+                    value=tss_df.index.max().date(),  # Default to the latest date in tss_df
+                    min_value=start_date,  # The minimum value for end_date is start_date
+                    max_value=tss_df.index.max().date()
+                )
+
+            # Convert the selected dates back to the '%Y-%m-%d' format for plot_dashboard
+            start_date_str = start_date.strftime('%Y-%m-%d')
+            end_date_str = end_date.strftime('%Y-%m-%d')
+
+            # Pass selected start_date and end_date (in string format) to the plot_dashboard function
+            fig = plot_dashboard(tss_df, atl_df, ctl_df, tsb_df, start_date_str, end_date_str)
 
             # Set figure size by updating the layout
             fig.update_layout(
@@ -205,6 +236,7 @@ else:
                 height=600   # Adjust height as needed
             )
 
+            # Plot the dashboard
             st.plotly_chart(fig, use_container_width=True)
 
         if st.checkbox('Show Data'):

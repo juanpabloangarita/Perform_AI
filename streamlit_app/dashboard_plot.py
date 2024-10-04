@@ -5,15 +5,24 @@ from params import *
 import pandas as pd
 
 
-def plot_dashboard(tss, atl, ctl, tsb):
+def plot_dashboard(tss, atl, ctl, tsb, start_date=None, end_date=None):
     tss = tss.interpolate()
     merged_df = ctl.join(atl).join(tsb)
     merged_df.columns = ['CTL', 'ATL', 'TSB']
 
-    # Convert the date strings to datetime objects
-    start_date = pd.to_datetime('2023-03-03') # FIXME: to change according to today's date
-    end_date = tss.index.max()
-    given_date = GIVEN_DATE  # Example date, update as needed
+    # Retrieve start_date from dataframe if not provided
+    if start_date is None:
+        start_date = tss.index.min()
+    else:
+        start_date = pd.to_datetime(start_date)
+
+    # Retrieve end_date from dataframe if not provided
+    if end_date is None:
+        end_date = tss.index.max()
+    else:
+        end_date = pd.to_datetime(end_date)
+
+    given_date = GIVEN_DATE
 
     # Define colors
     ctl_line_color = 'rgba(0, 0, 255, 0.8)'  # Dark blue color for the line
