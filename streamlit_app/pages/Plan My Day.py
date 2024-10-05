@@ -89,12 +89,17 @@ with st.container(border=True):
                     avg_heart_rate = row['HeartRateAverage']
                     total_duration = row['TimeTotalInHours']
                     total_distance = row['DistanceInMeters']
-                    total_calories = row['CaloriesSpent']
+                    calories_manually_input = row['CaloriesSpent']
+                    calories_estimated = row['EstimatedActiveCal']
+                    total_calories = calories_manually_input if calories_manually_input > 0 else calories_estimated
                     total_active_calories += total_calories
+                    total_duration_hours = int(total_duration)  # Get the whole number part as hours
+                    total_duration_minutes = int((total_duration - total_duration_hours) * 60)  # Get the fractional part as minutes
+                    converted_total_duration = f"{total_duration_hours}h {total_duration_minutes}min"
 
                     # Using bullet points with icons for activities
                     st.write(f"🟢 **{activity}**")
-                    st.write(f"  - {total_distance:.1f} meters in {total_duration} minutes with an Average HR of {avg_heart_rate:.1f} bpm")
+                    st.write(f"  - {total_distance:.1f} meters in {converted_total_duration} minutes with an Average HR of {avg_heart_rate:.1f} bpm")
                     st.write(f"  - **Total Calories:** {total_calories:.1f} kcal")
             else:
                 st.write("No activities added today.")
