@@ -17,7 +17,8 @@ from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
-from src.calorie_estimation_models import estimate_calories, estimate_calories_with_duration
+from src.calorie_estimation_models import estimate_calories_with_duration, load_model
+from src.calorie_estimation_models_previous import estimate_calories
 from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, save_dataframe, create_default_row
 
 
@@ -79,14 +80,15 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
                 'HeartRateAverage': details['heart_rate'],
                 'TimeTotalInHours': details['duration'] / 60,
                 'DistanceInMeters': details['distance'],
-                'CaloriesSpent': details['calories_spent']
+                'CaloriesSpent': details['calories_spent'],
+                'EstimatedActiveCal': details.get('estimated_calories', 0)  # Consistent key and default value
             }
             df = update_or_add_row(df, time_added, activity, updates)
 
     elif from_where == 'calories_consumed':
         if time_added in df.index:
             df.loc[time_added, 'CaloriesConsumed'] += data_to_update
-        else: # NOTE: THIS HAPPENS ONLY WHEN THERE IS NO VALUE FOR THAT DAY AND I WANT TO ADD CONSUMED CALORIES
+        else: # NOTE: THIS HAPPENS ONLY WHEN THERE IS NO VALUE FOR THAT DAY AND I WANT TO ADD CONSUMED CALORIES not associated to any workout type cuz there is none
             new_row = create_default_row(time_added)
             new_row['CaloriesConsumed'] = data_to_update
 
@@ -360,21 +362,47 @@ def process_data(user_data, workouts=None):
         acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
     # micro_agression(w_df, activities_df)
 
-    # Separate past and future workouts
-    past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
-    future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
-
     # workout_type = "with WorkoutType"
     workout_type = "duration with WorkoutType"
     # workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
 
+
+    # Separate past and future workouts
+    past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
+    future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
+
+
+    X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'}).copy()
+    y_activities = activities_df['Calories']
+
+    total_workouts = pd.concat([past_workouts_df, future_workouts_df])
+    total_workouts[['TimeTotalInHours', 'DistanceInMeters']] = total_workouts[['TimeTotalInHours', 'DistanceInMeters']].fillna({
+        'TimeTotalInHours': total_workouts['PlannedDuration'],
+        'DistanceInMeters': total_workouts['PlannedDistanceInMeters']
+        })
+    total_workouts = total_workouts.rename(columns={'TimeTotalInHours': 'TotalDuration'})
+    mask_total = total_workouts[['TotalDuration']].notna().all(axis=1)
+
+    estimate_calories_with_duration(X_activities, y_activities)
+    preprocessing_pipeline = load_model('preprocessing_pipeline')
+    total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
+
+    linear_model = load_model("Linear Regression with Duration with WorkoutType")
+
+    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
+
+    w_df_calories_estimated = total_workouts.copy()
+
+    """
     if workout_type == "duration with WorkoutType":
         w_df_calories_estimated, rmse_results = estimate_calories_with_duration(activities_df, past_workouts_df, future_workouts_df)
     else:
+        # FIXME: the following line comes from here from src.calorie_estimation_models_previous import estimate_calories
         w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
 
     print_performances(rmse_results)
+        """
 
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)

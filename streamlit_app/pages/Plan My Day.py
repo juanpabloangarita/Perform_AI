@@ -17,6 +17,7 @@ sys.path.append(dir_script_dir)
 
 from src.data_processing import load_and_update_final_csv
 from src.calorie_calculations import *
+from src.calorie_estimation_models import load_model
 
 
 
@@ -53,12 +54,46 @@ with st.container(border=True):
 
             submit_button = st.form_submit_button(label='Add Activity')
             if submit_button:
+                if duration > 0:
+                    try:
+                        # Load the preprocessing pipeline
+                        preprocessing_pipeline = load_model('preprocessing_pipeline')
+                        if preprocessing_pipeline is None:
+                            st.error("Preprocessing pipeline not found. Please train the model first.")
+                            st.stop()
+
+                        # Create a DataFrame with required features
+                        input_data = pd.DataFrame({
+                            'WorkoutType': [activity],
+                            'TotalDuration': [duration / 60]  # Convert minutes to hours
+                        })
+
+                        # Transform the input data
+                        duration_transformed = preprocessing_pipeline.transform(input_data)
+
+                        # Load the trained linear regression model
+                        linear_model = load_model("Linear Regression with Duration with WorkoutType")
+                        if linear_model is None:
+                            st.error("Linear Regression model not found. Please train the model first.")
+                            st.stop()
+
+                        # Predict the estimated calories
+                        estimated_calories = linear_model.predict(duration_transformed)[0]
+                    except Exception as e:
+                        st.error(f"An error occurred during prediction: {e}")
+                        estimated_calorie = 0
+                else:
+                    st.warning("Duration must be greater than 0 to estimate calories.")
+                    estimated_calories = 0  # Or set to None if preferred
+
+                # Create the activity dictionary with consistent key naming
                 temp_activity_dict = {
                     activity: {
                         'duration': duration,
                         'calories_spent': calories_spent,
                         'heart_rate': heart_rate,
-                        'distance': distance
+                        'distance': distance,
+                        'estimated_calories': estimated_calories  # Consistent key
                     }
                 }
 
