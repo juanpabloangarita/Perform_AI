@@ -8,7 +8,7 @@ from src.data_processing import process_data, save_final_csv, save_tss_values_fo
 def main(user_data, workouts=None, main_arg=None):
 
     full_path = get_full_path('data/processed/csv/')
-    final_csv_path = os.path.join(full_path, "final_df.csv")
+    final_csv_path = os.path.join(full_path, "final_df.csv") # NOTE: I AM NOT USING THIS
 
     if os.path.exists(final_csv_path) and main_arg != 'main': # TODO: i still need to check as well for atl ctl tsb, tss, activities_df and workouts
         print("File already exists. Loading existing final_df.csv")
