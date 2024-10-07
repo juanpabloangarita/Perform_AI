@@ -14,6 +14,7 @@ import numpy as np
 from sklearn.impute import KNNImputer
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from sklearn.decomposition import PCA
 
 from src.data_processing import *
 import joblib
@@ -196,7 +197,6 @@ def get_preprocessor():
     )
     return preprocessor
 
-from sklearn.decomposition import PCA
 
 # Function to create preprocessing pipeline with PCA
 def create_preprocessing_pipeline(use_poly=True, use_pca=False, n_components=None):
