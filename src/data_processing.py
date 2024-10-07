@@ -18,7 +18,7 @@ from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations 
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_duration, load_model
-from src.calorie_estimation_models_previous import estimate_calories
+from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
 from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, save_dataframe, create_default_row
 
 
@@ -356,11 +356,7 @@ def process_data(user_data, workouts=None):
     activities_df = clean_activities(dataframes['activities'])
 
 
-    def micro_agression(work_df, acti_df):
-        full_path = get_full_path('data/processed/csv/')
-        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
-        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
-    # micro_agression(w_df, activities_df)
+
 
     # workout_type = "with WorkoutType"
     workout_type = "duration with WorkoutType"
@@ -373,37 +369,57 @@ def process_data(user_data, workouts=None):
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
 
 
+    # if workout_type == "duration with WorkoutType":
+    #     w_df_calories_estimated, rmse_results = estimate_calories_with_duration_previous(activities_df, past_workouts_df, future_workouts_df)
+    # else:
+    #     # FIXME: the following line comes from here from src.calorie_estimation_models_previous import estimate_calories
+    #     w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
+
+
     X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'}).copy()
     y_activities = activities_df['Calories']
+    # Create and save models
+    rmse_results = estimate_calories_with_duration(X_activities, y_activities)
+    # Load preproc
+    preprocessing_pipeline = load_model('preprocessing_pipeline')
+    # Load linear model
+    linear_model = load_model("Linear Regression with Duration with WorkoutType")
+
 
     total_workouts = pd.concat([past_workouts_df, future_workouts_df])
+
+
     total_workouts[['TimeTotalInHours', 'DistanceInMeters']] = total_workouts[['TimeTotalInHours', 'DistanceInMeters']].fillna({
         'TimeTotalInHours': total_workouts['PlannedDuration'],
         'DistanceInMeters': total_workouts['PlannedDistanceInMeters']
         })
-    total_workouts = total_workouts.rename(columns={'TimeTotalInHours': 'TotalDuration'})
-    mask_total = total_workouts[['TotalDuration']].notna().all(axis=1)
-
-    estimate_calories_with_duration(X_activities, y_activities)
-    preprocessing_pipeline = load_model('preprocessing_pipeline')
-    total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
-
-    linear_model = load_model("Linear Regression with Duration with WorkoutType")
-
-    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
-
+    # total_workouts = total_workouts.rename(columns={'TimeTotalInHours': 'TotalDuration'})
+    total_workouts['TotalDuration'] = total_workouts['TimeTotalInHours']
     w_df_calories_estimated = total_workouts.copy()
 
-    """
-    if workout_type == "duration with WorkoutType":
-        w_df_calories_estimated, rmse_results = estimate_calories_with_duration(activities_df, past_workouts_df, future_workouts_df)
-    else:
-        # FIXME: the following line comes from here from src.calorie_estimation_models_previous import estimate_calories
-        w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
+    mask_total = total_workouts[['TotalDuration']].notna().all(axis=1)
+
+
+    total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
+
+
+    def micro_agression(work_df):#, acti_df):
+        full_path = get_full_path('data/processed/csv/')
+        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
+        #acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
+    micro_agression(total_workouts)
+
+
+    w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
+
+    def micro_agression(work_df):#, acti_df):
+        full_path = get_full_path('data/processed/csv/')
+        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
+        #acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
+    micro_agression(w_df_calories_estimated)
+
 
     print_performances(rmse_results)
-        """
-
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 

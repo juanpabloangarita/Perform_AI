@@ -371,7 +371,7 @@ def estimate_calories(activities_df, past_workouts, future_workouts, w_type):
     return workouts_df, model_configs
 
 
-def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df, total_workouts, use_poly = True):
+def prepare_duration_only_with_workout_type_for_calorie_estimation_previous(activities_df, total_workouts, use_poly = True):
     # BEST PERFORMANCE
     # Add 'WorkoutType' as a categorical feature (using one-hot encoding)
     one_hot_encoder = OneHotEncoder()
@@ -437,7 +437,7 @@ def prepare_duration_only_with_workout_type_for_calorie_estimation(activities_df
     return X_activities_transformed, y_activities, total_workouts_transformed, mask_total
 
 
-def estimate_calories_with_duration(activities_df, past_workouts, future_workouts):
+def estimate_calories_with_duration_previous(activities_df, past_workouts, future_workouts):
     total_workouts = pd.concat([past_workouts, future_workouts])
 
     (
@@ -445,7 +445,7 @@ def estimate_calories_with_duration(activities_df, past_workouts, future_workout
         y_activities,
         total_workouts_transformed,
         mask_total
-    ) = prepare_duration_only_with_workout_type_for_calorie_estimation(
+    ) = prepare_duration_only_with_workout_type_for_calorie_estimation_previous(
         activities_df, total_workouts
     )
 

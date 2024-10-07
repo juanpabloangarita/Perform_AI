@@ -209,8 +209,8 @@ def transform_features(X, y):
     return preprocessing_pipeline, X_train_transformed, X_test_transformed, y_train, y_test
 
 
-def estimate_calories_with_duration(X, y):
-    preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(X, y)
+def estimate_calories_with_duration(features, target):
+    preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(features, target)
     save_model(preprocessing_pipeline, 'preprocessing_pipeline')
 
     def create_model_configs(models, X_train, X_test):
@@ -243,7 +243,7 @@ def estimate_calories_with_duration(X, y):
         config['model'] = model
         config['rmse'] = rmse
 
-
+    return model_configs
 
 
 
