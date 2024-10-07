@@ -119,10 +119,23 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
         param_grid = {
             'n_estimators': [100, 200, 300],
             'max_depth': [10, 20, 30],
-            'learning_rate': [0.01, 0.05, 0.1]
+            'learning_rate': [0.01, 0.05, 0.1],
+            'num_leaves': [31, 50, 70],
+            'feature_fraction': [0.6, 0.8, 1.0]
         }
         grid_search = GridSearchCV(
-            lgb.LGBMRegressor(random_state=42),
+            lgb.LGBMRegressor(
+                boosting_type='gbdt',
+                num_threads=4,
+                verbose=-1,
+                force_col_wise=True,
+                random_state=42,
+                bagging_freq=5,          # Fixed based on best practices
+                bagging_fraction=0.8,    # Fixed based on best practices
+                lambda_l1=0.1,           # Fixed based on best practices
+                lambda_l2=0.1,           # Fixed based on best practices
+                min_child_samples=30     # Fixed based on best practices
+            ),
             param_grid,
             cv=5,
             scoring='neg_mean_squared_error',
