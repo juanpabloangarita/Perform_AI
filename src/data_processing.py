@@ -386,7 +386,7 @@ def process_data(user_data, workouts=None):
     # Load preproc
     preprocessing_pipeline = load_model('preprocessing_pipeline')
     # Load linear model
-    linear_model = load_model("Linear Regression with Duration with WorkoutType")
+    linear_model = load_model("Linear Regression with Duration with WorkoutType + PCA")
 
 
     total_workouts = pd.concat([past_workouts_df, future_workouts_df])
@@ -414,12 +414,6 @@ def process_data(user_data, workouts=None):
 
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
-
-    def micro_agression(work_df):#, acti_df):
-        full_path = get_full_path('data/processed/csv/')
-        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
-        #acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
-    micro_agression(w_df_calories_estimated)
 
 
     print_performances(rmse_results)

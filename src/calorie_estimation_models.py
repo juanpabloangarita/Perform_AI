@@ -196,24 +196,30 @@ def get_preprocessor():
     )
     return preprocessor
 
+from sklearn.decomposition import PCA
 
-def create_preprocessing_pipeline(use_poly = True):
+# Function to create preprocessing pipeline with PCA
+def create_preprocessing_pipeline(use_poly=True, use_pca=False, n_components=None):
     steps = [
         ('preprocessor', get_preprocessor())
-        ]
+    ]
+
     if use_poly:
-        steps.append(
-            ('poly', PolynomialFeatures(degree=2, include_bias=False))
-        )
-    steps.append(('scaler', StandardScaler()))
+        steps.append(('poly', PolynomialFeatures(degree=2, include_bias=False)))
+
+    steps.append(('scaler', StandardScaler()))  # Scaling before PCA
+
+    if use_pca and n_components:
+        steps.append(('pca', PCA(n_components=n_components)))
+
     preprocessing_pipeline = Pipeline(steps=steps)
     return preprocessing_pipeline
 
 
-def transform_features(X, y):
+def transform_features(X, y, use_pca=False, n_components=None):
     X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    preprocessing_pipeline = create_preprocessing_pipeline()
+    preprocessing_pipeline = create_preprocessing_pipeline(use_poly=True, use_pca=use_pca, n_components=n_components)
     preprocessing_pipeline.fit(X_train_raw)
 
     X_train_transformed = preprocessing_pipeline.transform(X_train_raw)
@@ -222,15 +228,15 @@ def transform_features(X, y):
     return preprocessing_pipeline, X_train_transformed, X_test_transformed, y_train, y_test
 
 
-def estimate_calories_with_duration(features, target):
-    preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(features, target)
+def estimate_calories_with_duration(features, target, use_pca=True, n_components=10):
+    preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(features, target, use_pca=use_pca, n_components=n_components)
     save_model(preprocessing_pipeline, 'preprocessing_pipeline')
 
     def create_model_configs(models, X_train, X_test):
         configs = []
         for model_name, model_func in models:
             configs.append({
-                "name": f"{model_name} with Duration with WorkoutType",
+                "name": f"{model_name} with Duration with WorkoutType{' + PCA' if use_pca else ''}",
                 "X_train": X_train,
                 "X_test": X_test,
                 "model_func": model_func
@@ -286,4 +292,25 @@ Random Forest with Duration with WorkoutTYpe RMSE: 92.06899183202154
 Gradient Boosting with Duration with WorkoutTYpe RMSE: 90.97004409283143
 LightGBM with Duration with WorkoutTYpe RMSE: 90.54056355551425
 XGBoost with Duration with WorkoutTYpe RMSE: 91.37666255801469
+
+
+
+
+PREVIOUS WITHOUT PCA
+
+Performance Metrics:
+Linear Regression with Duration with WorkoutType RMSE: 90.44261279868016
+Random Forest with Duration with WorkoutType RMSE: 92.35009718944328
+Gradient Boosting with Duration with WorkoutType RMSE: 92.52689118300806
+LightGBM with Duration with WorkoutType RMSE: 93.62855437802837
+XGBoost with Duration with WorkoutType RMSE: 91.26319865609005
+
+WITH PCA
+Performance Metrics:
+Linear Regression with Duration with WorkoutType + PCA RMSE: 89.18575651184022
+Random Forest with Duration with WorkoutType + PCA RMSE: 92.64961465932079
+Gradient Boosting with Duration with WorkoutType + PCA RMSE: 88.9923076391858
+LightGBM with Duration with WorkoutType + PCA RMSE: 93.59738060946677
+XGBoost with Duration with WorkoutType + PCA RMSE: 89.14774342763234
+
 """
