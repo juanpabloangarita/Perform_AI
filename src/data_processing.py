@@ -303,9 +303,9 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     after_df = df[df.index >= given_date].copy()
     # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
     before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy() # NOTE: HERE IS THE PART THAT CAUSES THE WEIRD BEHAVIOUR. Explanation below
-    # NOTE: this because, the workouts that have been done, they all have a heart rate average and a time total in hours. However, they all have heart rate, when i export the csv. But when the date changes for tomorrow, the training that i had today, that i did, there is no info about it, and so, it is sort of removed. i have to
-    # NOTE: I have to update it with the training peaks thing. i need to find a way to have it on all the time. the real costs.
-    # NOTE: (BTW, I DON'T NEED TO REMOVE THE HEARTRATEAVERAGE.ISNA, since what's important for me is timetotalinhours only)
+    # TODO: this because, the workouts that have been done, they all have a heart rate average and a time total in hours. However, they all have heart rate, when i export the csv. But when the date changes for tomorrow, the training that i had today, that i did, there is no info about it, and so, it is sort of removed. i have to
+    # TODO: I have to update it with the training peaks thing. i need to find a way to have it on all the time. the real costs.
+    # TODO: (BTW, I DON'T NEED TO REMOVE THE HEARTRATEAVERAGE.ISNA, since what's important for me is timetotalinhours only)
 
     # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
     after_df = after_df[after_df['PlannedDuration'].notna()]
