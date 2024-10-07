@@ -173,14 +173,15 @@ with st.container(border=True):
         st.write("#### Today's Calories")
         df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
 
-        calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed']
+
+        calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed'] if GIVEN_DATE in df.index else 0
 
         if isinstance(calories_data, pd.Series):
             # If it's a Series, drop NaNs and take the first non-empty value
-            calories_consumed = calories_data.dropna().iloc[0] if not calories_data.dropna().empty else None
+            calories_consumed = calories_data.dropna().iloc[0] if not calories_data.dropna().empty else 0
         else:
             # If it's a single value (numpy.float64), use it directly (it could be NaN)
-            calories_consumed = calories_data if not pd.isna(calories_data) else None
+            calories_consumed = calories_data if not pd.isna(calories_data) else 0
 
         # Display calories consumed
         st.write(f"**Calories Consumed Today:** {calories_consumed} kcal")
