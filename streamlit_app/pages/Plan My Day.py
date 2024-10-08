@@ -72,7 +72,7 @@ with st.container(border=True):
                         duration_transformed = preprocessing_pipeline.transform(input_data)
 
                         # Load the trained linear regression model
-                        linear_model = load_model("Linear Regression with Duration with WorkoutType")
+                        linear_model = load_model("Linear Regression with Duration with WorkoutType + PCA") # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
                         if linear_model is None:
                             st.error("Linear Regression model not found. Please train the model first.")
                             st.stop()
