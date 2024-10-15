@@ -273,10 +273,6 @@ def estimate_calories_with_duration(features, target, use_pca=True, n_components
 
 
 ### NIXTLA ###
-import pandas as pd
-from statsforecast import StatsForecast
-from statsforecast.models import AutoARIMA
-import pickle
 
 def prepare_time_series_data(df, unique_id='series_1'):
     """
@@ -383,32 +379,6 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
 
     print(fcst.head(50))
     return fcst[['ds', 'y']], sf
-
-# Example usage:
-# Assuming you have the following DataFrames:
-# df: Historical data with columns ['Date', 'TotalDuration', 'WorkoutType', 'Calories']
-# future_w_df: Future workouts with columns ['Date', 'TotalDuration', 'WorkoutType']
-
-# df = pd.read_csv('historical_data.csv')
-# future_w_df = pd.read_csv('future_workouts.csv')
-# target = df['Calories']
-
-# forecast, model = estimate_calories_with_nixtla(features=df, target=target, future_w_df=future_w_df)
-# print(forecast.head())
-
-
-
-
-
-
-    # Save the trained StatsForecast model for future use
-    save_model(sf, 'statsforecast_model.pkl')
-
-    return forecast[['ds', 'y']], sf
-
-
-
-
 
 
 ###################
