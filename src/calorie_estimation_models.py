@@ -65,6 +65,71 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
     print(f"Linear Regression RMSE: {rmse:.4f}")
     return model, rmse
 
+
+def ridge_regression_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)
+    if model is None:
+        param_grid = {'alpha': [0.1, 1.0, 10.0, 100.0]}
+        grid_search = GridSearchCV(
+            Ridge(random_state=42),
+            param_grid,
+            cv=5,
+            scoring='neg_mean_squared_error',
+            n_jobs=-1
+        )
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+        model = best_model
+    y_pred = model.predict(X_test)
+    rmse = root_mean_squared_error(y_test, y_pred)
+    print(f"Ridge Regression RMSE: {rmse:.4f} (alpha={model.alpha})")
+    return model, rmse
+
+def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)
+    if model is None:
+        param_grid = {'alpha': [0.01, 0.1, 1.0, 10.0]}
+        grid_search = GridSearchCV(
+            Lasso(random_state=42, max_iter=10000),
+            param_grid,
+            cv=5,
+            scoring='neg_mean_squared_error',
+            n_jobs=-1
+        )
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+        model = best_model
+    y_pred = model.predict(X_test)
+    rmse = root_mean_squared_error(y_test, y_pred)
+    print(f"Lasso Regression RMSE: {rmse:.4f} (alpha={model.alpha})")
+    return model, rmse
+
+def elasticnet_regression_model(model_name, X_train, X_test, y_train, y_test):
+    model = load_model(model_name)
+    if model is None:
+        param_grid = {
+            'alpha': [0.01, 0.1, 1.0, 10.0],
+            'l1_ratio': [0.1, 0.5, 0.9]
+        }
+        grid_search = GridSearchCV(
+            ElasticNet(random_state=42, max_iter=10000),
+            param_grid,
+            cv=5,
+            scoring='neg_mean_squared_error',
+            n_jobs=-1
+        )
+        grid_search.fit(X_train, y_train)
+        best_model = grid_search.best_estimator_
+        save_model(best_model, model_name)
+        model = best_model
+    y_pred = model.predict(X_test)
+    rmse = root_mean_squared_error(y_test, y_pred)
+    print(f"ElasticNet Regression RMSE: {rmse:.4f} (alpha={model.alpha}, l1_ratio={model.l1_ratio})")
+    return model, rmse
+
+
 # Modified Random Forest function without preprocessing
 def random_forest_model(model_name, X_train, X_test, y_train, y_test):
     model = load_model(model_name)  # Try loading the saved model
@@ -235,9 +300,31 @@ def transform_features(X, y, use_pca=False, n_components=None):
     return preprocessing_pipeline, X_train_transformed, X_test_transformed, y_train, y_test
 
 
-def estimate_calories_with_duration(features, target, use_pca=True, n_components=10):
+def estimate_calories_with_duration(features, target, use_pca=True, n_components=10, enable_regularization=True):
     preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(features, target, use_pca=use_pca, n_components=n_components)
     save_model(preprocessing_pipeline, 'preprocessing_pipeline')
+
+    # Flags to enable/disable regularization models
+    USE_RIDGE = True if enable_regularization else False
+    USE_LASSO = True if enable_regularization else False
+    USE_ELASTICNET = True if enable_regularization else False
+
+    # Define model names and corresponding functions
+    models = [
+        ("Linear Regression", linear_regression_model),
+        ("Random Forest", random_forest_model),
+        ("Gradient Boosting", gradient_boosting_model),
+        ("LightGBM", lightgbm_model),
+        ("XGBoost", xgboost_model)
+    ]
+
+    # Add regularized models based on flags
+    if USE_RIDGE:
+        models.append(("Ridge Regression", ridge_regression_model))
+    if USE_LASSO:
+        models.append(("Lasso Regression", lasso_regression_model))
+    if USE_ELASTICNET:
+        models.append(("ElasticNet Regression", elasticnet_regression_model))
 
     def create_model_configs(models, X_train, X_test):
         configs = []
@@ -250,15 +337,6 @@ def estimate_calories_with_duration(features, target, use_pca=True, n_components
             })
 
         return configs
-
-    # Define model names and corresponding functions
-    models = [
-        ("Linear Regression", linear_regression_model),
-        ("Random Forest", random_forest_model),
-        ("Gradient Boosting", gradient_boosting_model),
-        ("LightGBM", lightgbm_model),
-        ("XGBoost", xgboost_model)
-    ]
 
     # Create model configurations
     model_configs = create_model_configs(models, X_train, X_test)
@@ -419,11 +497,15 @@ LightGBM with Duration with WorkoutType RMSE: 93.62855437802837
 XGBoost with Duration with WorkoutType RMSE: 91.26319865609005
 
 WITH PCA
+
 Performance Metrics:
 Linear Regression with Duration with WorkoutType + PCA RMSE: 89.18575651184022
 Random Forest with Duration with WorkoutType + PCA RMSE: 92.64961465932079
 Gradient Boosting with Duration with WorkoutType + PCA RMSE: 88.9923076391858
 LightGBM with Duration with WorkoutType + PCA RMSE: 93.59738060946677
 XGBoost with Duration with WorkoutType + PCA RMSE: 89.14774342763234
+Ridge Regression with Duration with WorkoutType + PCA RMSE: 89.24537933176896
+Lasso Regression with Duration with WorkoutType + PCA RMSE: 89.24908379231046
+ElasticNet Regression with Duration with WorkoutType + PCA RMSE: 89.4404476536283
 
 """
