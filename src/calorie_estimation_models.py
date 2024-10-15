@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, V
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 import lightgbm as lgb
 import xgboost as xgb
 import numpy as np
@@ -15,6 +15,12 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.decomposition import PCA
+from statsforecast import StatsForecast
+from statsforecast.models import AutoARIMA
+# this makes it so that the outputs of the predict methods have the id as a column
+# instead of as the index
+os.environ['NIXTLA_ID_AS_COL'] = '1'
+
 
 from src.data_processing import *
 import joblib
@@ -54,7 +60,7 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
         model = lr  # Assign the newly trained model
 
     y_pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Linear Regression RMSE: {rmse:.4f}")
     return model, rmse
 
@@ -81,7 +87,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Random Forest RMSE: {rmse:.4f}")
     return model, rmse
 
@@ -108,7 +114,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Gradient Boosting RMSE: {rmse:.4f}")
     return model, rmse
 
@@ -148,7 +154,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"LightGBM RMSE: {rmse:.4f}")
     return model, rmse
 
@@ -175,7 +181,7 @@ def xgboost_model(model_name, X_train, X_test, y_train, y_test):
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"XGBoost RMSE: {rmse:.4f}")
     return model, rmse
 
@@ -262,7 +268,143 @@ def estimate_calories_with_duration(features, target, use_pca=True, n_components
         config['model'] = model
         config['rmse'] = rmse
 
+
     return model_configs
+
+
+### NIXTLA ###
+import pandas as pd
+from statsforecast import StatsForecast
+from statsforecast.models import AutoARIMA
+import pickle
+
+def prepare_time_series_data(df, unique_id='series_1'):
+    """
+    Prepare the DataFrame for time series forecasting.
+    Ensures 'Date' column exists, includes all dates, and incorporates exogenous variables.
+
+    Parameters:
+    - df: DataFrame with data (columns: 'Date', 'TotalDuration', 'WorkoutType', optionally 'Calories')
+    - unique_id: Identifier for the time series
+
+    Returns:
+    - ts_data: DataFrame ready for StatsForecast with 'unique_id', 'ds', 'y' (if present), and exogenous variables
+    """
+
+    if 'Date' not in df.columns:
+        df = df.reset_index().rename(columns={'index': 'Date'})
+
+
+    # Create a complete date range from the earliest to the latest date
+    full_date_range = pd.date_range(start=df['Date'].min(), end=df['Date'].max(), freq='D')
+    df_full = pd.DataFrame({'Date': full_date_range})
+
+    df['Date'] = pd.to_datetime(df['Date']).dt.normalize()
+    df_full['Date'] = pd.to_datetime(df_full['Date']).dt.normalize()
+
+    # Merge with the original data to include all dates
+    df_full = df_full.merge(df, on='Date', how='left')
+
+    # Fill missing 'TotalDuration' with 0 (no workout)
+    df_full['TotalDuration'] = df_full['TotalDuration'].fillna(0)
+
+    # Fill missing 'WorkoutType' with 'None' (no workout)
+    df_full['WorkoutType'] = df_full['WorkoutType'].fillna('None')
+
+    # Define workout types for one-hot encoding, ensuring 'None' is included
+    workout_types = ['None', 'Bike', 'Run', 'Swim']
+    df_full['WorkoutType'] = pd.Categorical(df_full['WorkoutType'], categories=workout_types)
+
+    # One-hot encode 'WorkoutType'
+    workout_dummies = pd.get_dummies(df_full['WorkoutType'], prefix='WorkoutType', drop_first=True)  # Drop 'None' to avoid dummy variable trap
+
+    # Initialize the base DataFrame with 'unique_id' and 'ds'
+    ts_data = pd.DataFrame({
+        'unique_id': unique_id,
+        'ds': df_full['Date']
+    })
+
+    # Add 'y' if 'Calories' is present in the original DataFrame
+    if 'Calories' in df_full.columns:
+        ts_data['y'] = df_full['Calories'].fillna(0)
+
+    # Add exogenous variables
+    ts_data = pd.concat([ts_data, df_full[['TotalDuration']], workout_dummies], axis=1)
+
+    # **Workaround: Shift 'TotalDuration' to avoid collinearity with trend**
+    ts_data['TotalDuration'] = ts_data['TotalDuration'] + 0.01  # Adjust the constant as needed otherwise ValueError: xreg is rank deficient
+
+    return ts_data
+
+
+def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='series_1'):
+    """
+    Estimate calories using StatsForecast with exogenous variables.
+
+    Parameters:
+    - features: DataFrame containing historical features (including 'TotalDuration' and 'WorkoutType')
+    - target: Series containing target variable ('Calories')
+    - future_w_df: DataFrame containing future workouts (columns: 'Date', 'TotalDuration', 'WorkoutType')
+    - unique_id: Identifier for the time series
+
+    Returns:
+    - forecast: DataFrame containing forecasted calories with 'ds' and 'y'
+    - sf: Trained StatsForecast model
+    """
+    # Combine features and target into a single DataFrame
+    df = features.copy()
+    df['Calories'] = target
+
+    # Prepare historical data
+    train = prepare_time_series_data(df, unique_id=unique_id)
+
+    # Prepare future data (exclude 'Calories')
+    X_test = prepare_time_series_data(future_w_df, unique_id=unique_id)
+
+    # Initialize the StatsForecast model with AutoARIMA
+    models = [AutoARIMA(season_length=7)]  # Weekly seasonality
+    sf = StatsForecast(models=models, freq='D', n_jobs=-1)
+
+    # Define forecasting parameters
+    horizon = X_test.shape[0]
+    level = [95]
+
+    # Perform the forecast using the specified method
+    fcst = sf.forecast(df=train, h=horizon, X_df=X_test, level=level)
+
+    # **Handling Non-Workout Days**: Ensure that days without workouts have Calories = 0
+    # Identify which days have workouts based on 'TotalDuration' in X_test
+    has_workout = X_test['TotalDuration'] == 0.01  # Considering the shift applied earlier
+
+    # Set Calories to 0 for days without workouts
+    fcst.loc[~has_workout, 'y'] = 0
+
+    save_model(sf, "statsforecast_model")
+
+    print(fcst.head(50))
+    return fcst[['ds', 'y']], sf
+
+# Example usage:
+# Assuming you have the following DataFrames:
+# df: Historical data with columns ['Date', 'TotalDuration', 'WorkoutType', 'Calories']
+# future_w_df: Future workouts with columns ['Date', 'TotalDuration', 'WorkoutType']
+
+# df = pd.read_csv('historical_data.csv')
+# future_w_df = pd.read_csv('future_workouts.csv')
+# target = df['Calories']
+
+# forecast, model = estimate_calories_with_nixtla(features=df, target=target, future_w_df=future_w_df)
+# print(forecast.head())
+
+
+
+
+
+
+    # Save the trained StatsForecast model for future use
+    save_model(sf, 'statsforecast_model.pkl')
+
+    return forecast[['ds', 'y']], sf
 
 
 

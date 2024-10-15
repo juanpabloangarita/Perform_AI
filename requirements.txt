@@ -25,6 +25,7 @@ selenium==4.23.1
 selenium-stealth==1.0.6
 setuptools==63.2.0
 scikit-learn
+statsforecast
 streamlit==1.37.1
 s3fs
 webdriver-manager==4.0.2

@@ -16,8 +16,9 @@ dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
 from src.data_processing import load_and_update_final_csv
-from src.calorie_calculations import *
+#from src.calorie_calculations import calculate_total_calories
 from src.calorie_estimation_models import load_model
+from params import BEST_MODEL, GIVEN_DATE
 
 
 
@@ -72,7 +73,7 @@ with st.container(border=True):
                         duration_transformed = preprocessing_pipeline.transform(input_data)
 
                         # Load the trained linear regression model
-                        linear_model = load_model("Linear Regression with Duration with WorkoutType + PCA") # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
+                        linear_model = load_model(BEST_MODEL) # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
                         if linear_model is None:
                             st.error("Linear Regression model not found. Please train the model first.")
                             st.stop()

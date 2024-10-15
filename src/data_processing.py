@@ -17,7 +17,7 @@ from src.calorie_calculations import calculate_total_calories
 from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations before
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
-from src.calorie_estimation_models import estimate_calories_with_duration, load_model
+from src.calorie_estimation_models import estimate_calories_with_duration, load_model, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
 from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, save_dataframe, create_default_row
 
@@ -358,14 +358,10 @@ def process_data(user_data, workouts=None):
     # ACTIVITIES
     activities_df = clean_activities(dataframes['activities'])
 
-
-
-
     # workout_type = "with WorkoutType"
     workout_type = "duration with WorkoutType"
     # workout_type = "without WorkoutType"
     # Estimate Total Calories from Models
-
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
@@ -386,7 +382,8 @@ def process_data(user_data, workouts=None):
     # Load preproc
     preprocessing_pipeline = load_model('preprocessing_pipeline')
     # Load linear model
-    linear_model = load_model("Linear Regression with Duration with WorkoutType + PCA")
+
+    linear_model = load_model(BEST_MODEL)
 
 
     total_workouts = pd.concat([past_workouts_df, future_workouts_df])
@@ -414,6 +411,13 @@ def process_data(user_data, workouts=None):
 
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
+
+
+
+    ### NIXTLA ###
+    future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()
+
+    forecast, sf = estimate_calories_with_nixtla(X_activities, y_activities, future_workouts_for_nixtla)
 
 
     print_performances(rmse_results)

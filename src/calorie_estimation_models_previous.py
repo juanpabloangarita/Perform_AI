@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, V
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 import lightgbm as lgb
 import xgboost as xgb
 import numpy as np
@@ -57,7 +57,7 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
         pipeline = model  # Use the loaded model
 
     y_pred = pipeline.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Linear Regression RMSE: {rmse}")
     return pipeline, rmse
 
@@ -80,7 +80,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
         best_model = model
 
     y_pred = best_model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Tuned Random Forest RMSE: {rmse}")
     return best_model, rmse
 
@@ -103,7 +103,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
         best_model = model
 
     y_pred = best_model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Tuned Gradient Boosting RMSE: {rmse}")
     return best_model, rmse
 
@@ -126,7 +126,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
         best_model = model
 
     y_pred = best_model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Tuned LightGBM RMSE: {rmse}")
     return best_model, rmse
 
@@ -149,7 +149,7 @@ def xgboost_model(model_name, X_train, X_test, y_train, y_test):
         best_model = model
 
     y_pred = best_model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Tuned XGBoost RMSE: {rmse}")
     return best_model, rmse
 
