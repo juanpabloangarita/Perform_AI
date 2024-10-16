@@ -18,7 +18,12 @@ def main(user_data, workouts=None, main_arg=None):
         tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df = process_data(user_data, workouts)
 
         save_tss_values_for_dashboard('data/processed/csv/', tss_df, atl_df, ctl_df, tsb_df) # TODO: here should be sourcer
-        save_final_csv('data/processed/csv/', w_df_calories_estimated_plus_calculated, activities_df, final_df) # TODO: here should be sourcer
+        save_final_csv(
+            'data/processed/csv/',
+            w_df=w_df_calories_estimated_plus_calculated,
+            a_df=activities_df,
+            df=final_df
+        ) # TODO: here should be sourcer
         return "Re-processed Main"
 
 if __name__ == "__main__":

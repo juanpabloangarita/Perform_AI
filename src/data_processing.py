@@ -43,14 +43,58 @@ def load_csv(file_path):
     # From March 12 of 2022 to July 14 2024
     activities_df_all_years = pd.read_csv(os.path.join(full_path,'activities.csv'))
 
+    # Load all CSV files into a list of dataframes for food data
+    food_file_paths = [
+        os.path.join(full_path, 'FOOD-DATA-GROUP1.csv'),
+        os.path.join(full_path, 'FOOD-DATA-GROUP2.csv'),
+        os.path.join(full_path, 'FOOD-DATA-GROUP3.csv'),
+        os.path.join(full_path, 'FOOD-DATA-GROUP4.csv'),
+        os.path.join(full_path, 'FOOD-DATA-GROUP5.csv')
+    ]
+
+    food_dataframes = [pd.read_csv(file, index_col=0) for file in food_file_paths]
+
+    # Define unwanted columns (adjust based on your needs)
+    unwanted_columns = ['Unnamed: 0']  # You can add more if needed
+
+    # Remove unwanted columns from all dataframes
+    cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
+    foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
+
+    save_final_csv('data/processed/csv/', foods_df=foods_dfs)
+
+
+
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
 
-def save_final_csv(file_path, w_df, a_df, df):
+def load_foods_df(file_path='data/processed/csv/'):
     full_path = get_full_path(file_path)
-    w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
-    a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
-    df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
+    foods_df_path = os.path.join(full_path, 'foods_df.csv')
+
+    # Load the DataFrame from CSV
+    if os.path.exists(foods_df_path):
+        foods_df = pd.read_csv(foods_df_path, index_col=0)  # Assuming the first column is the index
+        return foods_df
+    else:
+        raise FileNotFoundError(f"No file found at {foods_df_path}")
+
+
+def save_final_csv(file_path=None, w_df=None, a_df=None, df=None, foods_df=None):
+    full_path = get_full_path(file_path)
+
+    if w_df is not None:
+        w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
+
+    if a_df is not None:
+        a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
+
+    if df is not None:
+        df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
+
+    if foods_df is not None:
+        foods_df.to_csv(os.path.join(full_path, 'foods_df.csv'), index=True, na_rep='')
+
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
