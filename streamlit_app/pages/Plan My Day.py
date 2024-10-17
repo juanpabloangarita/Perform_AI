@@ -15,7 +15,7 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv
+from src.data_processing import load_and_update_final_csv, load_foods_df
 #from src.calorie_calculations import calculate_total_calories
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
@@ -162,6 +162,7 @@ with st.container(border=True):
 
             if submit_button:
                 st.success(f"Added {calories} calories")
+                foods_df = load_foods_df()
                 load_and_update_final_csv('data/processed/csv/', 'calories_consumed', GIVEN_DATE, calories)
 
         # Ensure space is balanced between columns

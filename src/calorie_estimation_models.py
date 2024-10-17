@@ -459,6 +459,7 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
         remainder='passthrough'  # Keep the other columns
     )
 
+
     # Prepare historical data
     train = prepare_time_series_data(df, unique_id=unique_id)
 

@@ -13,26 +13,57 @@ dir_script_dir = os.path.dirname(script_dir)  # directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir)  # src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv
+from src.data_processing import load_and_update_final_csv, load_foods_df, get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 
-# Initialize session state for meals if not already done
-if 'meals' not in st.session_state:
-    st.session_state['meals'] = {
-        'Breakfast': [],
-        'Lunch': [],
-        'Dinner': [],
-        'Snack': []  # 'Gouté' can be considered as 'Snack'
-    }
 
-# Load foods_df
-@st.cache_data
-def load_foods_df():
-    # Replace 'foods_df.csv' with the actual path to your foods_df CSV file
-    return load_and_update_final_csv('data/processed/csv/', 'foods_df')
+def initialize_food_log(file_path):
+    """Create an empty dataframe with the required columns and save it as a CSV if not exists."""
+    full_path = get_full_path(file_path)
+    csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
 
-foods_df = load_foods_df()
+    columns = ['Timestamp', 'Meal', 'Food', 'Units', 'Grams per Unit', 'Total Grams', 'Calories', 'Fat', 'Saturated Fats',
+               'Monounsaturated Fats', 'Polyunsaturated Fats', 'Carbohydrates', 'Sugars', 'Protein', 'Dietary Fiber']
+
+    if not os.path.exists(csv_file_path):
+        # Create an empty DataFrame with the necessary columns and save it to a CSV file
+        df = pd.DataFrame(columns=columns)
+        df.to_csv(csv_file_path, index=False)
+    else:
+        # Load the existing CSV
+        df = pd.read_csv(csv_file_path)
+    return df
+
+def update_food_log(file_path, meal, nutritional_info):
+    """Update the food log CSV with the new meal data and a timestamp."""
+    df = initialize_food_log(file_path)
+
+    nutritional_info['Timestamp'] = GIVEN_DATE
+    nutritional_info['Meal'] = meal
+
+    # Convert the dictionary into a DataFrame by wrapping it in a list
+    nutritional_info_df = pd.DataFrame([nutritional_info])
+
+    # Append the new entry to the DataFrame
+    df = pd.concat([df, nutritional_info_df], axis=0)
+
+    full_path = get_full_path(file_path)
+    csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
+
+    # Save the updated DataFrame back to the CSV
+    df.to_csv(csv_file_path, index=False)
+
+def load_food_log(file_path):
+    """Load the food log from the CSV and return the dataframe."""
+    full_path = get_full_path(file_path)
+    csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
+    if os.path.exists(csv_file_path):
+        return pd.read_csv(csv_file_path)
+    else:
+        return pd.DataFrame()
+
+
 
 st.title("Plan My Day")
 
@@ -160,35 +191,29 @@ with st.container():
                 pass
 
 
-# Ensure that st.session_state['meals'] is initialized
-if 'meals' not in st.session_state:
-    st.session_state['meals'] = {'Breakfast': [], 'Lunch': [], 'Dinner': [], 'Gouté': []}
 
 with st.container():
-    # Create two columns for layout
     col1, col2 = st.columns(2)
-    foods_df = load_foods_df()
 
     # First column: Input calories consumed via food selection
     with col1:
         st.write("### Nutrition")
-
-        with st.form(key='food_form'):
             # Food selection with search capability
-            food_search = st.text_input("Search for a food item", "").strip().lower()
+        food_search = st.text_input("Search for a food item", "").strip().lower()
+        filtered_foods = pd.DataFrame(columns=['food'])  # Create an empty DataFrame to avoid NoneType
 
-            # Filter foods_df based on search input
-            if food_search:
-                filtered_foods = foods_df[foods_df['food'].str.lower().str.contains(food_search)]
-            else:
-                filtered_foods = foods_df.copy()  # Ensure it’s always a DataFrame
-
-            # Limit to top 100 results to prevent performance issues
+        # search_button = st.form_submit_button("Search")
+        # if search_button:
+        if food_search:
+            foods_df = load_foods_df()
+            filtered_foods = foods_df[foods_df['food'].str.lower().str.contains(food_search)]
             if not filtered_foods.empty:
                 filtered_foods = filtered_foods.head(100)
             else:
                 st.warning("No data available.")
-                filtered_foods = pd.DataFrame(columns=['food'])  # Create an empty DataFrame to avoid NoneType
+        else:
+            st.warning("Type a food item in the search bar")
+        with st.form(key='food_form'):
 
             # Selectbox for food items with autocomplete
             food_item = st.selectbox("Select Food", options=filtered_foods['food'].unique() if not filtered_foods.empty else [])
@@ -200,56 +225,58 @@ with st.container():
             grams_per_unit = st.number_input("Grams per Unit", min_value=1.0, step=1.0, value=100.0)
 
             # Select meal
-            meal_options = list(st.session_state['meals'].keys())
+            meal_options = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Brunch', 'Pre-Training', 'Post-Training', 'During-Training']
             selected_meal = st.selectbox("Select Meal", options=meal_options)
 
             # Add submit button
             submit_food = st.form_submit_button(label='Add Food')
 
-            if submit_food and food_item:
-                # Retrieve the food details from foods_df
-                food_details = foods_df[foods_df['food'] == food_item].iloc[0]
+            if submit_food:
+                if food_item:
+                    # Retrieve the food details from foods_df
+                    food_details = foods_df[foods_df['food'] == food_item].iloc[0]
 
-                # Calculate total grams
-                total_grams = number_of_units * grams_per_unit
+                    # Calculate total grams
+                    total_grams = number_of_units * grams_per_unit
 
-                # Calculate scaling factor based on 100g
-                scaling_factor = total_grams / 100.0
+                    # Calculate scaling factor based on 100g
+                    scaling_factor = total_grams / 100.0
 
-                # Calculate nutritional values
-                nutritional_info = {
-                    'Food': food_item,
-                    'Units': number_of_units,
-                    'Grams per Unit': grams_per_unit,
-                    'Total Grams': total_grams,
-                    'Calories': food_details['Caloric Value'] * scaling_factor,
-                    'Fat': food_details['Fat'] * scaling_factor,
-                    'Saturated Fats': food_details['Saturated Fats'] * scaling_factor,
-                    'Monounsaturated Fats': food_details['Monounsaturated Fats'] * scaling_factor,
-                    'Polyunsaturated Fats': food_details['Polyunsaturated Fats'] * scaling_factor,
-                    'Carbohydrates': food_details['Carbohydrates'] * scaling_factor,
-                    'Sugars': food_details['Sugars'] * scaling_factor,
-                    'Protein': food_details['Protein'] * scaling_factor,
-                    'Dietary Fiber': food_details['Dietary Fiber'] * scaling_factor,
-                }
+                    # Calculate nutritional values
+                    nutritional_info = {
+                        'Food': food_item,
+                        'Units': number_of_units,
+                        'Grams per Unit': grams_per_unit,
+                        'Total Grams': total_grams,
+                        'Calories': food_details['Caloric Value'] * scaling_factor,
+                        'Fat': food_details['Fat'] * scaling_factor,
+                        'Saturated Fats': food_details['Saturated Fats'] * scaling_factor,
+                        'Monounsaturated Fats': food_details['Monounsaturated Fats'] * scaling_factor,
+                        'Polyunsaturated Fats': food_details['Polyunsaturated Fats'] * scaling_factor,
+                        'Carbohydrates': food_details['Carbohydrates'] * scaling_factor,
+                        'Sugars': food_details['Sugars'] * scaling_factor,
+                        'Protein': food_details['Protein'] * scaling_factor,
+                        'Dietary Fiber': food_details['Dietary Fiber'] * scaling_factor,
+                    }
 
-                # Append to the selected meal
-                st.session_state['meals'][selected_meal].append(nutritional_info)
+                    # Update the CSV with the new food item and timestamp
+                    update_food_log('data/processed/csv/', selected_meal, nutritional_info)
 
-                st.success(f"Added {number_of_units} x {food_item} ({total_grams}g) to {selected_meal}")
+                    st.success(f"Added {number_of_units} x {food_item} ({total_grams}g) to {selected_meal}")
+                else:
+                    st.warning("you need to select a food item")
 
         # Display added foods per meal
-        for meal, foods in st.session_state['meals'].items():
-            if foods:
-                st.write(f"**{meal}**")
-                meal_df = pd.DataFrame(foods)
-                st.dataframe(meal_df[['Food', 'Units', 'Grams per Unit', 'Total Grams', 'Calories', 'Fat', 'Protein', 'Carbohydrates']])
+        food_log_df = load_food_log('data/processed/csv/')
+        food_log_mask = food_log_df['Timestamp']==GIVEN_DATE
+        if not food_log_df[food_log_mask].empty:
+            for meal in meal_options:
+                meal_df = food_log_df[food_log_mask & (food_log_df['Meal'] == meal)]
+                if not meal_df.empty:
+                    st.write(f"**{meal}**")
+                    st.dataframe(meal_df[['Food', 'Units', 'Grams per Unit', 'Total Grams', 'Calories', 'Fat', 'Protein', 'Carbohydrates']])
 
-        # Ensure space is balanced between columns
-        with st.empty():
-            pass
-
-    # Second column: Display calories and remaining calories
+    # Second column: Display today's nutrition summary
     with col2:
         st.write("#### Today's Nutrition Summary")
 
@@ -264,9 +291,9 @@ with st.container():
         total_sugars = 0
         total_dietary_fiber = 0
 
-        # Calculate totals from meals
-        for foods in st.session_state['meals'].values():
-            for food in foods:
+        # Calculate totals from the food log
+        if not food_log_df[food_log_mask].empty:
+            for index, food in food_log_df[food_log_mask].iterrows():
                 total_calories_consumed += food['Calories']
                 total_fat += food['Fat']
                 total_protein += food['Protein']
@@ -294,4 +321,37 @@ with st.container():
         st.write(f"**Remaining Calories for Today:** {remaining_calories:.1f} kcal")
 
 
-# You can add more sections or functionalities below as needed
+
+        st.write("#### Today's Calories")
+        # df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
+
+
+        # calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed'] if GIVEN_DATE in df.index else 0
+
+        # if isinstance(calories_data, pd.Series):
+        #     # If it's a Series, drop NaNs and take the first non-empty value
+        #     calories_consumed = calories_data.dropna().iloc[0] if not calories_data.dropna().empty else 0
+        # else:
+        #     # If it's a single value (numpy.float64), use it directly (it could be NaN)
+        #     calories_consumed = calories_data if not pd.isna(calories_data) else 0
+
+        # Display calories consumed
+        st.write(f"**Calories Consumed Today:** {total_calories_consumed} kcal")
+
+        # Calculate total daily calorie needs
+        total_daily_calories = st.session_state['user_data']['passive_calories'] + total_active_calories # NOTE: NOT SURE ABOUT total_active_calories that was created before
+        calories_remaining = total_daily_calories - total_calories_consumed
+        st.write(f"**Calories To Consume Today:** {calories_remaining} kcal")
+
+        # FIXME: Calculations wrong, above and below
+        st.progress(min(total_calories_consumed / total_daily_calories, 1.0))  # To ensure progress stays between 0 and 1
+
+        # Provide guidance on managing remaining calories
+        if calories_remaining > 0:
+            st.write("🟢 You have room for more food today!")
+        else:
+            st.write("🔴 You've reached or exceeded your calorie limit for today. Consider balancing your intake.")
+
+        # Ensure space is balanced with the first column
+        with st.empty():
+            pass
