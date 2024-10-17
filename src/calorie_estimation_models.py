@@ -291,18 +291,22 @@ def create_preprocessing_pipeline(use_poly=True, use_pca=False, n_components=Non
 def transform_features(X, y, use_pca=False, n_components=None):
     X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    preprocessing_pipeline = create_preprocessing_pipeline(use_poly=True, use_pca=use_pca, n_components=n_components)
+    preprocessing_pipeline = load_model('preprocessing_pipeline')
+    if preprocessing_pipeline is None:
+        preprocessing_pipeline = create_preprocessing_pipeline(use_poly=True, use_pca=use_pca, n_components=n_components)
+        save_model(preprocessing_pipeline, 'preprocessing_pipeline')
     preprocessing_pipeline.fit(X_train_raw)
 
     X_train_transformed = preprocessing_pipeline.transform(X_train_raw)
     X_test_transformed = preprocessing_pipeline.transform(X_test_raw)
 
-    return preprocessing_pipeline, X_train_transformed, X_test_transformed, y_train, y_test
+    return X_train_transformed, X_test_transformed, y_train, y_test
 
 
 def estimate_calories_with_duration(features, target, use_pca=True, n_components=10, enable_regularization=True):
-    preprocessing_pipeline, X_train, X_test, y_train, y_test = transform_features(features, target, use_pca=use_pca, n_components=n_components)
-    save_model(preprocessing_pipeline, 'preprocessing_pipeline')
+
+    X_train, X_test, y_train, y_test = transform_features(features, target, use_pca=use_pca, n_components=n_components)
+
 
     # Flags to enable/disable regularization models
     USE_RIDGE = True if enable_regularization else False
@@ -351,7 +355,11 @@ def estimate_calories_with_duration(features, target, use_pca=True, n_components
     return model_configs
 
 
+
+
+
 ### NIXTLA ###
+
 
 def prepare_time_series_data(df, unique_id='series_1'):
     """
@@ -390,21 +398,32 @@ def prepare_time_series_data(df, unique_id='series_1'):
     workout_types = ['None', 'Bike', 'Run', 'Swim']
     df_full['WorkoutType'] = pd.Categorical(df_full['WorkoutType'], categories=workout_types)
 
-    # One-hot encode 'WorkoutType'
-    workout_dummies = pd.get_dummies(df_full['WorkoutType'], prefix='WorkoutType', drop_first=True)  # Drop 'None' to avoid dummy variable trap
+    # # One-hot encode 'WorkoutType'
+    # workout_dummies = pd.get_dummies(df_full['WorkoutType'], prefix='WorkoutType', drop_first=True)  # Drop 'None' to avoid dummy variable trap
 
-    # Initialize the base DataFrame with 'unique_id' and 'ds'
+    # # Initialize the base DataFrame with 'unique_id' and 'ds'
+    # ts_data = pd.DataFrame({
+    #     'unique_id': unique_id,
+    #     'ds': df_full['Date']
+    # })
+
+    # # Add 'y' if 'Calories' is present in the original DataFrame
+    # if 'Calories' in df_full.columns:
+    #     ts_data['y'] = df_full['Calories'].fillna(0)
+
+    # # Add exogenous variables
+    # ts_data = pd.concat([ts_data, df_full[['TotalDuration']], workout_dummies], axis=1)
+
+    # Return transformed DataFrame without creating dummies here, as this will be handled in the pipeline
     ts_data = pd.DataFrame({
         'unique_id': unique_id,
-        'ds': df_full['Date']
+        'ds': df_full['Date'],
+        'TotalDuration': df_full['TotalDuration'],
+        'WorkoutType': df_full['WorkoutType']
     })
 
-    # Add 'y' if 'Calories' is present in the original DataFrame
     if 'Calories' in df_full.columns:
         ts_data['y'] = df_full['Calories'].fillna(0)
-
-    # Add exogenous variables
-    ts_data = pd.concat([ts_data, df_full[['TotalDuration']], workout_dummies], axis=1)
 
     # **Workaround: Shift 'TotalDuration' to avoid collinearity with trend**
     ts_data['TotalDuration'] = ts_data['TotalDuration'] + 0.01  # Adjust the constant as needed otherwise ValueError: xreg is rank deficient
@@ -430,11 +449,45 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
     df = features.copy()
     df['Calories'] = target
 
+
+    # Define your preprocessing pipeline
+    preprocessing_pipeline = ColumnTransformer(
+        transformers=[
+            ('one_hot', OneHotEncoder(categories=[['Bike', 'Run', 'Swim']], sparse_output=False, handle_unknown='ignore'), ['WorkoutType']),
+            ('scaler', StandardScaler(), ['TotalDuration'])  # Apply scaler to TotalDuration
+        ],
+        remainder='passthrough'  # Keep the other columns
+    )
+
     # Prepare historical data
     train = prepare_time_series_data(df, unique_id=unique_id)
 
     # Prepare future data (exclude 'Calories')
     X_test = prepare_time_series_data(future_w_df, unique_id=unique_id)
+
+
+    # Fit and transform your training data
+    train_transformed = preprocessing_pipeline.fit_transform(train[['TotalDuration','WorkoutType']])
+
+    # Create a DataFrame from the transformed data
+    train_transformed_df = pd.DataFrame(train_transformed)
+
+    # Add back the 'unique_id', 'ds', and 'y' columns from the original train DataFrame
+    train_transformed_df['unique_id'] = train['unique_id'].values
+    train_transformed_df['ds'] = train['ds'].values
+    train_transformed_df['y'] = train['y'].values
+
+    # For test data, apply the same pipeline
+    X_test_transformed = preprocessing_pipeline.transform(X_test[['TotalDuration','WorkoutType']])
+
+    # Create a DataFrame from the transformed test data
+    X_test_transformed_df = pd.DataFrame(X_test_transformed)
+
+    # Add back the 'unique_id' and 'ds' columns from the original X_test DataFrame
+    X_test_transformed_df['unique_id'] = X_test['unique_id'].values
+    X_test_transformed_df['ds'] = X_test['ds'].values
+
+    # At this point, train_transformed_df and X_test_transformed_df are ready for use.
 
     # Initialize the StatsForecast model with AutoARIMA
     models = [AutoARIMA(season_length=7)]  # Weekly seasonality
@@ -445,19 +498,20 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
     level = [95]
 
     # Perform the forecast using the specified method
-    fcst = sf.forecast(df=train, h=horizon, X_df=X_test, level=level)
+    fcst = sf.forecast(df=train_transformed_df, h=horizon, X_df=X_test_transformed_df, level=level)
+
 
     # **Handling Non-Workout Days**: Ensure that days without workouts have Calories = 0
     # Identify which days have workouts based on 'TotalDuration' in X_test
-    has_workout = X_test['TotalDuration'] == 0.01  # Considering the shift applied earlier
+    # has_workout = X_test['TotalDuration'] == 0.01  # Considering the shift applied earlier
 
     # Set Calories to 0 for days without workouts
-    fcst.loc[~has_workout, 'y'] = 0
+    #fcst.loc[~has_workout, 'AutoARIMA'] = 0 # NOTE: STILL DON'T KNOW WHAT TO DO HERE
 
     save_model(sf, "statsforecast_model")
 
-    print(fcst.head(50))
-    return fcst[['ds', 'y']], sf
+
+    return fcst, sf
 
 
 ###################

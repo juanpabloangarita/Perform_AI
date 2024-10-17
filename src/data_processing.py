@@ -36,7 +36,7 @@ def load_csv(file_path):
     workouts_2022_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2022-03-03_to_2023-03-03.csv'))
     workouts_2023_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2023-03-03_to_2024-03-03.csv'))
     # from 03 of March to 30 of August same year
-    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2025-01-25.csv'))
+    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2025-03-03.csv')) # year month  day
 
     # ACTIVITIES GARMIN
     # Garmin files REAL CALORIES
@@ -464,6 +464,28 @@ def process_data(user_data, workouts=None):
     forecast, sf = estimate_calories_with_nixtla(X_activities, y_activities, future_workouts_for_nixtla)
 
 
+    # Step 1: Reset the index of w_df_calories_estimated and rename it to 'Date'
+    w_df_calories_estimated = w_df_calories_estimated.reset_index().rename(columns={'index': 'Date'})
+
+    # Step 2: Rename the 'ds' column in forecast to 'Date'
+    forecast = forecast.rename(columns={'ds': 'Date'})
+
+    # Step 3: Convert both 'Date' columns to datetime format if necessary
+    w_df_calories_estimated['Date'] = pd.to_datetime(w_df_calories_estimated['Date'], format='%Y-%m-%d')
+    forecast['Date'] = pd.to_datetime(forecast['Date'], format='%Y-%m-%d')
+
+    # Step 4: Perform the merge on the 'Date' column
+    w_df_calories_estimated = pd.merge(w_df_calories_estimated, forecast, on='Date', how='left')
+
+    # Step 5: Set the 'Date' column as the index again
+    w_df_calories_estimated.set_index('Date', inplace=True)
+
+    # Now, w_df_calories_estimated contains the merged data with 'Date' as the index
+
+
+
+
+
     print_performances(rmse_results)
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
@@ -471,7 +493,7 @@ def process_data(user_data, workouts=None):
     aggregate_by_date_path = False
     final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours',
                      'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
-                     'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
+                     'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',  'AutoARIMA-lo-95',  'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
     if aggregate_by_date_path:
         ### DATAFRAMES AGGREGATED BY DATE ###
         w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
