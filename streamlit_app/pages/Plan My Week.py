@@ -19,6 +19,9 @@ from src.data_processing import load_and_update_final_csv
 from src.training_peaks import navigate_to_login
 from src.training_peaks_handler import *
 from params import *
+from src.calorie_estimation_models import load_model
+from params import BEST_MODEL, GIVEN_DATE
+
 
 headless_mode = (CLOUD_ON == 'yes')
 
@@ -137,10 +140,10 @@ def main():
                 if not day_data.empty:
                     # Loop through each workout and display the main columns (WorkoutType, Title, Time)
                     for idx, row in day_data.iterrows():
-                        header_text = f"**{row['WorkoutType']}**  \n{row['Title']}  \n{row['TimeTotalInHours']} hours"
+                        header_text = f"**{row['WorkoutType']}**  \n{row['Title']}  \n{round(row['TimeTotalInHours']*60)} minutes"
                         with st.expander(header_text, expanded=False):
                             workout_type = st.text_input("Workout Type", value = row['WorkoutType'], key=f"WorkoutType_{idx}{row}")
-                            duration = st.text_input("Time", value = row['TimeTotalInHours'], key=f"Time_{idx}{row}")
+                            duration = st.text_input("Time", value = round(row['TimeTotalInHours']*60), key=f"Time_{idx}{row}")
                             distance = st.number_input(
                                 "Distance (m)",
                                 value=row['DistanceInMeters'],  # Default value
@@ -156,14 +159,48 @@ def main():
 
                             st.markdown(f"**Description**: {description}")
                             st.markdown(f"**Coach Comments**: {coach_comments}")
+                            duration = float(duration)
 
                             # Save the modifications to session_state temp dictionary
                             if st.button("Update", key=f"update_{idx}{row}"):
+                                if duration > 0:
+                                    try:
+                                        # Load the preprocessing pipeline
+                                        preprocessing_pipeline = load_model('preprocessing_pipeline')
+                                        if preprocessing_pipeline is None:
+                                            st.error("Preprocessing pipeline not found. Please train the model first.")
+                                            st.stop()
+
+                                        # Create a DataFrame with required features
+                                        input_data = pd.DataFrame({
+                                            'WorkoutType': [workout_type],
+                                            'TotalDuration': [duration / 60]  # Convert minutes to hours
+                                        })
+
+                                        # Transform the input data
+                                        duration_transformed = preprocessing_pipeline.transform(input_data)
+
+                                        # Load the trained linear regression model
+                                        linear_model = load_model(BEST_MODEL)  # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
+                                        if linear_model is None:
+                                            st.error("Linear Regression model not found. Please train the model first.")
+                                            st.stop()
+
+                                        # Predict the estimated calories
+                                        estimated_calories = linear_model.predict(duration_transformed)[0]
+                                    except Exception as e:
+                                        st.error(f"An error occurred during prediction: {e}")
+                                        estimated_calories = 0
+                                else:
+                                    st.warning("Duration must be greater than 0 to estimate calories.")
+                                    estimated_calories = 0  # Or set to None if preferred
+
                                 tmp_dict_week = {
                                     'WorkoutType': workout_type,
                                     'TimeTotalInHours': duration,
                                     'DistanceInMeters': distance,
-                                    'CaloriesSpent': calories_spent
+                                    'CaloriesSpent': calories_spent,
+                                    'estimated_calories': estimated_calories
                                 }
                                 st.session_state.temp_data[idx] = tmp_dict_week
                                 load_and_update_final_csv('data/processed/csv/', "plan_my_week", day_date_str, tmp_dict_week)

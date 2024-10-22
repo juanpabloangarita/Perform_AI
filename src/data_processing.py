@@ -112,9 +112,10 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
 
     elif from_where == 'plan_my_week':
         updates = {
-            'TimeTotalInHours': pd.to_numeric(data_to_update.get('TimeTotalInHours', 0), errors='coerce'),
+            'TimeTotalInHours': pd.to_numeric(data_to_update.get('TimeTotalInHours', 0), errors='coerce')/60,
             'DistanceInMeters': data_to_update.get('DistanceInMeters', 0.0),
-            'CaloriesSpent': data_to_update.get('CaloriesSpent', 0.0)
+            'CaloriesSpent': data_to_update.get('CaloriesSpent', 0.0),
+            'EstimatedActiveCal': data_to_update.get('estimated_calories', 0)
         }
         df = update_or_add_row(df, time_added, data_to_update.get('WorkoutType', ''), updates)
 
