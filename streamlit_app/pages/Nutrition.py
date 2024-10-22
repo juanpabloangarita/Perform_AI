@@ -251,7 +251,7 @@ with st.container():
         # Multiple choice for selecting input method
         input_method = st.radio("Choose how to input food information:",
                                  ("Type Food Item", "Scan Barcode"))
-
+        meal_options = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Brunch', 'Pre-Training', 'Post-Training', 'During-Training']
         if input_method == "Type Food Item":
             # Food selection with search capability
             food_search = st.text_input("Search for a food item", "").strip().lower()
@@ -278,7 +278,7 @@ with st.container():
                 grams_per_unit = st.number_input("Grams per Unit", min_value=1.0, step=1.0, value=100.0)
 
                 # Select meal
-                meal_options = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Brunch', 'Pre-Training', 'Post-Training', 'During-Training']
+                # meal_options = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Brunch', 'Pre-Training', 'Post-Training', 'During-Training']
                 selected_meal = st.selectbox("Select Meal", options=meal_options)
 
                 # Add submit button
