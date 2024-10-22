@@ -17,6 +17,7 @@ jupyterlab_server==2.27.2
 jupyterlab_widgets==3.0.11
 lightgbm
 notebook==7.2.1
+opencv-python-headless
 pandas==2.2.2
 paramiko
 python-dotenv
@@ -27,6 +28,7 @@ setuptools==63.2.0
 scikit-learn
 statsforecast
 streamlit==1.37.1
+streamlit-camera-input-live
 s3fs
 webdriver-manager==4.0.2
 webdrivermanager==0.10.0
