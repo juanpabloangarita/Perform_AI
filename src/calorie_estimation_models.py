@@ -398,21 +398,6 @@ def prepare_time_series_data(df, unique_id='series_1'):
     workout_types = ['None', 'Bike', 'Run', 'Swim']
     df_full['WorkoutType'] = pd.Categorical(df_full['WorkoutType'], categories=workout_types)
 
-    # # One-hot encode 'WorkoutType'
-    # workout_dummies = pd.get_dummies(df_full['WorkoutType'], prefix='WorkoutType', drop_first=True)  # Drop 'None' to avoid dummy variable trap
-
-    # # Initialize the base DataFrame with 'unique_id' and 'ds'
-    # ts_data = pd.DataFrame({
-    #     'unique_id': unique_id,
-    #     'ds': df_full['Date']
-    # })
-
-    # # Add 'y' if 'Calories' is present in the original DataFrame
-    # if 'Calories' in df_full.columns:
-    #     ts_data['y'] = df_full['Calories'].fillna(0)
-
-    # # Add exogenous variables
-    # ts_data = pd.concat([ts_data, df_full[['TotalDuration']], workout_dummies], axis=1)
 
     # Return transformed DataFrame without creating dummies here, as this will be handled in the pipeline
     ts_data = pd.DataFrame({

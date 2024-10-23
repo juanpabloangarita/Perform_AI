@@ -57,7 +57,7 @@ def load_csv(file_path):
     cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
     foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
 
-    Sourcer().save_final_csv('data/processed/csv/', foods_df=foods_dfs)
+    Sourcer().save_final_csv(foods_df=foods_dfs)
 
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
