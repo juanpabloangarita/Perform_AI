@@ -448,16 +448,16 @@ def process_data(user_data, workouts=None):
     total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
 
 
-    # def micro_agression(work_df):#, acti_df):
-    #     full_path = get_full_path('data/processed/csv/')
-    #     work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
-    #     #acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
-    # micro_agression(total_workouts)
+
 
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
-
+    def micro_agression(work_df, acti_df):
+        full_path = get_full_path('data/processed/csv/')
+        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
+        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
+    micro_agression(w_df_calories_estimated, activities_df)
 
     ### NIXTLA ###
     future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()

@@ -22,8 +22,10 @@ from src.user_data_cloud import *
 from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
 
 
-st.set_page_config(layout="wide")  # Set the layout to wide to utilize more space
-# Define your credentials here (use environment variables or a secure method in production)
+
+st.set_page_config(page_title="Perform AI", page_icon="🌞", layout="wide", initial_sidebar_state="expanded")
+
+
 
 # Capture the 'main' argument if provided
 main_arg = None
