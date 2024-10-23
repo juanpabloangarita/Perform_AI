@@ -20,13 +20,6 @@ from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 
 
-def save_dataframe(df, full_path):
-    try:
-        df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, mode='w', na_rep='')
-        print("File saved successfully")
-    except Exception as e:
-        print(f"Error saving final_df: {e}")
-
 def update_or_add_row(df, date_str, workout_type, updates):
     """
     Update the row with the given `date_str` and `workout_type`.

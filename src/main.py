@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 
-from src.data_processing import process_data, save_tss_values_for_dashboard
+from src.data_processing import process_data
 from src.data_loader.files_saving import Sourcer
 from src.data_loader.get_full_path import get_full_path
 

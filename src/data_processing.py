@@ -19,7 +19,7 @@ from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_duration, load_model, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
-from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, save_dataframe, create_default_row
+from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, create_default_row
 from src.data_loader.files_saving import Sourcer
 from src.data_loader.get_full_path import get_full_path # TODO: ASK DINIS: -> for the file files_saving.py in data_loader, i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
 from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW
@@ -74,23 +74,6 @@ def load_foods_df(file_path='data/processed/csv/'):
         raise FileNotFoundError(f"No file found at {foods_df_path}")
 
 
-# def save_final_csv(file_path=None, w_df=None, a_df=None, df=None, foods_df=None):
-#     full_path = get_full_path(file_path)
-
-#     if w_df is not None:
-#         w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
-
-#     if a_df is not None:
-#         a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
-
-#     if df is not None:
-#         df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
-
-#     if foods_df is not None:
-#         foods_df.to_csv(os.path.join(full_path, 'foods_df.csv'), index=True, na_rep='')
-
-
-
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
     full_path = get_full_path(file_path)
     df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0, na_filter=False)
@@ -133,22 +116,15 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
 
             df = pd.concat([df, new_row]).sort_index()
 
-    save_dataframe(df, full_path)
-        # Calculate TSS per discipline and TOTAL TSS
+
+    Sourcer().save_final_csv(df=df) # TODO: SAVE ALL WITH THE SOURCER() BELOW?
+    # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(df, 'load_and_update_final_csv')
 
     # # Calculate ATL, CTL, TSB from TSS
     w_df.index = pd.to_datetime(w_df.index)
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
-    save_tss_values_for_dashboard('data/processed/csv/', tss_df, atl_df, ctl_df, tsb_df)
-
-
-def save_tss_values_for_dashboard(file_path, tss, atl, ctl, tsb):
-    full_path = get_full_path(file_path)
-    tss.to_csv(os.path.join(full_path, 'tss.csv'), index=True)
-    ctl.to_csv(os.path.join(full_path, 'ctl.csv'), index=True)
-    atl.to_csv(os.path.join(full_path, 'atl.csv'), index=True)
-    tsb.to_csv(os.path.join(full_path, 'tsb.csv'), index=True)
+    Sourcer().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
 
 def load_tss_values_for_dashboard(file_path):
@@ -442,16 +418,9 @@ def process_data(user_data, workouts=None):
     total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
 
 
-
-
-
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
-    def micro_agression(work_df, acti_df):
-        full_path = get_full_path('data/processed/csv/')
-        work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
-        acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
-    micro_agression(w_df_calories_estimated, activities_df)
+    Sourcer().save_during_process(w_df_calories_estimated, activities_df)
 
     ### NIXTLA ###
     future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()

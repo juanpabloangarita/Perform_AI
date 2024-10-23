@@ -20,7 +20,8 @@ dir_script_dir = os.path.dirname(script_dir)  # directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir)  # src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv, load_foods_df, get_full_path
+from src.data_processing import load_and_update_final_csv, load_foods_df
+from src.data_loader.get_full_path import get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 
