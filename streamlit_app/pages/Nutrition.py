@@ -480,8 +480,10 @@ with st.container():
         # Provide guidance on managing remaining calories
         if calories_remaining > 0:
             st.write("🟢 You have room for more food today!")
+            st.session_state['user_data']['meal'] = 'Yes'
         else:
             st.write("🔴 You've reached or exceeded your calorie limit for today. Consider balancing your intake.")
+            st.session_state['user_data']['meal'] = 'No'
 
         # Ensure space is balanced with the first column
         with st.empty():

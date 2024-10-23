@@ -14,19 +14,15 @@ import plotly.io as pio
 
 from params import *
 from src.calorie_calculations import calculate_total_calories
-from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations before
+
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_duration, load_model, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
 from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, save_dataframe, create_default_row
-
-
-def get_full_path(file_path):
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located
-    dir_script_dir = os.path.dirname(script_dir)  # Get the directory where the previous dir is located
-    full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
-    return full_path
+from src.data_loader.files_saving import Sourcer
+from src.data_loader.get_full_path import get_full_path # TODO: ASK DINIS: -> for the file files_saving.py in data_loader, i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
+from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW
 
 
 def load_csv(file_path):
@@ -61,9 +57,7 @@ def load_csv(file_path):
     cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
     foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
 
-    save_final_csv('data/processed/csv/', foods_df=foods_dfs)
-
-
+    Sourcer().save_final_csv('data/processed/csv/', foods_df=foods_dfs)
 
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
@@ -80,20 +74,20 @@ def load_foods_df(file_path='data/processed/csv/'):
         raise FileNotFoundError(f"No file found at {foods_df_path}")
 
 
-def save_final_csv(file_path=None, w_df=None, a_df=None, df=None, foods_df=None):
-    full_path = get_full_path(file_path)
+# def save_final_csv(file_path=None, w_df=None, a_df=None, df=None, foods_df=None):
+#     full_path = get_full_path(file_path)
 
-    if w_df is not None:
-        w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
+#     if w_df is not None:
+#         w_df.to_csv(os.path.join(full_path, 'workouts_df.csv'), na_rep='')
 
-    if a_df is not None:
-        a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
+#     if a_df is not None:
+#         a_df.to_csv(os.path.join(full_path, 'activities_df.csv'), na_rep='')
 
-    if df is not None:
-        df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
+#     if df is not None:
+#         df.to_csv(os.path.join(full_path, 'final_df.csv'), index=True, na_rep='')
 
-    if foods_df is not None:
-        foods_df.to_csv(os.path.join(full_path, 'foods_df.csv'), index=True, na_rep='')
+#     if foods_df is not None:
+#         foods_df.to_csv(os.path.join(full_path, 'foods_df.csv'), index=True, na_rep='')
 
 
 

@@ -144,7 +144,7 @@ else:
         with col3:
             st.write(f"**Maintenance Calories:** {st.session_state['user_data']['passive_calories']} kcal")
         with col4:
-            st.write(f"**Meals Pending:** Yes")
+            st.write(f"**Meals Pending:** {st.session_state['user_data']['meal'] if 'meal' in st.session_state['user_data'] else ''}") # TODO: how to make it appear quickly, without having to navigate to the nutrition page
 
     st.write("")
     # Option for user to select data source
