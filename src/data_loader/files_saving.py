@@ -35,3 +35,7 @@ class Sourcer:
         full_path = get_full_path(self.file_path if file_path is None else file_path)
         work_df.to_csv(os.path.join(full_path, 'workouts_to_process_df.csv'), na_rep='')
         acti_df.to_csv(os.path.join(full_path, 'activities_to_process_df.csv'), na_rep='')
+
+    def save_nutrition(self, nutrition_df, file_path=None):
+        full_path = get_full_path(self.file_path if file_path is None else file_path)
+        nutrition_df.to_csv(os.path.join(full_path, 'user_nutrition.csv'), index=False)
