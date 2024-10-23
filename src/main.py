@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 from src.data_processing import process_data
-from src.data_loader.files_saving import Sourcer
+from src.data_loader.files_saving import FileSaver
 from src.data_loader.get_full_path import get_full_path
 
 #def main(*uploaded_workouts):
@@ -19,9 +19,9 @@ def main(user_data, workouts=None, main_arg=None):
         print("App is running")
         tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df = process_data(user_data, workouts)
 
-        Sourcer().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+        FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
-        Sourcer().save_final_csv(
+        FileSaver().save_final_csv(
             w_df=w_df_calories_estimated_plus_calculated,
             a_df=activities_df,
             df=final_df

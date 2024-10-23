@@ -4,14 +4,14 @@ import os
 import logging
 from .get_full_path import get_full_path
 
-class Sourcer:
+class FileSaver:
     """
     A class responsible for saving various dataframes to CSV files.
     Provides methods for saving workout data, activities, TSS metrics, and nutrition information.
     """
 
     def __init__(self):
-        """Initialize the Sourcer with the default file path and logging configuration."""
+        """Initialize the FileSaver with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv/'  # Default folder for saving CSV files
 

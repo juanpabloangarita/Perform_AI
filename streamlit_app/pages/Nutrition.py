@@ -24,7 +24,7 @@ from src.data_processing import load_and_update_final_csv, load_foods_df
 from src.data_loader.get_full_path import get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
-from src.data_loader.files_saving import Sourcer
+from src.data_loader.files_saving import FileSaver
 
 import requests
 import pandas as pd
@@ -76,7 +76,7 @@ def initialize_food_log(file_path):
     if not os.path.exists(csv_file_path):
         # Create an empty DataFrame with the necessary columns and save it to a CSV file
         df = pd.DataFrame(columns=columns)
-        Sourcer().save_nutrition(nutrition_df=df)
+        FileSaver().save_nutrition(nutrition_df=df)
     else:
         # Load the existing CSV
         df = pd.read_csv(csv_file_path)
@@ -99,7 +99,7 @@ def update_food_log(file_path, meal, nutritional_info):
     # Concatenate the two DataFrames
     df = pd.concat([df, nutritional_info_df_reindexed], axis=0)
 
-    Sourcer().save_nutrition(nutrition_df=df)
+    FileSaver().save_nutrition(nutrition_df=df)
 
 
 def load_food_log(file_path):

@@ -20,7 +20,7 @@ from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_duration, load_model, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
 from src.load_and_update_final_csv_helper import process_data_to_update, process_activity_dict, update_or_add_row, create_default_row
-from src.data_loader.files_saving import Sourcer
+from src.data_loader.files_saving import FileSaver
 from src.data_loader.get_full_path import get_full_path # TODO: ASK DINIS: -> for the file files_saving.py in data_loader, i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
 from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW
 
@@ -57,7 +57,7 @@ def load_csv(file_path):
     cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
     foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
 
-    Sourcer().save_final_csv(foods_df=foods_dfs)
+    FileSaver().save_final_csv(foods_df=foods_dfs)
 
     return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
 
@@ -117,14 +117,14 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
             df = pd.concat([df, new_row]).sort_index()
 
 
-    Sourcer().save_final_csv(df=df) # TODO: SAVE ALL WITH THE SOURCER() BELOW?
+    FileSaver().save_final_csv(df=df) # TODO: SAVE ALL WITH THE FileSaver() BELOW?
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(df, 'load_and_update_final_csv')
 
     # # Calculate ATL, CTL, TSB from TSS
     w_df.index = pd.to_datetime(w_df.index)
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
-    Sourcer().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+    FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
 
 def load_tss_values_for_dashboard(file_path):
@@ -420,7 +420,7 @@ def process_data(user_data, workouts=None):
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
-    Sourcer().save_during_process(w_df_calories_estimated, activities_df)
+    FileSaver().save_during_process(w_df_calories_estimated, activities_df)
 
     ### NIXTLA ###
     future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()
