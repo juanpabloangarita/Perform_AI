@@ -16,7 +16,6 @@ from config import setup_paths # TODO: decide to erase it or to implement it
 from dashboard_plot import *
 from params import *
 from src.main import main
-from src.user_data_cloud import *
 from src.user_data import *
 from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
 
@@ -75,49 +74,10 @@ def show_login_form():
                     st.session_state['authenticated'] = False
                     st.error('Invalid username or password')
 
-# Function to display the login and sign-up form
-def show_login_form_cloud():
-    st.subheader('Login / Sign Up')
-    # Option to switch between lofgin and sign up
-    option = st.radio("Select Option", ("Login", "Sign Up"))
-    with st.container(border=True):
-        username = st.text_input('Username')
-        password = st.text_input('Password', type='password')
-
-        if option == "Sign Up":
-            secret_code = st.text_input('Secret Code', type='password')
-            if st.button('Sign Up'):
-                if secret_code == CODE_PROMO:
-                    if not check_user_exists_cloud(username):
-                        create_user_data_cloud(username, password)
-                        st.session_state['authenticated'] = True
-                        st.session_state['username'] = username
-                        st.session_state['user_data']= load_user_data(username)
-                        response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
-                        st.success(f"Sign up successful! {response_main}")
-                    else:
-                        st.error('Username already exists.')
-                else:
-                    st.error('Invalid secret code.')
-        else:  # Login
-            if st.button('Login'):
-                if authenticate_user_cloud(username, password):
-                    st.session_state['authenticated'] = True
-                    st.session_state['username'] = username
-                    st.session_state['user_data']= load_user_data_cloud(username)
-                    response_main = main(st.session_state['user_data'], main_arg=str(main_arg))
-                    st.success(f"Login successful! {response_main}")
-                else:
-                    st.session_state['authenticated'] = False
-                    st.error('Invalid username or password')
-
 
 # Check if user is authenticated
 if not st.session_state['authenticated']:
-    if CLOUD_ON == 'yes':
-        show_login_form_cloud()
-    else:
-        show_login_form()
+    show_login_form()
 
     if st.button('GAME ON!'):
         pass # NOTE: weird behaviour, the way streamlit manages the state, it seems that as soon as this button is clicked, nothing below this line is read

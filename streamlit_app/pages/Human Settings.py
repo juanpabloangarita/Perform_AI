@@ -12,7 +12,6 @@ sys.path.append(dir_script_dir)
 
 from src.data_processing import *
 from src.calorie_calculations import *
-from src.user_data_cloud import *
 from src.user_data import *
 from params import *
 
@@ -126,11 +125,8 @@ if st.button('Update Information'):
     # Update the session_state when the user changes their goal
     st.session_state['user_data']['goal'] = goal
 
-    if CLOUD_ON == 'yes':
-        # Call the update_user_data_cloud function by merging both dictionaries
-        update_user_data_cloud(**{**st.session_state['user_data'], 'username': st.session_state['username']})
-    else:
-        update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
+
+    update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
 
     # Display a success message
     st.success("Your information has been successfully updated!")

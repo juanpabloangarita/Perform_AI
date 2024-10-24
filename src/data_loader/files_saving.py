@@ -3,7 +3,7 @@
 import os
 import logging
 from .get_full_path import get_full_path
-from params import CLOUD_ON, BUCKET_NAME
+from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 
 
 class FileSaver:
@@ -15,7 +15,6 @@ class FileSaver:
         """Initialize the FileSaver with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv/'  # Default folder for saving CSV files
-        self.cloud_on = CLOUD_ON
 
     def _save_csv(self, file_path, df, name, index=False):
         """
@@ -89,4 +88,12 @@ class FileSaver:
         self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
 
     def save_user_data(self, user_data):
-        user_data.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
+        try:
+            if CLOUD_ON == 'yes':
+                user_data.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
+            else:
+                full_path = get_full_path(USER_DATA_FILE)
+                user_data.to_csv(full_path, index=False, na_rep='')  # Save CSV without index
+            logging.info(f"user data dataframe saved successfully")
+        except Exception as e:
+            logging.error(f"Error saving dataframe user data: {e}")
