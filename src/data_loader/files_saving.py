@@ -5,6 +5,7 @@ import logging
 from .get_full_path import get_full_path
 from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 
+# FileSaver()._save_csv(f"s3://{BUCKET_NAME}/csv/upload_new_data_workouts_", workouts_df, st.session_state['username'])
 
 class FileSaver:
     """
@@ -14,7 +15,10 @@ class FileSaver:
     def __init__(self):
         """Initialize the FileSaver with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        self.file_path = 'data/processed/csv/'  # Default folder for saving CSV files
+        if CLOUD_ON == 'yes':
+            self.file_path = f"s3://{BUCKET_NAME}/csv/"
+        else:
+            self.file_path = 'data/processed/csv/'
 
     def _save_csv(self, file_path, df, name, index=False):
         """
@@ -26,12 +30,19 @@ class FileSaver:
             name (str): The name of the CSV file (without extension).
             index (bool): Whether to include the dataframe index in the CSV file (default is False).
         """
-        full_path = get_full_path(file_path)
         try:
+            if CLOUD_ON  == 'yes':
+                full_path = self.file_path
+            else:
+                full_path = get_full_path(file_path)
             df.to_csv(os.path.join(full_path, f"{name}.csv"), index=index, na_rep='')  # Save CSV with or without index
             logging.info(f"{name.replace('_', ' ').title()} dataframe saved successfully")
         except Exception as e:
             logging.error(f"Error saving dataframe {name}: {e}")
+
+    def save_initial_uploaded_workout_csv(df, name):
+        pass
+
 
     def save_final_csv(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
         """
@@ -87,13 +98,5 @@ class FileSaver:
         """
         self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
 
-    def save_user_data(self, user_data):
-        try:
-            if CLOUD_ON == 'yes':
-                user_data.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)
-            else:
-                full_path = get_full_path(USER_DATA_FILE)
-                user_data.to_csv(full_path, index=False, na_rep='')  # Save CSV without index
-            logging.info(f"user data dataframe saved successfully")
-        except Exception as e:
-            logging.error(f"Error saving dataframe user data: {e}")
+    def save_user_data(self, user_data, file_path='data/'):
+        self._save_csv(file_path, user_data, 'user_data')
