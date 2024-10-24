@@ -15,10 +15,9 @@ from config import setup_paths # TODO: decide to erase it or to implement it
 
 from dashboard_plot import *
 from params import *
-
 from src.main import main
-from src.user_data import *
 from src.user_data_cloud import *
+from src.user_data import *
 from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
 
 

@@ -3,17 +3,19 @@
 import os
 import logging
 from .get_full_path import get_full_path
+from params import CLOUD_ON, BUCKET_NAME
+
 
 class FileSaver:
     """
-    A class responsible for saving various dataframes to CSV files.
-    Provides methods for saving workout data, activities, TSS metrics, and nutrition information.
+    A class responsible for saving csv files of workout data, activities, TSS metrics, and nutrition information.
     """
 
     def __init__(self):
         """Initialize the FileSaver with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv/'  # Default folder for saving CSV files
+        self.cloud_on = CLOUD_ON
 
     def _save_csv(self, file_path, df, name, index=False):
         """
@@ -85,3 +87,6 @@ class FileSaver:
             file_path (str, optional): Custom file path for saving the CSV.
         """
         self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
+
+    def save_user_data(self, user_data):
+        user_data.to_csv(f's3://{BUCKET_NAME}/csv/user_data.csv', index=False)

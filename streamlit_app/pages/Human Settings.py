@@ -12,8 +12,8 @@ sys.path.append(dir_script_dir)
 
 from src.data_processing import *
 from src.calorie_calculations import *
-from src.user_data import *
 from src.user_data_cloud import *
+from src.user_data import *
 from params import *
 
 # Display current user data in editable form

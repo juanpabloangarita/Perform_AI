@@ -6,7 +6,6 @@ from src.data_processing import process_data
 from src.data_loader.files_saving import FileSaver
 from src.data_loader.get_full_path import get_full_path
 
-#def main(*uploaded_workouts):
 def main(user_data, workouts=None, main_arg=None):
 
     full_path = get_full_path('data/processed/csv/') # TODO: LOAD
