@@ -340,11 +340,13 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 def process_data(user_data, workouts=None):
     w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
-    # Merge workouts DataFrames into one
-    workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
     if workouts is not None:
         workouts_df = workouts
+    else:
+        # Merge workouts DataFrames into one
+        workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
+
 
     dataframes = {
         'activities': activities_df,
