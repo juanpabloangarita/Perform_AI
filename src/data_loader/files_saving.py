@@ -13,10 +13,7 @@ class FileSaver:
     def __init__(self):
         """Initialize the FileSaver with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        if CLOUD_ON == 'yes':
-            self.file_path = f"s3://{BUCKET_NAME}/csv/"
-        else:
-            self.file_path = 'data/processed/csv/'
+        self.file_path = 'data/processed/csv'
 
     def _save_csv(self, file_path, df, name, index=False):
         """
@@ -29,12 +26,11 @@ class FileSaver:
             index (bool): Whether to include the dataframe index in the CSV file (default is False).
         """
         try:
-            if CLOUD_ON  == 'yes':
-                full_path = self.file_path
-            else:
-                full_path = get_full_path(file_path)
-            df.to_csv(os.path.join(full_path, f"{name}.csv"), index=index, na_rep='')  # Save CSV with or without index
-            logging.info(f"{name.replace('_', ' ').title()} dataframe saved successfully")
+            # Set the full file path based on whether cloud storage is used
+            full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.csv" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.csv")
+
+            df.to_csv(full_path, index=index, na_rep='')  # Save CSV with or without index
+            logging.info(f"{name.replace('_', ' ').title()} dataframe saved successfully at {full_path}")
         except Exception as e:
             logging.error(f"Error saving dataframe {name}: {e}")
 
@@ -50,7 +46,7 @@ class FileSaver:
         """
         self._save_csv(file_path, workouts, name)
 
-    def save_final_csv(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
+    def save_csv_files(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
         """
         Save final CSV files for workouts, activities, foods, and final data.
 
@@ -94,7 +90,7 @@ class FileSaver:
             if data is not None:
                 self._save_csv(self.file_path if file_path is None else file_path, data, name)
 
-    def save_nutrition(self, nutrition_df, file_path=None):
+    def save_user_nutrition(self, nutrition_df, file_path=None):
         """
         Save the user's nutrition data.
 
@@ -113,4 +109,4 @@ class FileSaver:
             file_path (str): a special path hidden and different (for local only) from the default one.
             index (bool): Whether to include the dataframe index in the CSV file (default is False).
         """
-        self._save_csv(file_path, user_data, 'user_data')
+        self._save_csv(self.file_path if file_path is None else file_path, user_data, 'user_data')

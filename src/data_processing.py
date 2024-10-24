@@ -57,9 +57,11 @@ def load_csv(file_path):
     cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
     foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
 
-    FileSaver().save_final_csv(foods_df=foods_dfs)
+    workouts_df = pd.concat([workouts_2022_df, workouts_2023_df, workouts_2024_df], ignore_index=True)
 
-    return workouts_2022_df, workouts_2023_df, workouts_2024_df, activities_df_all_years
+    FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df_all_years, foods_df=foods_dfs,file_path = 'data/raw/csv')
+
+    return workouts_df, activities_df_all_years
 
 
 def load_foods_df(file_path='data/processed/csv/'):
@@ -117,7 +119,7 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
             df = pd.concat([df, new_row]).sort_index()
 
 
-    FileSaver().save_final_csv(df=df) # TODO: SAVE ALL WITH THE FileSaver() BELOW?
+    FileSaver().save_csv_files(df=df) # TODO: SAVE ALL WITH THE FileSaver() BELOW?
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(df, 'load_and_update_final_csv')
 
@@ -338,14 +340,11 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
 
 def process_data(user_data, workouts=None):
-    w_df1, w_df2, w_df3, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
+    workouts_df, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
 
     if workouts is not None:
         workouts_df = workouts
-    else:
-        # Merge workouts DataFrames into one
-        workouts_df = pd.concat([w_df1, w_df2, w_df3], ignore_index=True)
 
 
     dataframes = {

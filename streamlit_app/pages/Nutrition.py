@@ -65,7 +65,7 @@ def get_product_info(barcode):
         return None
 
 
-def initialize_food_log(file_path):
+def load_food_log(file_path):
     """Create an empty dataframe with the required columns and save it as a CSV if not exists."""
     full_path = get_full_path(file_path)
     csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
@@ -76,7 +76,7 @@ def initialize_food_log(file_path):
     if not os.path.exists(csv_file_path):
         # Create an empty DataFrame with the necessary columns and save it to a CSV file
         df = pd.DataFrame(columns=columns)
-        FileSaver().save_nutrition(nutrition_df=df)
+        FileSaver().save_user_nutrition(nutrition_df=df)
     else:
         # Load the existing CSV
         df = pd.read_csv(csv_file_path)
@@ -84,7 +84,7 @@ def initialize_food_log(file_path):
 
 def update_food_log(file_path, meal, nutritional_info):
     """Update the food log CSV with the new meal data and a timestamp."""
-    df = initialize_food_log(file_path)
+    df = load_food_log(file_path)
 
     nutritional_info['Timestamp'] = GIVEN_DATE
     nutritional_info['Meal'] = meal
@@ -99,17 +99,7 @@ def update_food_log(file_path, meal, nutritional_info):
     # Concatenate the two DataFrames
     df = pd.concat([df, nutritional_info_df_reindexed], axis=0)
 
-    FileSaver().save_nutrition(nutrition_df=df)
-
-
-def load_food_log(file_path):
-    """Load the food log from the CSV and return the dataframe."""
-    full_path = get_full_path(file_path)
-    csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
-    if os.path.exists(csv_file_path):
-        return pd.read_csv(csv_file_path)
-    else:
-        return pd.DataFrame()
+    FileSaver().save_user_nutrition(nutrition_df=df)
 
 
 

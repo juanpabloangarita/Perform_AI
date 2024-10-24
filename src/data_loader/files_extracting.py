@@ -14,7 +14,7 @@ class Sourcer:
     @staticmethod
     def load_user_data():
         if CLOUD_ON=='yes':
-            user_data = pd.read_csv(f's3://{BUCKET_NAME}/csv/user_data.csv')
+            user_data = pd.read_csv(f's3://{BUCKET_NAME}/data/user_data.csv')
         else:
             full_path = get_full_path(USER_DATA_FILE)
             user_data = pd.read_csv(os.path.join(full_path, "user_data.csv"))
