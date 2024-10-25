@@ -15,7 +15,7 @@ def main(user_data, workouts=None, main_arg=None):
         print("File already exists. Loading existing final_df.csv")
         return "You got this!"
     else:
-        print("App is running")
+        print("\n\n\nApp is running\n\n\n")
         tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df = process_data(user_data, workouts)
 
         FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)

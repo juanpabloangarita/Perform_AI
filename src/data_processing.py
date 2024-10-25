@@ -64,7 +64,7 @@ def load_csv(file_path):
     return workouts_df, activities_df_all_years
 
 
-def load_foods_df(file_path='data/processed/csv/'):
+def load_foods_df(file_path='data/raw/csv/'): # FIXME: LOAD SAVE HERE
     full_path = get_full_path(file_path)
     foods_df_path = os.path.join(full_path, 'foods_df.csv')
 
@@ -127,16 +127,6 @@ def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_up
     w_df.index = pd.to_datetime(w_df.index)
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
     FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
-
-
-def load_tss_values_for_dashboard(file_path):
-    full_path = get_full_path(file_path)
-    tss = pd.read_csv(os.path.join(full_path, 'tss.csv'), index_col=0)
-    ctl = pd.read_csv(os.path.join(full_path, 'ctl.csv'), index_col=0)
-    atl = pd.read_csv(os.path.join(full_path, 'atl.csv'), index_col=0)
-    tsb = pd.read_csv(os.path.join(full_path, 'tsb.csv'), index_col=0)
-
-    return tss, atl, ctl, tsb
 
 
 def clean_data_basic(dfs, date_cols):
@@ -340,12 +330,11 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
 
 def process_data(user_data, workouts=None):
-    workouts_df, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
-
-
     if workouts is not None:
         workouts_df = workouts
-
+    else:
+        workouts_df, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
+    _, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
 
     dataframes = {
         'activities': activities_df,

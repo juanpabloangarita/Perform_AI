@@ -17,7 +17,8 @@ from dashboard_plot import *
 from params import *
 from src.main import main
 from src.user_data import *
-from src.data_processing import load_tss_values_for_dashboard, load_and_update_final_csv
+from src.data_processing import load_and_update_final_csv
+from src.data_loader.files_extracting import FileLoader
 
 
 
@@ -139,9 +140,7 @@ else:
 
                 # Save the concatenated DataFrame
                 FileSaver().save_initial_uploaded_workout_csv(workouts_df, 'upload_new_data_workouts_' + st.session_state['username'])
-
-                # Optionally, re-read the saved file from the S3 bucket (if needed)
-                workouts_df = pd.read_csv(f"s3://{BUCKET_NAME}/csv/upload_new_data_workouts_{st.session_state['username']}.csv") # FIXME: LOAD
+                workouts_df = FileLoader().load_initial_uploaded_workout_csv('upload_new_data_workouts_' + st.session_state['username'])
 
                 st.write("Files successfully processed and uploaded to S3.")
 
@@ -157,7 +156,8 @@ else:
         st.write("### Performance Training")
         if st.checkbox("Show Dashboard"):
             # Load data
-            tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/')
+            tss_df, atl_df, ctl_df, tsb_df  = FileLoader().load_tss_values_for_dashboard()
+            #tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/')
 
             # Ensure index is in datetime format
             tss_df.index = pd.to_datetime(tss_df.index)

@@ -7,12 +7,12 @@ import os
 
 from params import *
 from src.data_loader.files_saving import FileSaver
-from src.data_loader.files_extracting import Sourcer
+from src.data_loader.files_extracting import FileLoader
 
 # Function to check if a user already exists
 def check_user_exists(username):
     try:
-        user_data_df = Sourcer().load_user_data()
+        user_data_df = FileLoader().load_user_data()
         return username in user_data_df['username'].values
     except FileNotFoundError:
         return False
@@ -40,7 +40,7 @@ def create_user_data(username, password):
 
     # Read the existing user data
     try:
-        user_data_df = Sourcer().load_user_data()
+        user_data_df = FileLoader().load_user_data()
 
         # Append the new user's data
         user_data_df = pd.concat([user_data_df, new_user_df], ignore_index=True)
@@ -56,7 +56,7 @@ def update_user_data(**kwargs):
     username = kwargs['username']
 
     # Load existing user data
-    user_data_df = Sourcer().load_user_data()
+    user_data_df = FileLoader().load_user_data()
 
     # Check if the user exists in the DataFrame based on 'username'
     if username in user_data_df['username'].values:
@@ -78,7 +78,7 @@ def update_user_data(**kwargs):
 
 def load_user_data(username):
     try:
-        user_data_df = Sourcer().load_user_data()
+        user_data_df = FileLoader().load_user_data()
         user_row = user_data_df[user_data_df['username'] == username]
         if not user_row.empty:
             user_data = user_row.iloc[0].to_dict()
@@ -95,7 +95,7 @@ def load_user_data(username):
 
 def authenticate_user(username, password):
     try:
-        user_data_df = Sourcer().load_user_data()
+        user_data_df = FileLoader().load_user_data()
         user_row = user_data_df[user_data_df['username'] == username]
 
         if user_row.empty:

@@ -1,7 +1,6 @@
 
 
 
-from src.data_processing import load_and_update_final_csv, load_foods_df, get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 import streamlit as st
@@ -25,6 +24,7 @@ from src.data_loader.get_full_path import get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 from src.data_loader.files_saving import FileSaver
+from src.data_loader.files_extracting import FileLoader
 
 import requests
 import pandas as pd
@@ -65,26 +65,9 @@ def get_product_info(barcode):
         return None
 
 
-def load_food_log(file_path):
-    """Create an empty dataframe with the required columns and save it as a CSV if not exists."""
-    full_path = get_full_path(file_path)
-    csv_file_path = os.path.join(full_path, 'user_nutrition.csv')
-
-    columns = ['Timestamp', 'Meal', 'Food', 'Units', 'Grams per Unit', 'Total Grams', 'Calories', 'Fat', 'Saturated Fats',
-               'Monounsaturated Fats', 'Polyunsaturated Fats', 'Carbohydrates', 'Sugars', 'Protein', 'Dietary Fiber']
-
-    if not os.path.exists(csv_file_path):
-        # Create an empty DataFrame with the necessary columns and save it to a CSV file
-        df = pd.DataFrame(columns=columns)
-        FileSaver().save_user_nutrition(nutrition_df=df)
-    else:
-        # Load the existing CSV
-        df = pd.read_csv(csv_file_path)
-    return df
-
 def update_food_log(file_path, meal, nutritional_info):
     """Update the food log CSV with the new meal data and a timestamp."""
-    df = load_food_log(file_path)
+    df = FileLoader().load_user_nutrition()
 
     nutritional_info['Timestamp'] = GIVEN_DATE
     nutritional_info['Meal'] = meal
@@ -388,7 +371,7 @@ with st.container():
                     st.error("No barcode detected.")
 
         # Display added foods per meal
-        food_log_df = load_food_log('data/processed/csv/')
+        food_log_df = FileLoader().load_user_nutrition()
         food_log_mask = food_log_df['Timestamp']==GIVEN_DATE
         if not food_log_df[food_log_mask].empty:
             for meal in meal_options:
