@@ -1,7 +1,7 @@
 
 
 
-from src.data_processing import load_and_update_final_csv, load_foods_df, get_full_path
+from src.data_processing import load_and_update_final_csv, get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 import streamlit as st
@@ -20,9 +20,10 @@ dir_script_dir = os.path.dirname(script_dir)  # directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir)  # src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv, load_foods_df, get_full_path
+from src.data_processing import load_and_update_final_csv, get_full_path
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
+from src.data_loader.files_extracting import FileLoader
 
 import requests
 import pandas as pd
@@ -258,7 +259,7 @@ with st.container():
             filtered_foods = pd.DataFrame(columns=['food'])  # Create an empty DataFrame to avoid NoneType
 
             if food_search:
-                foods_df = load_foods_df()
+                foods_df = FileLoader().load_csv_files('data/raw/csv/')
                 filtered_foods = foods_df[foods_df['food'].str.lower().str.contains(food_search)]
                 if not filtered_foods.empty:
                     filtered_foods = filtered_foods.head(100)

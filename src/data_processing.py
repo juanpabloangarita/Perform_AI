@@ -59,21 +59,9 @@ def load_csv(file_path):
 
     workouts_df = pd.concat([workouts_2022_df, workouts_2023_df, workouts_2024_df], ignore_index=True)
 
-    FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df_all_years, foods_df=foods_dfs,file_path = 'data/raw/csv')
+    FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df_all_years, foods_df=foods_dfs, file_path = 'data/raw/csv')
 
     return workouts_df, activities_df_all_years
-
-
-def load_foods_df(file_path='data/raw/csv/'): # FIXME: LOAD SAVE HERE
-    full_path = get_full_path(file_path)
-    foods_df_path = os.path.join(full_path, 'foods_df.csv')
-
-    # Load the DataFrame from CSV
-    if os.path.exists(foods_df_path):
-        foods_df = pd.read_csv(foods_df_path, index_col=0)  # Assuming the first column is the index
-        return foods_df
-    else:
-        raise FileNotFoundError(f"No file found at {foods_df_path}")
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
