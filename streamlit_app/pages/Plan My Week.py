@@ -40,7 +40,7 @@ def highlight_today(week_dates):
     return [date.date() == today for date in week_dates]
 
 # Load and update the dataframe
-final_df = load_and_update_final_csv('data/processed/csv/', 'home')
+final_df = load_and_update_final_csv('home')
 
 # Ensure index is in the proper string format to match
 final_df.index = pd.to_datetime(final_df.index).strftime('%Y-%m-%d')
@@ -72,21 +72,21 @@ def main():
                     # Step 5: Fetch the scraped data from S3
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)  # Display the DataFrame in Streamlit
-                    load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
+                    load_and_update_final_csv("training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 elif command_status == "Partial Success":
                     st.warning("Partial success: Some data was scraped but not all.")
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)
-                    load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=scraped_df)
+                    load_and_update_final_csv("training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 else:
                     st.error("Script execution failed; skipping data retrieval.")
             else:
                 tp_data_update = navigate_to_login('both')
-                load_and_update_final_csv('data/processed/csv/', "training_peaks", data_to_update=tp_data_update)
+                load_and_update_final_csv("training_peaks", data_to_update=tp_data_update)
 
     with col3:
         st.write("")
@@ -203,9 +203,9 @@ def main():
                                     'estimated_calories': estimated_calories
                                 }
                                 st.session_state.temp_data[idx] = tmp_dict_week
-                                load_and_update_final_csv('data/processed/csv/', "plan_my_week", day_date_str, tmp_dict_week)
+                                load_and_update_final_csv("plan_my_week", day_date_str, tmp_dict_week)
                             # if st.button("Delete", key=f"delete_{idx}{row}"):
-                            #     load_and_update_final_csv('data/processed/csv/', "plan_my_week")
+                            #     load_and_update_final_csv( "plan_my_week")
 
                 else:
                     st.markdown("<span style='font-size:16px;'>No workout data.</span>", unsafe_allow_html=True)

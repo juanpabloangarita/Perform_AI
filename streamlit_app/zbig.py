@@ -27,7 +27,7 @@ def highlight_today(week_dates):
     return [date.date() == today for date in week_dates]
 
 # Load and update the dataframe
-final_df = load_and_update_final_csv('data/processed/csv/', 'home')
+final_df = load_and_update_final_csv('home')
 
 # Ensure index is in the proper string format to match
 final_df.index = pd.to_datetime(final_df.index).strftime('%Y-%m-%d')

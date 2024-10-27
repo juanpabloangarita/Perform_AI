@@ -165,7 +165,7 @@ with st.container():
                 }
 
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
-                load_and_update_final_csv('data/processed/csv/', "input_activities", GIVEN_DATE, temp_activity_dict)
+                load_and_update_final_csv("input_activities", GIVEN_DATE, temp_activity_dict)
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
@@ -175,7 +175,7 @@ with st.container():
 
         # Add a container-like background for consistency
         with st.container():
-            df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
+            df = load_and_update_final_csv("plan_my_day")
             total_active_calories = 0
 
             if GIVEN_DATE in df.index:
@@ -429,7 +429,7 @@ with st.container():
 
 
         st.write("#### Today's Calories")
-        # df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
+        # df = load_and_update_final_csv( "plan_my_day")
 
 
         # calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed'] if GIVEN_DATE in df.index else 0

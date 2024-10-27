@@ -201,7 +201,7 @@ else:
             st.plotly_chart(fig, use_container_width=True)
 
         if st.checkbox('Show Data'):
-            final_df = load_and_update_final_csv('data/processed/csv/', 'home')
+            final_df = load_and_update_final_csv('home')
             st.write(final_df)
     else:
         st.write("Please upload a file")

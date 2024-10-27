@@ -37,8 +37,8 @@ def extract_quantity(quantity):
         return int(match.group(1))  # Return the captured number (e.g., 2)
     else:
         return 1  # Return 1 for other cases (e.g., result B)
-    
-    
+
+
 def get_product_info(barcode):
     # Define the API endpoint
     url = f"https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
@@ -194,7 +194,7 @@ with st.container():
                 }
 
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
-                load_and_update_final_csv('data/processed/csv/', "input_activities", GIVEN_DATE, temp_activity_dict)
+                load_and_update_final_csv("input_activities", GIVEN_DATE, temp_activity_dict)
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
@@ -204,7 +204,7 @@ with st.container():
 
         # Add a container-like background for consistency
         with st.container():
-            df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
+            df = load_and_update_final_csv("plan_my_day")
             total_active_calories = 0
 
             if GIVEN_DATE in df.index:
@@ -315,7 +315,7 @@ with st.container():
                             'Protein': food_details['Protein'] * scaling_factor,
                             'Dietary Fiber': food_details['Dietary Fiber'] * scaling_factor,
                         }
-                        
+
 
                         # Update the CSV with the new food item and timestamp
                         update_food_log('data/processed/csv/', selected_meal, nutritional_info)
@@ -378,14 +378,14 @@ with st.container():
                 # Calculate total grams
                 number_of_units = st.number_input("Number of Units", min_value=1, step=1, value=1)
                 product_df['adjusted_quantity'] = product_df['quantity'].apply(extract_quantity)
-                
+
                 grams_per_unit = product_df['product_quantity']/product_df['adjusted_quantity']  # Accessing directly from the DataFrame
-                
+
                 total_grams = number_of_units * grams_per_unit
 
                 # Calculate scaling factor based on 100g
                 scaling_factor = total_grams / 100.0
-                
+
                 meal_options = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Brunch', 'Pre-Training', 'Post-Training', 'During-Training']
                 selected_meal = st.selectbox("Select Meal", options=meal_options)
                 nutritional_info = {
@@ -459,7 +459,7 @@ with st.container():
 
 
         st.write("#### Today's Calories")
-        # df = load_and_update_final_csv('data/processed/csv/', "plan_my_day")
+        # df = load_and_update_final_csv( "plan_my_day")
 
 
         # calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed'] if GIVEN_DATE in df.index else 0
