@@ -28,8 +28,12 @@ from params import CLOUD_ON
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
-    full_path = get_full_path(file_path)
-    df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0, na_filter=False)
+    # full_path = get_full_path(file_path)
+    # df = pd.read_csv(os.path.join(full_path, 'final_df.csv'), index_col=0, na_filter=False)
+
+    sourcer = FileLoader()
+    sourcer.load_raw_and_final_dataframes()
+    df = sourcer.final
 
     if from_where in ['home', 'plan_my_day']:
         return df
