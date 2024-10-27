@@ -282,16 +282,21 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
 def process_data(user_data, workouts=None):
     sourcer = FileLoader()
+
     if CLOUD_ON == 'no':
         sourcer.load_initial_csv_files()
+
+    sourcer.load_raw_and_final_dataframes('data/raw/csv')
+    activities_df = sourcer.activities_raw
+
+
 
     if workouts is not None:
         workouts_df = workouts
     else:
-        sourcer.load_raw_and_final_dataframes('data/raw/csv')
         workouts_df = sourcer.workouts_raw
 
-    activities_df = sourcer.activities_raw
+
 
     dataframes = {
         'activities': activities_df,

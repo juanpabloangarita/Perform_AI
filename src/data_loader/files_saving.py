@@ -40,7 +40,7 @@ class FileSaver:
 
         Args:
             workouts (pd.Dataframe): The dataframe to be saved.
-            name (str): The name of the CSV File (without extension).
+            name (str): The name of the CSV File (without extension). -> 'upload_new_data_workouts_' + st.session_state['username']
             file_path (str): a special path different (for local only) from the default one.
             index (bool): Whether to include the dataframe index in the CSV file (default is False).
         """
