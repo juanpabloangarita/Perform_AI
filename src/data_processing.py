@@ -28,8 +28,7 @@ from params import CLOUD_ON
 
 
 def load_and_update_final_csv(from_where, time_added=None, data_to_update=None):
-    full_path = f"s3://{BUCKET_NAME}/data/processed/csv/final_df.csv" if CLOUD_ON == 'yes' else os.path.join(get_full_path('data/processed/csv'), "final_df.csv")
-    df = pd.read_csv(full_path, index_col=0, na_filter=False)
+    df = FileLoader().load_final_with_no_na_filter()
 
     if from_where in ['home', 'plan_my_day']:
         return df

@@ -25,7 +25,7 @@ class FileLoader:
 
         self.foods = None
 
-    def _load_csv(self, file_path, name, index=None):
+    def _load_csv(self, file_path, name, index=None, **kwargs):
         """
         Loads a CSV file into a DataFrame.
 
@@ -39,7 +39,7 @@ class FileLoader:
         """
         try:
             full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.csv" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.csv")
-            df = pd.read_csv(full_path, index_col=index)
+            df = pd.read_csv(full_path, index_col=index, **kwargs)
             logging.info(f"{name.replace('_', ' ').title()} dataframe loaded successfully from {full_path}")
             return df
         except Exception as e:
@@ -82,6 +82,15 @@ class FileLoader:
             self.activities_processed = dataframes['activities_df']
             self.workouts_processed = dataframes['workouts_df']
             self.final = dataframes['final_df']
+
+    def load_final_with_no_na_filter(self):
+        """
+        Load the 'final_df.csv' with na_filter set to False.
+
+        Returns:
+            pd.DataFrame: Loaded DataFrame with na_filter=False.
+        """
+        return self._load_csv(self.file_path, 'final_df', index=0, na_filter=False)
 
     def load_tss_values_for_dashboard(self, file_path=None):
         """
