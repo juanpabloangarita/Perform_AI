@@ -206,7 +206,11 @@ with st.container():
         # search_button = st.form_submit_button("Search")
         # if search_button:
         if food_search:
-            foods_df = FileLoader().load_csv_files('data/raw/csv/')
+            # foods_df = FileLoader().load_raw_and_final_dataframes('data/raw/csv/')
+            sourcer = FileLoader()
+            sourcer.load_raw_and_final_dataframes('data/raw/csv/')
+            foods_df = sourcer.foods
+            
             filtered_foods = foods_df[foods_df['food'].str.lower().str.contains(food_search)]
             if not filtered_foods.empty:
                 filtered_foods = filtered_foods.head(100)

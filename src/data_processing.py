@@ -23,45 +23,8 @@ from src.load_and_update_final_csv_helper import process_data_to_update, process
 from src.data_loader.files_saving import FileSaver
 from src.data_loader.get_full_path import get_full_path # TODO: ASK DINIS: -> for the file files_saving.py in data_loader, i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
 from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW
-
-
-def load_csv(file_path):
-    full_path = get_full_path(file_path)
-    # Training Peaks -- Workout Files
-    # from 03 of March to 03 of March next year
-    workouts_2022_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2022-03-03_to_2023-03-03.csv'))
-    workouts_2023_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2023-03-03_to_2024-03-03.csv'))
-    # from 03 of March to 30 of August same year
-    workouts_2024_df = pd.read_csv(os.path.join(full_path, 'tp_workouts_2024-03-03_to_2025-03-03.csv')) # year month  day
-
-    # ACTIVITIES GARMIN
-    # Garmin files REAL CALORIES
-    # From March 12 of 2022 to July 14 2024
-    activities_df_all_years = pd.read_csv(os.path.join(full_path,'activities.csv'))
-
-    # Load all CSV files into a list of dataframes for food data
-    food_file_paths = [
-        os.path.join(full_path, 'FOOD-DATA-GROUP1.csv'),
-        os.path.join(full_path, 'FOOD-DATA-GROUP2.csv'),
-        os.path.join(full_path, 'FOOD-DATA-GROUP3.csv'),
-        os.path.join(full_path, 'FOOD-DATA-GROUP4.csv'),
-        os.path.join(full_path, 'FOOD-DATA-GROUP5.csv')
-    ]
-
-    food_dataframes = [pd.read_csv(file, index_col=0) for file in food_file_paths]
-
-    # Define unwanted columns (adjust based on your needs)
-    unwanted_columns = ['Unnamed: 0']  # You can add more if needed
-
-    # Remove unwanted columns from all dataframes
-    cleaned_food_dfs = [df.drop(columns=unwanted_columns, errors='ignore') for df in food_dataframes]
-    foods_dfs = pd.concat(cleaned_food_dfs, axis=0, ignore_index=True)
-
-    workouts_df = pd.concat([workouts_2022_df, workouts_2023_df, workouts_2024_df], ignore_index=True)
-
-    FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df_all_years, foods_df=foods_dfs, file_path = 'data/raw/csv')
-
-    return workouts_df, activities_df_all_years
+from src.data_loader.files_extracting import FileLoader
+from params import CLOUD_ON
 
 
 def load_and_update_final_csv(file_path, from_where, time_added=None, data_to_update=None):
@@ -318,11 +281,17 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
 
 def process_data(user_data, workouts=None):
+    sourcer = FileLoader()
+    if CLOUD_ON == 'no':
+        sourcer.load_initial_csv_files()
+
     if workouts is not None:
         workouts_df = workouts
     else:
-        workouts_df, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
-    _, activities_df = load_csv('data/raw/csv/') # WITHOUT THE / behind
+        sourcer.load_raw_and_final_dataframes('data/raw/csv')
+        workouts_df = sourcer.workouts_raw
+
+    activities_df = sourcer.activities_raw
 
     dataframes = {
         'activities': activities_df,

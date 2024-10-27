@@ -16,6 +16,14 @@ class FileLoader:
         """Initialize the FileLoader with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv'
+        self.activities_raw = None
+        self.workouts_raw = None
+
+        self.activities_processed = None
+        self.workouts_processed = None
+        self.final = None
+
+        self.foods = None
 
     def _load_csv(self, file_path, name, index=None):
         """
@@ -51,10 +59,10 @@ class FileLoader:
         """
         return self._load_csv(file_path, name)
 
-    def load_csv_files(self, file_path=None):
+    def load_raw_and_final_dataframes(self, file_path=None):
         """
-        Loads final CSV files for workouts, activities and final merged data.
-        Loads raw Foods.
+        Loads final Dataframes for workouts, activities and final merged data.
+        Loads raw Foods Dataframe.
 
         Args:
             file_path (str, optional): Custom file path ( data/raw/csv ) for loading the foods_df.
@@ -63,12 +71,17 @@ class FileLoader:
             tuple: Loaded DataFrames for final_df, workouts_df, and activities_df if no file_path is provided;
                    otherwise, only foods_df if file_path is specified.
         """
-        if file_path:
-            return self._load_csv(file_path, 'foods_df')
+        names = ['final_df', 'workouts_df', 'activities_df', 'foods_df']
+        dataframes = {name: self._load_csv(file_path or self.file_path, name) for name in names}
 
-        names = ['final_df', 'workouts_df', 'activities_df']
-        dataframes = {name: self._load_csv(self.file_path, name) for name in names}
-        return dataframes['final_df'], dataframes['workouts_df'], dataframes['activities_df']
+        if file_path:
+            self.activities_raw = dataframes['activities_df']
+            self.workouts_raw =  dataframes['workouts_df']
+            self.foods = dataframes['foods_df']
+        else:
+            self.activities_processed = dataframes['activities_df']
+            self.workouts_processed = dataframes['workouts_df']
+            self.final = dataframes['final_df']
 
     def load_tss_values_for_dashboard(self, file_path=None):
         """
@@ -134,7 +147,27 @@ class FileLoader:
         """
         Loads multiple workout and activity data files, merges them as necessary, and saves the combined files.
 
+        Args:
+            NOTE: NOT SURE -> key (str): Whether 'workouts' 'activities' 'foods'
+
         Returns:
             tuple: DataFrames for merged workouts and all-year activities.
         """
-        pass
+
+        dataframes_names = {
+            'workouts': ['tp_workouts_2022-03-03_to_2023-03-03', 'tp_workouts_2023-03-03_to_2024-03-03', 'tp_workouts_2024-03-03_to_2025-03-03'],
+            'activities': 'activities',
+            'foods': [f"FOOD-DATA-GROUP{i}" for i in range(1,6)]
+        }
+
+        workouts_df = pd.concat([self._load_csv('data/raw/csv', name) for name in dataframes_names['workouts']], ignore_index=True)
+        activities_df = self._load_csv('data/raw/csv', dataframes_names['activities'])
+        foods = pd.concat([self._load_csv('data/raw/csv', name, index=0) for name in dataframes_names['foods']], ignore_index=True)
+
+        # Define unwanted columns (adjust based on your needs)
+        unwanted_columns = ['Unnamed: 0']  # You can add more if needed
+
+        # Remove unwanted columns from all dataframes
+        foods_df = foods.drop(columns=unwanted_columns, errors='ignore')
+
+        FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df, foods_df=foods_df, file_path = 'data/raw/csv')
