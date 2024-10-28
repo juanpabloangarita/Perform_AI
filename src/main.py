@@ -20,7 +20,7 @@ def main(user_data, workouts=None, main_arg=None):
 
         FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
-        FileSaver().save_csv_files(
+        FileSaver().save_raw_and_final_dataframes(
             w_df=w_df_calories_estimated_plus_calculated,
             a_df=activities_df,
             df=final_df

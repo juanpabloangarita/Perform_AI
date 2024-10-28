@@ -69,7 +69,7 @@ def load_and_update_final_csv(from_where, time_added=None, data_to_update=None):
             df = pd.concat([df, new_row]).sort_index()
 
 
-    FileSaver().save_csv_files(df=df) # TODO: SAVE ALL WITH THE FileSaver() BELOW?
+    FileSaver().save_raw_and_final_dataframes(df=df) # TODO: SAVE ALL WITH THE FileSaver() BELOW?
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(df, 'load_and_update_final_csv')
 
@@ -287,14 +287,8 @@ def process_data(user_data, workouts=None):
 
     sourcer.load_raw_and_final_dataframes('data/raw/csv')
     activities_df = sourcer.activities_raw
-
-
-
-    if workouts is not None:
-        workouts_df = workouts
-    else:
-        workouts_df = sourcer.workouts_raw
-
+    
+    workouts_df = workouts if workouts is not None else sourcer.workouts_raw
 
 
     dataframes = {

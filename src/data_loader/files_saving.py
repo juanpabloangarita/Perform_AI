@@ -46,7 +46,7 @@ class FileSaver:
         """
         self._save_csv(file_path, workouts, name)
 
-    def save_csv_files(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
+    def save_raw_and_final_dataframes(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
         """
         Save final CSV files for workouts, activities, foods, and final data.
 
@@ -107,6 +107,6 @@ class FileSaver:
         Args:
             user_data (pd.DataFrame): The user information to be saved: BMR, passive calories, etc.
             file_path (str): a special path hidden and different (for local only) from the default one.
-            index (bool): Whether to include the dataframe index in the CSV file (default is False).
+            index (bool): Not passed, default is False
         """
         self._save_csv(self.file_path if file_path is None else file_path, user_data, 'user_data')

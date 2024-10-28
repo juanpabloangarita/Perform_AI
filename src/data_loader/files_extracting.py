@@ -10,7 +10,8 @@ from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 
 class FileLoader:
     """
-    A class responsible for loading and saving CSV files related to workout, activities, TSS metrics, and nutrition data.
+    A class responsible for loading CSV files and Dataframes related to workout, activities, TSS metrics, and nutrition data.
+    It exclusively saves the initial loaded csv files: workouts, activities and foods.
     """
     def __init__(self):
         """Initialize the FileLoader with the default file path and logging configuration."""
@@ -18,11 +19,9 @@ class FileLoader:
         self.file_path = 'data/processed/csv'
         self.activities_raw = None
         self.workouts_raw = None
-
         self.activities_processed = None
         self.workouts_processed = None
         self.final = None
-
         self.foods = None
 
     def _load_csv(self, file_path, name, index=None, **kwargs):
@@ -156,9 +155,6 @@ class FileLoader:
         """
         Loads multiple workout and activity data files, merges them as necessary, and saves the combined files.
 
-        Args:
-            NOTE: NOT SURE -> key (str): Whether 'workouts' 'activities' 'foods'
-
         Returns:
             tuple: DataFrames for merged workouts and all-year activities.
         """
@@ -179,4 +175,4 @@ class FileLoader:
         # Remove unwanted columns from all dataframes
         foods_df = foods.drop(columns=unwanted_columns, errors='ignore')
 
-        FileSaver().save_csv_files(w_df = workouts_df, a_df=activities_df, foods_df=foods_df, file_path = 'data/raw/csv')
+        FileSaver().save_raw_and_final_dataframes(w_df = workouts_df, a_df=activities_df, foods_df=foods_df, file_path = 'data/raw/csv')
