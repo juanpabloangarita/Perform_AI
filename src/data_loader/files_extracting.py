@@ -7,7 +7,7 @@ from .files_saving import FileSaver
 from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 from .get_full_path import get_full_path
 from src.tss_calculations import calculate_total_tss, calculate_metrics_from_tss
-from src.load_and_update_final_csv_helper import (
+from src.data_loader.update_final_df_helper import (
     process_data_to_update,
     process_activity_dict,
     update_or_add_row,

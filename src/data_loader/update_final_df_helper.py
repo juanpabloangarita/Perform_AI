@@ -1,5 +1,5 @@
 # Perform_AI.src.load_and_update_final_csv_helper.py
-# this is a helper for load_and_update_final_csv function in data_processing.py
+# this is a helper for FileLoader().update_final_df function in files_extracting.py
 
 import streamlit as st
 from datetime import datetime
@@ -13,12 +13,6 @@ import sys
 
 import plotly.graph_objs as go
 import plotly.io as pio
-
-from params import *
-from src.tss_calculations import * # NOTE: WHY IT WORKED WITH .tss_calculations before
-from src.calorie_calculations import *
-from src.calorie_estimation_models import *
-
 
 def update_or_add_row(df, date_str, workout_type, updates):
     """
