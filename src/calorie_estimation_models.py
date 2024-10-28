@@ -1,4 +1,4 @@
-# calorie_estimation_models.py
+# Perform_AI.src.calorie_estimation_models.py
 
 import pandas as pd
 import os
@@ -24,9 +24,6 @@ from src.data_loader.files_saving import FileSaver
 # this makes it so that the outputs of the predict methods have the id as a column
 # instead of as the index
 os.environ['NIXTLA_ID_AS_COL'] = '1'
-
-
-from src.data_processing import *
 
 
 # Modified Linear Regression function without preprocessing

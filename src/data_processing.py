@@ -1,4 +1,5 @@
 # Perform_AI.src.data_processing.py
+
 import streamlit as st
 from datetime import datetime
 from datetime import timedelta
@@ -10,17 +11,14 @@ import sys
 import plotly.graph_objs as go
 import plotly.io as pio
 
-from params import *
 from src.calorie_calculations import calculate_total_calories
-
-from src.calorie_calculations import *
 from src.calorie_estimation_models import estimate_calories_with_duration, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
-from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
+from src.tss_calculations import calculate_metrics_from_tss, calculate_total_tss
 
 from src.data_loader.files_extracting import FileLoader
 from src.data_loader.files_saving import FileSaver
-from params import CLOUD_ON
+from params import CLOUD_ON, GIVEN_DATE, BEST_MODEL
 
 
 def clean_data_basic(dfs, date_cols):
@@ -137,7 +135,7 @@ def process_data(user_data, workouts=None):
         sourcer.load_initial_csv_files()
 
     sourcer.load_raw_and_final_dataframes('data/raw/csv')
-    
+
     activities_df = sourcer.activities_raw
     workouts_df = workouts if workouts is not None else sourcer.workouts_raw
 

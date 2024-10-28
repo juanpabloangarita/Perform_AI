@@ -1,15 +1,8 @@
-# calorie_calculations.py
-
-from src.data_processing import *
-from src.tss_calculations import *
-from params import *
-
+# Perform_AI.src.calorie_calculations.py
 
 import pandas as pd
 import numpy as np
 
-# OBLIGATORY PARAMETERS COME FIRST
-# OPTIONAL COME AFTER
 
 def calculate_total_calories(user_data, from_where=None, df=None):
     # Unpack user_data dictionary without default values (since they're already set elsewhere)
