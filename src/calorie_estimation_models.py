@@ -65,6 +65,7 @@ def ridge_regression_model(model_name, X_train, X_test, y_train, y_test):
     print(f"Ridge Regression RMSE: {rmse:.4f} (alpha={model.alpha})")
     return model, rmse
 
+
 def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
     model = FileLoader().load_models(model_name)
     if model is None:
@@ -84,6 +85,7 @@ def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
     rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Lasso Regression RMSE: {rmse:.4f} (alpha={model.alpha})")
     return model, rmse
+
 
 def elasticnet_regression_model(model_name, X_train, X_test, y_train, y_test):
     model = FileLoader().load_models(model_name)
@@ -136,6 +138,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
     print(f"Random Forest RMSE: {rmse:.4f}")
     return model, rmse
 
+
 # Modified Gradient Boosting function without preprocessing
 def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
     model = FileLoader().load_models(model_name)  # Try loading the saved model
@@ -162,6 +165,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
     rmse = root_mean_squared_error(y_test, y_pred)
     print(f"Gradient Boosting RMSE: {rmse:.4f}")
     return model, rmse
+
 
 # Modified LightGBM function without preprocessing
 def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
@@ -202,6 +206,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
     rmse = root_mean_squared_error(y_test, y_pred)
     print(f"LightGBM RMSE: {rmse:.4f}")
     return model, rmse
+
 
 # Modified XGBoost function without preprocessing
 def xgboost_model(model_name, X_train, X_test, y_train, y_test):
@@ -283,9 +288,7 @@ def transform_features(X, y, use_pca=False, n_components=None):
 
 
 def estimate_calories_with_duration(features, target, use_pca=True, n_components=10, enable_regularization=True):
-
     X_train, X_test, y_train, y_test = transform_features(features, target, use_pca=use_pca, n_components=n_components)
-
 
     # Flags to enable/disable regularization models
     USE_RIDGE = True if enable_regularization else False
@@ -334,12 +337,7 @@ def estimate_calories_with_duration(features, target, use_pca=True, n_components
     return model_configs
 
 
-
-
-
 ### NIXTLA ###
-
-
 def prepare_time_series_data(df, unique_id='series_1'):
     """
     Prepare the DataFrame for time series forecasting.
