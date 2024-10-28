@@ -63,13 +63,13 @@ def clean_activities(df):
     df = df[(df["WorkoutType"] != 'HIIT') & (df["WorkoutType"] != 'Exercice de respiration') & (df["WorkoutType"] != 'Musculation')].copy()
 
     sports_types = {
-    'Nat. piscine': 'Swim',
-    'Cyclisme': 'Bike',
-    'Course à pied': 'Run',
-    "Vélo d'intérieur": 'Bike',
-    'Cyclisme virtuel': 'Bike',
-    'Course à pied sur tapis roulant': 'Run',
-    'Natation': 'Swim',
+        'Nat. piscine': 'Swim',
+        'Cyclisme': 'Bike',
+        'Course à pied': 'Run',
+        "Vélo d'intérieur": 'Bike',
+        'Cyclisme virtuel': 'Bike',
+        'Course à pied sur tapis roulant': 'Run',
+        'Natation': 'Swim',
     }
     df["WorkoutType"] = df["WorkoutType"].apply(lambda x: sports_types[x])
 
@@ -89,18 +89,13 @@ def clean_activities(df):
 
 
 def print_performances(rmse_results):
-    print()
-    print()
-    # Printing the performance metrics
-    print("Performance Metrics:")
-
+    print("\n\n\nPerformance Metrics:\n")
     for result in rmse_results:
         model_name = result['name']
         rmse_value = result['rmse']
         print(f"{model_name} RMSE: {rmse_value}")
 
-    print()
-    print()
+    print("\n\n\n")
 
 
 def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
@@ -121,7 +116,7 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     # Keep dates where there was a Run Swim or Bike training Plan
     w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
 
-        # Fill NaN values in object columns with an empty string
+    # Fill NaN values in object columns with an empty string
     object_cols = w_df.select_dtypes(include=['object']).columns
     w_df[object_cols] = w_df[object_cols].fillna('')
 
@@ -138,7 +133,6 @@ def process_data(user_data, workouts=None):
 
     activities_df = sourcer.activities_raw
     workouts_df = workouts if workouts is not None else sourcer.workouts_raw
-
 
     dataframes = {
         'activities': activities_df,
