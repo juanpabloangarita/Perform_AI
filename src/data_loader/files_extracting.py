@@ -13,6 +13,10 @@ from src.load_and_update_final_csv_helper import (
     update_or_add_row,
     create_default_row
 )
+import joblib
+import tempfile
+import boto3
+s3 = boto3.client('s3')
 
 
 class FileLoader:
@@ -33,7 +37,7 @@ class FileLoader:
 
     def _load_csv(self, file_path, name, index=None, **kwargs):
         """
-        Loads a CSV file into a DataFrame.
+        Loads : a CSV file into a DataFrame OR dataframes OR models
 
         Args:
             file_path (str): The directory path of the CSV file.
@@ -43,14 +47,42 @@ class FileLoader:
         Returns:
             pd.DataFrame or bool: Loaded DataFrame if successful, otherwise False.
         """
+        extension, component = ('pkl', 'model') if file_path == 'data/processed/models' else ('csv', 'dataframe')
         try:
-            full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.csv" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.csv")
-            df = pd.read_csv(full_path, index_col=index, **kwargs)
-            logging.info(f"{name.replace('_', ' ').title()} dataframe loaded successfully from {full_path}")
-            return df
+            full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.{extension}" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.{extension}")
+            if component == 'model':
+                if CLOUD_ON=='yes':
+                    full_path = f"{file_path}/{name}.{extension}"
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.pkl') as temp_file:
+                        s3.download_file(BUCKET_NAME, full_path, temp_file.name)
+                        model_or_df = joblib.load(temp_file.name)
+                else:
+                    model_or_df = joblib.load(full_path)
+            else:
+                model_or_df = pd.read_csv(full_path, index_col=index, **kwargs)
+            # model_or_df = joblib.load(full_path) if component == 'model' else pd.read_csv(full_path, index_col=index, **kwargs)
+            logging.info(f"{name.replace('_', ' ').title()} {component} loaded successfully from {full_path}")
+            return model_or_df
         except Exception as e:
-            logging.error(f"Error loading dataframe {name}: {e}")
+            logging.error(f"Error loading {component} {name}: {e}")
             return False
+
+    def load_models(self, name, file_path='data/processed/models'):
+            """
+            Load a model from the specified file path using the _load_csv method.
+
+            Args:
+                name (str): The name of the model (without extension).
+                file_path (str): The directory path of the model files.
+
+            Returns:
+                Loaded model or None: Returns the loaded model or None if not found.
+            """
+            model = self._load_csv(file_path, name)
+            if model is False:
+                logging.warning(f"Model {name} not found. Training a new one.")
+                return None
+            return model
 
     def load_initial_uploaded_workout_csv(self, name, file_path='data/raw/csv'):
         """

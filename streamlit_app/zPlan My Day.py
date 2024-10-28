@@ -16,7 +16,6 @@ dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
 #from src.calorie_calculations import calculate_total_calories
-from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
 from src.data_loader.files_extracting import FileLoader
 
@@ -58,7 +57,7 @@ with st.container(border=True):
                 if duration > 0:
                     try:
                         # Load the preprocessing pipeline
-                        preprocessing_pipeline = load_model('preprocessing_pipeline')
+                        preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
                         if preprocessing_pipeline is None:
                             st.error("Preprocessing pipeline not found. Please train the model first.")
                             st.stop()
@@ -73,7 +72,7 @@ with st.container(border=True):
                         duration_transformed = preprocessing_pipeline.transform(input_data)
 
                         # Load the trained linear regression model
-                        linear_model = load_model(BEST_MODEL) # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
+                        linear_model = FileLoader().load_models(BEST_MODEL) # FIXME: UPLOAD THE CORRECT MODEL EACH TIME AUTOMATICALLY
                         if linear_model is None:
                             st.error("Linear Regression model not found. Please train the model first.")
                             st.stop()

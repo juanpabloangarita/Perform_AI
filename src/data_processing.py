@@ -2,13 +2,11 @@
 import streamlit as st
 from datetime import datetime
 from datetime import timedelta
-
 import pandas as pd
 import numpy as np
 import csv
 import os
 import sys
-
 import plotly.graph_objs as go
 import plotly.io as pio
 
@@ -17,21 +15,18 @@ from src.calorie_calculations import calculate_total_calories
 
 from src.calorie_calculations import *
 from src.calorie_estimation_models import *
-from src.calorie_estimation_models import estimate_calories_with_duration, load_model, estimate_calories_with_nixtla
+from src.calorie_estimation_models import estimate_calories_with_duration, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
-from src.data_loader.files_saving import FileSaver
 from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
+
 from src.data_loader.files_extracting import FileLoader
+from src.data_loader.files_saving import FileSaver
 from params import CLOUD_ON
 
 
 def clean_data_basic(dfs, date_cols):
-    # Threshold of % of NaN's per column we want to accept
-    threshold = 0.5
-
     for df_name, df in dfs.items():
         df.replace('--', np.nan, inplace=True)
-        # Remove duplicates
         df.drop_duplicates(inplace=True)
         # Change date format & place it as index
         if df_name == 'sleep':
@@ -265,10 +260,9 @@ def process_data(user_data, workouts=None):
     # Create and save models
     rmse_results = estimate_calories_with_duration(X_activities, y_activities)
     # Load preproc
-    preprocessing_pipeline = load_model('preprocessing_pipeline')
+    preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
     # Load linear model
-
-    linear_model = load_model(BEST_MODEL)
+    linear_model = FileLoader().load_models(BEST_MODEL)
 
 
     total_workouts = pd.concat([past_workouts_df, future_workouts_df])

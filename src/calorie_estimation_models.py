@@ -18,46 +18,25 @@ from sklearn.compose import ColumnTransformer
 from sklearn.decomposition import PCA
 from statsforecast import StatsForecast
 from statsforecast.models import AutoARIMA
+
+from src.data_loader.files_extracting import FileLoader
+from src.data_loader.files_saving import FileSaver
 # this makes it so that the outputs of the predict methods have the id as a column
 # instead of as the index
 os.environ['NIXTLA_ID_AS_COL'] = '1'
 
 
 from src.data_processing import *
-import joblib
-
-file_path = 'data/processed/models/'
-script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
-dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
-full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
-
-
-# Helper function to save models
-def save_model(model, model_name):
-    model_file = os.path.join(full_path, f"{model_name}.pkl")
-    joblib.dump(model, model_file)
-    print(f"Model {model_name} saved successfully at {model_file}.")
-
-# Helper function to load models
-def load_model(model_name):
-    try:
-        model_file = os.path.join(full_path, f"{model_name}.pkl")
-        model = joblib.load(model_file)
-        print(f"Model {model_name} loaded successfully from {model_file}.")
-        return model
-    except FileNotFoundError:
-        print(f"Model {model_name} not found. Training a new one.")
-        return None
 
 
 # Modified Linear Regression function without preprocessing
 def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:  # If the model is not saved, train and save it
         lr = LinearRegression()
         lr.fit(X_train, y_train)
-        save_model(lr, model_name)  # Save the trained model
+        FileSaver().save_models(lr, model_name)
         model = lr  # Assign the newly trained model
 
     y_pred = model.predict(X_test)
@@ -67,7 +46,7 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
 
 
 def ridge_regression_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)
+    model = FileLoader().load_models(model_name)
     if model is None:
         param_grid = {'alpha': [0.1, 1.0, 10.0, 100.0]}
         grid_search = GridSearchCV(
@@ -79,7 +58,7 @@ def ridge_regression_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model
     y_pred = model.predict(X_test)
     rmse = root_mean_squared_error(y_test, y_pred)
@@ -87,7 +66,7 @@ def ridge_regression_model(model_name, X_train, X_test, y_train, y_test):
     return model, rmse
 
 def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)
+    model = FileLoader().load_models(model_name)
     if model is None:
         param_grid = {'alpha': [0.01, 0.1, 1.0, 10.0]}
         grid_search = GridSearchCV(
@@ -99,7 +78,7 @@ def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model
     y_pred = model.predict(X_test)
     rmse = root_mean_squared_error(y_test, y_pred)
@@ -107,7 +86,7 @@ def lasso_regression_model(model_name, X_train, X_test, y_train, y_test):
     return model, rmse
 
 def elasticnet_regression_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)
+    model = FileLoader().load_models(model_name)
     if model is None:
         param_grid = {
             'alpha': [0.01, 0.1, 1.0, 10.0],
@@ -122,7 +101,7 @@ def elasticnet_regression_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model
     y_pred = model.predict(X_test)
     rmse = root_mean_squared_error(y_test, y_pred)
@@ -132,7 +111,7 @@ def elasticnet_regression_model(model_name, X_train, X_test, y_train, y_test):
 
 # Modified Random Forest function without preprocessing
 def random_forest_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -149,7 +128,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)  # Save the model
+        FileSaver().save_models(best_model, model_name)
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
@@ -159,7 +138,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
 
 # Modified Gradient Boosting function without preprocessing
 def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -176,7 +155,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
@@ -186,7 +165,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
 
 # Modified LightGBM function without preprocessing
 def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -216,7 +195,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
@@ -226,7 +205,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
 
 # Modified XGBoost function without preprocessing
 def xgboost_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -243,7 +222,7 @@ def xgboost_model(model_name, X_train, X_test, y_train, y_test):
         )
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
         model = best_model  # Assign the best model
 
     y_pred = model.predict(X_test)
@@ -290,12 +269,12 @@ def create_preprocessing_pipeline(use_poly=True, use_pca=False, n_components=Non
 
 def transform_features(X, y, use_pca=False, n_components=None):
     X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    preprocessing_pipeline = load_model('preprocessing_pipeline')
+    preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
     if preprocessing_pipeline is None:
         preprocessing_pipeline = create_preprocessing_pipeline(use_poly=True, use_pca=use_pca, n_components=n_components)
-        save_model(preprocessing_pipeline, 'preprocessing_pipeline')
+        # FileSaver().save_models(preprocessing_pipeline, 'preprocessing_pipeline')
     preprocessing_pipeline.fit(X_train_raw)
+    FileSaver().save_models(preprocessing_pipeline, 'preprocessing_pipeline')
 
     X_train_transformed = preprocessing_pipeline.transform(X_train_raw)
     X_test_transformed = preprocessing_pipeline.transform(X_test_raw)
@@ -493,8 +472,7 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
 
     # Set Calories to 0 for days without workouts
     #fcst.loc[~has_workout, 'AutoARIMA'] = 0 # NOTE: STILL DON'T KNOW WHAT TO DO HERE
-
-    save_model(sf, "statsforecast_model")
+    FileSaver().save_models(sf, "statsforecast_model")
 
 
     return fcst, sf

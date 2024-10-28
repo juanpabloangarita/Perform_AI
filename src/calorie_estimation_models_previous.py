@@ -15,36 +15,13 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
 
 from src.data_processing import *
-import joblib
-
-file_path = 'data/processed/models/'
-script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - src
-dir_script_dir = os.path.dirname(script_dir) # Get the directory where the previous dir is located - PerformAI
-full_path = os.path.join(dir_script_dir, file_path)  # Construct the full path
-
-
-# Helper function to save models
-def save_model(model, model_name):
-    model_file = os.path.join(full_path, f"{model_name}.pkl")
-    joblib.dump(model, model_file)
-    print(f"Model {model_name} saved successfully.")
-    print(f"Model {model_name} saved successfully at {model_file}.")
-
-# Helper function to load models
-def load_model(model_name):
-    try:
-        model_file = os.path.join(full_path, f"{model_name}.pkl")
-        model = joblib.load(model_file)
-        print(f"Model {model_name} loaded successfully from {model_file}.")
-        return model
-    except FileNotFoundError:
-        print(f"Model {model_name} not found. Training a new one.")
-        return None
+from src.data_loader.files_extracting import FileLoader
+from src.data_loader.files_saving import FileSaver
 
 
 # Modify each model function to check for saved models
 def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:  # If the model is not saved, train and save it
         pipeline = Pipeline([
@@ -52,7 +29,7 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
             ('model', LinearRegression())
         ])
         pipeline.fit(X_train, y_train)
-        save_model(pipeline, model_name)  # Save the trained model
+        FileSaver().save_models(pipeline, model_name)
     else:
         pipeline = model  # Use the loaded model
 
@@ -64,7 +41,7 @@ def linear_regression_model(model_name, X_train, X_test, y_train, y_test):
 
 # Modify the Random Forest function similarly
 def random_forest_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -75,7 +52,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
         grid_search = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)  # Save the model
+        FileSaver().save_models(best_model, model_name)
     else:
         best_model = model
 
@@ -87,7 +64,7 @@ def random_forest_model(model_name, X_train, X_test, y_train, y_test):
 
 # Apply the same logic for Gradient Boosting
 def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -98,7 +75,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
         grid_search = GridSearchCV(GradientBoostingRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
     else:
         best_model = model
 
@@ -110,7 +87,7 @@ def gradient_boosting_model(model_name, X_train, X_test, y_train, y_test):
 
 # Apply the same logic for LightGBM
 def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -121,7 +98,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
         grid_search = GridSearchCV(lgb.LGBMRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
     else:
         best_model = model
 
@@ -133,7 +110,7 @@ def lightgbm_model(model_name, X_train, X_test, y_train, y_test):
 
 # Apply the same logic for XGBoost
 def xgboost_model(model_name, X_train, X_test, y_train, y_test):
-    model = load_model(model_name)  # Try loading the saved model
+    model = FileLoader().load_models(model_name)  # Try loading the saved model
 
     if model is None:
         param_grid = {
@@ -144,7 +121,7 @@ def xgboost_model(model_name, X_train, X_test, y_train, y_test):
         grid_search = GridSearchCV(xgb.XGBRegressor(random_state=42), param_grid, cv=5, scoring='neg_mean_squared_error')
         grid_search.fit(X_train, y_train)
         best_model = grid_search.best_estimator_
-        save_model(best_model, model_name)
+        FileSaver().save_models(best_model, model_name)
     else:
         best_model = model
 

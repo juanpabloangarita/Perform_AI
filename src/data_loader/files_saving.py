@@ -4,6 +4,10 @@ import os
 import logging
 from .get_full_path import get_full_path
 from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
+import joblib
+import tempfile
+import boto3
+s3 = boto3.client('s3')
 
 
 class FileSaver:
@@ -15,9 +19,9 @@ class FileSaver:
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv'
 
-    def _save_csv(self, file_path, df, name, index=False):
+    def _save_csv(self, file_path, model_or_df, name, index=False):
         """
-        Saves the given dataframe to a CSV file.
+        Saves the given dataframe to a CSV file or trained models.
 
         Args:
             file_path (str): The directory path to save the CSV.
@@ -25,14 +29,28 @@ class FileSaver:
             name (str): The name of the CSV file (without extension).
             index (bool): Whether to include the dataframe index in the CSV file (default is False).
         """
+        extension, component = ('pkl', 'model') if file_path == 'data/processed/models' else ('csv', 'dataframe')
         try:
             # Set the full file path based on whether cloud storage is used
-            full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.csv" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.csv")
-
-            df.to_csv(full_path, index=index, na_rep='')  # Save CSV with or without index
-            logging.info(f"{name.replace('_', ' ').title()} dataframe saved successfully at {full_path}")
+            full_path = f"s3://{BUCKET_NAME}/{file_path}/{name}.{extension}" if CLOUD_ON == 'yes' else os.path.join(get_full_path(file_path), f"{name}.{extension}")
+            if component == 'model':
+                if CLOUD_ON=='yes':
+                    full_path = f"{file_path}/{name}.{extension}"
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.pkl') as temp_file:
+                        joblib.dump(model_or_df, temp_file.name)  # Save temporarily
+                        s3.upload_file(temp_file.name, BUCKET_NAME, full_path)
+                else:
+                    joblib.dump(model_or_df, full_path)
+            else:
+                model_or_df.to_csv(full_path, index=index, na_rep='')  # Save CSV with or without index
+            # joblib.dump(model_or_df, full_path) if component == 'model' else model_or_df.to_csv(full_path, index=index, na_rep='')  # Save CSV with or without index
+            logging.info(f"{name.replace('_', ' ').title()} {component} saved successfully at {full_path}")
         except Exception as e:
-            logging.error(f"Error saving dataframe {name}: {e}")
+            logging.error(f"Error saving {component} {name}: {e}")
+
+    def save_models(self, model, name, file_path='data/processed/models'):
+        """Save the model using the _save_csv helper method."""
+        self._save_csv(file_path, model, name)
 
     def save_initial_uploaded_workout_csv(self, workouts, name, file_path='data/raw/csv'):
         """
