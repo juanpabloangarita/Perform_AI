@@ -48,7 +48,7 @@ class FileSaver:
 
     def save_raw_and_final_dataframes(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
         """
-        Save final CSV files for workouts, activities, foods, and final data.
+        Save raw and final dataframes for workouts, activities, foods, and final data.
 
         Args:
             w_df (pd.DataFrame, optional): Workouts dataframe.

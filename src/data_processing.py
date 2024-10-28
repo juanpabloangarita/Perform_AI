@@ -73,7 +73,7 @@ def load_and_update_final_csv(from_where, time_added=None, data_to_update=None):
     # Calculate TSS per discipline and TOTAL TSS
     w_df = calculate_total_tss(df, 'load_and_update_final_csv')
 
-    # # Calculate ATL, CTL, TSB from TSS
+    # Calculate ATL, CTL, TSB from TSS
     w_df.index = pd.to_datetime(w_df.index)
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
     FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
@@ -84,13 +84,6 @@ def clean_data_basic(dfs, date_cols):
     threshold = 0.5
 
     for df_name, df in dfs.items():
-
-        # REMOVED DROP_HIGH_NA_COLUMNS CUZ WEIRD BEHAVIOUR, WILL NEED TO UPDATE CUZ NO NEED
-
-        # Remove columns with high > threshold % NaN values
-        # drop_high_na_columns(df, threshold) # NOTE: - REMOVED THIS ONE
-
-        # Replace '--' with NaN
         df.replace('--', np.nan, inplace=True)
         # Remove duplicates
         df.drop_duplicates(inplace=True)
@@ -99,16 +92,6 @@ def clean_data_basic(dfs, date_cols):
             continue
         date_col = date_cols[df_name]
         convert_to_datetime(df, date_col)
-
-
-def drop_high_na_columns(df, threshold):
-    # Calculate the percentage of missing values for each column
-    na_percentage = df.isna().sum() / len(df)
-    # Select columns to drop
-    columns_to_drop = na_percentage[na_percentage > threshold].index
-    # Drop the columns
-    df.drop(columns=columns_to_drop, inplace=True)
-    #return columns_to_drop
 
 
 def convert_to_datetime(df, date_col):
@@ -121,12 +104,10 @@ def convert_to_datetime(df, date_col):
         df.sort_values('Date', inplace=True)
         df.set_index(pd.to_datetime(df.index), inplace=True)
 
-    #df.sort_values('Date', inplace=True)
     # Remove the date column to normalize all date columns with the same name
     if date_col in df.columns:
         # This removes the column name date_col
         df.drop(columns=date_col, inplace=True)
-    #return df
 
 
 def clean_activities(df):
@@ -226,8 +207,6 @@ def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
     cal_estimated_df_agg = cal_estimated_df.groupby(cal_estimated_df.index).apply(aggregate_group)
 
 
-
-
     ### FOR cal_calculated_df ###
     # Define the special aggregation for 'TotalPassiveCalories' (take the last value)
     special_aggregation_calculated = {
@@ -287,7 +266,7 @@ def process_data(user_data, workouts=None):
 
     sourcer.load_raw_and_final_dataframes('data/raw/csv')
     activities_df = sourcer.activities_raw
-    
+
     workouts_df = workouts if workouts is not None else sourcer.workouts_raw
 
 
@@ -390,9 +369,6 @@ def process_data(user_data, workouts=None):
     w_df_calories_estimated.set_index('Date', inplace=True)
 
     # Now, w_df_calories_estimated contains the merged data with 'Date' as the index
-
-
-
 
 
     print_performances(rmse_results)
