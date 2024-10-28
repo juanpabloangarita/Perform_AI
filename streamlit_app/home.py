@@ -17,7 +17,6 @@ from dashboard_plot import *
 from params import *
 from src.main import main
 from src.user_data import *
-from src.data_processing import load_and_update_final_csv
 from src.data_loader.files_extracting import FileLoader
 
 
@@ -201,7 +200,7 @@ else:
             st.plotly_chart(fig, use_container_width=True)
 
         if st.checkbox('Show Data'):
-            final_df = load_and_update_final_csv('home')
+            final_df = FileLoader().update_final_df('home')
             st.write(final_df)
     else:
         st.write("Please upload a file")

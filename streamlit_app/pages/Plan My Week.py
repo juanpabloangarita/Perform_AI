@@ -1,3 +1,5 @@
+# Perform_AI.streamlit_app.plan my week.py
+
 from datetime import datetime, timedelta
 import streamlit as st
 import pandas as pd
@@ -15,12 +17,12 @@ dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
 
-from src.data_processing import load_and_update_final_csv
 from src.training_peaks import navigate_to_login
 from src.training_peaks_handler import *
 from params import *
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
+from src.data_loader.files_extracting import FileLoader
 
 
 headless_mode = (CLOUD_ON == 'yes')
@@ -40,7 +42,7 @@ def highlight_today(week_dates):
     return [date.date() == today for date in week_dates]
 
 # Load and update the dataframe
-final_df = load_and_update_final_csv('home')
+final_df = FileLoader().update_final_df('home')
 
 # Ensure index is in the proper string format to match
 final_df.index = pd.to_datetime(final_df.index).strftime('%Y-%m-%d')
@@ -72,21 +74,21 @@ def main():
                     # Step 5: Fetch the scraped data from S3
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)  # Display the DataFrame in Streamlit
-                    load_and_update_final_csv("training_peaks", data_to_update=scraped_df)
+                    FileLoader().update_final_df("training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 elif command_status == "Partial Success":
                     st.warning("Partial success: Some data was scraped but not all.")
                     scraped_df = fetch_scraped_data()
                     st.write(scraped_df)
-                    load_and_update_final_csv("training_peaks", data_to_update=scraped_df)
+                    FileLoader().update_final_df("training_peaks", data_to_update=scraped_df)
                     reset_scraped_data()
 
                 else:
                     st.error("Script execution failed; skipping data retrieval.")
             else:
                 tp_data_update = navigate_to_login('both')
-                load_and_update_final_csv("training_peaks", data_to_update=tp_data_update)
+                FileLoader().update_final_df("training_peaks", data_to_update=tp_data_update)
 
     with col3:
         st.write("")
@@ -203,9 +205,9 @@ def main():
                                     'estimated_calories': estimated_calories
                                 }
                                 st.session_state.temp_data[idx] = tmp_dict_week
-                                load_and_update_final_csv("plan_my_week", day_date_str, tmp_dict_week)
+                                FileLoader().update_final_df("plan_my_week", day_date_str, tmp_dict_week)
                             # if st.button("Delete", key=f"delete_{idx}{row}"):
-                            #     load_and_update_final_csv( "plan_my_week")
+                            #     FileLoader().update_final_df( "plan_my_week")
 
                 else:
                     st.markdown("<span style='font-size:16px;'>No workout data.</span>", unsafe_allow_html=True)

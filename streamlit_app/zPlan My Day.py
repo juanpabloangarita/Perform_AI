@@ -15,7 +15,6 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv
 #from src.calorie_calculations import calculate_total_calories
 from src.calorie_estimation_models import load_model
 from params import BEST_MODEL, GIVEN_DATE
@@ -100,7 +99,7 @@ with st.container(border=True):
                 }
 
                 st.success(f"Added {duration} minutes of {activity} with {calories_spent} calories, {heart_rate} bpm, and {distance} meters")
-                load_and_update_final_csv("input_activities", GIVEN_DATE, temp_activity_dict)
+                FileLoader().update_final_df("input_activities", GIVEN_DATE, temp_activity_dict)
         # Ensure that the form has enough space, add a placeholder if necessary
         with st.empty():
             pass
@@ -111,7 +110,7 @@ with st.container(border=True):
 
         # Add a container-like background for consistency
         with st.container():
-            df = load_and_update_final_csv("plan_my_day")
+            df = FileLoader().update_final_df("plan_my_day")
             total_active_calories = 0
 
             if GIVEN_DATE in df.index:
@@ -167,7 +166,7 @@ with st.container(border=True):
                 sourcer = FileLoader()
                 sourcer.load_raw_and_final_dataframes('data/raw/csv/')
                 foods_df = sourcer.foods
-                load_and_update_final_csv('calories_consumed', GIVEN_DATE, calories)
+                FileLoader().update_final_df('calories_consumed', GIVEN_DATE, calories)
 
         # Ensure space is balanced between columns
         with st.empty():
@@ -177,7 +176,7 @@ with st.container(border=True):
     # Second column: Display calories and remaining calories
     with col2:
         st.write("#### Today's Calories")
-        df = load_and_update_final_csv("plan_my_day")
+        df = FileLoader().update_final_df("plan_my_day")
 
 
         calories_data = df.loc[GIVEN_DATE, 'CaloriesConsumed'] if GIVEN_DATE in df.index else 0

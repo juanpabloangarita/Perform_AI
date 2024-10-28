@@ -3,9 +3,16 @@
 import os
 import logging
 import pandas as pd
-from .get_full_path import get_full_path
 from .files_saving import FileSaver
 from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
+from .get_full_path import get_full_path
+from src.tss_calculations import calculate_total_tss, calculate_metrics_from_tss
+from src.load_and_update_final_csv_helper import (
+    process_data_to_update,
+    process_activity_dict,
+    update_or_add_row,
+    create_default_row
+)
 
 
 class FileLoader:
@@ -90,6 +97,66 @@ class FileLoader:
             pd.DataFrame: Loaded DataFrame with na_filter=False.
         """
         return self._load_csv(self.file_path, 'final_df', index=0, na_filter=False)
+
+    def update_final_df(self, from_where, time_added=None, data_to_update=None):
+            """
+            Load the final DataFrame and update it based on the source of the data.
+
+            Args:
+                from_where (str): Source of the update.
+                time_added (str, optional): Time to add the data.
+                data_to_update (various): Data to be updated in the DataFrame.
+
+            Returns:
+                pd.DataFrame: Updated DataFrame.
+            """
+            df = self.load_final_with_no_na_filter()
+
+            if from_where in ['home', 'plan_my_day']:
+                return df
+
+            elif from_where == 'training_peaks' and isinstance(data_to_update, pd.DataFrame):
+                df = process_data_to_update(df, data_to_update)
+
+            elif from_where == 'training_peaks' and isinstance(data_to_update, list):
+                df = process_activity_dict(df, data_to_update)
+
+            elif from_where == 'plan_my_week':
+                updates = {
+                    'TimeTotalInHours': pd.to_numeric(data_to_update.get('TimeTotalInHours', 0), errors='coerce') / 60,
+                    'DistanceInMeters': data_to_update.get('DistanceInMeters', 0.0),
+                    'CaloriesSpent': data_to_update.get('CaloriesSpent', 0.0),
+                    'EstimatedActiveCal': data_to_update.get('estimated_calories', 0)
+                }
+                df = update_or_add_row(df, time_added, data_to_update.get('WorkoutType', ''), updates)
+
+            elif from_where == 'input_activities':
+                for activity, details in data_to_update.items():
+                    updates = {
+                        'HeartRateAverage': details['heart_rate'],
+                        'TimeTotalInHours': details['duration'] / 60,
+                        'DistanceInMeters': details['distance'],
+                        'CaloriesSpent': details['calories_spent'],
+                        'EstimatedActiveCal': details.get('estimated_calories', 0)
+                    }
+                    df = update_or_add_row(df, time_added, activity, updates)
+
+            elif from_where == 'calories_consumed':
+                if time_added in df.index:
+                    df.loc[time_added, 'CaloriesConsumed'] += data_to_update
+                else:
+                    new_row = create_default_row(time_added)
+                    new_row['CaloriesConsumed'] = data_to_update
+                    df = pd.concat([df, new_row]).sort_index()
+
+            FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame
+                # Calculate TSS per discipline and TOTAL TSS
+            w_df = calculate_total_tss(df, 'load_and_update_final_csv')
+
+            # Calculate ATL, CTL, TSB from TSS
+            w_df.index = pd.to_datetime(w_df.index)
+            tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
+            FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
     def load_tss_values_for_dashboard(self, file_path=None):
         """

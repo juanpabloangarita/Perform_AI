@@ -10,7 +10,7 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import load_and_update_final_csv
+from src.data_loader.files_extracting import FileLoader
 from params import *
 
 # Helper function to get the start of the week (Monday) for a given date
@@ -27,7 +27,7 @@ def highlight_today(week_dates):
     return [date.date() == today for date in week_dates]
 
 # Load and update the dataframe
-final_df = load_and_update_final_csv('home')
+final_df = FileLoader().update_final_df('home')
 
 # Ensure index is in the proper string format to match
 final_df.index = pd.to_datetime(final_df.index).strftime('%Y-%m-%d')
