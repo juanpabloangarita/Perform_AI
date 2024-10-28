@@ -14,7 +14,6 @@ from params import *
 from src.calorie_calculations import calculate_total_calories
 
 from src.calorie_calculations import *
-from src.calorie_estimation_models import *
 from src.calorie_estimation_models import estimate_calories_with_duration, estimate_calories_with_nixtla
 from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
 from src.tss_calculations import * # TODO: WHY IT WORKED WITH .tss_calculations before ASK DINIS, RELATED TO  THE ONE BELOW i did the equivalente, meaning from src. and it didn't work, meaning i did from data_loader.
@@ -31,8 +30,7 @@ def clean_data_basic(dfs, date_cols):
         # Change date format & place it as index
         if df_name == 'sleep':
             continue
-        date_col = date_cols[df_name]
-        convert_to_datetime(df, date_col)
+        convert_to_datetime(df, date_cols[df_name])
 
 
 def convert_to_datetime(df, date_col):
@@ -107,71 +105,6 @@ def print_performances(rmse_results):
     print()
 
 
-def aggregate_by_date(cal_estimated_df, cal_calculated_df, activities):
-    # HAD IT BEEN A NORMAL COLUMN - meaning 'Date' not as index, WE WOULD HAVE NEEDED TO DO THE FOLLOWING
-    # activities['Date'] = pd.to_datetime(activities['Date']).dt.normalize()
-    cal_estimated_df.index = pd.to_datetime(cal_estimated_df.index).normalize()
-    cal_calculated_df.index = pd.to_datetime(cal_calculated_df.index).normalize()
-    activities.index = pd.to_datetime(activities.index).normalize()
-
-    ### FOR cal_estimated_df ###
-    def weighted_heart_rate_average(df):
-        # Choose the duration column: use 'TimeTotalInHours' if available, else 'PlannedDuration'
-        duration_col = df['TimeTotalInHours'].fillna(df['PlannedDuration']).fillna(0)
-
-        # Perform the weighted average
-        total_duration = duration_col.sum()
-        if total_duration > 0:
-            weighted_hr = (df['HeartRateAverage'] * duration_col).sum() / total_duration # NOTE: MAYBE THIS IS NOT NEEDED ANYMORE
-        else:
-            weighted_hr = 0  # Handle the case where no valid durations are present
-        return weighted_hr
-
-    def concatenate_workout_types(series):
-        return ', '.join(series.dropna().unique())
-
-    def aggregate_group(group):
-        # Special aggregation
-        special_agg = pd.Series({
-            'WorkoutType': concatenate_workout_types(group['WorkoutType']),
-            'HeartRateAverage': weighted_heart_rate_average(group)
-        })
-
-        # Default aggregation (sum for other columns)
-        default_agg = group.drop(columns=['WorkoutType', 'HeartRateAverage']).sum()
-
-        # Combine special and default aggregations
-        return pd.concat([special_agg, default_agg])
-
-
-    # Apply aggregation
-    cal_estimated_df_agg = cal_estimated_df.groupby(cal_estimated_df.index).apply(aggregate_group)
-
-
-    ### FOR cal_calculated_df ###
-    # Define the special aggregation for 'TotalPassiveCalories' (take the last value)
-    special_aggregation_calculated = {
-        'TotalPassiveCal': 'last'
-    }
-
-    # Default aggregation: sum for all other columns
-    default_aggregation_calculated = {col: 'sum' for col in cal_calculated_df.columns if col != 'TotalPassiveCal'}
-
-    # Merge the aggregation rules
-    aggregation_rules_calculated = {**default_aggregation_calculated, **special_aggregation_calculated}
-
-    # Apply aggregation
-    cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg(aggregation_rules_calculated)
-
-
-
-    # cal_estimated_df_agg = cal_estimated_df.groupby('Date').agg('sum')
-    # cal_calculated_df_agg = cal_calculated_df.groupby('Date').agg('sum')
-    activities_agg = activities.groupby('Date').agg('sum')
-
-    return cal_estimated_df_agg, cal_calculated_df_agg, activities_agg
-
-
 def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
     df = df[columns_to_keep_workouts].copy()
@@ -180,8 +113,6 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     after_df = df[df.index >= given_date].copy()
     # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
     before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy() # NOTE: HERE IS THE PART THAT CAUSES THE WEIRD BEHAVIOUR. Explanation below
-    # TODO: this because, the workouts that have been done, they all have a heart rate average and a time total in hours. However, they all have heart rate, when i export the csv. But when the date changes for tomorrow, the training that i had today, that i did, there is no info about it, and so, it is sort of removed. i have to
-    # TODO: I have to update it with the training peaks thing. i need to find a way to have it on all the time. the real costs.
     # TODO: (BTW, I DON'T NEED TO REMOVE THE HEARTRATEAVERAGE.ISNA, since what's important for me is timetotalinhours only)
 
     # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
@@ -206,8 +137,8 @@ def process_data(user_data, workouts=None):
         sourcer.load_initial_csv_files()
 
     sourcer.load_raw_and_final_dataframes('data/raw/csv')
+    
     activities_df = sourcer.activities_raw
-
     workouts_df = workouts if workouts is not None else sourcer.workouts_raw
 
 
@@ -241,7 +172,7 @@ def process_data(user_data, workouts=None):
     # workout_type = "with WorkoutType"
     workout_type = "duration with WorkoutType"
     # workout_type = "without WorkoutType"
-    # Estimate Total Calories from Models
+
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
@@ -308,85 +239,60 @@ def process_data(user_data, workouts=None):
     # Step 5: Set the 'Date' column as the index again
     w_df_calories_estimated.set_index('Date', inplace=True)
 
-    # Now, w_df_calories_estimated contains the merged data with 'Date' as the index
-
-
     print_performances(rmse_results)
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
-    aggregate_by_date_path = False
+
     final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours',
                      'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',  'AutoARIMA-lo-95',  'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
-    if aggregate_by_date_path:
-        ### DATAFRAMES AGGREGATED BY DATE ###
-        w_df_cal_est, w_df_cal_calc, activities_df = aggregate_by_date(w_df_calories_estimated, w_df_calories_calculated, activities_df)
 
-        w_df_calories_estimated_plus_calculated_agg = pd.concat([w_df_cal_est, w_df_cal_calc], axis=1, join='inner')
+    def standardize_date_index(df):
+        """
+        Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
 
-        final_df = pd.concat([w_df_calories_estimated_plus_calculated_agg, activities_df['Calories']], axis=1)
-        final_df = final_df.loc[:,~final_df.columns.duplicated()]
+        Parameters:
+        df (pd.DataFrame): DataFrame with a date index to be standardized.
 
-        final_df.index = pd.to_datetime(final_df.index)
-        final_df.index = final_df.index.date
-
-        final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
-
-        numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
-        final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
-        final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
-        final_df['ComplianceStatus'] = ''
-        final_df['TSS'] = 0.0
-
-        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated_agg, activities_df, final_df
-    else:
-        ### DATAFRAMES NOT AGGREGATED BY DATE ###
-        def standardize_date_index(df):
-            """
-            Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
-
-            Parameters:
-            df (pd.DataFrame): DataFrame with a date index to be standardized.
-
-            Returns:
-            pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
-            """
-            # Convert index to datetime
-            df.index = pd.to_datetime(df.index)
-            # Format index as 'YYYY-MM-DD'
-            df.index = df.index.strftime('%Y-%m-%d')
-            return df
+        Returns:
+        pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
+        """
+        # Convert index to datetime
+        df.index = pd.to_datetime(df.index)
+        # Format index as 'YYYY-MM-DD'
+        df.index = df.index.strftime('%Y-%m-%d')
+        return df
 
 
-        w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
-        w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
-        activities_df = standardize_date_index(activities_df)
+    w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
+    w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
+    activities_df = standardize_date_index(activities_df)
 
 
-        # Reset the index to ensure the 'date' is a column and not part of the index
-        w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
-        w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
-        activities_df_reset = activities_df.reset_index()
+    # Reset the index to ensure the 'date' is a column and not part of the index
+    w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
+    w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
+    activities_df_reset = activities_df.reset_index()
 
-        # # Concatenate the two dataframes, now using columns and not index
-        w_df_calories_estimated_plus_calculated = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
+    # # Concatenate the two dataframes, now using columns and not index
+    w_df_calories_estimated_plus_calculated = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
 
-        final_df = pd.concat([w_df_calories_estimated_plus_calculated, activities_df_reset[['Date', 'Calories']]], axis=1)
+    final_df = pd.concat([w_df_calories_estimated_plus_calculated, activities_df_reset[['Date', 'Calories']]], axis=1)
 
-        # Drop duplicate 'Date' columns if they exist
-        final_df = final_df.loc[:,~final_df.columns.duplicated()]
+    # Drop duplicate 'Date' columns if they exist
+    final_df = final_df.loc[:,~final_df.columns.duplicated()]
 
-        final_df = final_df.set_index('Date')
+    final_df = final_df.set_index('Date')
 
-        final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
+    final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
 
-        numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
-        final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
+    numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
+    final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
 
-        final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
-        final_df['ComplianceStatus'] = ''
-        final_df['TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
+    final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
+    final_df['ComplianceStatus'] = ''
+    final_df['TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
 
 
-        return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
