@@ -123,7 +123,6 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     # Concatenate before and after dataframes
     w_df = pd.concat([before_df_cleaned, after_df])
     # Keep dates where there was a Run Swim or Bike training Plan
-    # w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
     w_df = w_df[w_df['WorkoutType'].isin(['Run', 'Swim', 'Bike'])]
 
     # Fill NaN values in object columns with an empty string
@@ -166,15 +165,68 @@ def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
     else:
         print("No valid data provided for the specified keyword.")
 
+def create_models_and_predict(X_act, y_act, total_workouts):
+    """Create models for calorie estimation and predict on total workouts."""
+    rmse_results = estimate_calories_with_duration(X_act, y_act)
+
+    # Load preprocessing pipeline and linear model
+    preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
+    linear_model = FileLoader().load_models(BEST_MODEL)
+
+    # Fill missing values in 'TimeTotalInHours' and 'DistanceInMeters'
+    total_workouts = total_workouts.fillna({
+        'TimeTotalInHours': total_workouts['PlannedDuration'],
+        'DistanceInMeters': total_workouts['PlannedDistanceInMeters']
+    })
+    total_workouts['TotalDuration'] = total_workouts['TimeTotalInHours']
+
+    # Filter rows with complete data for transformation
+    mask_total = total_workouts['TotalDuration'].notna()
+    total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
+
+    # Estimate calories
+    total_workouts.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
+
+    return total_workouts, rmse_results
+
+
+def create_nixtla_and_predict(X_activities_df, y_activities_df, w_df):
+    """Generate Nixtla predictions for future workouts."""
+    future_workouts_df = w_df[w_df.index >= GIVEN_DATE].copy()
+    future_workouts_df = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'})
+
+    forecast, sf = estimate_calories_with_nixtla(X_activities_df, y_activities_df, future_workouts_df)
+    forecast = forecast.rename(columns={'ds': 'Date'})
+    forecast['Date'] = pd.to_datetime(forecast['Date'], format='%Y-%m-%d')
+
+    return forecast
+
+
+def standardize_date_index(df):
+    """
+    Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
+
+    Parameters:
+    df (pd.DataFrame): DataFrame with a date index to be standardized.
+
+    Returns:
+    pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
+    """
+    # Convert index to datetime
+    df.index = pd.to_datetime(df.index)
+    # Format index as 'YYYY-MM-DD'
+    df.index = df.index.strftime('%Y-%m-%d')
+    return df
+
 
 def process_data(user_data, workouts=None):
+    """Process and prepare data, estimate calories, and combine results."""
     sourcer = FileLoader()
 
     if CLOUD_ON == 'no':
         sourcer.load_initial_csv_files()
 
     sourcer.load_raw_and_final_dataframes('data/raw/csv')
-
     activities_df = sourcer.activities_raw
     workouts_df = workouts if workouts is not None else sourcer.workouts_raw
 
@@ -190,105 +242,34 @@ def process_data(user_data, workouts=None):
         #'health_metrics': 'Timestamp', # already as index
         'workouts': 'WorkoutDay' # as column
     }
-    # For Workouts and Activities For the moment
     clean_data_basic(dataframes, date_columns)
 
-    ### WORKOUTS ###
     w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
-
-    # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
     w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(w_df, 'data_processing')
-
-    ### ACTIVITIES ###
-    activities_df = clean_activities(dataframes['activities'])
-
-    print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
-
-    # Separate past and future workouts
-    past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
-    future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
-
-    X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'}).copy()
-    y_activities = activities_df['Calories']
-    # Create and save models
-    rmse_results = estimate_calories_with_duration(X_activities, y_activities)
-    print_metrics_or_data('rmse', rmse = rmse_results)
-    # Load preproc
-    preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
-    # Load linear model
-    linear_model = FileLoader().load_models(BEST_MODEL)
-
-
-    total_workouts = pd.concat([past_workouts_df, future_workouts_df])
-
-
-    total_workouts[['TimeTotalInHours', 'DistanceInMeters']] = total_workouts[['TimeTotalInHours', 'DistanceInMeters']].fillna({
-        'TimeTotalInHours': total_workouts['PlannedDuration'],
-        'DistanceInMeters': total_workouts['PlannedDistanceInMeters']
-        })
-    # total_workouts = total_workouts.rename(columns={'TimeTotalInHours': 'TotalDuration'})
-    total_workouts['TotalDuration'] = total_workouts['TimeTotalInHours']
-    w_df_calories_estimated = total_workouts.copy()
-
-    mask_total = total_workouts[['TotalDuration']].notna().all(axis=1)
-
-
-    total_workouts_transformed = preprocessing_pipeline.transform(total_workouts[mask_total])
-
-
-    w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
-
-
-    print_metrics_or_data('both', w_df_tmp=w_df_calories_estimated, act_df_tmp=activities_df)
-
-
-    ### NIXTLA ###
-    future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()
-
-    forecast, sf = estimate_calories_with_nixtla(X_activities, y_activities, future_workouts_for_nixtla)
-
-
-    # Step 1: Reset the index of w_df_calories_estimated and rename it to 'Date'
-    w_df_calories_estimated = w_df_calories_estimated.reset_index().rename(columns={'index': 'Date'})
-
-    # Step 2: Rename the 'ds' column in forecast to 'Date'
-    forecast = forecast.rename(columns={'ds': 'Date'})
-
-    # Step 3: Convert both 'Date' columns to datetime format if necessary
-    w_df_calories_estimated['Date'] = pd.to_datetime(w_df_calories_estimated['Date'], format='%Y-%m-%d')
-    forecast['Date'] = pd.to_datetime(forecast['Date'], format='%Y-%m-%d')
-
-    # Step 4: Perform the merge on the 'Date' column
-    w_df_calories_estimated = pd.merge(w_df_calories_estimated, forecast, on='Date', how='left')
-
-    # Step 5: Set the 'Date' column as the index again
-    w_df_calories_estimated.set_index('Date', inplace=True)
-
-
-    # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
+    activities_df = clean_activities(dataframes['activities'])
+    print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
+
+    # Model creation and predictions
+    X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'})
+    y_activities = activities_df['Calories']
+    w_df_calories_estimated, rmse_results = create_models_and_predict(X_activities, y_activities, w_df)
+    print_metrics_or_data('rmse', rmse=rmse_results)
+    print_metrics_or_data('both', w_df_tmp=w_df_calories_estimated, act_df_tmp=activities_df)
+
+    # Nixtla forecast
+    forecast_result = create_nixtla_and_predict(X_activities, y_activities, w_df)
+
+    # Combine estimated and calculated calories
+    w_df_calories_estimated.reset_index(inplace=True)
+    w_df_calories_estimated['Date'] = pd.to_datetime(w_df_calories_estimated['Date'], format='%Y-%m-%d')
+    w_df_calories_estimated = pd.merge(w_df_calories_estimated, forecast_result, on='Date', how='left')
+    w_df_calories_estimated.set_index('Date', inplace=True)
 
     final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours',
                      'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',  'AutoARIMA-lo-95',  'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
-
-    def standardize_date_index(df):
-        """
-        Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
-
-        Parameters:
-        df (pd.DataFrame): DataFrame with a date index to be standardized.
-
-        Returns:
-        pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
-        """
-        # Convert index to datetime
-        df.index = pd.to_datetime(df.index)
-        # Format index as 'YYYY-MM-DD'
-        df.index = df.index.strftime('%Y-%m-%d')
-        return df
-
 
     w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
     w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
