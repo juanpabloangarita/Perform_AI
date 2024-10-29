@@ -22,16 +22,30 @@ from params import CLOUD_ON, GIVEN_DATE, BEST_MODEL
 
 
 def clean_data_basic(dfs, date_cols):
+    """
+    Clean data for the given dataframes.
+
+    Parameters:
+        dfs (dict): Dictionary of DataFrames to clean.
+        date_cols (dict): Dictionary mapping DataFrame names to their date column names.
+    """
     for df_name, df in dfs.items():
         df.replace('--', np.nan, inplace=True)
         df.drop_duplicates(inplace=True)
-        # Change date format & place it as index
+
         if df_name == 'sleep':
             continue
         convert_to_datetime(df, date_cols[df_name])
 
 
 def convert_to_datetime(df, date_col):
+    """
+    Convert specified column to datetime and set as index.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame to process.
+        date_col (str): Name of the date column.
+    """
     if date_col != 'Timestamp':
         df['Date'] = pd.to_datetime(df[date_col])
         df.sort_values('Date', inplace=True)
@@ -41,26 +55,32 @@ def convert_to_datetime(df, date_col):
         df.sort_values('Date', inplace=True)
         df.set_index(pd.to_datetime(df.index), inplace=True)
 
-    # Remove the date column to normalize all date columns with the same name
     if date_col in df.columns:
-        # This removes the column name date_col
         df.drop(columns=date_col, inplace=True)
 
 
 def clean_activities(df):
-    columns_to_keep_activities = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
-    df = df[columns_to_keep_activities].copy()
-    df = df.rename(columns={
+    """
+    Clean activity data to keep relevant columns and rename them.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame containing activity data.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame.
+    """
+    columns_to_keep = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
+    df = df[columns_to_keep].copy().rename(columns={
         'Distance': 'DistanceInMeters',
         'Durée': 'TimeTotalInHours',
         'Fréquence cardiaque moyenne': 'HeartRateAverage',
         'Type d\'activité': 'WorkoutType'
     })
-    df['HeartRateAverage'] = pd.to_numeric(df['HeartRateAverage'])
 
-    df = df[df['HeartRateAverage'].notna()].copy()
+    df['HeartRateAverage'] = pd.to_numeric(df['HeartRateAverage'], errors='coerce')
+    df = df[df['HeartRateAverage'].notna()]
 
-    df = df[(df["WorkoutType"] != 'HIIT') & (df["WorkoutType"] != 'Exercice de respiration') & (df["WorkoutType"] != 'Musculation')].copy()
+    df = df[~df["WorkoutType"].isin(['HIIT', 'Exercice de respiration', 'Musculation'])].copy()
 
     sports_types = {
         'Nat. piscine': 'Swim',
@@ -145,7 +165,7 @@ def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
             print("\nWorkouts DataFrame:\n", tmp_workouts.head(), "\n")
     else:
         print("No valid data provided for the specified keyword.")
-        
+
 
 def process_data(user_data, workouts=None):
     sourcer = FileLoader()
