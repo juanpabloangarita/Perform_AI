@@ -207,7 +207,16 @@ def process_data(user_data, workouts=None):
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
-    FileSaver().save_during_process(w_df_calories_estimated, activities_df)
+    FileSaver().save_during_process(workouts_tmp_df=w_df_calories_estimated, activities_tmp_df=activities_df)
+
+    loader = FileLoader()
+    loader.save_and_load_during_process(workouts_tmp_df=w_df_calories_estimated, activities_tmp_df=activities_df)
+    tmp_workouts = loader.workouts_tmp_df
+    tmp_activities = loader.activities_tmp_df
+    print("\n\n\n\n")
+    print(tmp_workouts.head())
+    print("\n\n\n\n")
+    print(tmp_activities.head())
 
     ### NIXTLA ###
     future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()

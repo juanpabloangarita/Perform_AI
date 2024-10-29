@@ -95,18 +95,17 @@ class FileSaver:
             if data is not None:
                 self._save_csv(self.file_path if file_path is None else file_path, data, name, index=True)
 
-    def save_during_process(self, work_df, acti_df, file_path=None):
+    def save_during_process(self, file_path=None, **kwargs):
         """
-        Save intermediate workout and activity dataframes during the processing step.
+        Save tmp workout and activity dataframes during the processing step.
 
         Args:
-            work_df (pd.DataFrame): Workouts dataframe to be saved.
-            acti_df (pd.DataFrame): Activities dataframe to be saved.
+            **kwargs (pd.DataFrame): Workouts and/or Activities dataframe to be saved.
             file_path (str, optional): Custom file path for saving the CSVs.
         """
-        for name, data in zip(['workouts_to_process_df', 'activities_to_process_df'], [work_df, acti_df]):
+        for name, data in zip(['workouts_tmp_df', 'activities_tmp_df'], [kwargs.get('workouts_tmp_df'), kwargs.get('activities_tmp_df')]):
             if data is not None:
-                self._save_csv(self.file_path if file_path is None else file_path, data, name)
+                self._save_csv(file_path or self.file_path, data, name)
 
     def save_user_nutrition(self, nutrition_df, file_path=None):
         """

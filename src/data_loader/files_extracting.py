@@ -34,6 +34,8 @@ class FileLoader:
         self.workouts_processed = None
         self.final = None
         self.foods = None
+        self.workouts_tmp_df = None
+        self.activities_tmp_df = None
 
     def _load_csv(self, file_path, name, index=None, **kwargs):
         """
@@ -109,7 +111,7 @@ class FileLoader:
             tuple: Loaded DataFrames for final_df, workouts_df, and activities_df if no file_path is provided;
                    otherwise, only foods_df if file_path is specified.
         """
-        names = ['final_df', 'workouts_df', 'activities_df', 'foods_df']
+        names = ['workouts_df', 'activities_df', 'foods_df'] if file_path == 'data/raw/csv' else ['final_df', 'workouts_df', 'activities_df', 'foods_df']
         dataframes = {name: self._load_csv(file_path or self.file_path, name) for name in names}
 
         if file_path:
@@ -204,21 +206,26 @@ class FileLoader:
         dataframes = {name: self._load_csv(file_path or self.file_path, name, index=0) for name in names} # NOTE: self.file_path if file_path is None else file_path
         return dataframes['tss'], dataframes['atl'], dataframes['ctl'], dataframes['tsb']
 
-    def load_during_process(self, file_path=None):
+    def save_and_load_during_process(self, file_path=None, **kwargs):
         """
-        Loads intermediate workout and activity data during the processing stage.
+        Saves and Loads intermediate workout and/or activity data during the processing stage.
 
         Args:
             file_path (str, optional): Custom file path for loading the CSV files (default is None).
+            **kwargs (DataFrame): Optional. One or both of workouts_tmp_df and/or activities_tmp_df.
 
         Returns:
-            tuple: Loaded DataFrames for workouts_to_process_df and activities_to_process_df.
+            tuple: Loaded DataFrames for workouts_tmp_df and activities_tmp_df.
         """
-        names = ['workouts_to_process_df', 'activities_to_process_df']
-        dataframes = {name: self._load_csv(file_path or self.file_path, name) for name in names}
-        return dataframes['workouts_to_process_df'], dataframes['activities_to_process_df']
+        # Save the provided DataFrames
+        FileSaver().save_during_process(file_path=file_path, **kwargs)
 
-    def load_user_nutrition(self, file_path=None):
+        if 'workouts_tmp_df' in kwargs:
+            self.workouts_tmp_df = self._load_csv(file_path or self.file_path, 'workouts_tmp_df')
+        if 'activities_tmp_df' in kwargs:
+            self.activities_tmp_df = self._load_csv(file_path or self.file_path, 'activities_tmp_df')
+
+    def load_user_nutrition(self, file_path=None): # NOTE: probably it should be called update, cuz it is loading and saving
         """
         Loads or initializes the user's nutrition data.
 
