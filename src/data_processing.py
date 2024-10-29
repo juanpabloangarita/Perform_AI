@@ -88,14 +88,39 @@ def clean_activities(df):
     return df
 
 
-def print_performances(rmse_results):
-    print("\n\n\nPerformance Metrics:\n")
-    for result in rmse_results:
-        model_name = result['name']
-        rmse_value = result['rmse']
-        print(f"{model_name} RMSE: {rmse_value}")
+def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
+    """
+    Print performance metrics or display DataFrames for activities and/or workouts based on the keyword.
 
-    print("\n\n\n")
+    Args:
+        keyword (str): Specify what to print ('rmse', 'activities', 'workouts', or 'both').
+        rmse (list, optional): List of RMSE results to print if keyword is 'rmse'.
+        w_df_tmp (DataFrame, optional): DataFrame for workouts to be saved and printed.
+        act_df_tmp (DataFrame, optional): DataFrame for activities to be saved and printed.
+    """
+    # Save temporary DataFrames during processing NOTE: the following line is an alternative to save only to the FileLoader
+    # FileSaver().save_during_process(workouts_tmp_df=w_df_tmp, activities_tmp_df=act_df_tmp)
+
+    # Create a FileLoader instance and load the temporary DataFrames
+    loader = FileLoader()
+    loader.save_and_load_during_process(workouts_tmp_df=w_df_tmp, activities_tmp_df=act_df_tmp)
+    tmp_workouts = loader.workouts_tmp_df
+    tmp_activities = loader.activities_tmp_df
+
+    if keyword == "rmse" and rmse is not None:
+        print("\nPerformance Metrics:\n")
+        for result in rmse:
+            print(f"{result['name']} RMSE: {result['rmse']}")
+        print("\n")
+
+    elif keyword in {"activities", "workouts", "both"}:
+        if keyword in {"activities", "both"} and tmp_activities is not None:
+            print("\nActivities DataFrame:\n", tmp_activities.head(), "\n")
+        if keyword in {"workouts", "both"} and tmp_workouts is not None:
+            print("\nWorkouts DataFrame:\n", tmp_workouts.head(), "\n")
+    else:
+        print("No valid data provided for the specified keyword.")
+
 
 
 def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
@@ -182,6 +207,7 @@ def process_data(user_data, workouts=None):
     y_activities = activities_df['Calories']
     # Create and save models
     rmse_results = estimate_calories_with_duration(X_activities, y_activities)
+    print_metrics_or_data('rmse', rmse = rmse_results)
     # Load preproc
     preprocessing_pipeline = FileLoader().load_models('preprocessing_pipeline')
     # Load linear model
@@ -207,16 +233,9 @@ def process_data(user_data, workouts=None):
 
     w_df_calories_estimated.loc[mask_total, 'EstimatedActiveCal'] = linear_model.predict(total_workouts_transformed)
 
-    FileSaver().save_during_process(workouts_tmp_df=w_df_calories_estimated, activities_tmp_df=activities_df)
 
-    loader = FileLoader()
-    loader.save_and_load_during_process(workouts_tmp_df=w_df_calories_estimated, activities_tmp_df=activities_df)
-    tmp_workouts = loader.workouts_tmp_df
-    tmp_activities = loader.activities_tmp_df
-    print("\n\n\n\n")
-    print(tmp_workouts.head())
-    print("\n\n\n\n")
-    print(tmp_activities.head())
+    print_metrics_or_data('both', w_df_tmp=w_df_calories_estimated, act_df_tmp=activities_df)
+
 
     ### NIXTLA ###
     future_workouts_for_nixtla = future_workouts_df.rename(columns={'PlannedDuration': 'TotalDuration'}).copy()
@@ -240,7 +259,7 @@ def process_data(user_data, workouts=None):
     # Step 5: Set the 'Date' column as the index again
     w_df_calories_estimated.set_index('Date', inplace=True)
 
-    print_performances(rmse_results)
+
     # Calculate Total Calories from TSS
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
