@@ -105,7 +105,7 @@ class FileSaver:
         """
         for name, data in zip(['workouts_tmp_df', 'activities_tmp_df'], [kwargs.get('workouts_tmp_df'), kwargs.get('activities_tmp_df')]):
             if data is not None:
-                self._save_csv(file_path or self.file_path, data, name)
+                self._save_csv(file_path or self.file_path, data, name, index=True)
 
     def save_user_nutrition(self, nutrition_df, file_path=None):
         """

@@ -123,7 +123,8 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
     # Concatenate before and after dataframes
     w_df = pd.concat([before_df_cleaned, after_df])
     # Keep dates where there was a Run Swim or Bike training Plan
-    w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
+    # w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
+    w_df = w_df[w_df['WorkoutType'].isin(['Run', 'Swim', 'Bike'])]
 
     # Fill NaN values in object columns with an empty string
     object_cols = w_df.select_dtypes(include=['object']).columns
@@ -200,6 +201,8 @@ def process_data(user_data, workouts=None):
 
     ### ACTIVITIES ###
     activities_df = clean_activities(dataframes['activities'])
+
+    print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
