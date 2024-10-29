@@ -13,8 +13,7 @@ import plotly.io as pio
 
 from src.calorie_calculations import calculate_total_calories
 from src.calorie_estimation_models import estimate_calories_with_duration, estimate_calories_with_nixtla
-from src.calorie_estimation_models_previous import estimate_calories, estimate_calories_with_duration_previous
-from src.tss_calculations import calculate_metrics_from_tss, calculate_total_tss
+from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 
 from src.data_loader.files_extracting import FileLoader
 from src.data_loader.files_saving import FileSaver
@@ -193,34 +192,18 @@ def process_data(user_data, workouts=None):
     # For Workouts and Activities For the moment
     clean_data_basic(dataframes, date_columns)
 
-    ### WORKOUTS
+    ### WORKOUTS ###
     w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
 
-    # Calculate TSS per discipline and TOTAL TSS
-    w_df = calculate_total_tss(w_df, 'data_processing')
+    # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
+    w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(w_df, 'data_processing')
 
-    # # Calculate ATL, CTL, TSB from TSS
-    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
-
-    # ACTIVITIES
+    ### ACTIVITIES ###
     activities_df = clean_activities(dataframes['activities'])
-
-    # workout_type = "with WorkoutType"
-    workout_type = "duration with WorkoutType"
-    # workout_type = "without WorkoutType"
-
 
     # Separate past and future workouts
     past_workouts_df = w_df.loc[w_df.index < GIVEN_DATE]
     future_workouts_df = w_df.loc[w_df.index >= GIVEN_DATE]
-
-
-    # if workout_type == "duration with WorkoutType":
-    #     w_df_calories_estimated, rmse_results = estimate_calories_with_duration_previous(activities_df, past_workouts_df, future_workouts_df)
-    # else:
-    #     # FIXME: the following line comes from here from src.calorie_estimation_models_previous import estimate_calories
-    #     w_df_calories_estimated, rmse_results = estimate_calories(activities_df, past_workouts_df, future_workouts_df, workout_type)
-
 
     X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'}).copy()
     y_activities = activities_df['Calories']

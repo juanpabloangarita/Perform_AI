@@ -479,36 +479,6 @@ def estimate_calories_with_nixtla(features, target, future_w_df, unique_id='seri
 """
 Model Performance Results
 
-| Model               | With Duration & WorkoutType | With WorkoutType & HR | With WorkoutType & without HR | Without WorkoutType & HR | Without WorkoutType & without HR |
-|---------------------|-----------------------------|-----------------------|-------------------------------|--------------------------|----------------------------------|
-| Linear Regression    | 89.19                       | 63.75                 | 87.77                         | 66.93                    | 88.35                            |
-| Random Forest        | 92.34                       | 63.99                 | 88.38                         | 67.65                    | 93.03                            |
-| Gradient Boosting    | 91.99                       | 53.49                 | 87.12                         | 65.10                    | 94.26                            |
-| LightGBM             | 91.05                       | 54.38                 | 87.06                         | 63.72                    | 91.52                            |
-| XGBoost              | 91.26                       | 53.67                 | 83.58                         | 62.56                    | 93.88                            |
-"""
-
-"""
-
-Performance Metrics WITH DURATION & WORKOUTTYPE without poly:
-Linear Regression with Duration with WorkoutTYpe RMSE: 99.89309317090766
-Random Forest with Duration with WorkoutTYpe RMSE: 92.06899183202154
-Gradient Boosting with Duration with WorkoutTYpe RMSE: 90.97004409283143
-LightGBM with Duration with WorkoutTYpe RMSE: 90.54056355551425
-XGBoost with Duration with WorkoutTYpe RMSE: 91.37666255801469
-
-
-
-
-PREVIOUS WITHOUT PCA
-
-Performance Metrics:
-Linear Regression with Duration with WorkoutType RMSE: 90.44261279868016
-Random Forest with Duration with WorkoutType RMSE: 92.35009718944328
-Gradient Boosting with Duration with WorkoutType RMSE: 92.52689118300806
-LightGBM with Duration with WorkoutType RMSE: 93.62855437802837
-XGBoost with Duration with WorkoutType RMSE: 91.26319865609005
-
 WITH PCA
 
 Performance Metrics:

@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 from params import GIVEN_DATE
 
-def calculate_total_tss(df, source, given_date=GIVEN_DATE):
+def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE):
     """
-    Calculate total Training Stress Score (TSS) for different workout types.
+    Calculate total Training Stress Score (TSS) for different workout types and call the calculate_metrics_from_tss to calculate metrics
 
     Parameters:
         df (pd.DataFrame): DataFrame containing workout data.
@@ -15,7 +15,7 @@ def calculate_total_tss(df, source, given_date=GIVEN_DATE):
         given_date (str): Date to filter the data.
 
     Returns:
-        pd.DataFrame: Updated DataFrame with total TSS calculated.
+        pd.DataFrame: Updated DataFrame with total TSS calculated AND TSS DataFrame, ATL, CTL, and TSB DataFrames.
     """
     column_to_use = 'PlannedDuration' if source == 'data_processing' else 'TimeTotalInHours'
 
@@ -39,7 +39,14 @@ def calculate_total_tss(df, source, given_date=GIVEN_DATE):
 
     # Calculate TOTAL TSS
     df['TOTAL TSS'] = df[['Run_TSS Calculated', 'Bike_TSS Calculated', 'Swim_TSS Calculated']].sum(axis=1)
-    return df
+
+    if source == 'update_final_df':
+        df.index = pd.to_datetime(df.index)
+
+    # Calculate ATL, CTL, TSB from TSS
+    tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(df)
+
+    return df, tss_df, atl_df, ctl_df, tsb_df
 
 def calculating_running_tss(df, mask, avg_hr, date, column, discipline):
     """Calculate TSS for running workouts."""

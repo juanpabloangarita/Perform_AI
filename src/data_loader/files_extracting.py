@@ -6,7 +6,7 @@ import pandas as pd
 from .files_saving import FileSaver
 from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 from .get_full_path import get_full_path
-from src.tss_calculations import calculate_total_tss, calculate_metrics_from_tss
+from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 from src.data_loader.update_final_df_helper import (
     process_data_to_update,
     process_activity_dict,
@@ -184,12 +184,9 @@ class FileLoader:
                     df = pd.concat([df, new_row]).sort_index()
 
             FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame
-                # Calculate TSS per discipline and TOTAL TSS
-            w_df = calculate_total_tss(df, 'update_final_df')
+            # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
+            w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(df, 'update_final_df')
 
-            # Calculate ATL, CTL, TSB from TSS
-            w_df.index = pd.to_datetime(w_df.index)
-            tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(w_df)
             FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
 
     def load_tss_values_for_dashboard(self, file_path=None):
