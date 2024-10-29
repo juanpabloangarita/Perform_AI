@@ -268,9 +268,10 @@ def process_data(user_data, workouts=None):
     w_df_calories_estimated = pd.merge(w_df_calories_estimated, forecast_result, on='Date', how='left')
     w_df_calories_estimated.set_index('Date', inplace=True)
 
-    final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours',
-                     'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
-                     'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',  'AutoARIMA-lo-95',  'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
+    final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage',
+                     'TimeTotalInHours', 'DistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
+                     'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',
+                     'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
 
     w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
     w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
@@ -282,24 +283,19 @@ def process_data(user_data, workouts=None):
     w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
     activities_df_reset = activities_df.reset_index()
 
-    # # Concatenate the two dataframes, now using columns and not index
-    w_df_calories_estimated_plus_calculated = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
+    # Concatenate calculated and estimated calories
+    w_df_combined = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
 
-    final_df = pd.concat([w_df_calories_estimated_plus_calculated, activities_df_reset[['Date', 'Calories']]], axis=1)
+    final_df = pd.concat([w_df_combined, activities_df_reset[['Date', 'Calories']]], axis=1)
 
     # Drop duplicate 'Date' columns if they exist
     final_df = final_df.loc[:,~final_df.columns.duplicated()]
-
     final_df = final_df.set_index('Date')
-
     final_df = final_df.reindex(columns=final_columns, fill_value=0.0)
-
     numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
     final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
-
-    final_df = final_df.drop(columns=['PlannedDuration', 'PlannedDistanceInMeters'])
     final_df['ComplianceStatus'] = ''
     final_df['TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
 
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_calories_estimated_plus_calculated, activities_df, final_df
+    return tss_df, atl_df, ctl_df, tsb_df, w_df_combined, activities_df, final_df
