@@ -165,6 +165,7 @@ def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
     else:
         print("No valid data provided for the specified keyword.")
 
+
 def create_models_and_predict(X_act, y_act, total_workouts):
     """Create models for calorie estimation and predict on total workouts."""
     rmse_results = estimate_calories_with_duration(X_act, y_act)
