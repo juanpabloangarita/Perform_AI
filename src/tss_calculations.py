@@ -4,67 +4,98 @@ import numpy as np
 import pandas as pd
 from params import GIVEN_DATE
 
+def calculate_total_tss(df, source, given_date=GIVEN_DATE):
+    """
+    Calculate total Training Stress Score (TSS) for different workout types.
 
-def calculate_total_tss(df, from_where, given_date = GIVEN_DATE):
-    # if 'PlannedDuration' then 'data_processing' else update_final_df from FileLoader
-    column_to_use = 'PlannedDuration' if from_where == 'data_processing' else 'TimeTotalInHours'
-    # calculate running tss
-    r_mask = df['WorkoutType']=='Run'
-    average_hr_running = 140
-    calculating_running_tss(df, r_mask, average_hr_running, given_date, column_to_use)
+    Parameters:
+        df (pd.DataFrame): DataFrame containing workout data.
+        source (str):   Source of data ('data_processing' or other).
+                        if 'PlannedDuration' then 'data_processing' else update_final_df from FileLoader
+        given_date (str): Date to filter the data.
 
-    # calculate cycling tss
-    c_mask = df['WorkoutType']=='Bike'
-    average_hr_cycling = 136
-    calculating_cycling_tss(df, c_mask, average_hr_cycling, given_date, column_to_use)
+    Returns:
+        pd.DataFrame: Updated DataFrame with total TSS calculated.
+    """
+    column_to_use = 'PlannedDuration' if source == 'data_processing' else 'TimeTotalInHours'
 
-    # calculate swimming tss
-    s_mask = df['WorkoutType']=='Swim'
-    # swimming threshold is meters per minutes
-    s_thrs = 100/(2 + 17/60)
-    average_pace_swimming = 30
-    calculating_swimming_tss(df, s_mask, average_pace_swimming, given_date, s_thrs, column_to_use)
+    workout_types = {
+        'Run': (140, calculating_running_tss),
+        'Bike': (136, calculating_cycling_tss),
+        'Swim': (30, calculating_swimming_tss)
+    }
+
+    # Calculate swimming threshold (s_thrs)
+    s_thrs = 100 / (2 + 17 / 60)  # Adjusted as per your previous code
+
+    for workout_type, (avg_hr, calc_function) in workout_types.items():
+        mask = df['WorkoutType'] == workout_type
+
+        if workout_type == 'Swim':
+            average_pace_swimming = 30  # Average pace for swimming
+            calc_function(df, mask, average_pace_swimming, given_date, s_thrs, column_to_use, f"{workout_type}_")
+        else:
+            calc_function(df, mask, avg_hr, given_date, column_to_use, f"{workout_type}_")
 
     # Calculate TOTAL TSS
-    df['TOTAL TSS'] = df['Run_TSS Calculated']+ df['Bike_TSS Calculated']+ df['Swim_TSS Calculated']
-
+    df['TOTAL TSS'] = df[['Run_TSS Calculated', 'Bike_TSS Calculated', 'Swim_TSS Calculated']].sum(axis=1)
     return df
 
+def calculating_running_tss(df, mask, avg_hr, date, column, discipline):
+    """Calculate TSS for running workouts."""
+    df[f'{discipline}TSS Calculated'] = 0.0
+    df.loc[mask & (df.index < date), f'{discipline}TSS Calculated'] = (
+        df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 60 *
+        ((df.loc[mask & (df.index < date), 'HeartRateAverage'] - 42) / (163 - 42)) ** 2
+    )
+    df.loc[mask & (df.index >= date), f'{discipline}TSS Calculated'] = (
+        df.loc[mask & (df.index >= date), column] * 60 *
+        ((avg_hr - 42) / (163 - 42)) ** 2
+    )
 
-def calculating_running_tss(df, mask, average, date, the_column, discipline = 'Run_'):
-    df[f'{discipline}TSS Calculated'] = float(0)
-    df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(163-42))**2
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date), the_column]*60 * ((average- 42)/(163-42))**2
+def calculating_cycling_tss(df, mask, avg_hr, date, column, discipline):
+    """Calculate TSS for cycling workouts."""
+    df[f'{discipline}TSS Calculated'] = 0.0
+    df.loc[mask & (df.index < date), f'{discipline}TSS Calculated'] = (
+        df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 60 *
+        ((df.loc[mask & (df.index < date), 'HeartRateAverage'] - 42) / (157 - 42)) ** 2
+    )
+    df.loc[mask & (df.index >= date), f'{discipline}TSS Calculated'] = (
+        df.loc[mask & (df.index >= date), column] * 60 *
+        ((avg_hr - 42) / (157 - 42)) ** 2
+    )
 
+    correcting_mask = (df[f'{discipline}TSS Calculated'] == 0) & mask
+    df.loc[correcting_mask & (df.index < date), f'{discipline}TSS Calculated'] = (
+        df.loc[correcting_mask & (df.index < date), 'TimeTotalInHours'] * 60 *
+        ((avg_hr - 42) / (157 - 42)) ** 2
+    )
 
-def calculating_cycling_tss(df, mask, average, date, the_column, discipline='Bike_'):
-    df[f'{discipline}TSS Calculated'] = float(0)
-    df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index < date),'TimeTotalInHours']*60 * ((df.loc[mask & (df.index < date),'HeartRateAverage']- 42)/(157-42))**2
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = df.loc[mask & (df.index >= date), the_column]*60 * ((average- 42)/(157-42))**2
-
-    # after this, there will be cTSS 0 values on bike, of heart rate that wasn't detected, correction here
-    correcting_mask = (df[f'{discipline}TSS Calculated']==0) & mask
-    df.loc[correcting_mask & (df.index < date),f'{discipline}TSS Calculated'] = df.loc[correcting_mask & (df.index < date),'TimeTotalInHours']*60 * ((average- 42)/(157-42))**2
-
-
-def calculating_swimming_tss(df, mask, average, date, s_thrs , the_column, discipline='Swim_'):
-    df[f'{discipline}TSS Calculated'] = float(0)
-
-    # Calculate the pace in meters per hour and convert to pace per 100 meters
-    pace_per_100m = (df.loc[mask & (df.index < date),'DistanceInMeters'] / df.loc[mask & (df.index < date), 'TimeTotalInHours']) / 100
-
-    # Calculate the normalized pace ratio
+def calculating_swimming_tss(df, mask, avg_pace, date, s_thrs, column, discipline):
+    """Calculate TSS for swimming workouts."""
+    df[f'{discipline}TSS Calculated'] = 0.0
+    pace_per_100m = (df.loc[mask & (df.index < date), 'DistanceInMeters'] / df.loc[mask & (df.index < date), 'TimeTotalInHours']) / 100
     normalized_pace_ratio = pace_per_100m / s_thrs
+    normalized_pace_ratio_avg = avg_pace / s_thrs
 
-    # Calculate the normalized pace ratio averaged
-    normalized_pace_ratio_averaged = average / s_thrs
+    df.loc[mask & (df.index < date), f'{discipline}TSS Calculated'] = (
+        (normalized_pace_ratio ** 3) * df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 100
+    )
+    df.loc[mask & (df.index >= date), f'{discipline}TSS Calculated'] = (
+        (normalized_pace_ratio_avg ** 3) * df.loc[mask & (df.index >= date), column] * 100
+    )
 
-    # Calculate the TSS
-    df.loc[mask & (df.index < date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio ** 3) * df.loc[mask & (df.index < date), 'TimeTotalInHours'] * 100
-    df.loc[mask & (df.index >= date),f'{discipline}TSS Calculated'] = (normalized_pace_ratio_averaged ** 3) * df.loc[mask & (df.index >= date), the_column] * 100
+def calculate_metrics_from_tss(df, given_date=GIVEN_DATE):
+    """
+    Calculate ATL, CTL, and TSB metrics from TSS.
 
+    Parameters:
+        df (pd.DataFrame): DataFrame containing TSS data.
+        given_date (str): Date for filtering the data.
 
-def calculate_metrics_from_tss(df, given_date = GIVEN_DATE):
+    Returns:
+        tuple: TSS DataFrame, ATL, CTL, and TSB DataFrames.
+    """
     group_by = 'Date' if 'Date' in df.columns else df.index
     calc_df = df.groupby(group_by).agg({'TOTAL TSS': 'sum', 'HeartRateAverage': 'mean'})
 
@@ -75,28 +106,24 @@ def calculate_metrics_from_tss(df, given_date = GIVEN_DATE):
     k_atl = 7
     k_ctl = 42
 
-    # Initializing the ATL and CTL DataFrames with the same index as tss_df
+    # Initializing the ATL and CTL DataFrames
     atl_series = pd.Series(index=tss_df.index, data=0.0)
     ctl_series = pd.Series(index=tss_df.index, data=0.0)
 
     # Smoothing factors
-    alpha_atl = 1 - np.exp(-1/k_atl)
-    alpha_ctl = 1 - np.exp(-1/k_ctl)
-    # Initial values (assuming starting values of 0 for simplicity)
+    alpha_atl = 1 - np.exp(-1 / k_atl)
+    alpha_ctl = 1 - np.exp(-1 / k_ctl)
+
+    # Initial values
     atl_series.iloc[0] = tss_df.iloc[0] * alpha_atl
     ctl_series.iloc[0] = tss_df.iloc[0] * alpha_ctl
 
     # Calculate ATL and CTL iteratively
     for i in range(1, len(tss_df)):
-        atl_series.iloc[i] = atl_series.iloc[i-1] * (1 - alpha_atl) + tss_df.iloc[i] * alpha_atl
-        ctl_series.iloc[i] = ctl_series.iloc[i-1] * (1 - alpha_ctl) + tss_df.iloc[i] * alpha_ctl
+        atl_series.iloc[i] = atl_series.iloc[i - 1] * (1 - alpha_atl) + tss_df.iloc[i] * alpha_atl
+        ctl_series.iloc[i] = ctl_series.iloc[i - 1] * (1 - alpha_ctl) + tss_df.iloc[i] * alpha_ctl
 
-    # TSB is the difference between CTL and ATL
     tsb_series = ctl_series - atl_series
-    tss_df.loc[:given_date] = tss_df.loc[:given_date].replace(0, np.nan) # NOTE: DOES THIS EQUAL TO <given_date as it should be?
+    tss_df.loc[:given_date] = tss_df.loc[:given_date].replace(0, np.nan)
 
-    # Convert Series to DataFrames with corresponding columns
-    atl_df = atl_series.to_frame(name='ATL')
-    ctl_df = ctl_series.to_frame(name='CTL')
-    tsb_df = tsb_series.to_frame(name='TSB')
-    return tss_df, atl_df, ctl_df, tsb_df
+    return tss_df, atl_series.to_frame(name='ATL'), ctl_series.to_frame(name='CTL'), tsb_series.to_frame(name='TSB')

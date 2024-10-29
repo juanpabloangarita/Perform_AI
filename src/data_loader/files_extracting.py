@@ -185,7 +185,7 @@ class FileLoader:
 
             FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame
                 # Calculate TSS per discipline and TOTAL TSS
-            w_df = calculate_total_tss(df, 'load_and_update_final_csv')
+            w_df = calculate_total_tss(df, 'update_final_df')
 
             # Calculate ATL, CTL, TSB from TSS
             w_df.index = pd.to_datetime(w_df.index)

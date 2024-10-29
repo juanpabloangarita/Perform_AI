@@ -88,6 +88,31 @@ def clean_activities(df):
     return df
 
 
+def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
+    columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
+    df = df[columns_to_keep_workouts].copy()
+
+    before_df = df[df.index < given_date].copy()
+    after_df = df[df.index >= given_date].copy()
+    # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
+    before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy() # NOTE: HERE IS THE PART THAT CAUSES THE WEIRD BEHAVIOUR. Explanation below
+    # TODO: (BTW, I DON'T NEED TO REMOVE THE HEARTRATEAVERAGE.ISNA, since what's important for me is timetotalinhours only)
+
+    # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
+    after_df = after_df[after_df['PlannedDuration'].notna()]
+
+    # Concatenate before and after dataframes
+    w_df = pd.concat([before_df_cleaned, after_df])
+    # Keep dates where there was a Run Swim or Bike training Plan
+    w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
+
+    # Fill NaN values in object columns with an empty string
+    object_cols = w_df.select_dtypes(include=['object']).columns
+    w_df[object_cols] = w_df[object_cols].fillna('')
+
+    return w_df
+
+
 def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
     """
     Print performance metrics or display DataFrames for activities and/or workouts based on the keyword.
@@ -120,33 +145,7 @@ def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
             print("\nWorkouts DataFrame:\n", tmp_workouts.head(), "\n")
     else:
         print("No valid data provided for the specified keyword.")
-
-
-
-def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
-    columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
-    df = df[columns_to_keep_workouts].copy()
-
-    before_df = df[df.index < given_date].copy()
-    after_df = df[df.index >= given_date].copy()
-    # Remove rows, before the given date, where i didn't train, meaning, where HR and Total Time is nan.
-    before_df_cleaned = before_df[~(before_df['HeartRateAverage'].isna() & before_df['TimeTotalInHours'].isna())].copy() # NOTE: HERE IS THE PART THAT CAUSES THE WEIRD BEHAVIOUR. Explanation below
-    # TODO: (BTW, I DON'T NEED TO REMOVE THE HEARTRATEAVERAGE.ISNA, since what's important for me is timetotalinhours only)
-
-    # Remove rows, after the given date, where Planned Duration is nan, which means there is no info on training, so no tss
-    after_df = after_df[after_df['PlannedDuration'].notna()]
-
-    # Concatenate before and after dataframes
-    w_df = pd.concat([before_df_cleaned, after_df])
-    # Keep dates where there was a Run Swim or Bike training Plan
-    w_df = w_df[(w_df['WorkoutType'] == 'Run') | (w_df['WorkoutType'] == 'Swim') | (w_df['WorkoutType'] == 'Bike')].copy()
-
-    # Fill NaN values in object columns with an empty string
-    object_cols = w_df.select_dtypes(include=['object']).columns
-    w_df[object_cols] = w_df[object_cols].fillna('')
-
-    return w_df
-
+        
 
 def process_data(user_data, workouts=None):
     sourcer = FileLoader()
