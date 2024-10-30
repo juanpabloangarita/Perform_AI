@@ -127,7 +127,6 @@ if st.button('Update Information'):
 
     user = UserManager(**{**st.session_state['user_data'], 'username': st.session_state['username']})
     user.update_user_data()
-    # update_user_data(**{**st.session_state['user_data'], 'username': st.session_state['username']})
 
     # Display a success message
     st.success("Your information has been successfully updated!")
