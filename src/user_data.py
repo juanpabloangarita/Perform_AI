@@ -5,106 +5,188 @@ import numpy as np
 import bcrypt
 import os
 
-from params import *
 from src.data_loader.files_saving import FileSaver
 from src.data_loader.files_extracting import FileLoader
 
-# Function to check if a user already exists
-def check_user_exists(username):
-    try:
-        user_data_df = FileLoader().load_user_data()
-        return username in user_data_df['username'].values
-    except FileNotFoundError:
-        return False
+
+class UserManager:
+    def __init__(self, **kwargs):
+        self.username = kwargs.get('username')
+        self.password = kwargs.get('password')
+        self.user_data_df = FileLoader().load_user_data()
+        self.user_row = None
+        self.user_data = None
+        self.user_index = None
+        self.kwargs = kwargs
+        self.user_exists = self.username in self.user_data_df.values
+
+    def load_user_data(self, authentication_required=True):
+        self.user_row = self.user_data_df[self.user_data_df['username'] == self.username]
+        if not self.user_row.empty:
+            user_data = self.user_row.iloc[0].to_dict()
+            stored_password = user_data['password']
+            # Compare the hashed password
+            if authentication_required:
+                if bcrypt.checkpw(self.password.encode('utf-8'), stored_password.encode('utf-8')):
+                    del user_data['password']
+                    self.user_index = self.user_row.index[0]
+                    self.user_data = user_data
+            else:
+                self.user_index = self.user_row.index[0]
+                self.user_data = user_data
 
 
-#def save_user_data(username, first_name, password, weight, height, age, gender, vo2_max, resting_hr, goal, bmr, passive_calories):
-def create_user_data(username, password):
-    # Hash the password using bcrypt
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    def create_user_data(self):
+        hashed_password = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt())
+        # Create a DataFrame with the new user's data
+        new_user_df = pd.DataFrame({
+            'username': [self.username],
+            'password': [hashed_password.decode('utf-8')],  # Save the hashed password
+            'weight': [50],  # Default value for weight
+            'height': [50],  # Default value for height
+            'age': [50],     # Default value for age
+            'gender': ['Male'],  # Default value for gender
+            'vo2_max': [50], # Default value for VO2 max
+            'resting_hr': [50], # Default value for resting heart rate
+            'BMR': [np.nan], # FIXME: and below, probably 0.0 instead of np.nan
+            'goal': ["Lose weight"],
+            'passive_calories': [np.nan] # FIXME
+        })
 
-    # Create a DataFrame with the new user's data
-    new_user_df = pd.DataFrame({
-        'username': [username],
-        'password': [hashed_password.decode('utf-8')],  # Save the hashed password
-        'weight': [50],  # Default value for weight
-        'height': [50],  # Default value for height
-        'age': [50],     # Default value for age
-        'gender': ['Male'],  # Default value for gender
-        'vo2_max': [50], # Default value for VO2 max
-        'resting_hr': [50], # Default value for resting heart rate
-        'BMR': [np.nan],
-        'goal': ["Lose weight"],
-        'passive_calories': [np.nan]
-    })
+        if self.user_data_df is not None:
+            self.user_data_df = pd.concat([self.user_data_df, new_user_df], ignore_index=True)
+        else:
+            self.user_data_df = new_user_df
 
-    # Read the existing user data
-    try:
-        user_data_df = FileLoader().load_user_data()
+        # Save the updated DataFrame to CSV
+        FileSaver().save_user_data(self.user_data_df)
+        self.load_user_data()
 
-        # Append the new user's data
-        user_data_df = pd.concat([user_data_df, new_user_df], ignore_index=True)
-    except FileNotFoundError:
-        # Create a new file if it doesn't exist
-        user_data_df = new_user_df
+    def update_user_data(self): # HUMAN SETTING
+        self.load_user_data(authentication_required=False)
+        if self.user_data is not None:
+            # Update the user's data in the DataFrame
+            for key, value in self.kwargs.items():
+                if key in self.user_data_df.columns:
+                    self.user_data_df.at[self.user_index, key] = value  # Update value in the DataFrame
 
-    # Save the updated DataFrame to CSV
-    FileSaver().save_user_data(user_data_df)
+            # Save the updated DataFrame back to CSV
+            FileSaver().save_user_data(self.user_data_df)
+            print(f"User '{self.username}' data updated successfully.")
 
-
-def update_user_data(**kwargs):
-    username = kwargs['username']
-
-    # Load existing user data
-    user_data_df = FileLoader().load_user_data()
-
-    # Check if the user exists in the DataFrame based on 'username'
-    if username in user_data_df['username'].values:
-        # Find the row index for the user
-        user_index = user_data_df[user_data_df['username'] == username].index[0]
-
-        # Update the user's data in the DataFrame
-        for key, value in kwargs.items():
-            if key in user_data_df.columns:
-                user_data_df.at[user_index, key] = value  # Update value in the DataFrame
-
-        # Save the updated DataFrame back to CSV
-        FileSaver().save_user_data(user_data_df)
-        print(f"User '{username}' data updated successfully.")
-
-    else:
-        print(f"User '{username}' not found in the database.")
+        else:
+            print(f"User '{self.username}' not found in the database.")
 
 
-def load_user_data(username):
-    try:
-        user_data_df = FileLoader().load_user_data()
-        user_row = user_data_df[user_data_df['username'] == username]
-        if not user_row.empty:
-            user_data = user_row.iloc[0].to_dict()
-
-            # Remove the password from the dictionary for security reasons
-            if 'password' in user_data:
-                del user_data['password']
-
-            return user_data
-        return None
-    except FileNotFoundError:
-        return None
 
 
-def authenticate_user(username, password):
-    try:
-        user_data_df = FileLoader().load_user_data()
-        user_row = user_data_df[user_data_df['username'] == username]
 
-        if user_row.empty:
-            return False
+# # user_data.py
 
-        stored_password = user_row['password'].values[0]
-        # Compare the hashed password
-        if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
-            return True
-        return False
-    except FileNotFoundError:
-        return False
+# import pandas as pd
+# import numpy as np
+# import bcrypt
+# import os
+
+# from src.data_loader.files_saving import FileSaver
+# from src.data_loader.files_extracting import FileLoader
+
+# # Function to check if a user already exists
+# def check_user_exists(username):
+#     try:
+#         user_data_df = FileLoader().load_user_data()
+#         return username in user_data_df['username'].values
+#     except FileNotFoundError:
+#         return False
+
+
+# #def save_user_data(username, first_name, password, weight, height, age, gender, vo2_max, resting_hr, goal, bmr, passive_calories):
+# def create_user_data(username, password):
+#     # Hash the password using bcrypt
+#     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+#     # Create a DataFrame with the new user's data
+#     new_user_df = pd.DataFrame({
+#         'username': [username],
+#         'password': [hashed_password.decode('utf-8')],  # Save the hashed password
+#         'weight': [50],  # Default value for weight
+#         'height': [50],  # Default value for height
+#         'age': [50],     # Default value for age
+#         'gender': ['Male'],  # Default value for gender
+#         'vo2_max': [50], # Default value for VO2 max
+#         'resting_hr': [50], # Default value for resting heart rate
+#         'BMR': [np.nan],
+#         'goal': ["Lose weight"],
+#         'passive_calories': [np.nan]
+#     })
+
+#     # Read the existing user data
+#     try:
+#         user_data_df = FileLoader().load_user_data()
+
+#         # Append the new user's data
+#         user_data_df = pd.concat([user_data_df, new_user_df], ignore_index=True)
+#     except FileNotFoundError:
+#         # Create a new file if it doesn't exist
+#         user_data_df = new_user_df
+
+#     # Save the updated DataFrame to CSV
+#     FileSaver().save_user_data(user_data_df)
+
+
+# def update_user_data(**kwargs):
+#     username = kwargs['username']
+
+#     # Load existing user data
+#     user_data_df = FileLoader().load_user_data()
+
+#     # Check if the user exists in the DataFrame based on 'username'
+#     if username in user_data_df['username'].values:
+#         # Find the row index for the user
+#         user_index = user_data_df[user_data_df['username'] == username].index[0]
+
+#         # Update the user's data in the DataFrame
+#         for key, value in kwargs.items():
+#             if key in user_data_df.columns:
+#                 user_data_df.at[user_index, key] = value  # Update value in the DataFrame
+
+#         # Save the updated DataFrame back to CSV
+#         FileSaver().save_user_data(user_data_df)
+#         print(f"User '{username}' data updated successfully.")
+
+#     else:
+#         print(f"User '{username}' not found in the database.")
+
+
+# def load_user_data(username):
+#     try:
+#         user_data_df = FileLoader().load_user_data()
+#         user_row = user_data_df[user_data_df['username'] == username]
+#         if not user_row.empty:
+#             user_data = user_row.iloc[0].to_dict()
+
+#             # Remove the password from the dictionary for security reasons
+#             if 'password' in user_data:
+#                 del user_data['password']
+
+#             return user_data
+#         return None
+#     except FileNotFoundError:
+#         return None
+
+
+# def authenticate_user(username, password):
+#     try:
+#         user_data_df = FileLoader().load_user_data()
+#         user_row = user_data_df[user_data_df['username'] == username]
+
+#         if user_row.empty:
+#             return False
+
+#         stored_password = user_row['password'].values[0]
+#         # Compare the hashed password
+#         if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
+#             return True
+#         return False
+#     except FileNotFoundError:
+#         return False
