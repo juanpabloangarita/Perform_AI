@@ -251,7 +251,8 @@ class FileLoader:
                        'Protein', 'Dietary Fiber']
             df = pd.DataFrame(columns=columns)
             logging.info("Initialized a new nutrition DataFrame with predefined columns.")
-            FileSaver().save_user_nutrition(nutrition_df=df)
+            FileSaver().save_dfs(df, name='user_nutrition')
+            # FileSaver().save_user_nutrition(nutrition_df=df) # NOTE: FILESAVER
         return df
 
     def load_user_data(self, file_path=USER_DATA_FILE):

@@ -118,15 +118,15 @@ class FileSaver:
     #         if data is not None:
     #             self._save_csv(file_path or self.file_path, data, name, index=True)
 
-    def save_user_nutrition(self, nutrition_df, file_path=None):
-        """
-        Save the user's nutrition data.
+    # def save_user_nutrition(self, nutrition_df, file_path=None):
+    #     """
+    #     Save the user's nutrition data.
 
-        Args:
-            nutrition_df (pd.DataFrame): The nutrition dataframe to be saved.
-            file_path (str, optional): Custom file path for saving the CSV.
-        """
-        self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
+    #     Args:
+    #         nutrition_df (pd.DataFrame): The nutrition dataframe to be saved.
+    #         file_path (str, optional): Custom file path for saving the CSV.
+    #     """
+    #     self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
 
     def save_user_data(self, user_data, file_path=USER_DATA_FILE):
         """

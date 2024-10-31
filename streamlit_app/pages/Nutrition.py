@@ -78,8 +78,8 @@ def update_food_log(file_path, meal, nutritional_info):
 
     # Concatenate the two DataFrames
     df = pd.concat([df, nutritional_info_df_reindexed], axis=0)
-
-    FileSaver().save_user_nutrition(nutrition_df=df)
+    FileSaver().save_dfs(df, name='user_nutrition')
+    # FileSaver().save_user_nutrition(nutrition_df=df) # NOTE: FILESAVER
 
 
 

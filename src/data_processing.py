@@ -142,9 +142,6 @@ def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
         w_df_tmp (DataFrame, optional): DataFrame for workouts to be saved and printed.
         act_df_tmp (DataFrame, optional): DataFrame for activities to be saved and printed.
     """
-    # Save temporary DataFrames during processing NOTE: the following line is an alternative to save only to the FileLoader
-    # FileSaver().save_during_process(workouts_tmp_df=w_df_tmp, activities_tmp_df=act_df_tmp)
-
     # Create a FileLoader instance and load the temporary DataFrames
     loader = FileLoader()
     loader.save_and_load_during_process(workouts_tmp_df=w_df_tmp, activities_tmp_df=act_df_tmp)
