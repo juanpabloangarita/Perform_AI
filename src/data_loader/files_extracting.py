@@ -96,14 +96,14 @@ class FileLoader:
         if isinstance(name_s, str):
             return self._load_csv(file_path or self.file_path, name_s, index=index)
 
-    def load_final_with_no_na_filter(self):
-        """
-        Load the 'final_df.csv' with na_filter set to False.
+    # def load_final_with_no_na_filter(self):
+    #     """
+    #     Load the 'final_df.csv' with na_filter set to False.
 
-        Returns:
-            pd.DataFrame: Loaded DataFrame with na_filter=False.
-        """
-        return self._load_csv(self.file_path, 'final_df', index=0, na_filter=False)
+    #     Returns:
+    #         pd.DataFrame: Loaded DataFrame with na_filter=False.
+    #     """
+    #     return self._load_csv(self.file_path, 'final_df', index=0, na_filter=False)
 
     def update_final_df(self, from_where, time_added=None, data_to_update=None):
             """
@@ -117,7 +117,7 @@ class FileLoader:
             Returns:
                 pd.DataFrame: Updated DataFrame.
             """
-            df = self.load_final_with_no_na_filter()
+            df = self._load_csv(self.file_path, 'final_df', index=0, na_filter=False)
 
             if from_where in ['home', 'plan_my_day']:
                 return df
