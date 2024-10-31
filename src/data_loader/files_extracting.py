@@ -265,7 +265,11 @@ class FileLoader:
         Returns:
             pd.DataFrame or bool: Loaded DataFrame if successful, otherwise False.
         """
-        return self._load_csv(file_path, 'user_data')
+        result = self._load_csv(file_path, 'user_data')
+        if isinstance(result, bool) and not result:  # If loading fails
+            logging.warning(f"User data file not found. Returning empty DataFrame.")
+            return pd.DataFrame(columns=['username'])  # Return an empty DataFrame instead of False
+        return result
 
     def load_initial_csv_files(self):
         """

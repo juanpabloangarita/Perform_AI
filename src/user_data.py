@@ -17,6 +17,7 @@ import os
 
 from src.data_loader.files_saving import FileSaver
 from src.data_loader.files_extracting import FileLoader
+from params import USER_DATA_FILE
 
 
 class UserManager:
@@ -121,7 +122,8 @@ class UserManager:
             self.user_data_df = new_user_df
 
         # Save the updated DataFrame to CSV
-        FileSaver().save_user_data(self.user_data_df)
+        FileSaver().save_dfs(self.user_data_df, file_path=USER_DATA_FILE, name='user_data')
+        # FileSaver().save_user_data(self.user_data_df) # NOTE: FILESAVER
 
         # Reload user data to refresh the current session data
         self.load_user_data()
@@ -145,7 +147,8 @@ class UserManager:
                     self.user_data_df.at[self.user_index, key] = value
 
             # Save updated user data to CSV
-            FileSaver().save_user_data(self.user_data_df)
+            FileSaver().save_dfs(self.user_data_df, file_path=USER_DATA_FILE, name='user_data')
+            # FileSaver().save_user_data(self.user_data_df) # NOTE: FILESAVER
             print(f"User '{self.username}' data updated successfully.")
         else:
             print(f"User '{self.username}' not found in the database.")

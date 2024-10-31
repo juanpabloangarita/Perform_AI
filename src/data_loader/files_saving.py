@@ -128,13 +128,13 @@ class FileSaver:
     #     """
     #     self._save_csv(self.file_path if file_path is None else file_path, nutrition_df, 'user_nutrition')
 
-    def save_user_data(self, user_data, file_path=USER_DATA_FILE):
-        """
-        Saves the user data in a special hidden folder.
+    # def save_user_data(self, user_data, file_path=USER_DATA_FILE):
+    #     """
+    #     Saves the user data in a special hidden folder.
 
-        Args:
-            user_data (pd.DataFrame): The user information to be saved: BMR, passive calories, etc.
-            file_path (str): a special path hidden and different (for local only) from the default one.
-            index (bool): Not passed, default is False
-        """
-        self._save_csv(self.file_path if file_path is None else file_path, user_data, 'user_data')
+    #     Args:
+    #         user_data (pd.DataFrame): The user information to be saved: BMR, passive calories, etc.
+    #         file_path (str): a special path hidden and different (for local only) from the default one.
+    #         index (bool): Not passed, default is False
+    #     """
+    #     self._save_csv(self.file_path if file_path is None else file_path, user_data, 'user_data')
