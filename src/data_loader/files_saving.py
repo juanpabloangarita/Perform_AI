@@ -3,7 +3,7 @@
 import os
 import logging
 from .get_full_path import get_full_path
-from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
+from params import CLOUD_ON, BUCKET_NAME
 import joblib
 import tempfile
 import boto3
