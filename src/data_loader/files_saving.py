@@ -110,20 +110,23 @@ class FileSaver:
                 index = name in ['final_df', 'foods_df']  # Include index only for 'final_df' and 'foods_df'
                 self._save_csv(self.file_path if file_path is None else file_path, data, name, index)
 
-    def save_tss_values_for_dashboard(self, tss, atl, ctl, tsb, file_path=None):
-        """
-        Save TSS, ATL, CTL, and TSB metrics for the dashboard.
+    # def save_tss_values_for_dashboard(self, tss, atl, ctl, tsb, file_path=None):
+    #     """
+    #     Save TSS, ATL, CTL, and TSB metrics for the dashboard.
 
-        Args:
-            tss (pd.DataFrame): Training Stress Score (TSS) dataframe.
-            atl (pd.DataFrame): Acute Training Load (ATL) dataframe.
-            ctl (pd.DataFrame): Chronic Training Load (CTL) dataframe.
-            tsb (pd.DataFrame): Training Stress Balance (TSB) dataframe.
-            file_path (str, optional): Custom file path for saving the CSVs.
-        """
-        for name, data in zip(['tss', 'atl', 'ctl', 'tsb'], [tss, atl, ctl, tsb]):
-            if data is not None:
-                self._save_csv(self.file_path if file_path is None else file_path, data, name, index=True)
+    #     Args:
+    #         tss (pd.DataFrame): Training Stress Score (TSS) dataframe.
+    #         atl (pd.DataFrame): Acute Training Load (ATL) dataframe.
+    #         ctl (pd.DataFrame): Chronic Training Load (CTL) dataframe.
+    #         tsb (pd.DataFrame): Training Stress Balance (TSB) dataframe.
+    #         file_path (str, optional): Custom file path for saving the CSVs.
+    #     """
+    #     for name, data in zip(['tss', 'atl', 'ctl', 'tsb'], [tss, atl, ctl, tsb]):
+    #         if data is not None:
+    #             self._save_csv(self.file_path if file_path is None else file_path, data, name, index=True)
+
+
+
 
     # def save_during_process(self, file_path=None, **kwargs):
     #     """

@@ -186,8 +186,11 @@ class FileLoader:
             FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame
             # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
             w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(df, 'update_final_df')
-
-            FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df)
+            # This will save the TSS, ATL, CTL, and TSB DataFrames to CSV files
+            # The filenames will be 'tss.csv', 'atl.csv', 'ctl.csv', and 'tsb.csv'
+            # The index of each DataFrame will be included in the CSV files
+            FileSaver().save_dfs([tss_df, atl_df, ctl_df, tsb_df], dfs_names=['tss', 'atl', 'ctl', 'tsb'], index=True)
+            # FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df) # NOTE: FILESAVER
 
     def load_tss_values_for_dashboard(self, file_path=None):
         """
