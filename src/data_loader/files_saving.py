@@ -81,19 +81,3 @@ class FileSaver:
 
         if isinstance(dfs, pd.DataFrame):
             self._save_csv(self.file_path if file_path is None else file_path, dfs, name, index=index)
-
-    # def save_raw_and_final_dataframes(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
-    #     """
-    #     Save raw and final dataframes for workouts, activities, foods, and final data.
-
-    #     Args:
-    #         w_df (pd.DataFrame, optional): Workouts dataframe.
-    #         a_df (pd.DataFrame, optional): Activities dataframe.
-    #         df (pd.DataFrame, optional): Final merged dataframe.
-    #         foods_df (pd.DataFrame, optional): Foods dataframe.
-    #         file_path (str, optional): Custom file path for saving the CSVs.
-    #     """
-    #     for name, data in zip(['final_df', 'foods_df', 'workouts_df', 'activities_df'], [df, foods_df, w_df, a_df]):
-    #         if data is not None:
-    #             index = name in ['final_df', 'foods_df']  # Include index only for 'final_df' and 'foods_df'
-    #             self._save_csv(self.file_path if file_path is None else file_path, data, name, index)
