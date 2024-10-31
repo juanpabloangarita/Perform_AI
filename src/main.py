@@ -12,11 +12,15 @@ def main(user_data, workouts=None, main_arg=None):
         # The index of each DataFrame will be included in the CSV files
         FileSaver().save_dfs([tss_df, atl_df, ctl_df, tsb_df], dfs_names=['tss', 'atl', 'ctl', 'tsb'], index=True)
 
-        FileSaver().save_raw_and_final_dataframes(
-            w_df=w_df_calories_estimated_plus_calculated,
-            a_df=activities_df,
-            df=final_df
-        )
+        FileSaver().save_dfs([w_df_calories_estimated_plus_calculated, activities_df], dfs_names=['workouts_df', 'activities_df'])
+        FileSaver().save_dfs(final_df, name='final_df', index=True)
+
+
+        # FileSaver().save_raw_and_final_dataframes( # NOTE: FILESAVER
+        #     w_df=w_df_calories_estimated_plus_calculated,
+        #     a_df=activities_df,
+        #     df=final_df
+        # )
         return "Re-processed Main"
     else:
         return "App already loaded"
