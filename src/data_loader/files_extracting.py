@@ -28,12 +28,6 @@ class FileLoader:
         """Initialize the FileLoader with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv'
-        # self.activities_raw = None
-        # self.workouts_raw = None
-        # self.activities_processed = None
-        # self.workouts_processed = None
-        # self.final = None
-        # self.foods = None
         self.workouts_tmp_df = None
         self.activities_tmp_df = None
 
