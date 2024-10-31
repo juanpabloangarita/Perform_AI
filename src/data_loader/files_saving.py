@@ -7,6 +7,7 @@ from params import CLOUD_ON, BUCKET_NAME, USER_DATA_FILE
 import joblib
 import tempfile
 import boto3
+import pandas as pd
 s3 = boto3.client('s3')
 
 
@@ -52,17 +53,27 @@ class FileSaver:
         """Save the model using the _save_csv helper method."""
         self._save_csv(file_path, model, name)
 
-    def save_initial_uploaded_workout_csv(self, workouts, name, file_path='data/raw/csv'):
-        """
-        Saves the workouts dataframe that the user uploads online.
+    def save_dfs(self, dfs, dfs_names=None, file_path=None, name=None, index=False):
 
-        Args:
-            workouts (pd.Dataframe): The dataframe to be saved.
-            name (str): The name of the CSV File (without extension). -> 'upload_new_data_workouts_' + st.session_state['username']
-            file_path (str): a special path different (for local only) from the default one.
-            index (bool): Whether to include the dataframe index in the CSV file (default is False).
-        """
-        self._save_csv(file_path, workouts, name)
+        if isinstance(dfs, list):
+            for list_name, data in zip(dfs_names, dfs):
+                if data is not None:
+                    self._save_csv(self.file_path if file_path is None else file_path, data, list_name, index=index)
+
+        if isinstance(dfs, pd.DataFrame):
+            self._save_csv(self.file_path if file_path is None else file_path, dfs, name, index=index)
+
+    # def save_initial_uploaded_workout_csv(self, workouts, name, file_path='data/raw/csv'):
+    #     """
+    #     Saves the workouts dataframe that the user uploads online.
+
+    #     Args:
+    #         workouts (pd.Dataframe): The dataframe to be saved.
+    #         name (str): The name of the CSV File (without extension). -> 'upload_new_data_workouts_' + st.session_state['username']
+    #         file_path (str): a special path different (for local only) from the default one.
+    #         index (bool): Whether to include the dataframe index in the CSV file (default is False).
+    #     """
+    #     self._save_csv(file_path, workouts, name)
 
     def save_raw_and_final_dataframes(self, w_df=None, a_df=None, df=None, foods_df=None, file_path=None):
         """
@@ -95,17 +106,17 @@ class FileSaver:
             if data is not None:
                 self._save_csv(self.file_path if file_path is None else file_path, data, name, index=True)
 
-    def save_during_process(self, file_path=None, **kwargs):
-        """
-        Save tmp workout and activity dataframes during the processing step.
+    # def save_during_process(self, file_path=None, **kwargs):
+    #     """
+    #     Save tmp workout and activity dataframes during the processing step.
 
-        Args:
-            **kwargs (pd.DataFrame): Workouts and/or Activities dataframe to be saved.
-            file_path (str, optional): Custom file path for saving the CSVs.
-        """
-        for name, data in zip(['workouts_tmp_df', 'activities_tmp_df'], [kwargs.get('workouts_tmp_df'), kwargs.get('activities_tmp_df')]):
-            if data is not None:
-                self._save_csv(file_path or self.file_path, data, name, index=True)
+    #     Args:
+    #         **kwargs (pd.DataFrame): Workouts and/or Activities dataframe to be saved.
+    #         file_path (str, optional): Custom file path for saving the CSVs.
+    #     """
+    #     for name, data in zip(['workouts_tmp_df', 'activities_tmp_df'], [kwargs.get('workouts_tmp_df'), kwargs.get('activities_tmp_df')]):
+    #         if data is not None:
+    #             self._save_csv(file_path or self.file_path, data, name, index=True)
 
     def save_user_nutrition(self, nutrition_df, file_path=None):
         """

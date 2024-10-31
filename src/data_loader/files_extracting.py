@@ -215,12 +215,24 @@ class FileLoader:
             tuple: Loaded DataFrames for workouts_tmp_df and activities_tmp_df.
         """
         # Save the provided DataFrames
-        FileSaver().save_during_process(file_path=file_path, **kwargs)
+        # FileSaver().save_during_process(file_path=file_path, **kwargs) # NOTE: FILESAVER
 
+        # Prepare the DataFrames and their names for saving
+        dfs, dfs_names = [], []
         if 'workouts_tmp_df' in kwargs:
-            self.workouts_tmp_df = self._load_csv(file_path or self.file_path, 'workouts_tmp_df')
+            dfs.append(kwargs['workouts_tmp_df'])
+            dfs_names.append('workouts_tmp_df')
         if 'activities_tmp_df' in kwargs:
-            self.activities_tmp_df = self._load_csv(file_path or self.file_path, 'activities_tmp_df')
+            dfs.append(kwargs['activities_tmp_df'])
+            dfs_names.append('activities_tmp_df')
+
+        # Save the provided DataFrames
+        FileSaver().save_dfs(dfs=dfs, dfs_names=dfs_names, file_path=file_path, index=True)
+
+        # Load the DataFrames if provided
+        self.workouts_tmp_df = self._load_csv(file_path or self.file_path, 'workouts_tmp_df') if 'workouts_tmp_df' in kwargs else None
+        self.activities_tmp_df = self._load_csv(file_path or self.file_path, 'activities_tmp_df') if 'activities_tmp_df' in kwargs else None
+
 
     def load_user_nutrition(self, file_path=None): # NOTE: probably it should be called update, cuz it is loading and saving
         """
