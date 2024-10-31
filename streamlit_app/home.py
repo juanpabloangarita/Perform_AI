@@ -137,10 +137,10 @@ else:
                 # Concatenate all DataFrames
                 workouts_df = pd.concat(df_list, ignore_index=False)
                 # Save the workouts dataframe uploaded by the user online in in data/raw/csv/upload_new_data_workouts_juan.csv
-                # The saved file will be named based on the user's session state.                
+                # The saved file will be named based on the user's session state.
                 FileSaver().save_dfs(workouts_df, file_path='data/raw/csv', name='upload_new_data_workouts_' + st.session_state['username'])
-                # Save the concatenated DataFrame
-                workouts_df = FileLoader().load_initial_uploaded_workout_csv('upload_new_data_workouts_' + st.session_state['username'])
+                # The loaded DataFrame will contain the workout data uploaded by the user.
+                workouts_df = FileLoader().load_dfs(name_s='upload_new_data_workouts_' + st.session_state['username'], file_path='data/raw/csv')
 
                 st.write("Files successfully processed and uploaded to S3.")
 

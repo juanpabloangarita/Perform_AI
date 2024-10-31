@@ -86,18 +86,21 @@ class FileLoader:
                 return None
             return model
 
-    def load_initial_uploaded_workout_csv(self, name, file_path='data/raw/csv'):
+    def load_dfs(self, name_s, file_path=None, index=None):
         """
-        Loads the workouts DataFrame that the user uploads online.
+        Loads one or more CSV files into DataFrames.
 
         Args:
-            name (str): The name of the CSV file (without extension).
-            file_path (str): Path to the directory containing the CSV file (default is 'data/raw/csv').
+            name_s (str or list): The name(s) of the CSV file(s) to load. Can be a single filename (str) or a list of filenames (list of str).
+            file_path (str, optional): The directory path where the CSV files are located. Defaults to the instance's `file_path` attribute.
 
         Returns:
-            pd.DataFrame or bool: Loaded DataFrame if successful, otherwise False.
+            pd.DataFrame or list of pd.DataFrame: A DataFrame if a single filename is provided, or a list of DataFrames if multiple filenames are provided.
         """
-        return self._load_csv(file_path, name)
+        if isinstance(name_s, list):
+            return [self._load_csv(file_path or self.file_path, name, index=index) for name in name_s]
+        if isinstance(name_s, str):
+            return self._load_csv(file_path or self.file_path, name_s, index=index)
 
     def load_raw_and_final_dataframes(self, file_path=None):
         """
