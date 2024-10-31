@@ -155,9 +155,8 @@ else:
         st.write("")
         st.write("### Performance Training")
         if st.checkbox("Show Dashboard"):
-            # Load data
-            tss_df, atl_df, ctl_df, tsb_df  = FileLoader().load_tss_values_for_dashboard()
-            #tss_df, atl_df, ctl_df, tsb_df = load_tss_values_for_dashboard('data/processed/csv/')
+            tss_df, atl_df, ctl_df, tsb_df  = FileLoader().load_dfs(name_s=['tss', 'atl', 'ctl', 'tsb'], file_path=None, index=0)
+            # tss_df, atl_df, ctl_df, tsb_df  = FileLoader().load_tss_values_for_dashboard()
 
             # Ensure index is in datetime format
             tss_df.index = pd.to_datetime(tss_df.index)
