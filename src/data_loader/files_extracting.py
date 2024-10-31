@@ -28,12 +28,12 @@ class FileLoader:
         """Initialize the FileLoader with the default file path and logging configuration."""
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.file_path = 'data/processed/csv'
-        self.activities_raw = None
-        self.workouts_raw = None
-        self.activities_processed = None
-        self.workouts_processed = None
-        self.final = None
-        self.foods = None
+        # self.activities_raw = None
+        # self.workouts_raw = None
+        # self.activities_processed = None
+        # self.workouts_processed = None
+        # self.final = None
+        # self.foods = None
         self.workouts_tmp_df = None
         self.activities_tmp_df = None
 
@@ -101,30 +101,6 @@ class FileLoader:
             return [self._load_csv(file_path or self.file_path, name, index=index) for name in name_s]
         if isinstance(name_s, str):
             return self._load_csv(file_path or self.file_path, name_s, index=index)
-
-    def load_raw_and_final_dataframes(self, file_path=None):
-        """
-        Loads final Dataframes for workouts, activities and final merged data.
-        Loads raw Foods Dataframe.
-
-        Args:
-            file_path (str, optional): Custom file path ( data/raw/csv ) for loading the foods_df.
-
-        Returns:
-            tuple: Loaded DataFrames for final_df, workouts_df, and activities_df if no file_path is provided;
-                   otherwise, only foods_df if file_path is specified.
-        """
-        names = ['workouts_df', 'activities_df', 'foods_df'] if file_path == 'data/raw/csv' else ['final_df', 'workouts_df', 'activities_df', 'foods_df']
-        dataframes = {name: self._load_csv(file_path or self.file_path, name) for name in names}
-
-        if file_path:
-            self.activities_raw = dataframes['activities_df']
-            self.workouts_raw =  dataframes['workouts_df']
-            self.foods = dataframes['foods_df']
-        else:
-            self.activities_processed = dataframes['activities_df']
-            self.workouts_processed = dataframes['workouts_df']
-            self.final = dataframes['final_df']
 
     def load_final_with_no_na_filter(self):
         """

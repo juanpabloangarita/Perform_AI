@@ -161,10 +161,7 @@ with st.container(border=True):
 
             if submit_button:
                 st.success(f"Added {calories} calories")
-                # foods_df = FileLoader().load_raw_and_final_dataframes('data/raw/csv/')
-                sourcer = FileLoader()
-                sourcer.load_raw_and_final_dataframes('data/raw/csv/')
-                foods_df = sourcer.foods
+                foods_df = FileLoader().load_dfs(name_s='foods_df', file_path='data/raw/csv')
                 FileLoader().update_final_df('calories_consumed', GIVEN_DATE, calories)
 
         # Ensure space is balanced between columns

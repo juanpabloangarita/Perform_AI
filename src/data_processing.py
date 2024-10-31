@@ -220,13 +220,11 @@ def standardize_date_index(df):
 def process_data(user_data, workouts=None):
     """Process and prepare data, estimate calories, and combine results."""
     sourcer = FileLoader()
-
     if CLOUD_ON == 'no':
         sourcer.load_initial_csv_files()
 
-    sourcer.load_raw_and_final_dataframes('data/raw/csv')
-    activities_df = sourcer.activities_raw
-    workouts_df = workouts if workouts is not None else sourcer.workouts_raw
+    tmp_workouts, activities_df = FileLoader().load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
+    workouts_df = workouts if workouts is not None else tmp_workouts
 
     dataframes = {
         'activities': activities_df,
