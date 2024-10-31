@@ -196,20 +196,6 @@ class FileLoader:
             # The index of each DataFrame will be included in the CSV files
             FileSaver().save_dfs([tss_df, atl_df, ctl_df, tsb_df], dfs_names=['tss', 'atl', 'ctl', 'tsb'], index=True)
 
-    # def load_tss_values_for_dashboard(self, file_path=None):
-    #     """
-    #     Loads TSS, ATL, CTL, and TSB metrics for dashboard display.
-
-    #     Args:
-    #         file_path (str, optional): Custom file path for loading the CSV files (default is None).
-
-    #     Returns:
-    #         tuple: Loaded DataFrames for TSS, ATL, CTL, and TSB if successful, otherwise False.
-    #     """
-    #     names = ['tss', 'atl', 'ctl', 'tsb']
-    #     dataframes = {name: self._load_csv(file_path or self.file_path, name, index=0) for name in names} # NOTE: self.file_path if file_path is None else file_path
-    #     return dataframes['tss'], dataframes['atl'], dataframes['ctl'], dataframes['tsb']
-
     def save_and_load_during_process(self, file_path=None, **kwargs):
         """
         Saves and Loads intermediate workout and/or activity data during the processing stage.
