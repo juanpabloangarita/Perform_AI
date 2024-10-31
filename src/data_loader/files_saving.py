@@ -54,7 +54,26 @@ class FileSaver:
         self._save_csv(file_path, model, name)
 
     def save_dfs(self, dfs, dfs_names=None, file_path=None, name=None, index=False):
+        """
+        Save one or multiple dataframes to CSV files.
 
+        This method can save either a single dataframe or a list of dataframes.
+        If saving a list, the corresponding names must be provided in dfs_names.
+
+        Args:
+            dfs (Union[pd.DataFrame, list]): The dataframe(s) to be saved.
+                Can be a single pandas DataFrame or a list of DataFrames.
+            dfs_names (list, optional): The names of the CSV files to save each dataframe.
+                Required if dfs is a list.
+            file_path (str, optional): The directory path to save the CSV files.
+                If not provided, defaults to the instance's file_path.
+            name (str, optional): The name of the CSV file to save if a single dataframe is provided.
+                Ignored if dfs is a list.
+            index (bool): Whether to include the dataframe index in the CSV file (default is False).
+
+        Raises:
+            ValueError: If dfs is a list but dfs_names is not provided.
+        """
         if isinstance(dfs, list):
             for list_name, data in zip(dfs_names, dfs):
                 if data is not None:

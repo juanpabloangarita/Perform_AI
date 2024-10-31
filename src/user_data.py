@@ -121,9 +121,8 @@ class UserManager:
         else:
             self.user_data_df = new_user_df
 
-        # Save the updated DataFrame to CSV
+        # Save the user data dataframe to a specified file path with the name 'user_data'
         FileSaver().save_dfs(self.user_data_df, file_path=USER_DATA_FILE, name='user_data')
-        # FileSaver().save_user_data(self.user_data_df) # NOTE: FILESAVER
 
         # Reload user data to refresh the current session data
         self.load_user_data()
@@ -146,9 +145,8 @@ class UserManager:
                 if key in self.user_data_df.columns:
                     self.user_data_df.at[self.user_index, key] = value
 
-            # Save updated user data to CSV
+            # Save the user data dataframe to a specified file path with the name 'user_data'
             FileSaver().save_dfs(self.user_data_df, file_path=USER_DATA_FILE, name='user_data')
-            # FileSaver().save_user_data(self.user_data_df) # NOTE: FILESAVER
             print(f"User '{self.username}' data updated successfully.")
         else:
             print(f"User '{self.username}' not found in the database.")

@@ -214,9 +214,6 @@ class FileLoader:
         Returns:
             tuple: Loaded DataFrames for workouts_tmp_df and activities_tmp_df.
         """
-        # Save the provided DataFrames
-        # FileSaver().save_during_process(file_path=file_path, **kwargs) # NOTE: FILESAVER
-
         # Prepare the DataFrames and their names for saving
         dfs, dfs_names = [], []
         if 'workouts_tmp_df' in kwargs:
@@ -226,7 +223,8 @@ class FileLoader:
             dfs.append(kwargs['activities_tmp_df'])
             dfs_names.append('activities_tmp_df')
 
-        # Save the provided DataFrames
+        # Save multiple dataframes during processing.
+        # The dataframes will be saved with their corresponding names in the specified file path.
         FileSaver().save_dfs(dfs=dfs, dfs_names=dfs_names, file_path=file_path, index=True)
 
         # Load the DataFrames if provided
@@ -251,8 +249,8 @@ class FileLoader:
                        'Protein', 'Dietary Fiber']
             df = pd.DataFrame(columns=columns)
             logging.info("Initialized a new nutrition DataFrame with predefined columns.")
+            # Save the user's nutrition dataframe with the specified name 'user_nutrition'.
             FileSaver().save_dfs(df, name='user_nutrition')
-            # FileSaver().save_user_nutrition(nutrition_df=df) # NOTE: FILESAVER
         return df
 
     def load_user_data(self, file_path=USER_DATA_FILE):
