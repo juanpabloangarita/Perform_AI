@@ -190,7 +190,6 @@ class FileLoader:
             # The filenames will be 'tss.csv', 'atl.csv', 'ctl.csv', and 'tsb.csv'
             # The index of each DataFrame will be included in the CSV files
             FileSaver().save_dfs([tss_df, atl_df, ctl_df, tsb_df], dfs_names=['tss', 'atl', 'ctl', 'tsb'], index=True)
-            # FileSaver().save_tss_values_for_dashboard(tss_df, atl_df, ctl_df, tsb_df) # NOTE: FILESAVER
 
     def load_tss_values_for_dashboard(self, file_path=None):
         """
