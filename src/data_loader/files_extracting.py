@@ -183,7 +183,8 @@ class FileLoader:
                     new_row['CaloriesConsumed'] = data_to_update
                     df = pd.concat([df, new_row]).sort_index()
 
-            FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame
+            FileSaver().save_dfs(df, name='final_df', index=True)
+            # FileSaver().save_raw_and_final_dataframes(df=df)  # Save updated DataFrame # NOTE: FILESAVER
             # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
             w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(df, 'update_final_df')
             # This will save the TSS, ATL, CTL, and TSB DataFrames to CSV files
@@ -295,4 +296,6 @@ class FileLoader:
         # Remove unwanted columns from all dataframes
         foods_df = foods.drop(columns=unwanted_columns, errors='ignore')
 
-        FileSaver().save_raw_and_final_dataframes(w_df = workouts_df, a_df=activities_df, foods_df=foods_df, file_path = 'data/raw/csv')
+        FileSaver().save_dfs([workouts_df, activities_df], dfs_names=['workouts_df', 'activities_df'], file_path = 'data/raw/csv')
+        FileSaver().save_dfs(foods_df, name='foods_df', index=True)
+        # FileSaver().save_raw_and_final_dataframes(w_df = workouts_df, a_df=activities_df, foods_df=foods_df, file_path = 'data/raw/csv') # NOTE: FILESAVER
