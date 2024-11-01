@@ -18,9 +18,10 @@ from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 from src.data_loader.files_extracting import FileLoader
 from src.data_loader.files_saving import FileSaver
 from params import CLOUD_ON, GIVEN_DATE, BEST_MODEL
+from typing import List
 
 
-def clean_data_basic(dfs, date_cols):
+def clean_data_basic(df):
     """
     Clean data for the given dataframes.
 
@@ -28,88 +29,126 @@ def clean_data_basic(dfs, date_cols):
         dfs (dict): Dictionary of DataFrames to clean.
         date_cols (dict): Dictionary mapping DataFrame names to their date column names.
     """
-    for df_name, df in dfs.items():
-        df.replace('--', np.nan, inplace=True)
-        df.drop_duplicates(inplace=True)
-
-        if df_name == 'sleep':
-            continue
-        convert_to_datetime(df, date_cols[df_name])
-
-
-def convert_to_datetime(df, date_col):
-    """
-    Convert specified column to datetime and set as index.
-
-    Parameters:
-        df (pd.DataFrame): DataFrame to process.
-        date_col (str): Name of the date column.
-    """
-    if date_col != 'Timestamp':
-        df['Date'] = pd.to_datetime(df[date_col])
-        df.sort_values('Date', inplace=True)
-        df.set_index('Date', inplace=True)
-    else:
-        df.index.name = 'Date'
-        df.sort_values('Date', inplace=True)
-        df.set_index(pd.to_datetime(df.index), inplace=True)
-
-    if date_col in df.columns:
-        df.drop(columns=date_col, inplace=True)
-
-
-def clean_activities(df):
-    """
-    Clean activity data to keep relevant columns and rename them.
-
-    Parameters:
-        df (pd.DataFrame): DataFrame containing activity data.
-
-    Returns:
-        pd.DataFrame: Cleaned DataFrame.
-    """
-    columns_to_keep = ["Type d'activité", 'Distance', 'Calories', 'Durée', 'Fréquence cardiaque moyenne']
-    df = df[columns_to_keep].copy().rename(columns={
-        'Distance': 'DistanceInMeters',
-        'Durée': 'TimeTotalInHours',
-        'Fréquence cardiaque moyenne': 'HeartRateAverage',
-        'Type d\'activité': 'WorkoutType'
-    })
-
-    df['HeartRateAverage'] = pd.to_numeric(df['HeartRateAverage'], errors='coerce')
-    df = df[df['HeartRateAverage'].notna()]
-
-    df = df[~df["WorkoutType"].isin(['HIIT', 'Exercice de respiration', 'Musculation'])].copy()
-
-    sports_types = {
-        'Nat. piscine': 'Swim',
-        'Cyclisme': 'Bike',
-        'Course à pied': 'Run',
-        "Vélo d'intérieur": 'Bike',
-        'Cyclisme virtuel': 'Bike',
-        'Course à pied sur tapis roulant': 'Run',
-        'Natation': 'Swim',
-    }
-    df["WorkoutType"] = df["WorkoutType"].apply(lambda x: sports_types[x])
-
-    # Convert Durée from 'hh:mm:ss' to total minutes
-    df['TimeTotalInHours'] = pd.to_timedelta(df['TimeTotalInHours']).dt.total_seconds() / 3600  # Convert to Hours
-
-    # Convert relevant columns to numeric (remove commas, etc.)
-    df['DistanceInMeters'] = pd.to_numeric(df['DistanceInMeters'].str.replace(',', '.'), errors='coerce')
-    df['Calories'] = pd.to_numeric(df['Calories'], errors='coerce')
-
-    # Drop rows with NaN values in critical columns
-    df = df.dropna(subset=['DistanceInMeters', 'Calories', 'TimeTotalInHours', 'HeartRateAverage'])
-
-    # df = df[df['DistanceInMeters']>0].copy() # NOTE: not needed since, i will be using only TotalDuration or TimeTotalInHours
+    df = df.replace('--', np.nan)
+    df = df.drop_duplicates()
 
     return df
 
 
-def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
-    columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
-    df = df[columns_to_keep_workouts].copy()
+def convert_to_datetime(df, date_col):
+    """
+    Convert specified column to datetime and set as index with uniform date format.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame to process.
+        date_col (str): Name of the date column.
+
+    Returns:
+        pd.DataFrame: DataFrame with 'Date' as index in datetime format (YYYY-MM-DD).
+    """
+    # Explicitly check for known date columns
+    if date_col in ['Date', 'WorkoutDay']:
+        df['Date'] = pd.to_datetime(df[date_col])
+        df = df.sort_values('Date')
+        df = df.set_index('Date')
+    elif date_col == 'Timestamp':
+        df.index.name = 'Date'
+        df.index = pd.to_datetime(df.index)
+        df = df.sort_index()
+    else:
+        raise ValueError(f"Unrecognized date column: {date_col}")
+
+    # Format the index to YYYY-MM-DD
+    #df.index = df.index.date  # Keep only the date part
+    df.index = df.index.normalize()  # Keep only the date part
+
+    # Drop the original date column if it exists
+    if date_col in df.columns:
+        df = df.drop(columns=date_col)
+
+    return df
+
+def filter_and_translate_columns(df, column_mapping, columns_to_keep):
+    """
+    Translates column names in a DataFrame based on a given mapping and filters to keep only specified columns.
+
+    Parameters:
+    - df (pd.DataFrame): The DataFrame with original column names.
+    - column_mapping (dict): A dictionary mapping original column names to desired column names.
+    - columns_to_keep (list, optional): List of columns to keep in the final DataFrame after renaming. Defaults to None.
+
+    Returns:
+    - pd.DataFrame: A DataFrame with renamed and filtered columns.
+    """
+    # Translate columns
+    df_translated = df.rename(columns=column_mapping)
+
+    # Determine columns to keep
+    df_translated = df_translated[columns_to_keep]
+
+    return df_translated
+
+def filter_and_translate_workouts_column(df, workouts_to_remove, sports_mapping=None):
+    """
+    Filters and translates workout types in a DataFrame based on specified criteria.
+
+    Parameters:
+    - df (pd.DataFrame): The DataFrame with workout data.
+    - workouts_to_remove (list): List of workout types to exclude from the DataFrame.
+    - sports_mapping (dict, optional): A dictionary to translate workout types. Defaults to None.
+
+    Returns:
+    - pd.DataFrame: The DataFrame with filtered and translated workout types.
+    """
+    # Filter out unwanted workout types
+    df_filtered = df[~df['WorkoutType'].isin(workouts_to_remove)].copy()
+
+    # Apply mapping if provided
+    if sports_mapping:
+        df_filtered['WorkoutType'] = df_filtered['WorkoutType'].map(sports_mapping).fillna(df_filtered['WorkoutType'])
+
+    return df_filtered
+
+def convert_time_to_hours(time_str: str) -> float:
+    """Convert a time string to hours."""
+    try:
+        return pd.to_timedelta(time_str).total_seconds() / 3600
+    except Exception as e:
+        print(f"Error converting time '{time_str}': {e}")
+        return 0.0
+
+def clean_calories(calories_str: str) -> float:
+    """Remove thousands commas from calorie strings and convert to float."""
+    try:
+        return float(calories_str.replace(',', ''))
+    except ValueError:
+        print(f"Error cleaning calories '{calories_str}': cannot convert to float.")
+        return 0.0
+
+def convert_distance_to_meters(distance_str: str, workout_type: str) -> float:
+    """Convert distance string to meters based on workout type."""
+    try:
+        distance_value = float(distance_str.replace(',', ''))  # Remove commas
+        return distance_value if workout_type == 'Swim' else distance_value * 1000
+    except ValueError:
+        print(f"Error converting distance '{distance_str}' for workout '{workout_type}': cannot convert to float.")
+        return 0.0
+
+def convert_data_types_for_activities(df: pd.DataFrame, columns_to_modify: List[str]) -> pd.DataFrame:
+    """Convert specified columns in a DataFrame to appropriate data types."""
+    for col in columns_to_modify:
+        if col == 'DistanceInMeters':
+            df[col] = df.apply(lambda row: convert_distance_to_meters(row['DistanceInMeters'], row['WorkoutType']), axis=1)
+        elif col in ['HeartRateAverage', 'Calories', 'TimeTotalInHours']:
+            conversion_func = clean_calories if col == 'Calories' else (convert_time_to_hours if col == 'TimeTotalInHours' else float)
+            df[col] = df[col].apply(conversion_func)
+
+        df[col] = df[col].astype('float64')  # Ensure the column is in float64 format
+
+    return df
+
+
+def filter_workouts_df_and_remove_nans(df, given_date = GIVEN_DATE):
 
     before_df = df[df.index < given_date].copy()
     after_df = df[df.index >= given_date].copy()
@@ -122,15 +161,11 @@ def filter_workouts_and_remove_nans(df, given_date = GIVEN_DATE):
 
     # Concatenate before and after dataframes
     w_df = pd.concat([before_df_cleaned, after_df])
-    # Keep dates where there was a Run Swim or Bike training Plan
-    w_df = w_df[w_df['WorkoutType'].isin(['Run', 'Swim', 'Bike'])]
 
-    # Fill NaN values in object columns with an empty string
     object_cols = w_df.select_dtypes(include=['object']).columns
     w_df[object_cols] = w_df[object_cols].fillna('')
 
     return w_df
-
 
 def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
     """
@@ -226,25 +261,52 @@ def process_data(user_data, workouts=None):
     tmp_workouts, activities_df = FileLoader().load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
     workouts_df = workouts if workouts is not None else tmp_workouts
 
-    dataframes = {
-        'activities': activities_df,
-        #'sleep': sleep_df,
-        #'health_metrics': health_metrics_df,
-        'workouts': workouts_df
-    }
-    date_columns = {
-        'activities': 'Date', # as column
-        #'sleep': 'Date', # as column
-        #'health_metrics': 'Timestamp', # already as index
-        'workouts': 'WorkoutDay' # as column
-    }
-    clean_data_basic(dataframes, date_columns)
+    workouts_df = clean_data_basic(workouts_df).copy()
+    activities_df = clean_data_basic(activities_df).copy()
 
-    w_df = filter_workouts_and_remove_nans(dataframes['workouts'])
-    w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(w_df, 'data_processing')
+    workouts_df = convert_to_datetime(workouts_df, 'WorkoutDay').copy()
+    activities_df = convert_to_datetime(activities_df, 'Date').copy()
+
+    columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments',
+                                'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
+    french_to_english = {
+        'Type d\'activité': 'WorkoutType',
+        'Titre': 'Title',
+        'Fréquence cardiaque moyenne': 'HeartRateAverage',
+        'Durée': 'TimeTotalInHours',
+        'Distance': 'DistanceInMeters',
+        'Calories': 'Calories'
+    }
+    columns_to_keep_activities = list(french_to_english.values())
+    workouts_df = filter_and_translate_columns(workouts_df, {}, columns_to_keep_workouts).copy()
+    activities_df = filter_and_translate_columns(activities_df, french_to_english, columns_to_keep_activities).copy()
+
+    workouts_to_remove_both_dfs = ['Brick', 'Other', 'Strength', 'Day Off', 'HIIT', 'Exercice de respiration', 'Musculation']
+    sports_types = {
+        'Nat. piscine': 'Swim',
+        'Cyclisme': 'Bike',
+        'Course à pied': 'Run',
+        "Vélo d'intérieur": 'Bike',
+        'Cyclisme virtuel': 'Bike',
+        'Course à pied sur tapis roulant': 'Run',
+        'Natation': 'Swim',
+    }
+    workouts_df = filter_and_translate_workouts_column(workouts_df, workouts_to_remove_both_dfs).copy()
+    activities_df = filter_and_translate_workouts_column(activities_df, workouts_to_remove_both_dfs, sports_types).copy()
+
+    # Usage
+    activities_df = activities_df.dropna()
+    columns_to_float = ['HeartRateAverage', 'Calories', 'DistanceInMeters', 'TimeTotalInHours']
+    activities_df = convert_data_types_for_activities(activities_df, columns_to_float).copy()
+
+    #workouts_df.index = workouts_df.index.strftime('%Y-%m-%d')
+    # activities_df.index = activities_df.index.strftime('%Y-%m-%d')
+
+    workouts_df = filter_workouts_df_and_remove_nans(workouts_df).copy()
+
+    w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(workouts_df, 'data_processing')
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
 
-    activities_df = clean_activities(dataframes['activities'])
     print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
 
     # Model creation and predictions
