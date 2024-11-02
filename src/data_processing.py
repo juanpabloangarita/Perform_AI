@@ -35,40 +35,50 @@ def clean_data_basic(df):
     return df
 
 
-def convert_to_datetime(df, date_col):
+def process_date_column(df, date_col=None, standardize=False):
     """
-    Convert specified column to datetime and set as index with uniform date format.
+    Convert specified column to datetime, set as index, and standardize the date index if required.
 
     Parameters:
         df (pd.DataFrame): DataFrame to process.
-        date_col (str): Name of the date column.
+        date_col (str, optional): Name of the date column. If provided, converts this column to datetime
+                                   and sets it as the index. If None, only standardizes the date index.
+        standardize (bool): If True, standardizes the date index format.
 
     Returns:
-        pd.DataFrame: DataFrame with 'Date' as index in datetime format (YYYY-MM-DD).
+        pd.DataFrame: DataFrame with the date index formatted as 'YYYY-MM-DD' if standardize is True.
     """
-    # Explicitly check for known date columns
-    if date_col in ['Date', 'WorkoutDay']:
-        df['Date'] = pd.to_datetime(df[date_col])
-        df = df.sort_values('Date')
-        df = df.set_index('Date')
-    elif date_col == 'Timestamp':
-        df.index.name = 'Date'
+    # If a date column is specified, convert it to datetime and set as index
+    if date_col:
+        if date_col in ['Date', 'WorkoutDay']:
+            df['Date'] = pd.to_datetime(df[date_col])
+            df = df.sort_values('Date')
+            df = df.set_index('Date')
+        elif date_col == 'Timestamp':
+            df.index.name = 'Date'
+            df.index = pd.to_datetime(df.index)
+            df = df.sort_index()
+        else:
+            raise ValueError(f"Unrecognized date column: {date_col}")
+
+        # Format the index to YYYY-MM-DD
+        #df.index = df.index.date  # Keep only the date part
+        df.index = df.index.normalize()  # Keep only the date part
+        # today = datetime.today().date()
+        # GIVEN_DATE = pd.to_datetime(today).normalize() # NOTE: to use had i left the index with the date format all along.
+
+        # Drop the original date column if it exists
+        if date_col in df.columns:
+            df = df.drop(columns=date_col)
+
+    elif standardize:
+        # If no date column is provided but standardize is True, we are standardizing the index
         df.index = pd.to_datetime(df.index)
-        df = df.sort_index()
-    else:
-        raise ValueError(f"Unrecognized date column: {date_col}")
-
-    # Format the index to YYYY-MM-DD
-    #df.index = df.index.date  # Keep only the date part
-    df.index = df.index.normalize()  # Keep only the date part
-    # today = datetime.today().date()
-    # GIVEN_DATE = pd.to_datetime(today).normalize() # NOTE: to use had i left the index with the date format all along.
-
-    # Drop the original date column if it exists
-    if date_col in df.columns:
-        df = df.drop(columns=date_col)
+        df.index = df.index.strftime('%Y-%m-%d')
 
     return df
+
+
 
 def filter_and_translate_columns(df, column_mapping, columns_to_keep):
     """
@@ -90,6 +100,7 @@ def filter_and_translate_columns(df, column_mapping, columns_to_keep):
 
     return df_translated
 
+
 def filter_and_translate_workouts_column(df, workouts_to_remove, sports_mapping=None):
     """
     Filters and translates workout types in a DataFrame based on specified criteria.
@@ -110,6 +121,7 @@ def filter_and_translate_workouts_column(df, workouts_to_remove, sports_mapping=
         df_filtered['WorkoutType'] = df_filtered['WorkoutType'].map(sports_mapping).fillna(df_filtered['WorkoutType'])
 
     return df_filtered
+
 
 def convert_time_to_hours(time_str: str) -> float:
     """Convert a time string to hours."""
@@ -168,6 +180,7 @@ def filter_workouts_df_and_remove_nans(df, given_date = GIVEN_DATE):
     w_df[object_cols] = w_df[object_cols].fillna('')
 
     return w_df
+
 
 def print_metrics_or_data(keyword, rmse=None, w_df_tmp=None, act_df_tmp=None):
     """
@@ -237,23 +250,6 @@ def create_nixtla_and_predict(X_activities_df, y_activities_df, w_df):
     return forecast
 
 
-def standardize_date_index(df):
-    """
-    Converts the index of the dataframe to datetime and formats it as 'YYYY-MM-DD'.
-
-    Parameters:
-    df (pd.DataFrame): DataFrame with a date index to be standardized.
-
-    Returns:
-    pd.DataFrame: DataFrame with the index formatted as 'YYYY-MM-DD'.
-    """
-    # Convert index to datetime
-    df.index = pd.to_datetime(df.index)
-    # Format index as 'YYYY-MM-DD'
-    df.index = df.index.strftime('%Y-%m-%d')
-    return df
-
-
 def process_data(user_data, workouts=None):
     """Process and prepare data, estimate calories, and combine results."""
     sourcer = FileLoader()
@@ -266,8 +262,8 @@ def process_data(user_data, workouts=None):
     workouts_df = clean_data_basic(workouts_df).copy()
     activities_df = clean_data_basic(activities_df).copy()
 
-    workouts_df = convert_to_datetime(workouts_df, 'WorkoutDay').copy()
-    activities_df = convert_to_datetime(activities_df, 'Date').copy()
+    workouts_df = process_date_column(workouts_df, date_col = 'WorkoutDay').copy()
+    activities_df = process_date_column(activities_df, date_col = 'Date').copy()
 
     columns_to_keep_workouts = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments',
                                 'HeartRateAverage', 'TimeTotalInHours', 'DistanceInMeters', 'PlannedDuration', 'PlannedDistanceInMeters']
@@ -326,10 +322,9 @@ def process_data(user_data, workouts=None):
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',
                      'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
 
-    w_df_calories_estimated = standardize_date_index(w_df_calories_estimated)
-    w_df_calories_calculated = standardize_date_index(w_df_calories_calculated)
-    activities_df = standardize_date_index(activities_df)
-
+    w_df_calories_estimated = process_date_column(w_df_calories_estimated, standardize=True)
+    w_df_calories_calculated = process_date_column(w_df_calories_calculated, standardize=True)
+    activities_df = process_date_column(activities_df, standardize=True)
 
     # Reset the index to ensure the 'date' is a column and not part of the index
     w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
