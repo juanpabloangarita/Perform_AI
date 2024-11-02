@@ -61,6 +61,8 @@ def convert_to_datetime(df, date_col):
     # Format the index to YYYY-MM-DD
     #df.index = df.index.date  # Keep only the date part
     df.index = df.index.normalize()  # Keep only the date part
+    # today = datetime.today().date()
+    # GIVEN_DATE = pd.to_datetime(today).normalize() # NOTE: to use had i left the index with the date format all along.
 
     # Drop the original date column if it exists
     if date_col in df.columns:
@@ -294,19 +296,13 @@ def process_data(user_data, workouts=None):
     workouts_df = filter_and_translate_workouts_column(workouts_df, workouts_to_remove_both_dfs).copy()
     activities_df = filter_and_translate_workouts_column(activities_df, workouts_to_remove_both_dfs, sports_types).copy()
 
-    # Usage
     activities_df = activities_df.dropna()
     columns_to_float = ['HeartRateAverage', 'Calories', 'DistanceInMeters', 'TimeTotalInHours']
     activities_df = convert_data_types_for_activities(activities_df, columns_to_float).copy()
-
-    #workouts_df.index = workouts_df.index.strftime('%Y-%m-%d')
-    # activities_df.index = activities_df.index.strftime('%Y-%m-%d')
-
     workouts_df = filter_workouts_df_and_remove_nans(workouts_df).copy()
 
     w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(workouts_df, 'data_processing')
     w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
-
     print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
 
     # Model creation and predictions
