@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from params import GIVEN_DATE
 
-def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE):
+def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE): # NOTE: Everytime i have a new data point, i recalculate the WHOLE metrics again, not efficient
     """
     Calculate total Training Stress Score (TSS) for different workout types and call the calculate_metrics_from_tss to calculate metrics
 

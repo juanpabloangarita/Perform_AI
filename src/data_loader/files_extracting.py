@@ -147,11 +147,12 @@ class FileLoader:
                     new_row['CaloriesConsumed'] = data_to_update
                     df = pd.concat([df, new_row]).sort_index()
 
-            # Save updated final DataFrame to CSV, including index
-            FileSaver().save_dfs(df, name='final_df', index=True)
-
             # Calculate TSS per discipline, TOTAL TSS and tss, atl, ctl, tsb
             w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(df, 'update_final_df')
+
+            # Save updated final DataFrame to CSV, including index
+            FileSaver().save_dfs(w_df, name='final_df', index=True)
+
             # This will save the TSS, ATL, CTL, and TSB DataFrames to CSV files
             # The filenames will be 'tss.csv', 'atl.csv', 'ctl.csv', and 'tsb.csv'
             # The index of each DataFrame will be included in the CSV files

@@ -16,6 +16,7 @@ from src.data_processor import DataProcessor
 def process_data(user_data, workouts=None):
     """Process and prepare data, estimate calories, and combine results."""
     sourcer = FileLoader()
+    # NOTE: I am loading the csv files that i have by default, corresponding to my info, how should be the behaviour when running the app for someone that has not put their own info?
     sourcer.load_initial_csv_files()
     tmp_workouts, activities_df = sourcer.load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
 
