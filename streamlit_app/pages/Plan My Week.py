@@ -5,7 +5,6 @@ import streamlit as st
 import pandas as pd
 import os
 import sys
-import boto3
 import subprocess
 import time
 from io import StringIO
@@ -19,9 +18,7 @@ sys.path.append(dir_script_dir)
 
 from src.training_peaks import navigate_to_login
 from src.training_peaks_handler import *
-from params import *
-
-from params import BEST_MODEL, GIVEN_DATE
+from params import BEST_MODEL, CLOUD_ON
 from src.data_loader.files_extracting import FileLoader
 
 

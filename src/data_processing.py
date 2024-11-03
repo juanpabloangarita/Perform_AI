@@ -20,7 +20,7 @@ def process_data(user_data, workouts=None):
     if CLOUD_ON == 'no':
         sourcer.load_initial_csv_files()
 
-    tmp_workouts, activities_df = FileLoader().load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
+    tmp_workouts, activities_df = sourcer.load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
     workouts_df = workouts if workouts is not None else tmp_workouts
 
     data_processor = DataProcessor(workouts_df, activities_df)

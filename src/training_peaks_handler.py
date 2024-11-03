@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta
-import streamlit as st
+# Perform_AI.src.training_peaks_handler.py
+
 import pandas as pd
 import os
 import sys
@@ -13,7 +13,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory whe
 dir_script_dir = os.path.dirname(script_dir) #directory = PerformAI
 sys.path.append(dir_script_dir)
 
-from params import *
+from params import INSTANCE_ID, INSTANCE_IP, SSH_KEY_STR, BUCKET_NAME
 
 def training_peaks_button_helper():
     # Step 1: Start EC2 instance if not running

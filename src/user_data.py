@@ -11,9 +11,7 @@ Classes:
 """
 
 import pandas as pd
-import numpy as np
 import bcrypt
-import os
 
 from src.data_loader.files_saving import FileSaver
 from src.data_loader.files_extracting import FileLoader

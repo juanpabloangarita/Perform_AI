@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 import pandas as pd
 import sys
 import os
-import boto3
 
 # Add the parent directory to the Python path
 parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -13,11 +12,11 @@ sys.path.append(parent_dir)
 
 from config import setup_paths # TODO: decide to erase it or to implement it
 
-from dashboard_plot import *
-from params import *
+from dashboard_plot import plot_dashboard
 from src.main import main
-from src.user_data import *
+from params import CLOUD_ON, CODE_PROMO
 from src.data_loader.files_extracting import FileLoader
+from src.data_loader.files_saving import FileSaver
 from src.user_data import UserManager
 
 

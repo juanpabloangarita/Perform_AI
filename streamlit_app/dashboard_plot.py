@@ -1,7 +1,7 @@
-# dashboard_plot.py
+# Perform_AI.streamlit_app.dashboard_plot.py
 
 import plotly.graph_objects as go
-from params import *
+from params import GIVEN_DATE
 import pandas as pd
 
 

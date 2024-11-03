@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import sys
 import os
 
@@ -10,10 +8,8 @@ dir_script_dir = os.path.dirname(script_dir) #directory = streamlit_app
 dir_script_dir = os.path.dirname(dir_script_dir) #src
 sys.path.append(dir_script_dir)
 
-from src.data_processing import *
-from src.calorie_calculations import *
-from src.user_data import *
-from params import *
+from src.calorie_calculations import calculate_total_calories
+from src.user_data import UserManager
 
 # Display current user data in editable form
 st.title("Human Settings")

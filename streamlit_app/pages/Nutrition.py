@@ -1,14 +1,10 @@
 # Perform_AI.streamlit_app.nutrition.py
 
-
-from params import BEST_MODEL, GIVEN_DATE
 import streamlit as st
-import pandas as pd
 import numpy as np
 import sys
 import os
 
-from datetime import datetime
 from PIL import Image
 import cv2
 

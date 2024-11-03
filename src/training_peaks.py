@@ -24,10 +24,9 @@ Python runtime is decoupled from package installations.
 ###########
 from dotenv import load_dotenv
 # Standard Library Imports:
-import os
 import time
 import tempfile
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from random import uniform
 
 
@@ -56,8 +55,8 @@ import chromedriver_autoinstaller
 # Load environment variables from .env file
 load_dotenv()
 # Local imports
-from params import *
 import os
+from params import CLOUD_ON, USER_TP, PASSWORD_TP, BUCKET_NAME
 
 
 

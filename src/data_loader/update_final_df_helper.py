@@ -1,18 +1,8 @@
 # Perform_AI.src.load_and_update_final_csv_helper.py
 # this is a helper for FileLoader().update_final_df function in files_extracting.py
 
-import streamlit as st
-from datetime import datetime
-from datetime import timedelta
-
 import pandas as pd
-import numpy as np
-import csv
-import os
-import sys
 
-import plotly.graph_objs as go
-import plotly.io as pio
 
 def update_or_add_row(df, date_str, workout_type, updates):
     """

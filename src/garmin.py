@@ -1,4 +1,4 @@
-# garmin.py
+# Perform_AI.src.garmin.py
 
 # Import necessary modules
 from selenium import webdriver
@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from random import uniform
-from params import *  # Assumed to contain EMAIL and PASSWORD variables
+from params import *
 
 from selenium.common.exceptions import TimeoutException
 
