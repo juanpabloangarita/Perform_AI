@@ -52,14 +52,6 @@ def process_data(user_data, workouts=None):
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',
                      'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
 
-    # w_df_calories_estimated = process_date_column(w_df_calories_estimated, standardize=True)
-    # w_df_calories_calculated = process_date_column(w_df_calories_calculated, standardize=True)
-    # activities_df = process_date_column(activities_df, standardize=True)
-
-    # # Reset the index to ensure the 'date' is a column and not part of the index
-    # w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
-    # w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
-    # activities_df_reset = activities_df.reset_index()
     w_df_calories_estimated_reset = process_date_column(w_df_calories_estimated, standardize=True)
     w_df_calories_calculated_reset = process_date_column(w_df_calories_calculated, standardize=True)
     activities_df_reset = process_date_column(activities_df, standardize=True)
@@ -76,7 +68,7 @@ def process_data(user_data, workouts=None):
     numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
     final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
     final_df['ComplianceStatus'] = ''
-    final_df['TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
+    final_df['Scraped TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
 
 
     return tss_df, atl_df, ctl_df, tsb_df, w_df_combined, activities_df, final_df
