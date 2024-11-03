@@ -65,6 +65,7 @@ def process_date_column(df, date_col=None, standardize=False):
         # If no date column is provided but standardize is True, we are standardizing the index
         df.index = pd.to_datetime(df.index)
         df.index = df.index.strftime('%Y-%m-%d')
+        df = df.reset_index()
 
     return df
 

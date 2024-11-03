@@ -52,14 +52,17 @@ def process_data(user_data, workouts=None):
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',
                      'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
 
-    w_df_calories_estimated = process_date_column(w_df_calories_estimated, standardize=True)
-    w_df_calories_calculated = process_date_column(w_df_calories_calculated, standardize=True)
-    activities_df = process_date_column(activities_df, standardize=True)
+    # w_df_calories_estimated = process_date_column(w_df_calories_estimated, standardize=True)
+    # w_df_calories_calculated = process_date_column(w_df_calories_calculated, standardize=True)
+    # activities_df = process_date_column(activities_df, standardize=True)
 
-    # Reset the index to ensure the 'date' is a column and not part of the index
-    w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
-    w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
-    activities_df_reset = activities_df.reset_index()
+    # # Reset the index to ensure the 'date' is a column and not part of the index
+    # w_df_calories_estimated_reset = w_df_calories_estimated.reset_index()
+    # w_df_calories_calculated_reset = w_df_calories_calculated.reset_index()
+    # activities_df_reset = activities_df.reset_index()
+    w_df_calories_estimated_reset = process_date_column(w_df_calories_estimated, standardize=True)
+    w_df_calories_calculated_reset = process_date_column(w_df_calories_calculated, standardize=True)
+    activities_df_reset = process_date_column(activities_df, standardize=True)
 
     # Concatenate calculated and estimated calories
     w_df_combined = pd.concat([w_df_calories_estimated_reset, w_df_calories_calculated_reset], axis=1, join='inner')
