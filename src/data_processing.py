@@ -12,15 +12,13 @@ from src.calorie_calculations import calculate_total_calories
 import pandas as pd
 from src.data_loader.files_extracting import FileLoader
 from src.data_processor import DataProcessor
-from params import CLOUD_ON
 
 def process_data(user_data, workouts=None):
     """Process and prepare data, estimate calories, and combine results."""
     sourcer = FileLoader()
-    if CLOUD_ON == 'no':
-        sourcer.load_initial_csv_files()
-
+    sourcer.load_initial_csv_files()
     tmp_workouts, activities_df = sourcer.load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
+
     workouts_df = workouts if workouts is not None else tmp_workouts
 
     data_processor = DataProcessor(workouts_df, activities_df)

@@ -27,8 +27,8 @@ st.set_page_config(page_title="Perform AI", page_icon="🌞", layout="wide", ini
 main_arg = None
 if len(sys.argv) > 1:
     main_arg = sys.argv[1]
-if CLOUD_ON == 'yes':
-    main_arg = 'main'
+if CLOUD_ON == 'yes': # THIS IS ONLY VALID, THE PURPOSE OF THIS, FOR WHEN I AM LAUNCHING IT FROM STREAMLIT.IO APP, OTHERWISE THIS DOESN'T MAKE ANY SENSE BECAUSE main with CLOUD_ON from terminal works
+    main_arg = 'main' #NOTE: REMEMBER CLOUD_ON THIS IS TEMPORAL ONCE IT IS LAUNCHED ONE TIME IT WILL GO ON FOREVER
 
 # Initialize session state for authentication and username
 if 'authenticated' not in st.session_state:
