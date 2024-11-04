@@ -6,7 +6,6 @@ from src.data_helpers import (
     create_models_and_predict,
     create_nixtla_and_predict
 )
-from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 from src.calorie_calculations import calculate_total_calories
 import pandas as pd
 from src.data_loader.files_extracting import FileLoader
@@ -25,20 +24,18 @@ def process_data(user_data, workouts=None):
     workouts_df = data_processor.workouts_df
     activities_df = data_processor.activities_df
 
-
-    w_df, tss_df, atl_df, ctl_df, tsb_df = calculate_total_tss_and_metrics_from_tss(workouts_df, 'data_processing')
-    w_df_calories_calculated = calculate_total_calories(user_data, df=w_df)
-    print_metrics_or_data('both', w_df_tmp=w_df, act_df_tmp=activities_df)
+    w_df_calories_calculated = calculate_total_calories(user_data, df=workouts_df)
+    print_metrics_or_data('both', w_df_tmp=workouts_df, act_df_tmp=activities_df)
 
     # Model creation and predictions
     X_activities = activities_df.rename(columns={'TimeTotalInHours': 'TotalDuration'})
     y_activities = activities_df['Calories']
-    w_df_calories_estimated, rmse_results = create_models_and_predict(X_activities, y_activities, w_df)
+    w_df_calories_estimated, rmse_results = create_models_and_predict(X_activities, y_activities, workouts_df)
     print_metrics_or_data('rmse', rmse=rmse_results)
     print_metrics_or_data('both', w_df_tmp=w_df_calories_estimated, act_df_tmp=activities_df)
 
     # Nixtla forecast
-    forecast_result = create_nixtla_and_predict(X_activities, y_activities, w_df)
+    forecast_result = create_nixtla_and_predict(X_activities, y_activities, workouts_df)
 
     # Combine estimated and calculated calories
     w_df_calories_estimated.reset_index(inplace=True)
@@ -67,7 +64,7 @@ def process_data(user_data, workouts=None):
     numeric_cols = final_df.select_dtypes(include=['float64', 'int64']).columns
     final_df[numeric_cols] = final_df[numeric_cols].fillna(0.0)
     final_df['ComplianceStatus'] = ''
-    final_df['Scraped TSS'] = 0.0 # NOTE: probably this could be inserted as final columns, and used the reindex fill_value = 0.0 or a dictionary for this and before line
+    final_df['Real TSS'] = 0.0
 
 
-    return tss_df, atl_df, ctl_df, tsb_df, w_df_combined, activities_df, final_df
+    return w_df_combined, activities_df, final_df

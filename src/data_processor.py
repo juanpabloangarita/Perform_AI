@@ -8,7 +8,7 @@ from src.data_helpers import (
     convert_data_types_for_activities,
     filter_workouts_df_and_remove_nans
 )
-
+from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 
 class DataProcessor:
     def __init__(self, workouts=None, activities=None):
@@ -44,6 +44,10 @@ class DataProcessor:
     def filter_workouts_dataframe_remove_nan(df):
         return filter_workouts_df_and_remove_nans(df)
 
+    @staticmethod
+    def metrics_from_tss_total_tss(df, source):
+        return calculate_total_tss_and_metrics_from_tss(df, source=source)
+
 
     def process_workouts(self):
         df = self.clean_data(self.workouts_df)
@@ -53,6 +57,7 @@ class DataProcessor:
         df = self.filter_translate_cols(df, {}, columns_to_keep_workouts)
         df = self.filter_translate_workout_type_cols(df, self.workout_types_to_remove_both_dfs)
         df = self.filter_workouts_dataframe_remove_nan(df)
+        df = self.metrics_from_tss_total_tss(df, 'data_processing')
         self.workouts_df = df
 
 

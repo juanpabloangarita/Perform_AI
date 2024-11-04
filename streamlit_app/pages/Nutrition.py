@@ -223,7 +223,7 @@ with st.container():
             filtered_foods = pd.DataFrame(columns=['food'])  # Create an empty DataFrame to avoid NoneType
 
             if food_search:
-                foods_df = FileLoader().load_dfs(name_s='foods_df', file_path='data/raw/csv')
+                foods_df = FileLoader().load_dfs(name_s='foods_df')
                 filtered_foods = foods_df[foods_df['food'].str.lower().str.contains(food_search)]
                 if not filtered_foods.empty:
                     filtered_foods = filtered_foods.head(100)

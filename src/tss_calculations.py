@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 from params import GIVEN_DATE
+from src.data_loader.files_extracting import FileSaver
 
 def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE): # NOTE: Everytime i have a new data point, i recalculate the WHOLE metrics again, not efficient
     """
@@ -45,8 +46,12 @@ def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE):
 
     # Calculate ATL, CTL, TSB from TSS
     tss_df, atl_df, ctl_df, tsb_df = calculate_metrics_from_tss(df)
+    # This will save the TSS, ATL, CTL, and TSB DataFrames to CSV files
+    # The filenames will be 'tss.csv', 'atl.csv', 'ctl.csv', and 'tsb.csv'
+    # The index of each DataFrame will be included in the CSV files
+    FileSaver().save_dfs([tss_df, atl_df, ctl_df, tsb_df], dfs_names=['tss', 'atl', 'ctl', 'tsb'], index=True)
 
-    return df, tss_df, atl_df, ctl_df, tsb_df
+    return df
 
 def calculating_running_tss(df, mask, avg_hr, date, column, discipline):
     """Calculate TSS for running workouts."""
