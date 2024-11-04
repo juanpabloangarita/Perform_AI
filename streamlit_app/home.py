@@ -11,12 +11,10 @@ parent_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(parent_dir)
 
 from config import setup_paths # TODO: decide to erase it or to implement it
-
-from dashboard_plot import plot_dashboard
 from src.main import main
+from dashboard_plot import plot_dashboard
 from params import CLOUD_ON, CODE_PROMO
 from src.data_loader.files_extracting import FileLoader
-from src.data_loader.files_saving import FileSaver
 from src.user_data import UserManager
 
 
@@ -104,54 +102,7 @@ else:
         with col4:
             st.write(f"**Meals Pending:** {st.session_state['user_data']['meal'] if 'meal' in st.session_state['user_data'] else ''}") # TODO: how to make it appear quickly, without having to navigate to the nutrition page
 
-    st.write("")
-    # Option for user to select data source
-    data_source = st.radio(
-        f"Select Data Source for your Workouts {st.session_state['username']}",
-        ('Use Pre-Saved Data', 'Upload New Data')
-    )
 
-    uploaded_files = None
-    if data_source == 'Upload New Data': # NOTE: For the moment, i have to upload all files simultaneously, i don't know how to handle loading one file, and then the next.
-        uploaded_files = st.file_uploader(
-            label="Please insert your CSV Files",
-            type=['csv', 'xlsx'],
-            accept_multiple_files=True,
-            key="fileUploader"
-        )
-
-    if data_source == 'Use Pre-Saved Data' or uploaded_files:
-        if data_source != 'Use Pre-Saved Data':
-            # Call the main function from src/main.py
-            try:
-                # List to hold DataFrames
-                df_list = []
-
-                # Process each uploaded file
-                for uploaded_file in uploaded_files:
-                    # Read each file into a DataFrame
-                    df = pd.read_csv(uploaded_file)
-                    df_list.append(df)
-
-                # Concatenate all DataFrames
-                workouts_df = pd.concat(df_list, ignore_index=False)
-                # Save the workouts dataframe uploaded by the user online in in data/raw/csv/upload_new_data_workouts_juan.csv
-                # The saved file will be named based on the user's session state.
-                FileSaver().save_dfs(workouts_df, file_path='data/raw/csv', name='workouts_df')
-                # # The loaded DataFrame will contain the workout data uploaded by the user.
-                # workouts_df = FileLoader().load_dfs(name_s='upload_new_data_workouts_' + st.session_state['username'], file_path='data/raw/csv')
-
-                st.write("Files successfully processed and uploaded to S3.")
-
-                # Process the data using the main function
-                response_main = main(st.session_state['user_data'], workouts_df, main_arg = 'main')
-
-                # Display a success message or further processing results
-                st.write(f"{response_main} Processing completed successfully.")
-                data_source = 'Use Pre-Saved Data'
-
-            except Exception as e:
-                st.error(f"An error occurred while processing the files: {e}")
     st.write("")
     st.write("### Performance Training")
     if st.checkbox("Show Dashboard"):

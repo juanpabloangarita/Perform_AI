@@ -1,549 +1,550 @@
-Date,WorkoutType,Title,WorkoutDescription,CoachComments,HeartRateAverage,TimeTotalInHours,DistanceInMeters,Run_Cal,Bike_Cal,Swim_Cal,TotalPassiveCal,CalculatedActiveCal,EstimatedActiveCal,AutoARIMA,AutoARIMA-lo-95,AutoARIMA-hi-95,Calories,CaloriesSpent,CaloriesConsumed,Run_TSS Calculated,Bike_TSS Calculated,Swim_TSS Calculated,TOTAL TSS,ComplianceStatus,Real TSS
-2024-03-03,Run,Long Zone 2 Run,Warm Up: 5 minutes in zone 1 Main Set: 50 minutes in zone 2 Cool Down: 5 minutes in zone 1,.,132.0,1.38964354991913,8593.4599609375,39.08847570299007,0.0,0.0,2108.24,39.08847570299007,835.1684641384667,0.0,0.0,0.0,200.0,0.0,0.0,46.12845879794394,0.0,0.0,46.12845879794394,,0.0
-2024-03-05,Bike,Easy mixed Effort spin,45 minutes in Zones 1-2,Choose to do this in Zone 1 or 2 based off of how you're feeling but don't go above zone 2,118.0,0.179605826735497,5291.68994140625,0.0,3.56525865278382,0.0,2108.24,3.56525865278382,150.05178958843987,0.0,0.0,0.0,216.0,0.0,0.0,0.0,4.706555411225242,0.0,4.706555411225242,,0.0
-2024-03-05,Run,Zone 3 Intervals,Warm up for 10 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,142.0,0.697031378746033,6328.68994140625,26.03916435389319,0.0,0.0,2108.24,26.03916435389319,444.2978787707448,0.0,0.0,0.0,351.0,0.0,0.0,28.56490862971244,0.0,0.0,28.56490862971244,,0.0
-2024-03-05,Bike,Virtual Activity Cycling,,,133.0,0.617566406726837,13187.8095703125,0.0,19.809773888064615,0.0,2108.24,19.809773888064615,372.1478215516504,0.0,0.0,0.0,439.0,0.0,0.0,0.0,23.201818135825803,0.0,23.201818135825803,,0.0
-2024-03-05,Bike,Cycling,,,133.0,0.750490248203278,14105.240234375,0.0,24.07359266981704,0.0,2108.24,24.07359266981704,438.66584174979585,0.0,0.0,0.0,66.0,0.0,0.0,0.0,28.19573419450138,0.0,28.19573419450138,,0.0
-2024-03-06,Bike,Base Building,Warm Up: -7 minutes Zone 1 Main Set: 4 x 16 minutes in Zone 2 with 1 minute of recovery in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,131.0,1.14766776561737,0.0,0.0,34.68397956261262,0.0,2108.24,34.68397956261262,634.9541305035325,0.0,0.0,0.0,179.0,0.0,0.0,0.0,41.24314421832221,0.0,41.24314421832221,,0.0
-2024-03-06,Swim,Broken 500s,"Warm up Zone 1: 100 swim, 100 kick, 100 Pull 4x50 kick Zone 1 500 Zone 3 free broken done as: 150, 200, 150 on 15 seconds rest 100 Zone 2 pull on 20 seconds rest 500 free Zone 3 broken done as: 200, 100, 200 on 15 seconds rest 4x25 Zone 5 sprint 500 free Zone 3 broken done as: 100, 100, 100, 100, 100 on 15 seconds rest 100 Zone 1 easy cool down","This workout requires paddles to be completed as written, but can be done without. You may kick with or without fins",119.0,0.383405834833781,1000.0,0.0,0.0,6.186476038415382,2108.24,6.186476038415382,258.53432924530136,0.0,0.0,0.0,465.0,0.0,0.0,0.0,0.0,8.098237597746822,8.098237597746822,,0.0
-2024-03-07,Bike,Vo2 short recovery intervals,Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high zone 2 Main Set: -10 x 1 minute sprints in Zone 4 with 1 minute of recovery in Zone 1 between intervals Cool Down: -10 minutes zone 2 -5 minutes Zone 1,There are short rests in between intervals to help with recovery time. The effort on the intervals will be close to maximum effort,131.0,1.14369964599609,36677.109375,0.0,34.564057940720204,0.0,2108.24,34.564057940720204,633.0113447811877,0.0,0.0,0.0,292.0,0.0,0.0,0.0,41.100543951312034,0.0,41.100543951312034,,0.0
-2024-03-07,Bike,Virtual Activity Cycling,,,142.0,0.925900280475616,24192.23046875,0.0,38.29252361800807,0.0,2108.24,38.29252361800807,525.8108812827647,0.0,0.0,0.0,393.0,0.0,0.0,0.0,42.00681801779732,0.0,42.00681801779732,,0.0
-2024-03-07,Bike,Cycling,,,142.0,0.953881084918976,22680.19921875,0.0,39.44972773338845,0.0,2108.24,39.44972773338845,539.6452450397342,0.0,0.0,0.0,367.0,0.0,0.0,0.0,43.27626850294031,0.0,43.27626850294031,,0.0
-2024-03-12,Bike,Indoor Cycling,,,128.0,1.00240302085876,22744.349609375,0.0,27.638258074636774,0.0,2108.24,27.638258074636774,563.5921098976943,0.0,0.0,0.0,613.0,0.0,0.0,0.0,33.63526385907625,0.0,33.63526385907625,,0.0
-2024-03-14,Bike,Cycling,,,149.0,1.00136697292328,24472.1796875,0.0,49.75176770337859,0.0,2108.24,49.75176770337859,563.0813694256179,0.0,0.0,0.0,155.0,0.0,0.0,0.0,52.01353711757413,0.0,52.01353711757413,,0.0
-2024-03-14,Bike,Bike Test,Warm Up: -5 minutes zone 1 -10 minutes zone 2 -4 x :30 second sprints at Zone 4 with 1 minute of recovery in zone 1 in between intervals -4 minutes zone 2 Main Set: perform a 20 or 30-minute time trial going as hard as you can maintain for that entire duration (This should be done on a level course or on a trainer). Cool Down: 5 minutes zone 1,"Use this workout to set or re confirm your zones. When setting your zones we share with the 80/20 calculator, so that is the calculator you will use inside of TrainingPeaks. The 80/20 calculator is based off of a 30 minute test, so doing a 30 minute test is going to be more accurate. If going off of watts plug in your average 30 minute power to calculate your bike power zones. A 20 minute test is still good to go off of, but if performing a 20 minute power test times your average 20 minute power by .95 to get your number to plug into the calculator. You can choose to go for 20 or 30 minutes. This is an all out effort. If going off of heart rate, take your highest 20 minute average heart rate and plug it into the 80/20 cycling heart rate calculator to set up your cycling heart rate zones.",127.0,1.01184940338135,31596.76953125,0.0,27.040759227130007,0.0,2108.24,27.040759227130007,568.2477316031806,0.0,0.0,0.0,312.0,0.0,0.0,0.0,33.167237532386785,0.0,33.167237532386785,,0.0
-2024-03-15,Run,Run Test,Run Test! Warm up for 20 minutes in zone 1-2 then do: 20 minutes at a 5K or zone 3 effort 10 minutes easy zone 1-2 cool down,Warm up REALLY well before this test...I want you to be sweating before you start the test interval! Make sure you lap your watch or start your treadmill over so you have accurate and isolated data to calculate your run zones. The test interval should be done like you're racing a 5K...as fast as you can without slowing down or stopping! We then take your average pace for the test interval to calculate your run zones.,152.0,1.0058411359787,8800.0,48.66813681022813,0.0,0.0,2108.24,48.66813681022813,619.9617617388009,0.0,0.0,0.0,291.0,0.0,0.0,49.876419965885944,0.0,0.0,49.876419965885944,,0.0
-2024-03-15,Swim,Lap Swimming,,,137.0,0.199670556386312,550.0,0.0,0.0,4.369124184473612,2108.24,4.369124184473612,147.23874701662032,0.0,0.0,0.0,656.0,0.0,0.0,0.0,0.0,4.967844147549696,4.967844147549696,,0.0
-2024-03-19,Bike,Base Building steady effort,Warm Up; -10 minutes Zone 1 Main Set: -30 minutes Zone 2 Cool Down: -5 minutes Zone 1,,141.0,1.14953911304474,36921.23828125,0.0,46.26735615553571,0.0,2108.24,46.26735615553571,635.8702114430893,0.0,0.0,0.0,133.0,0.0,0.0,0.0,51.11515847388204,0.0,51.11515847388204,,0.0
-2024-03-19,Run,Zone 4 Pyramid Run,Warm up in zone 1-2 for 20 minutes then do: 2 minutes in zone 4 on 2 minutes easy recovery in-between 3 minutes in zone 4 on 2 minutes recovery in-between 4 minutes in zone 4 on 2 minutes recovery in-between 3 minutes zone 4 on 2 minutes recovery in-between 2 minutes in zone 4 on 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,,149.0,0.785379409790039,7403.580078125,35.24680078883813,0.0,0.0,2108.24,35.24680078883813,494.7822498085934,0.0,0.0,0.0,269.0,0.0,0.0,36.84915864771323,0.0,0.0,36.84915864771323,,0.0
-2024-03-19,Bike,Cycling,,,131.0,0.667382717132568,12992.8603515625,0.0,20.169154536648538,0.0,2108.24,20.169154536648538,397.12553357639365,0.0,0.0,0.0,96.0,0.0,0.0,0.0,23.983388290693703,0.0,23.983388290693703,,0.0
-2024-03-20,Bike,Base Build Pyramid,Main Set: -10 minutes in low Zone 1 -10 minutes in high Zone 1 -10 minutes in low Zone 2 -20 minutes in high Zone 2 -10 minutes in low Zone 2 -10 minutes in high Zone 1 -5 minutes in low Zone 1,"The warm up and cool down are included in the main set. Effort will start in low Zone 2, go to high Zone 2 and back to low Zone 1. Don't go above Zone 2",120.0,0.698213934898376,0.0,0.0,14.84637385131234,0.0,2108.24,14.84637385131234,412.55504361972265,0.0,0.0,0.0,472.0,0.0,0.0,0.0,19.27228845333105,0.0,19.27228845333105,,0.0
-2024-03-21,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 4X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,140.0,0.609796941280365,5759.759765625,21.570082075445104,0.0,0.0,2108.24,21.570082075445104,394.27029329941655,0.0,0.0,0.0,293.0,0.0,0.0,24.000368106235744,0.0,0.0,24.000368106235744,,0.0
-2024-03-22,Bike,Muscular Endurance,Warm Up: -5 minutes Zone 1 -5 minutes Zone 2 -5 minutes Zone 1 Main Set: -2 x 7 minutes in Zone 3 with 3 minutes of recovery in Zone 1 between intervals Cool Down: -10 minutes in Zones 1-2,,131.0,0.464067220687866,13241.16015625,0.0,14.02470164295148,0.0,2108.24,14.02470164295148,294.81805965563296,0.0,0.0,0.0,938.0,0.0,0.0,0.0,16.67694421959283,0.0,16.67694421959283,,0.0
-2024-03-22,Bike,Cycling,,,133.0,0.556847214698792,12342.3798828125,0.0,17.86207490113836,0.0,2108.24,17.86207490113836,341.6247686852164,0.0,0.0,0.0,329.0,0.0,0.0,0.0,20.920613012872725,0.0,20.920613012872725,,0.0
-2024-03-24,Bike,Cycling,,,134.0,1.59616804122925,37094.26171875,0.0,52.72547402750658,0.0,2108.24,52.72547402750658,852.1603648571863,0.0,0.0,0.0,317.0,0.0,0.0,0.0,61.29285278320321,0.0,61.29285278320321,,0.0
-2024-03-24,Bike,Vo2 step up intervals with foundation pyramid,"Warm Up: -5 minutes Zone 1 -5 minutes low Zone 2 -10 minutes high zone 2 Main Set: 10 x 1 minute sprints done as :30 seconds in Zone 4, :30 seconds in Zone 5 with 2 minutes of recovery in Zone 1 between intervals Cool Down Pyramid: -5 minutes low Zone 1 -5 minutes high Zone 2 -5 minutes low Zone 2 -10 minutes high Zone 2 -5 minutes low Zone 2 -5 minutes high Zone 1 -5 minutes low Zone 1",These intervals start in Zone 4 and end in Zone 5. A interval set that mixes up the interval efforts.,132.0,0.383071660995483,13241.16015625,0.0,11.928900159871267,0.0,2108.24,11.928900159871267,253.79150233413407,0.0,0.0,0.0,452.0,0.0,0.0,0.0,14.07734043431416,0.0,14.07734043431416,,0.0
-2024-03-24,Bike,Virtual Activity Cycling,,,135.0,1.52138757705688,41376.80859375,0.0,51.736966388058015,0.0,2108.24,51.736966388058015,816.272201040482,0.0,0.0,0.0,955.0,0.0,0.0,0.0,59.69821317488826,0.0,59.69821317488826,,0.0
-2024-03-26,Bike,Easy mixed Effort spin,45 minutes in Zones 1-2,Choose to do this in Zone 1 or 2 based off of how you're feeling but don't go above zone 2,131.0,0.750955820083618,0.0,0.0,22.694840002057646,0.0,2108.24,22.694840002057646,438.898096189077,0.0,0.0,0.0,105.0,0.0,0.0,0.0,26.98671176203707,0.0,26.98671176203707,,0.0
-2024-03-26,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,121.0,0.55105721950531,4399.43017578125,10.947693204996709,0.0,0.0,2108.24,10.947693204996709,360.48346766310266,0.0,0.0,0.0,562.0,0.0,0.0,14.093906592169823,0.0,0.0,14.093906592169823,,0.0
-2024-04-02,Bike,Base Building,Warm Up: -5 minutes Zone 1 Main Set: -5 x 10 minutes in Zone 2 with 1 minute of recovery in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,139.0,1.0004757642746,20814.849609375,0.0,38.10888746149241,0.0,2108.24,38.10888746149241,562.6420102314194,0.0,0.0,0.0,223.0,0.0,0.0,0.0,42.7076437023503,0.0,42.7076437023503,,0.0
-2024-04-02,Run,Zone 4 Pyramid Run,Warm up in zone 1-2 for 20 minutes then do: 2X2 minutes in zone 4 on 2 minutes easy recovery in-between 2X3 minutes in zone 4 on 2 minutes recovery in-between 1X4 minutes in zone 4 on 2 minutes recovery in-between 2X3 minutes zone 4 on 2 minutes recovery in-between 2X2 minutes in zone 4 on 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,,138.0,0.940591990947723,6630.75,31.470902527623938,0.0,0.0,2108.24,31.470902527623938,583.0316184491535,0.0,0.0,0.0,335.0,0.0,0.0,35.52419556822983,0.0,0.0,35.52419556822983,,0.0
-2024-04-04,Bike,Vo2 intervals,"Warm Up: -15 minutes Zone 1 Main Set: -2 sets of 10 x 1 minute done as :30 seconds Zone 4, :30 seconds Zone 2 with 5 minutes of recovery in Zone 1 in between interval sets",These are high intensity sprints down as 10 x :30 in Zone 4 with :30 seconds in Zone 2 between intervals. This is done a total of 2 times with 5 minutes of recovery in zone 1 in between sets,121.0,0.75162136554718,0.0,0.0,16.531037025009454,0.0,2108.24,16.531037025009454,439.2301003036173,0.0,0.0,0.0,268.0,0.0,0.0,0.0,21.281825069398643,0.0,21.281825069398643,,0.0
-2024-04-04,Run,Zone 5 Hill Repeats,Warm up for 20 minutes in zone 1-2 then do: 15X30 seconds all out zone 5 sprint on 30 seconds recovery in-between. cool down for 20 minutes in zone1-2,"This is an excellent treadmill workout. We recommend increasing both the incline and the pace as the workout progresses. Because the rest interval is so short, standing on the side of the treadmill in-between intervals is recommended. If done outside, find a steep hill for repeats, and either jog slowly downhill or walk uphill in-between intervals.",147.0,0.586744725704193,3909.67993164063,25.016785002981262,0.0,0.0,2108.24,25.016785002981262,381.02040562964606,0.0,0.0,0.0,1064.0,0.0,0.0,26.509912987727866,0.0,0.0,26.509912987727866,,0.0
-2024-04-06,Bike,Muscular Endurance broken intervals with foundation pyramid,"Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high Zone 2 Main Set: -3 x 9 minutes done as 2 minutes in Zone 3, 1 minute in Zone 4, 2 minutes in Zone 3, 1 minute in Zone 4, 2 minutes in Zone 3, 1 minute in Zone 4 with 4 minutes of recovery in Zone 1 in between interval sets Cool Down Pyramid: -5 minutes low Zone 1 -5 minutes high Zone 1 -10 minutes low Zone 2 -16 minutes high Zone 2 -10 minutes low Zone 2 -5 minutes high Zone 1 -5 minutes low Zone 1",These are zone 3 efforts broken up with zone 4 sprints to increase speed while working on muscular endurance.,146.0,1.81092000007629,52148.0703125,0.0,83.28757711966344,0.0,2108.24,83.28757711966344,954.4938819359625,0.0,0.0,0.0,505.0,0.0,0.0,0.0,88.86311102075683,0.0,88.86311102075683,,0.0
-2024-04-06,Bike,Cycling,,,147.0,1.80009329319,47635.890625,0.0,84.96740909613341,0.0,2108.24,84.96740909613341,949.3606252061534,0.0,0.0,0.0,246.0,0.0,0.0,0.0,90.03869288810472,0.0,90.03869288810472,,0.0
-2024-04-11,Bike,Cycling,,,143.0,1.02866995334625,29052.66015625,0.0,43.703504992409506,0.0,2108.24,43.703504992409506,576.532510673861,0.0,0.0,0.0,298.0,0.0,0.0,0.0,47.607389916454125,0.0,47.607389916454125,,0.0
-2024-04-11,Bike,Muscular Endurance,Warm Up: -5 minutes Zone 1 -10 minutes Zone 2 -5 minutes Zone 1 Main Set; -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 between intervals Cool Down: -10 minutes in Zones 1-2,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,143.0,1.02676999568939,30588.830078125,0.0,43.622784437996664,0.0,2108.24,43.622784437996664,575.597039493517,0.0,0.0,0.0,631.0,0.0,0.0,0.0,47.51945887044599,0.0,47.51945887044599,,0.0
-2024-04-12,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,133.0,0.833735823631287,7098.06982421875,24.157348079355234,0.0,0.0,2108.24,24.157348079355234,522.3368752094707,0.0,0.0,0.0,577.0,0.0,0.0,28.29383111327377,0.0,0.0,28.29383111327377,,0.0
-2024-04-13,Bike,Vo2 intervals,"Warm Up: -15 minutes Zone 1 Main Set; -2 sets of 10 x 1 minute done as :30 seconds in Zone 4, :30 seconds in Zone 2 with 5 minutes of recovery in Zone 1 in between interval sets Cool Down: -30 minutes Zone 1",These are high intensity sprints down as 10 x :30 seconds in Zone 4 with :30 seconds in Zone 2 in between intervals. This is done a total of 2 times with 5 minutes of recovery in zone 1 after each interval set,140.0,1.30187690258026,38176.80078125,0.0,50.98137422591434,0.0,2108.24,50.98137422591434,710.1687661712492,0.0,0.0,0.0,55.0,0.0,0.0,0.0,56.72540993140634,0.0,56.72540993140634,,0.0
-2024-04-13,Bike,Cycling,,,141.0,1.29957616329193,34474.19140625,0.0,52.306139491864485,0.0,2108.24,52.306139491864485,709.0506905920176,0.0,0.0,0.0,692.0,0.0,0.0,0.0,57.78667361704744,0.0,57.78667361704744,,0.0
-2024-04-16,Bike,Vo2 short recovery intervals,Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high zone 2 Main Set: -6 x 1 minute sprints in Zone 4 with 1 minute of recovery in Zone 1 in between intervals Cool Down: 8 minutes Zone 1,There are short rests in between intervals to help with recovery time.,133.0,0.524690806865692,0.0,0.0,16.83058879488734,0.0,2108.24,16.83058879488734,325.4249896684015,0.0,0.0,0.0,100.0,0.0,0.0,0.0,19.712504672914008,0.0,19.712504672914008,,0.0
-2024-04-16,Run,Zone 1 Run,30 minutes in zone 1,Nice and easy run!,143.0,0.500959992408752,4668.06982421875,19.22508185811374,0.0,0.0,2108.24,19.22508185811374,331.60385053655716,0.0,0.0,0.0,117.0,0.0,0.0,20.942392797875875,0.0,0.0,20.942392797875875,,0.0
-2024-04-16,Swim,Lap Swimming,,,127.0,0.314512779447767,825.0,0.0,0.0,5.509380694441004,2108.24,5.509380694441004,216.89588042176564,0.0,0.0,0.0,283.0,0.0,0.0,0.0,0.0,6.757611227333321,6.757611227333321,,0.0
-2024-04-17,Bike,Base Building,Warm Up: -7 minutes Zone 1 Main Set: -4 x 16 minutes in Zone 2 with 1 minute in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,142.0,1.25984466075897,38366.69140625,0.0,52.1034850560289,0.0,2108.24,52.1034850560289,689.7230494944212,0.0,0.0,0.0,636.0,0.0,0.0,0.0,57.1574137206338,0.0,57.1574137206338,,0.0
-2024-04-17,Bike,Cycling,,,142.0,1.25060510635376,35134.26171875,0.0,51.721364148689254,0.0,2108.24,51.721364148689254,685.2231056575889,0.0,0.0,0.0,251.0,0.0,0.0,0.0,56.73822788750518,0.0,56.73822788750518,,0.0
-2024-04-19,Bike,Easy Effort spin,45 minutes in Zone 1,This is designed as a low effort ride with a focus on active recovery. This is a great workout to work on maintaining a high cadence if you are used to keeping it under 88,0.0,0.617224752902985,13227.5400390625,0.0,0.0,0.0,2108.24,0.0,371.9763167164472,0.0,0.0,0.0,404.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-04-19,Bike,Cycling,,,116.0,0.71344918012619,14481.4501953125,0.0,13.199148066654699,0.0,2108.24,13.199148066654699,420.1713082789955,0.0,0.0,0.0,1075.0,0.0,0.0,0.0,17.724828931739957,0.0,17.724828931739957,,0.0
-2024-04-21,Bike,Muscular Endurance with step downs,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -4 x 8 minutes Zone 3 with 4 minutes of recovery in Zone 1 after each interval Cool Down: Long descending efforts done as -15 minutes high Zone 2 -15 minutes low Zone 2 -12 minutes high Zone 1 -10 minutes Zone 1,steady Muscular endurance sets working on strengthening your maximum sustained power,128.0,1.50194132328033,43375.5703125,0.0,41.411529137472726,0.0,2108.24,41.411529137472726,806.9181991418843,0.0,0.0,0.0,122.0,0.0,0.0,0.0,50.397087457004105,0.0,50.397087457004105,,0.0
-2024-04-21,Bike,Cycling,,,128.0,1.66554307937622,48646.87109375,0.0,45.92235708027787,0.0,2108.24,45.92235708027787,885.337157257529,0.0,0.0,0.0,345.0,0.0,0.0,0.0,55.88668407591617,0.0,55.88668407591617,,0.0
-2024-04-23,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 8X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,142.0,0.713475286960602,6386.97998046875,26.653463281711627,0.0,0.0,2108.24,26.653463281711627,453.7082175977829,0.0,0.0,0.0,625.0,0.0,0.0,29.238793263872772,0.0,0.0,29.238793263872772,,0.0
-2024-04-23,Bike,Easy Effort spin,30 minutes in Zone 1,Today is a brick workout. So run immediately after this ride,121.0,0.57420551776886,0.0,0.0,12.628981970584913,0.0,2108.24,12.628981970584913,350.35947215097156,0.0,0.0,0.0,249.0,0.0,0.0,0.0,16.258374153779005,0.0,16.258374153779005,,0.0
-2024-04-25,Bike,Base Build Pyramid,Main Set: -10 minutes in low Zone 1 -10 minutes in high Zone 1 -15 minutes in low Zone 2 -25 minutes in high Zone 2 -15 minutes in low Zone 2 -10 minutes in high Zone 1 -5 minutes in low Zone 1,"The warm up and cool down are included in the main set. Effort will start in low Zone 2, go to high Zone 2 and back to low Zone 1. Don't go above Zone 2",137.0,1.33489334583282,40245.4296875,0.0,48.0701829252582,0.0,2108.24,48.0701829252582,726.1998873159525,0.0,0.0,0.0,359.0,0.0,0.0,0.0,54.657447770772926,0.0,54.657447770772926,,0.0
-2024-04-25,Bike,Cycling,,,135.0,1.42020618915558,35881.26953125,0.0,48.29614818769294,0.0,2108.24,48.29614818769294,767.5051668900182,0.0,0.0,0.0,49.0,0.0,0.0,0.0,55.727924370540386,0.0,55.727924370540386,,0.0
-2024-04-28,Run,Zone 2 Run,Warm up: 5 minutes in zone 1 Main Set: 70 minutes in zone 2 Cool Down: 5 minutes zone 1,,153.0,0.92325633764267,8434.76953125,45.787407556438374,0.0,0.0,2108.24,45.787407556438374,573.2030879868428,0.0,0.0,0.0,943.0,0.0,0.0,46.6174769596148,0.0,0.0,46.6174769596148,,0.0
-2024-04-28,Bike,Endurance Step Ups,"Warm Up: -10 minutes low Zone 1 -15 minutes high Zone 1 Main Set: 3 x 12 minute step ups done as 5 minutes in low Zone 3, 5 minutes in high Zone 3, 2 minutes in low Zone 4 with 5 minutes of recovery in Zone 1 after each interval set Cool Down; 74 minutes in Zones 1-2. Base this effort off of how you are feeling but don't go above Zone 2",These are tough intervals that will really build strength and speed. Each Interval set is 12 minutes long Starting in low Zone 3 and building up to Zone 4 with 5 minutes of recovery after. The interval set is repeated a total of 3 times.,139.0,2.43942999839783,66615.546875,0.0,92.91975537911756,0.0,2108.24,92.91975537911756,1247.7783316696834,0.0,0.0,0.0,5.0,0.0,0.0,0.0,104.13276455920689,0.0,104.13276455920689,,0.0
-2024-04-28,Bike,Cycling,,,138.0,2.49903130531311,57813.76953125,0.0,92.56667793412349,0.0,2108.24,92.56667793412349,1275.1095927698557,0.0,0.0,0.0,609.0,0.0,0.0,0.0,104.48879777587426,0.0,104.48879777587426,,0.0
-2024-05-03,Bike,Endurance Step Ups,"Warm Up: -10 minutes low Zone 1 -15 minutes high Zone 1 Main Set: -3 x 15 minute step ups done as 7 minutes in low Zone 3, 5 minutes in high Zone 3, 3 minutes in low Zone 4 with 10 minutes of recovery in Zone 1 after each interval set Cool Down: 80 minutes in Zones 1-2. Base this effort off of how you are feeling but don't go above Zone 2",These are tough intervals that will really build strength and speed. Each Interval set is 15 minutes long Starting in low Zone 3 and building up to Zone 4 with 10 minutes of recovery after. The interval set is repeated a total of 3 times.,136.0,2.93690848350525,84161.2890625,0.0,102.78895673725911,0.0,2108.24,102.78895673725911,1473.3525668474103,0.0,0.0,0.0,886.0,0.0,0.0,0.0,117.733943411353,0.0,117.733943411353,,0.0
-2024-05-03,Bike,Cycling,,,136.0,2.94186615943909,73142.65625,0.0,102.96247060054188,0.0,2108.24,102.96247060054188,1475.571351779379,0.0,0.0,0.0,105.0,0.0,0.0,0.0,117.93268529967699,0.0,117.93268529967699,,0.0
-2024-05-06,Run,Zone 5 Hill Repeats,Warm up for 20 minutes in zone 1-2 then do: 15X30 seconds all out zone 5 sprint on 30 seconds recovery in-between. cool down for 20 minutes in zone1-2,"This is an excellent treadmill workout. We recommend increasing both the incline and the pace as the workout progresses. Because the rest interval is so short, standing on the side of the treadmill in-between intervals is recommended. If done outside, find a steep hill for repeats, and either jog slowly downhill or walk uphill in-between intervals.",149.0,0.637498915195465,4884.3798828125,28.61011759017464,0.0,0.0,2108.24,28.61011759017464,410.17627433445665,0.0,0.0,0.0,284.0,0.0,0.0,29.91076462020168,0.0,0.0,29.91076462020168,,0.0
-2024-05-10,Bike,Muscular Endurance,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 after each interval Cool Down: -10 minutes Zone 1,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,136.0,0.737008333206177,21342.9609375,0.0,25.794578926243126,0.0,2108.24,25.794578926243126,431.9380710462332,0.0,0.0,0.0,377.0,0.0,0.0,0.0,29.544978293579344,0.0,29.544978293579344,,0.0
-2024-05-13,Bike,Cycling,,,124.0,0.464208871126175,0.0,0.0,11.272604095582205,0.0,2108.24,11.272604095582205,294.88967490856817,0.0,0.0,0.0,553.0,0.0,0.0,0.0,14.161090885984427,0.0,14.161090885984427,,0.0
-2024-05-13,Bike,Vo2 short recovery step up intervals,"Warm Up: -15 minutes Zone 1 Main Set: -4 x 3 minute step up sprints done as :30 seconds in low Zone 4, 1 minute in high Zone 4, 1 minute in low Zone 5, :30 seconds in high Zone 5 around 120% of FTP with 5 minutes of recovery in between sets in Zone 1 -63 minutes Zone 2 Cool Down: -10 minutes Zone 1",These are high intensity step up intervals starting in low Zone 4 and going to upper Zone 5 at or around 120% of FTP.,134.0,0.731908917427063,24157.83984375,0.0,24.176805711873374,0.0,2108.24,24.176805711873374,429.3922401976501,0.0,0.0,0.0,441.0,0.0,0.0,0.0,28.105302429199224,0.0,28.105302429199224,,0.0
-2024-05-14,Run,Zone 5 Repeats,Warm up for 10 minutes in zone 1-2 then do: 8X1 minutes in zone 5 with 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,These need to be FAST and all out!,148.0,0.710555255413055,4879.97998046875,31.08548665356571,0.0,0.0,2108.24,31.08548665356571,452.03763700012166,0.0,0.0,0.0,1070.0,0.0,0.0,32.71825223613586,0.0,0.0,32.71825223613586,,0.0
-2024-05-15,Bike,Easy Effort spin,45 minutes in Zone 1,This is designed as a low effort ride with a focus on active recovery. This is a great workout to work on maintaining a high cadence if you are used to keeping it under 88,125.0,0.448272496461868,14975.6298828125,0.0,11.242676656486006,0.0,2108.24,11.242676656486006,286.8296542044494,0.0,0.0,0.0,179.0,0.0,0.0,0.0,14.010506895088737,0.0,14.010506895088737,,0.0
-2024-05-15,Bike,Virtual Activity Cycling,,,0.0,0.535780847072601,13241.16015625,0.0,0.0,0.0,2108.24,0.0,331.0146770383798,0.0,0.0,0.0,662.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-15,Bike,Cycling,,,128.0,0.750836670398712,16716.470703125,0.0,20.702070161961885,0.0,2108.24,20.702070161961885,438.8386578527927,0.0,0.0,0.0,137.0,0.0,0.0,0.0,25.194047701786953,0.0,25.194047701786953,,0.0
-2024-05-19,Bike,Race Pace Intervals,Warm Up: -20 minutes Zone 1 Main Set: -20 minutes Zone 2 -10 minutes Zone 1 -20 minutes high Zone 2 - low Zone 2b -10 minutes Zone 1 -20 minutes Zone 2 -10 minutes Zone 1 -10 minutes high Zone 2 - low Zone 2b -10 minutes Zone 3 -10 minutes Zone 1 Cool Down: -70 minutes Zones 1-2,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. The first 30 minutes of these race intervals are at or just below expected race pace, Second 30 minutes are just above race pace. Third 30 minutes at or just below expected race pace, The Last set is 40 minutes long giving you a longer push to get through the fatigue. Done as 30 minutes high Zone 2-low Zone 2b with the last 10 minutes being in Zone 3. These higher paced intervals will get your muscles used to higher intensity to better set you up on race day.",137.0,2.58684349060059,84165.46875,0.0,93.15353932984337,0.0,2108.24,93.15353932984337,1315.225720585251,0.0,0.0,0.0,438.0,0.0,0.0,0.0,105.91877127865553,0.0,105.91877127865553,,0.0
-2024-05-19,Run,Zone 2 Run,"Warm up for 5 minutes in zone 1, 65 minutes in zone 2, 5 minutes zone 1 cool down",,135.0,1.04708671569824,8371.66015625,32.16389860093734,0.0,0.0,2108.24,32.16389860093734,643.2547180224635,0.0,0.0,0.0,247.0,0.0,0.0,37.11325594183762,0.0,0.0,37.11325594183762,,0.0
-2024-05-19,Bike,Cycling,,,134.0,3.50875282287598,0.0,0.0,115.90299458007824,0.0,2108.24,115.90299458007824,1725.478778179045,0.0,0.0,0.0,298.0,0.0,0.0,0.0,134.73610839843766,0.0,134.73610839843766,,0.0
-2024-05-21,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X4 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,139.0,0.904826402664185,8534.169921875,31.13220649907338,0.0,0.0,2108.24,31.13220649907338,562.7464224242933,0.0,0.0,0.0,99.0,0.0,0.0,34.88905794413216,0.0,0.0,34.88905794413216,,0.0
-2024-05-23,Bike,Indoor Cycling,,,128.0,0.610420286655426,17055.849609375,0.0,16.830509351541114,0.0,2108.24,16.830509351541114,368.5600118862985,0.0,0.0,0.0,500.0,0.0,0.0,0.0,20.482427705573677,0.0,20.482427705573677,,0.0
-2024-05-23,Bike,Virtual Activity Cycling,,,0.0,0.568418860435486,18635.30078125,0.0,0.0,0.0,2108.24,0.0,347.44840934242177,0.0,0.0,0.0,258.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-24,Bike,Cycling,,,140.0,1.19820296764374,26121.419921875,0.0,46.92151291030431,0.0,2108.24,46.92151291030431,659.6638059632319,0.0,0.0,0.0,246.0,0.0,0.0,0.0,52.208126886580615,0.0,52.208126886580615,,0.0
-2024-05-24,Bike,Virtual Activity Cycling,,,0.0,0.381479740142822,13241.16015625,0.0,0.0,0.0,2108.24,0.0,252.98360790995588,0.0,0.0,0.0,1239.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-24,Bike,Endurance Step Ups,"Warm Up: -9 minutes Zone 1 Main Set: -3 x 12 minute step ups done as 5 minutes in low Zone 3, 5 minutes in high Zone 3, 2 minutes in low Zone 4 With 10 minutes of recovery in Zone 1 after each interval set",These are tough intervals that will really build strength and speed. Each Interval set is 12 minutes long Starting in low Zone 3 and building up to Zone 4 with 10 minutes of recovery after. The interval set is repeated a total of 3 times.,0.0,0.472653329372406,13238.7099609375,0.0,0.0,0.0,2108.24,0.0,299.1581517768209,0.0,0.0,0.0,1004.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-24,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x15 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,130.0,0.89782190322876,6960.41015625,23.778544177587904,0.0,0.0,2108.24,23.778544177587904,558.7701632819067,0.0,0.0,0.0,148.0,0.0,0.0,28.492860399987094,0.0,0.0,28.492860399987094,,0.0
-2024-05-26,Bike,Race Pace Intervals,"Warm Up: -20 minutes Zone 1 Main Set: -4 x 30 minutes done as 25 minutes in high Zone 2 - mid Zone 2b, 5 minutes in Zone 3 with 10 minutes of recovery in Zone 1 after each interval set Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -20 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at.",0.0,2.93098616600037,84164.296875,0.0,0.0,0.0,2108.24,0.0,1470.7013057089098,0.0,0.0,0.0,314.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-26,Bike,Cycling,,,134.0,3.43102312088013,82315.890625,0.0,113.33538560791027,0.0,2108.24,113.33538560791027,1691.6579754929421,0.0,0.0,0.0,438.0,0.0,0.0,0.0,131.75128784179702,0.0,131.75128784179702,,0.0
-2024-05-26,Bike,Virtual Activity Cycling,,,0.0,0.465757787227631,10015.66015625,0.0,0.0,0.0,2108.24,0.0,295.67274110755557,0.0,0.0,0.0,593.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-05-28,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 8X4 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,130.0,1.13442468643188,9457.16015625,30.044898019817733,0.0,0.0,2108.24,30.044898019817733,692.4461645204854,0.0,0.0,0.0,478.0,0.0,0.0,36.00157682560677,0.0,0.0,36.00157682560677,,0.0
-2024-05-30,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x20 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,139.0,0.87030416727066,8174.14990234375,29.94440588017419,0.0,0.0,2108.24,29.94440588017419,543.1379753664071,0.0,0.0,0.0,645.0,0.0,0.0,33.557920537598406,0.0,0.0,33.557920537598406,,0.0
-2024-06-02,Bike,Virtual Activity Cycling,,,0.0,0.830900251865387,24050.94921875,0.0,0.0,0.0,2108.24,0.0,478.70369102118605,0.0,0.0,0.0,528.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.149001941084862,2170.61010742188,0.0,0.0,0.0,2108.24,0.0,134.3640257157715,0.0,0.0,0.0,1175.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-03,Bike,Cycling,,,134.0,4.37784671783447,105783.8828125,0.0,144.61136763509106,0.0,2108.24,144.61136763509106,2093.9821913429073,0.0,0.0,0.0,1510.0,0.0,0.0,0.0,168.10931396484366,0.0,168.10931396484366,,0.0
-2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.65954864025116,13241.16015625,0.0,0.0,0.0,2108.24,0.0,393.20141210095005,0.0,0.0,0.0,239.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.605925559997559,13241.16015625,0.0,0.0,0.0,2108.24,0.0,366.30275807073645,0.0,0.0,0.0,526.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-03,Run,Brick Run,"5 minutes in zone 1, 50 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,133.0,0.920588552951813,7039.240234375,26.673890555243677,0.0,0.0,2108.24,26.673890555243677,571.6899492979323,0.0,0.0,0.0,719.0,0.0,0.0,31.24128327434177,0.0,0.0,31.24128327434177,,0.0
-2024-06-03,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",0.0,2.7251181602478,84165.46875,0.0,0.0,0.0,2108.24,0.0,1378.0286667367063,0.0,0.0,0.0,599.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-07,Swim,Lap Swimming,,,126.0,0.213540000915527,525.0,0.0,0.0,3.055651241852941,2108.24,3.055651241852941,155.6676247813919,0.0,0.0,0.0,345.0,0.0,0.0,0.0,0.0,3.777699250916098,3.777699250916098,,0.0
-2024-06-09,Run,Brick Run,"5 minutes in zone 1, 20 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,145.0,0.746568620204926,7126.2001953125,30.213327081477356,0.0,0.0,2108.24,30.213327081477356,472.62728892552923,0.0,0.0,0.0,284.0,0.0,0.0,32.45821935012934,0.0,0.0,32.45821935012934,,0.0
-2024-06-18,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,149.0,1.06181001663208,9439.33984375,47.65264490678337,0.0,0.0,2108.24,47.65264490678337,651.5598692986755,0.0,0.0,0.0,555.0,0.0,0.0,49.81898591798656,0.0,0.0,49.81898591798656,,0.0
-2024-06-23,Bike,Race Pace Intervals,"Warm Up: -30 minutes Zone 1 Main Set: 5 x 30 minutes done as 25 minutes at high Zone 2 - mid Zone 2b, 5 minutes Zone 3 with 15 minutes of recovery in Zone 1 after each interval set Cool Down: 105 minutes Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",0.0,2.95757389068604,84164.7265625,0.0,0.0,0.0,2108.24,0.0,1482.5974690557994,0.0,0.0,0.0,1178.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-23,Bike,Virtual Activity Cycling,,,0.0,1.52404129505157,39951.53125,0.0,0.0,0.0,2108.24,0.0,817.5480001937148,0.0,0.0,0.0,945.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-06-23,Bike,Cycling,,,141.0,4.74553346633911,109657.796875,0.0,191.00114519250818,0.0,2108.24,191.00114519250818,2244.553829614035,0.0,0.0,0.0,2001.0,0.0,0.0,0.0,211.0138684472875,0.0,211.0138684472875,,0.0
-2024-06-24,Swim,Lap Swimming,,,136.0,0.380623890558879,1000.0,0.0,0.0,7.1739877320288405,2108.24,7.1739877320288405,256.85509883811346,0.0,0.0,0.0,629.0,0.0,0.0,0.0,0.0,8.217048722805687,8.217048722805687,,0.0
-2024-06-25,Run,Zone 3 Intervals,Warm up for 10 minutes in zone 1-2 then do: 8X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 5 minutes in zone 1-2,,144.0,0.487239450216293,4305.7900390625,19.20399786563939,0.0,0.0,2108.24,19.20399786563939,323.68408643844566,0.0,0.0,0.0,1148.0,0.0,0.0,20.77415165651381,0.0,0.0,20.77415165651381,,0.0
-2024-06-25,Swim,Lap Swimming,,,123.0,0.178636667463515,525.0,0.0,0.0,4.262413854098662,2108.24,4.262413854098662,134.44721526581588,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,5.398146219693851,5.398146219693851,,0.0
-2024-06-30,Swim,Lap Swimming,,,144.0,0.518218613730537,1600.0,0.0,0.0,16.784570521388318,2108.24,16.784570521388318,339.69224359857577,0.0,0.0,0.0,398.0,0.0,0.0,0.0,0.0,18.156907532501574,18.156907532501574,,0.0
-2024-07-03,Bike,Cycling,,,131.0,1.75054383277893,33028.12109375,0.0,52.90366109298263,0.0,2108.24,52.90366109298263,925.8327154615722,0.0,0.0,0.0,842.0,0.0,0.0,0.0,62.90839031882905,0.0,62.90839031882905,,0.0
-2024-07-03,Bike,Race Pace Intervals,Warm Up: -30 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -25 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",0.0,1.63409972190857,40997.71875,0.0,0.0,0.0,2108.24,0.0,870.3141776157673,0.0,0.0,0.0,290.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-07-04,Swim,500s Swim,Warm up Zone 1: 200 swim Main Set: 4x500 Zone 2-3 #1: Moderate pace #2: Moderate pull #3: FAST pull #4: race pace Cool Down Zone 1: 100 easy,"This workout requires paddles as written, but can be done without. You may drill with or without fins",133.0,0.196872778998481,600.0,0.0,0.0,5.664321014662988,2108.24,5.664321014662988,145.5379070844392,0.0,0.0,0.0,527.0,0.0,0.0,0.0,0.0,6.634227467095371,6.634227467095371,,0.0
-2024-07-04,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x25 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,145.0,0.797847211360931,7401.490234375,32.28855071791745,0.0,0.0,2108.24,32.28855071791745,501.8919425112198,0.0,0.0,0.0,248.0,0.0,0.0,34.687634992123975,0.0,0.0,34.687634992123975,,0.0
-2024-07-05,Swim,Endurance Swim,Warm up: 200 Zone 1 easy 8x50 Zone 5 sprint 2x1000 Zone 2b Race Pace! Record your time! 100 easy Zone 1 cool down,2700 yards,134.0,0.515355836020576,1350.0,0.0,0.0,9.486489195204493,2108.24,9.486489195204493,337.9732663000896,0.0,0.0,0.0,607.0,0.0,0.0,0.0,0.0,11.027951789826975,11.027951789826975,,0.0
-2024-07-07,Bike,Virtual Activity Cycling,,,0.0,0.59652304649353,13241.16015625,0.0,0.0,0.0,2108.24,0.0,361.57927966043826,0.0,0.0,0.0,404.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-07-07,Bike,Cycling,,,140.0,5.00657558441162,92893.5234375,0.0,196.0570181046584,0.0,2108.24,196.0570181046584,2349.52941245315,0.0,0.0,0.0,1121.0,0.0,0.0,0.0,218.14662493469578,0.0,218.14662493469578,,0.0
-2024-07-07,Bike,Virtual Activity Cycling,,,0.0,0.470521688461304,12016.419921875,0.0,0.0,0.0,2108.24,0.0,298.0808147133993,0.0,0.0,0.0,1419.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-07-07,Run,Brick Run,"5 minutes in zone 1, 50 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,140.0,0.943612456321716,8238.1201171875,33.37799315217252,0.0,0.0,2108.24,33.37799315217252,584.7433647946717,0.0,0.0,0.0,2142.0,0.0,0.0,37.13866824880989,0.0,0.0,37.13866824880989,,0.0
-2024-07-07,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -4 x 35 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down: -85 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be slightly above the pace you plan on racing at.",0.0,3.46738219261169,84165.46875,0.0,0.0,0.0,2108.24,0.0,1707.4957255166346,0.0,0.0,0.0,357.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-2024-07-10,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,145.0,1.07429695129395,11098.6103515625,43.4763587614607,0.0,0.0,2108.24,43.4763587614607,658.5995433099034,0.0,0.0,0.0,258.0,0.0,0.0,46.70671275026645,0.0,0.0,46.70671275026645,,0.0
-2024-07-10,Swim,Long Endurance Swim,"Warm up Zone 1: 200 swim, 200 kick, 200 pull 500 Zone 2b 20 x 25 Zone 5 SPRINT 1000 Zone 2b 100 Zone 1 easy kick 500 Zone 2b 100 Zone 1 easy cool down","3300 yards. This workout requires paddles as written, but may be done without. You may kick with or without fins.",133.0,0.263868612713284,700.0,0.0,0.0,5.007075072622502,2108.24,5.007075072622502,186.2159576778364,0.0,0.0,0.0,1442.0,0.0,0.0,0.0,0.0,5.864440749493281,5.864440749493281,,0.0
-2024-07-14,Swim,Broken 1000,"Warm up Zone 1: 200 drill, 200 swim, 200 kick Broken 1000 Zone 3: 5x100 negative split (second half of the 100 is fatser than the first) 5x100 done as 100 SPRINT, 100 race pace, 100 kick, 100 SPRINT 3x300 Zone 3 as: first 100 FAST, 2nd 100 race pace, 3rd 100 easy 8x50 Zone 1 25 drill/25 sprint 100 Zone 1 cool down easy",3000 yards. You may drill and kick with or without fins.,139.0,0.593482780456543,1675.0,0.0,0.0,14.172837199668885,2108.24,14.172837199668885,384.8162721350503,0.0,0.0,0.0,1012.0,0.0,0.0,0.0,0.0,15.883131775665088,15.883131775665088,,0.0
-2024-07-14,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",132.0,1.33090174198151,33738.71875,0.0,41.4444492224743,0.0,2108.24,41.4444492224743,724.2631237349267,0.0,0.0,0.0,1004.0,0.0,0.0,0.0,48.90875210608801,0.0,48.90875210608801,,0.0
-2024-07-20,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",151.0,3.39542126655579,90015.96875,0.0,177.4128352620099,0.0,2108.24,177.4128352620099,1676.1200316805634,0.0,0.0,0.0,437.0,0.0,0.0,0.0,183.02155040279473,0.0,183.02155040279473,,0.0
-2024-07-20,Run,Brick Run Mile Repeats,Warm up for 10 minutes in zone 1-2 then do: 2X1 miles in zone 2b with .25 miles zone 1 recovery in-between 5 minutes in zone 1-2,,137.0,0.793654441833496,5904.22998046875,25.815800595733503,0.0,0.0,2108.24,25.815800595733503,499.5014463267393,0.0,0.0,0.0,372.0,0.0,0.0,29.353451284259148,0.0,0.0,29.353451284259148,,0.0
-2024-07-21,Run,Running,,,133.0,0.229660555720329,2157.17993164063,6.654373996393972,0.0,0.0,2108.24,6.654373996393972,174.18535670876219,0.0,0.0,0.0,1000.0,0.0,0.0,7.793808053767004,0.0,0.0,7.793808053767004,,0.0
-2024-07-29,Bike,Race Pace Intervals,"Warm Up: -30 minutes Zone 1 Main Set: 5 x 30 minutes done as 25 minutes at high Zone 2 - mid Zone 2b, 5 minutes Zone 3 with 15 minutes of recovery in Zone 1 after each interval set Cool Down: 105 minutes Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",143.0,5.11041021347046,116454.5,0.0,217.1180732470463,0.0,2108.24,217.1180732470463,2390.8413855174344,0.0,0.0,0.0,3297.0,0.0,0.0,0.0,236.51248962243707,0.0,236.51248962243707,,0.0
-2024-07-30,Run,Running,,,140.0,0.433277487754822,3661.23999023438,15.326136193289399,0.0,0.0,2108.24,15.326136193289399,292.49337736388003,0.0,0.0,0.0,3122.0,0.0,0.0,17.05292121739216,0.0,0.0,17.05292121739216,,0.0
-2024-07-30,Swim,Lap Swimming,,,126.0,0.175857217576769,400.0,0.0,0.0,1.99270923597612,2108.24,1.99270923597612,132.75614703337783,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,2.463584876746504,2.463584876746504,,0.0
-2024-07-30,Swim,Lap Swimming,,,118.0,0.0208802774217394,50.0,0.0,0.0,0.25854330772265194,2108.24,0.25854330772265194,38.17873983338427,0.0,0.0,0.0,355.0,0.0,0.0,0.0,0.0,0.34130718764204737,0.34130718764204737,,0.0
-2024-07-30,Swim,Lap Swimming,,,130.0,0.618769713507758,875.0,0.0,0.0,1.738293971435548,2108.24,1.738293971435548,399.94704453743054,0.0,0.0,0.0,244.0,0.0,0.0,0.0,0.0,2.0829268222793464,2.0829268222793464,,0.0
-2024-08-03,Run,Brick Run Mile Repeats,Warm up for 10 minutes in zone 1-2 then do: 3X1 miles in zone 2b (race pace) with .25 miles zone 1 recovery in-between 5 minutes in zone 1-2,,108.0,2.4390766620636,10138.990234375,30.187242687719895,0.0,0.0,2108.24,30.187242687719895,1405.977808606524,0.0,0.0,0.0,405.0,0.0,0.0,43.54054206658988,0.0,0.0,43.54054206658988,,0.0
-2024-08-05,Bike,Race Pace Intervals,Warm Up: -30 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -25 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",146.0,5.30361700057983,137148.46875,0.0,243.92320474142522,0.0,2108.24,243.92320474142522,2467.0384909863546,0.0,0.0,0.0,49.0,0.0,0.0,0.0,260.25219574263036,0.0,260.25219574263036,,0.0
-2024-08-08,Swim,Lap Swimming,,,139.0,1.19343747986688,4000.0,0.0,0.0,47.731956732852936,2108.24,47.731956732852936,739.7655352357444,0.0,0.0,0.0,122.0,0.0,0.0,0.0,0.0,53.49196833474949,53.49196833474949,,0.0
-2024-08-18,Bike,Cycling,,,147.0,6.69041347503662,174859.09375,0.0,315.79868716044274,0.0,2108.24,315.79868716044274,2988.2792472865945,0.0,0.0,0.0,298.0,0.0,0.0,0.0,334.6471465963496,0.0,334.6471465963496,,0.0
-2024-08-18,Run,Running,,,128.0,5.72749328613281,42693.83984375,142.64541926720423,0.0,0.0,2108.24,142.64541926720423,3027.401926414916,0.0,0.0,0.0,125.0,0.0,0.0,173.59691418989792,0.0,0.0,173.59691418989792,,0.0
-2024-08-18,Swim,Lap Swimming,,,140.0,1.45642249001397,6350.0,0.0,0.0,129.14817327427184,2108.24,129.14817327427184,892.6942129594662,0.0,0.0,0.0,392.0,0.0,0.0,0.0,0.0,143.699207448031,143.699207448031,,0.0
-2024-08-23,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,125.0,0.815555572509766,19062.240234375,0.0,20.454138207211166,0.0,2108.24,20.454138207211166,471.0749529171629,0.0,0.0,0.0,208.0,0.0,0.0,0.0,25.489734619371397,0.0,25.489734619371397,,0.0
-2024-08-27,Swim,easy swim,20 minutes easy swim,,126.0,0.493931110170152,2100.0,0.0,0.0,36.551859596804455,2108.24,36.551859596804455,325.102522041833,0.0,0.0,0.0,406.0,0.0,0.0,0.0,0.0,45.189035557181576,45.189035557181576,,0.0
-2024-08-29,Swim,Lap Swimming,,,115.0,0.197228889465332,1200.0,0.0,0.0,39.04040634502137,2108.24,39.04040634502137,145.75440587446053,0.0,0.0,0.0,632.0,0.0,0.0,0.0,0.0,52.88233582165688,52.88233582165688,,0.0
-2024-09-04,Bike,Muscular Endurance,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 after each interval Cool Down: -10 minutes Zone 1,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,130.0,0.663369417190552,14509.91015625,0.0,19.45026716849277,0.0,2108.24,19.45026716849277,395.1154348061333,0.0,0.0,0.0,298.0,0.0,0.0,0.0,23.306462457725374,0.0,23.306462457725374,,0.0
-2024-11-04,Swim,Simple Swim,"Warm Up Zone 1 (do this 2 times through) : 2x200 (50 kick, 50 swim, 50 kick, 50 swim), 3x100 Easy 1x200 Zone 3 2x75 Zone 4-5 1x150 Zone 3 2x125 Zone 3 1x100 Zone 4 2x75 Zone 5 1x50 Zone 5 cool down Zone 1 200 easy",2650 yards. You can kick with or without fins.,0.0,0.999949333932665,2423.16015625,0.0,0.0,0.0,2108.24,0.0,626.2146969540024,-66.95656805177734,-390.77579754497856,256.86266144142394,63.0,0.0,0.0,0.0,0.0,32.140283995697,32.140283995697,,0.0
-2024-11-05,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 4X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,0.0,0.833333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,522.1077529972836,205.4625673983726,-118.35666209482864,529.2817968915739,680.0,0.0,0.0,32.798306126630685,0.0,0.0,32.798306126630685,,0.0
-2024-11-06,Bike,Base Building,Warm Up: -5 minutes Zone 1 Main Set: -4 x 9 minutes in Zone 2 with 1 minute of recovery in Zone 1 after each interval,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,0.0,0.75,0.0,0.0,0.0,0.0,2108.24,0.0,438.4212718267374,322.72615306947887,-1.0930764237223798,646.5453825626801,358.0,0.0,0.0,0.0,30.06578449905482,0.0,30.06578449905482,,0.0
-2024-11-06,Swim,Sprints!,"Warm up with: 200 swim 100 kick 200 pull Really focus on your form during the warm-up because you MUST keep good form on these sprints. You will have slower times to start with, but they will begin to drop as good form becomes second nature. Main Set: 8x100 ALL OUT SPRINT! I want the recovery between these sets to be 2-3 minutes. I want your HR to come all the way back down, and the lactic acid to build up in your arms and legs. These need to be ALL OUT! As fast as humanly possible. That's the only reason you get such a long rest is because you need to be spent by the end of each 100. Also, these cannot get slower. I would prefer if they got faster. Record your times! 50s on one minute 15 seconds. I want you to do 10x50 sprints LEAVING on 1:15, so watch the clock! These are not necessarily all out, but still a sprint. 10x25 on 30 seconds. These ARE all out, and I want you leaving the wall at 30 seconds. Don't sandbag these because they're at the end of the workout. Cooldown: 200 easy swim",,0.0,0.5,1188.71997070313,0.0,0.0,0.0,2108.24,0.0,328.7494547911557,322.72615306947887,-1.0930764237223798,646.5453825626801,481.0,0.0,0.0,0.0,0.0,16.070956249999995,16.070956249999995,,0.0
-2024-11-07,Bike,Muscular Endurance short intervals,Warm Up: -5 minutes Zone 1 -5 minutes Zone 2 -5 minutes Zone 1 Main Set: -4 x 2 minutes Zone 3 with 1 minute of recovery in Zone 1 after each interval Cool Down: -18 minutes in Zones 1-2,,0.0,0.75,0.0,0.0,0.0,0.0,2108.24,0.0,438.4212718267374,236.88026115465027,-117.99459481160574,591.7551171209063,285.0,0.0,0.0,0.0,30.06578449905482,0.0,30.06578449905482,,0.0
-2024-11-07,Run,Zone 2 Run,"Warm up for 5 minutes in zone 1, 20 minutes in zone 2, 5 minutes zone 1 cool down",,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,331.04986782715616,236.88026115465027,-117.99459481160574,591.7551171209063,597.0,0.0,0.0,19.678983675978415,0.0,0.0,19.678983675978415,,0.0
-2024-11-09,Bike,Test Ride,10 minutes Zone 1,A short ride to make sure that your bike is running smoothly. Go through all of gears and check that your brakes are not rubbing,0.0,0.166666666666667,0.0,0.0,0.0,0.0,2108.24,0.0,143.42176582934957,203.36628520288042,-151.5085707633756,558.2411411691364,479.0,0.0,0.0,0.0,6.681285444234418,0.0,6.681285444234418,,0.0
-2024-11-09,Run,Shake Out Run,5 minutes in zone 1 then do: 10X15 second zone 5 bursts with 45 seconds easy zone 1 jog in-between.,,0.0,0.25,0.0,0.0,0.0,0.0,2108.24,0.0,186.0469299381711,203.36628520288042,-151.5085707633756,558.2411411691364,294.0,0.0,0.0,9.839491837989208,0.0,0.0,9.839491837989208,,0.0
-2024-11-09,Swim,Shake Out Swim,300 Easy Zone 1 Swim 5X30 seconds Zone 5 bursts on 20 seconds recovery in-between. 300 easy cool down,,0.0,0.288333333333333,662.940002441406,0.0,0.0,0.0,2108.24,0.0,201.04404191524782,203.36628520288042,-151.5085707633756,558.2411411691364,534.0,0.0,0.0,0.0,0.0,9.26758477083332,9.26758477083332,,0.0
-2024-11-14,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,193.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0
-2024-11-15,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,578.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0
-2024-11-17,Run,active recovery run,Nice and easy. You can go for a walk or hike or light jog. Just something easy to get your muscles moving,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,442.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0
-2024-11-19,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,568.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0
-2024-11-20,Run,active recovery run,Nice easy jog keeping it at a light jog,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,257.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0
-2024-11-21,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,441.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0
-2024-11-22,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,369.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0
-2024-11-23,Run,active recovery run,Nice easy jog keeping it at a light jog,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,309.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0
-2024-11-24,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,167.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,413.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,193.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,434.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,560.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,640.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,352.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,718.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,463.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1683.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,537.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,440.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,498.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,281.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,495.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,529.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,549.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,628.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,466.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,460.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,258.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,729.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1187.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,415.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,32.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,381.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,136.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,340.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,259.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,476.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,431.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,258.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,542.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,339.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,588.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,501.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,691.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,328.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,386.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,462.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,387.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,369.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,710.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,614.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,763.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,848.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,439.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,394.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,344.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,312.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,455.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,693.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,565.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,152.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,192.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,155.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,538.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,71.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,541.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,458.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,768.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,384.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,626.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,892.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,504.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,782.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,26.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,320.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,441.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,624.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,843.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,692.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,838.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,74.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,240.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,738.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,15.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,504.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,401.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,600.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,276.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,388.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,659.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,915.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,623.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,490.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,309.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,220.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,323.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,659.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,307.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1067.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,732.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,840.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,501.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,227.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,108.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,157.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,354.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,447.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,831.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,260.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,529.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,453.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,740.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1673.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,790.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,608.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,419.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,690.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,337.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,18.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1799.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,508.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,550.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,527.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,136.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,411.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2010.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,558.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,692.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,335.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,663.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,753.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,305.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,510.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1592.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,795.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,707.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,968.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,519.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,503.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,406.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,652.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,233.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,555.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,460.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,791.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3183.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1722.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,46.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,270.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,422.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,415.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,147.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,78.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,422.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1396.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,528.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,414.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,387.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,714.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,553.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,98.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,536.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,670.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,767.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1042.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,691.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,113.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1263.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,31.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,81.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,39.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,164.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,98.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,129.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,59.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,279.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,645.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,308.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,453.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1250.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,439.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,283.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,560.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,779.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,711.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,288.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,272.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,851.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,809.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,353.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,388.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,592.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,622.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,292.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,182.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,652.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,352.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,365.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,791.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,774.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,238.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,57.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,114.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,273.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,65.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,182.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,122.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,696.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,282.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,156.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,232.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,154.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,253.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,403.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,755.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,235.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,648.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,129.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,648.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,270.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,518.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,220.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1252.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,211.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,904.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,102.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,705.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,351.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,642.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,588.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,334.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,361.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,330.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,360.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,487.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,886.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,645.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,391.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,435.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,749.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,340.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,337.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,392.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,351.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,602.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,563.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,305.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,666.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,777.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,777.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,286.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,737.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,763.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,345.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,323.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,689.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,464.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,346.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,245.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,772.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,333.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,464.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,316.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,727.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,657.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,318.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,210.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,493.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,669.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,703.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,647.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,573.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,329.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,226.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,462.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,312.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,573.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,638.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,463.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,613.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,526.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,530.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,319.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,788.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,498.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,77.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,454.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,317.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,615.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,194.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,605.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,621.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,488.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,540.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,497.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,735.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,143.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,793.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,620.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,578.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,333.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,429.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,190.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,248.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,842.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,822.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,461.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,297.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,595.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,644.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,381.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,430.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1026.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1150.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,715.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,636.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,486.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,752.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,825.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,200.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,374.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,332.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,750.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,832.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,806.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,809.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,290.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,468.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,775.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,760.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1227.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1331.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,674.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1429.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1693.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,481.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,456.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,426.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,259.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,515.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,261.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,394.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1599.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1396.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,643.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,631.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,350.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,716.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,519.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1577.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,599.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,548.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,507.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1949.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,543.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,172.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,544.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,729.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,251.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,107.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,339.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,378.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,852.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,543.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,142.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,317.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2377.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,620.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,793.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,180.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,667.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,414.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1996.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,467.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,160.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2617.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,304.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,11.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,109.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,310.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,928.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2831.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,730.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,957.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3196.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3140.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,428.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,302.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,240.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,367.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,555.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,66.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,94.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,278.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,357.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,187.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
-,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,601.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+,WorkoutType,Title,WorkoutDescription,CoachComments,HeartRateAverage,TimeTotalInHours,DistanceInMeters,Run_Cal,Bike_Cal,Swim_Cal,TotalPassiveCal,CalculatedActiveCal,EstimatedActiveCal,AutoARIMA,AutoARIMA-lo-95,AutoARIMA-hi-95,Calories,CaloriesSpent,CaloriesConsumed,Run_TSS Calculated,Bike_TSS Calculated,Swim_TSS Calculated,TOTAL TSS,ComplianceStatus,Real TSS,TSS
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,707.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,795.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1592.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,510.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,305.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,753.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,663.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,335.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,692.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,558.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2010.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,411.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,136.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,527.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,550.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,508.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1799.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,18.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,337.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,690.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,419.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,608.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,601.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,790.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,968.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,503.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,553.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,714.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,387.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,414.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,528.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1396.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,422.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,78.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,147.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,415.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,422.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,270.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,46.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1722.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3183.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,791.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,460.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,555.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,233.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,652.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,406.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,519.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,98.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1673.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,453.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,504.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,15.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,738.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,240.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,74.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,838.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,692.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,843.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,624.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,441.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,320.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,26.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,782.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,504.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,892.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,626.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,384.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,768.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,458.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,541.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,401.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,740.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,600.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,388.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,529.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,260.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,831.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,447.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,354.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,157.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,108.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,227.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,501.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,840.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,732.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1067.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,307.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,659.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,323.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,220.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,309.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,490.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,623.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,915.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,659.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,276.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,536.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,670.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,767.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,361.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,334.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,588.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,642.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,351.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,705.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,102.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,904.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,211.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1252.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,220.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,518.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,270.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,648.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,129.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,648.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,235.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,755.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,403.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,330.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,253.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,360.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,886.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,464.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,689.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,323.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,345.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,763.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,737.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,286.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,777.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,777.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,666.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,305.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,563.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,602.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,351.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,392.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,337.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,340.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,749.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,435.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,391.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,645.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,487.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,154.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,232.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,156.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,779.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,560.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,283.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,439.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1250.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,453.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,308.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,645.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,279.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,59.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,129.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,98.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,164.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,39.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,81.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,31.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1263.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,113.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,691.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1042.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,711.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,288.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,272.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,851.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,282.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,696.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,122.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,182.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,65.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,273.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,114.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,57.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,238.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,774.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,71.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,791.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,352.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,652.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,182.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,292.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,622.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,592.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,388.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,353.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,809.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,365.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,538.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,155.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,192.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,290.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,468.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,775.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,760.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1227.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1331.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,674.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1429.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1693.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,481.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,456.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,426.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,259.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,515.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,261.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,394.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1599.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1396.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,643.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,631.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,350.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,809.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,716.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,806.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,832.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,248.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,842.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,822.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,461.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,297.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,595.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,644.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,381.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,430.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1026.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1150.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,715.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,636.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,486.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,752.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,825.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,200.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,374.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,332.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,750.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,519.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1577.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,599.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,304.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,11.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,109.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,310.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,928.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2831.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,730.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,957.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3196.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3140.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,428.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,302.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,240.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,367.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,555.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,66.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,94.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,278.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,357.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,187.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2617.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,160.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,467.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1996.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,548.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,507.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1949.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,543.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,172.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,544.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,729.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2255.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,251.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,107.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,190.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,339.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,852.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,543.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,142.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,317.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2377.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,620.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,793.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,180.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,667.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,414.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,378.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,346.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,429.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,259.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,340.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,136.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,381.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,32.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,415.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1187.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,729.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,258.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,460.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,466.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,628.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,549.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,529.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,495.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,281.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,498.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,440.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,537.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1683.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,463.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,476.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,718.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,431.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,542.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,152.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,565.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,693.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,455.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,312.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,344.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,394.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,439.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,848.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,763.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,614.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,710.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,369.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,387.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,462.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,386.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,328.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,691.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,501.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,588.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,339.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,258.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,352.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,640.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,560.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,526.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,530.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,319.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,788.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,498.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,77.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,454.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,317.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,615.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,194.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,605.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,621.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,488.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,540.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,497.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,735.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,143.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,793.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,620.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,578.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,613.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,463.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,638.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,573.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,434.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,193.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,413.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,772.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,333.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,464.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,343.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,316.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,727.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,333.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,657.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,210.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,493.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,669.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,703.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,647.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,573.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,329.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,226.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,462.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,312.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,318.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+,,,,,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,245.0,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,
+2024-03-03,Run,Long Zone 2 Run,Warm Up: 5 minutes in zone 1 Main Set: 50 minutes in zone 2 Cool Down: 5 minutes in zone 1,.,132.0,1.38964354991913,8593.4599609375,37.00212064191995,0.0,0.0,2108.24,37.00212064191995,835.1684641384667,0.0,0.0,0.0,200.0,0.0,0.0,46.12845879794394,0.0,0.0,46.12845879794394,,0.0,
+2024-03-05,Bike,Easy mixed Effort spin,45 minutes in Zones 1-2,Choose to do this in Zone 1 or 2 based off of how you're feeling but don't go above zone 2,118.0,0.179605826735497,5291.68994140625,0.0,3.374962272572439,0.0,2108.24,3.374962272572439,150.05178958843987,0.0,0.0,0.0,216.0,0.0,0.0,0.0,4.706555411225242,0.0,4.706555411225242,,0.0,
+2024-03-05,Run,Zone 3 Intervals,Warm up for 10 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,142.0,0.697031378746033,6328.68994140625,24.649318846778012,0.0,0.0,2108.24,24.649318846778012,444.2978787707448,0.0,0.0,0.0,351.0,0.0,0.0,28.56490862971244,0.0,0.0,28.56490862971244,,0.0,
+2024-03-05,Bike,Virtual Activity Cycling,,,133.0,0.617566406726837,13187.8095703125,0.0,18.752423319470896,0.0,2108.24,18.752423319470896,372.1478215516504,0.0,0.0,0.0,439.0,0.0,0.0,0.0,23.201818135825803,0.0,23.201818135825803,,0.0,
+2024-03-05,Bike,Cycling,,,133.0,0.750490248203278,14105.240234375,0.0,22.788659937048152,0.0,2108.24,22.788659937048152,438.66584174979585,0.0,0.0,0.0,66.0,0.0,0.0,0.0,28.19573419450138,0.0,28.19573419450138,,0.0,
+2024-03-06,Bike,Base Building,Warm Up: -7 minutes Zone 1 Main Set: 4 x 16 minutes in Zone 2 with 1 minute of recovery in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,131.0,1.14766776561737,0.0,0.0,32.83271534733973,0.0,2108.24,32.83271534733973,634.9541305035325,0.0,0.0,0.0,179.0,0.0,0.0,0.0,41.24314421832221,0.0,41.24314421832221,,0.0,
+2024-03-06,Swim,Broken 500s,"Warm up Zone 1: 100 swim, 100 kick, 100 Pull 4x50 kick Zone 1 500 Zone 3 free broken done as: 150, 200, 150 on 15 seconds rest 100 Zone 2 pull on 20 seconds rest 500 free Zone 3 broken done as: 200, 100, 200 on 15 seconds rest 4x25 Zone 5 sprint 500 free Zone 3 broken done as: 100, 100, 100, 100, 100 on 15 seconds rest 100 Zone 1 easy cool down","This workout requires paddles to be completed as written, but can be done without. You may kick with or without fins",119.0,0.383405834833781,1000.0,0.0,0.0,5.856271665878298,2108.24,5.856271665878298,258.53432924530136,0.0,0.0,0.0,465.0,0.0,0.0,0.0,0.0,8.098237597746822,8.098237597746822,,0.0,
+2024-03-07,Bike,Virtual Activity Cycling,,,142.0,0.925900280475616,24192.23046875,0.0,36.24865265566541,0.0,2108.24,36.24865265566541,525.8108812827647,0.0,0.0,0.0,393.0,0.0,0.0,0.0,42.00681801779732,0.0,42.00681801779732,,0.0,
+2024-03-07,Bike,Vo2 short recovery intervals,Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high zone 2 Main Set: -10 x 1 minute sprints in Zone 4 with 1 minute of recovery in Zone 1 between intervals Cool Down: -10 minutes zone 2 -5 minutes Zone 1,There are short rests in between intervals to help with recovery time. The effort on the intervals will be close to maximum effort,131.0,1.14369964599609,36677.109375,0.0,32.71919456554833,0.0,2108.24,32.71919456554833,633.0113447811877,0.0,0.0,0.0,292.0,0.0,0.0,0.0,41.100543951312034,0.0,41.100543951312034,,0.0,
+2024-03-07,Bike,Cycling,,,142.0,0.953881084918976,22680.19921875,0.0,37.344090774306494,0.0,2108.24,37.344090774306494,539.6452450397342,0.0,0.0,0.0,367.0,0.0,0.0,0.0,43.27626850294031,0.0,43.27626850294031,,0.0,
+2024-03-12,Bike,Indoor Cycling,,,128.0,1.00240302085876,22744.349609375,0.0,26.163060626383,0.0,2108.24,26.163060626383,563.5921098976943,0.0,0.0,0.0,613.0,0.0,0.0,0.0,33.63526385907625,0.0,33.63526385907625,,0.0,
+2024-03-14,Bike,Cycling,,,149.0,1.00136697292328,24472.1796875,0.0,47.096257339305005,0.0,2108.24,47.096257339305005,563.0813694256179,0.0,0.0,0.0,155.0,0.0,0.0,0.0,52.01353711757413,0.0,52.01353711757413,,0.0,
+2024-03-14,Bike,Bike Test,Warm Up: -5 minutes zone 1 -10 minutes zone 2 -4 x :30 second sprints at Zone 4 with 1 minute of recovery in zone 1 in between intervals -4 minutes zone 2 Main Set: perform a 20 or 30-minute time trial going as hard as you can maintain for that entire duration (This should be done on a level course or on a trainer). Cool Down: 5 minutes zone 1,"Use this workout to set or re confirm your zones. When setting your zones we share with the 80/20 calculator, so that is the calculator you will use inside of TrainingPeaks. The 80/20 calculator is based off of a 30 minute test, so doing a 30 minute test is going to be more accurate. If going off of watts plug in your average 30 minute power to calculate your bike power zones. A 20 minute test is still good to go off of, but if performing a 20 minute power test times your average 20 minute power by .95 to get your number to plug into the calculator. You can choose to go for 20 or 30 minutes. This is an all out effort. If going off of heart rate, take your highest 20 minute average heart rate and plug it into the 80/20 cycling heart rate calculator to set up your cycling heart rate zones.",127.0,1.01184940338135,31596.76953125,0.0,25.597453397110502,0.0,2108.24,25.597453397110502,568.2477316031806,0.0,0.0,0.0,312.0,0.0,0.0,0.0,33.167237532386785,0.0,33.167237532386785,,0.0,
+2024-03-15,Swim,Lap Swimming,,,137.0,0.199670556386312,550.0,0.0,0.0,4.135921323763873,2108.24,4.135921323763873,147.23874701662032,0.0,0.0,0.0,656.0,0.0,0.0,0.0,0.0,4.967844147549696,4.967844147549696,,0.0,
+2024-03-15,Run,Run Test,Run Test! Warm up for 20 minutes in zone 1-2 then do: 20 minutes at a 5K or zone 3 effort 10 minutes easy zone 1-2 cool down,Warm up REALLY well before this test...I want you to be sweating before you start the test interval! Make sure you lap your watch or start your treadmill over so you have accurate and isolated data to calculate your run zones. The test interval should be done like you're racing a 5K...as fast as you can without slowing down or stopping! We then take your average pace for the test interval to calculate your run zones.,152.0,1.0058411359787,8800.0,46.07046545771987,0.0,0.0,2108.24,46.07046545771987,619.9617617388009,0.0,0.0,0.0,291.0,0.0,0.0,49.876419965885944,0.0,0.0,49.876419965885944,,0.0,
+2024-03-19,Bike,Cycling,,,131.0,0.667382717132568,12992.8603515625,0.0,19.092621955414547,0.0,2108.24,19.092621955414547,397.1255335763937,0.0,0.0,0.0,96.0,0.0,0.0,0.0,23.983388290693703,0.0,23.983388290693703,,0.0,
+2024-03-19,Bike,Base Building steady effort,Warm Up; -10 minutes Zone 1 Main Set: -30 minutes Zone 2 Cool Down: -5 minutes Zone 1,,141.0,1.14953911304474,36921.23828125,0.0,43.797826941582464,0.0,2108.24,43.797826941582464,635.8702114430893,0.0,0.0,0.0,133.0,0.0,0.0,0.0,51.11515847388204,0.0,51.11515847388204,,0.0,
+2024-03-19,Run,Zone 4 Pyramid Run,Warm up in zone 1-2 for 20 minutes then do: 2 minutes in zone 4 on 2 minutes easy recovery in-between 3 minutes in zone 4 on 2 minutes recovery in-between 4 minutes in zone 4 on 2 minutes recovery in-between 3 minutes zone 4 on 2 minutes recovery in-between 2 minutes in zone 4 on 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,,149.0,0.785379409790039,7403.580078125,33.36549588017173,0.0,0.0,2108.24,33.36549588017173,494.7822498085934,0.0,0.0,0.0,269.0,0.0,0.0,36.84915864771323,0.0,0.0,36.84915864771323,,0.0,
+2024-03-20,Bike,Base Build Pyramid,Main Set: -10 minutes in low Zone 1 -10 minutes in high Zone 1 -10 minutes in low Zone 2 -20 minutes in high Zone 2 -10 minutes in low Zone 2 -10 minutes in high Zone 1 -5 minutes in low Zone 1,"The warm up and cool down are included in the main set. Effort will start in low Zone 2, go to high Zone 2 and back to low Zone 1. Don't go above Zone 2",120.0,0.698213934898376,0.0,0.0,14.053945733659877,0.0,2108.24,14.053945733659877,412.55504361972265,0.0,0.0,0.0,472.0,0.0,0.0,0.0,19.27228845333105,0.0,19.27228845333105,,0.0,
+2024-03-21,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 4X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,140.0,0.609796941280365,5759.759765625,20.41877471192056,0.0,0.0,2108.24,20.41877471192056,394.27029329941655,0.0,0.0,0.0,293.0,0.0,0.0,24.000368106235744,0.0,0.0,24.000368106235744,,0.0,
+2024-03-22,Bike,Cycling,,,133.0,0.556847214698792,12342.3798828125,0.0,16.90868314817336,0.0,2108.24,16.90868314817336,341.6247686852164,0.0,0.0,0.0,329.0,0.0,0.0,0.0,20.920613012872725,0.0,20.920613012872725,,0.0,
+2024-03-22,Bike,Muscular Endurance,Warm Up: -5 minutes Zone 1 -5 minutes Zone 2 -5 minutes Zone 1 Main Set: -2 x 7 minutes in Zone 3 with 3 minutes of recovery in Zone 1 between intervals Cool Down: -10 minutes in Zones 1-2,,131.0,0.464067220687866,13241.16015625,0.0,13.276130440658935,0.0,2108.24,13.276130440658935,294.81805965563296,0.0,0.0,0.0,938.0,0.0,0.0,0.0,16.67694421959283,0.0,16.67694421959283,,0.0,
+2024-03-24,Bike,Virtual Activity Cycling,,,135.0,1.52138757705688,41376.80859375,0.0,48.97549565462949,0.0,2108.24,48.97549565462949,816.272201040482,0.0,0.0,0.0,955.0,0.0,0.0,0.0,59.69821317488826,0.0,59.69821317488826,,0.0,
+2024-03-24,Bike,Cycling,,,134.0,1.59616804122925,37094.26171875,0.0,49.91124150484533,0.0,2108.24,49.91124150484533,852.1603648571863,0.0,0.0,0.0,317.0,0.0,0.0,0.0,61.29285278320321,0.0,61.29285278320321,,0.0,
+2024-03-24,Bike,Vo2 step up intervals with foundation pyramid,"Warm Up: -5 minutes Zone 1 -5 minutes low Zone 2 -10 minutes high zone 2 Main Set: 10 x 1 minute sprints done as :30 seconds in Zone 4, :30 seconds in Zone 5 with 2 minutes of recovery in Zone 1 between intervals Cool Down Pyramid: -5 minutes low Zone 1 -5 minutes high Zone 2 -5 minutes low Zone 2 -10 minutes high Zone 2 -5 minutes low Zone 2 -5 minutes high Zone 1 -5 minutes low Zone 1",These intervals start in Zone 4 and end in Zone 5. A interval set that mixes up the interval efforts.,132.0,0.383071660995483,13241.16015625,0.0,11.292192773002157,0.0,2108.24,11.292192773002157,253.7915023341341,0.0,0.0,0.0,452.0,0.0,0.0,0.0,14.07734043431416,0.0,14.07734043431416,,0.0,
+2024-03-26,Bike,Easy mixed Effort spin,45 minutes in Zones 1-2,Choose to do this in Zone 1 or 2 based off of how you're feeling but don't go above zone 2,131.0,0.750955820083618,0.0,0.0,21.48349846348628,0.0,2108.24,21.48349846348628,438.898096189077,0.0,0.0,0.0,105.0,0.0,0.0,0.0,26.98671176203707,0.0,26.98671176203707,,0.0,
+2024-03-26,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,121.0,0.55105721950531,4399.43017578125,10.363357931888563,0.0,0.0,2108.24,10.363357931888563,360.48346766310266,0.0,0.0,0.0,562.0,0.0,0.0,14.093906592169823,0.0,0.0,14.093906592169823,,0.0,
+2024-04-02,Bike,Base Building,Warm Up: -5 minutes Zone 1 Main Set: -5 x 10 minutes in Zone 2 with 1 minute of recovery in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,139.0,1.0004757642746,20814.849609375,0.0,36.07481811503912,0.0,2108.24,36.07481811503912,562.6420102314194,0.0,0.0,0.0,223.0,0.0,0.0,0.0,42.7076437023503,0.0,42.7076437023503,,0.0,
+2024-04-02,Run,Zone 4 Pyramid Run,Warm up in zone 1-2 for 20 minutes then do: 2X2 minutes in zone 4 on 2 minutes easy recovery in-between 2X3 minutes in zone 4 on 2 minutes recovery in-between 1X4 minutes in zone 4 on 2 minutes recovery in-between 2X3 minutes zone 4 on 2 minutes recovery in-between 2X2 minutes in zone 4 on 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,,138.0,0.940591990947723,6630.75,29.7911369296032,0.0,0.0,2108.24,29.7911369296032,583.0316184491535,0.0,0.0,0.0,335.0,0.0,0.0,35.52419556822983,0.0,0.0,35.52419556822983,,0.0,
+2024-04-04,Bike,Vo2 intervals,"Warm Up: -15 minutes Zone 1 Main Set: -2 sets of 10 x 1 minute done as :30 seconds Zone 4, :30 seconds Zone 2 with 5 minutes of recovery in Zone 1 in between interval sets",These are high intensity sprints down as 10 x :30 in Zone 4 with :30 seconds in Zone 2 between intervals. This is done a total of 2 times with 5 minutes of recovery in zone 1 in between sets,121.0,0.75162136554718,0.0,0.0,15.64868967987551,0.0,2108.24,15.64868967987551,439.2301003036173,0.0,0.0,0.0,268.0,0.0,0.0,0.0,21.281825069398643,0.0,21.281825069398643,,0.0,
+2024-04-04,Run,Zone 5 Hill Repeats,Warm up for 20 minutes in zone 1-2 then do: 15X30 seconds all out zone 5 sprint on 30 seconds recovery in-between. cool down for 20 minutes in zone1-2,"This is an excellent treadmill workout. We recommend increasing both the incline and the pace as the workout progresses. Because the rest interval is so short, standing on the side of the treadmill in-between intervals is recommended. If done outside, find a steep hill for repeats, and either jog slowly downhill or walk uphill in-between intervals.",147.0,0.586744725704193,3909.67993164063,23.681509194344905,0.0,0.0,2108.24,23.681509194344905,381.02040562964606,0.0,0.0,0.0,1064.0,0.0,0.0,26.509912987727866,0.0,0.0,26.509912987727866,,0.0,
+2024-04-06,Bike,Muscular Endurance broken intervals with foundation pyramid,"Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high Zone 2 Main Set: -3 x 9 minutes done as 2 minutes in Zone 3, 1 minute in Zone 4, 2 minutes in Zone 3, 1 minute in Zone 4, 2 minutes in Zone 3, 1 minute in Zone 4 with 4 minutes of recovery in Zone 1 in between interval sets Cool Down Pyramid: -5 minutes low Zone 1 -5 minutes high Zone 1 -10 minutes low Zone 2 -16 minutes high Zone 2 -10 minutes low Zone 2 -5 minutes high Zone 1 -5 minutes low Zone 1",These are zone 3 efforts broken up with zone 4 sprints to increase speed while working on muscular endurance.,146.0,1.81092000007629,52148.0703125,0.0,78.84208634718533,0.0,2108.24,78.84208634718533,954.4938819359623,0.0,0.0,0.0,505.0,0.0,0.0,0.0,88.86311102075683,0.0,88.86311102075683,,0.0,
+2024-04-06,Bike,Cycling,,,147.0,1.80009329319,47635.890625,0.0,80.43225696227385,0.0,2108.24,80.43225696227385,949.3606252061534,0.0,0.0,0.0,246.0,0.0,0.0,0.0,90.03869288810472,0.0,90.03869288810472,,0.0,
+2024-04-11,Bike,Cycling,,,143.0,1.02866995334625,29052.66015625,0.0,41.37082183739863,0.0,2108.24,41.37082183739863,576.532510673861,0.0,0.0,0.0,298.0,0.0,0.0,0.0,47.607389916454125,0.0,47.607389916454125,,0.0,
+2024-04-11,Bike,Muscular Endurance,Warm Up: -5 minutes Zone 1 -10 minutes Zone 2 -5 minutes Zone 1 Main Set; -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 between intervals Cool Down: -10 minutes in Zones 1-2,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,143.0,1.02676999568939,30588.830078125,0.0,41.29440975841756,0.0,2108.24,41.29440975841756,575.597039493517,0.0,0.0,0.0,631.0,0.0,0.0,0.0,47.51945887044599,0.0,47.51945887044599,,0.0,
+2024-04-12,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,133.0,0.833735823631287,7098.06982421875,22.86794488516673,0.0,0.0,2108.24,22.86794488516673,522.3368752094707,0.0,0.0,0.0,577.0,0.0,0.0,28.29383111327377,0.0,0.0,28.29383111327377,,0.0,
+2024-04-13,Bike,Vo2 intervals,"Warm Up: -15 minutes Zone 1 Main Set; -2 sets of 10 x 1 minute done as :30 seconds in Zone 4, :30 seconds in Zone 2 with 5 minutes of recovery in Zone 1 in between interval sets Cool Down: -30 minutes Zone 1",These are high intensity sprints down as 10 x :30 seconds in Zone 4 with :30 seconds in Zone 2 in between intervals. This is done a total of 2 times with 5 minutes of recovery in zone 1 after each interval set,140.0,1.30187690258026,38176.80078125,0.0,48.26023337241185,0.0,2108.24,48.26023337241185,710.1687661712492,0.0,0.0,0.0,55.0,0.0,0.0,0.0,56.72540993140634,0.0,56.72540993140634,,0.0,
+2024-04-13,Bike,Cycling,,,141.0,1.29957616329193,34474.19140625,0.0,49.51428903233011,0.0,2108.24,49.51428903233011,709.0506905920176,0.0,0.0,0.0,692.0,0.0,0.0,0.0,57.78667361704744,0.0,57.78667361704744,,0.0,
+2024-04-16,Bike,Vo2 short recovery intervals,Warm Up: -5 minutes Zone 1 -10 minutes low Zone 2 -10 minutes high zone 2 Main Set: -6 x 1 minute sprints in Zone 4 with 1 minute of recovery in Zone 1 in between intervals Cool Down: 8 minutes Zone 1,There are short rests in between intervals to help with recovery time.,133.0,0.524690806865692,0.0,0.0,15.93225281525442,0.0,2108.24,15.93225281525442,325.4249896684015,0.0,0.0,0.0,100.0,0.0,0.0,0.0,19.712504672914008,0.0,19.712504672914008,,0.0,
+2024-04-16,Run,Zone 1 Run,30 minutes in zone 1,Nice and easy run!,143.0,0.500959992408752,4668.06982421875,18.198939341354137,0.0,0.0,2108.24,18.198939341354137,331.60385053655716,0.0,0.0,0.0,117.0,0.0,0.0,20.942392797875875,0.0,0.0,20.942392797875875,,0.0,
+2024-04-16,Swim,Lap Swimming,,,127.0,0.314512779447767,825.0,0.0,0.0,5.215316418756554,2108.24,5.215316418756554,216.89588042176564,0.0,0.0,0.0,283.0,0.0,0.0,0.0,0.0,6.757611227333321,6.757611227333321,,0.0,
+2024-04-17,Bike,Base Building,Warm Up: -7 minutes Zone 1 Main Set: -4 x 16 minutes in Zone 2 with 1 minute in Zone 1 between intervals,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,142.0,1.25984466075897,38366.69140625,0.0,49.32245131677461,0.0,2108.24,49.32245131677461,689.7230494944212,0.0,0.0,0.0,636.0,0.0,0.0,0.0,57.1574137206338,0.0,57.1574137206338,,0.0,
+2024-04-17,Bike,Cycling,,,142.0,1.25060510635376,35134.26171875,0.0,48.96072618784869,0.0,2108.24,48.96072618784869,685.2231056575889,0.0,0.0,0.0,251.0,0.0,0.0,0.0,56.73822788750518,0.0,56.73822788750518,,0.0,
+2024-04-19,Bike,Easy Effort spin,45 minutes in Zone 1,This is designed as a low effort ride with a focus on active recovery. This is a great workout to work on maintaining a high cadence if you are used to keeping it under 88,0.0,0.617224752902985,13227.5400390625,0.0,0.0,0.0,2108.24,0.0,371.9763167164472,0.0,0.0,0.0,404.0,0.0,0.0,0.0,4.939664865576706,0.0,4.939664865576706,,0.0,
+2024-04-19,Bike,Cycling,,,116.0,0.71344918012619,14481.4501953125,0.0,12.494640948497304,0.0,2108.24,12.494640948497304,420.1713082789955,0.0,0.0,0.0,1075.0,0.0,0.0,0.0,17.724828931739957,0.0,17.724828931739957,,0.0,
+2024-04-21,Bike,Muscular Endurance with step downs,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -4 x 8 minutes Zone 3 with 4 minutes of recovery in Zone 1 after each interval Cool Down: Long descending efforts done as -15 minutes high Zone 2 -15 minutes low Zone 2 -12 minutes high Zone 1 -10 minutes Zone 1,steady Muscular endurance sets working on strengthening your maximum sustained power,128.0,1.50194132328033,43375.5703125,0.0,39.201180643478885,0.0,2108.24,39.201180643478885,806.9181991418843,0.0,0.0,0.0,122.0,0.0,0.0,0.0,50.397087457004105,0.0,50.397087457004105,,0.0,
+2024-04-21,Bike,Cycling,,,128.0,1.66554307937622,48646.87109375,0.0,43.47124225966648,0.0,2108.24,43.47124225966648,885.337157257529,0.0,0.0,0.0,345.0,0.0,0.0,0.0,55.88668407591617,0.0,55.88668407591617,,0.0,
+2024-04-23,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 8X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,142.0,0.713475286960602,6386.97998046875,25.230829448778824,0.0,0.0,2108.24,25.230829448778824,453.7082175977829,0.0,0.0,0.0,625.0,0.0,0.0,29.238793263872772,0.0,0.0,29.238793263872772,,0.0,
+2024-04-23,Bike,Easy Effort spin,30 minutes in Zone 1,Today is a brick workout. So run immediately after this ride,121.0,0.57420551776886,0.0,0.0,11.95490757969027,0.0,2108.24,11.95490757969027,350.35947215097156,0.0,0.0,0.0,249.0,0.0,0.0,0.0,16.258374153779005,0.0,16.258374153779005,,0.0,
+2024-04-25,Bike,Cycling,,,135.0,1.42020618915558,35881.26953125,0.0,45.718331800908715,0.0,2108.24,45.718331800908715,767.5051668900182,0.0,0.0,0.0,49.0,0.0,0.0,0.0,55.727924370540386,0.0,55.727924370540386,,0.0,
+2024-04-25,Bike,Base Build Pyramid,Main Set: -10 minutes in low Zone 1 -10 minutes in high Zone 1 -15 minutes in low Zone 2 -25 minutes in high Zone 2 -15 minutes in low Zone 2 -10 minutes in high Zone 1 -5 minutes in low Zone 1,"The warm up and cool down are included in the main set. Effort will start in low Zone 2, go to high Zone 2 and back to low Zone 1. Don't go above Zone 2",137.0,1.33489334583282,40245.4296875,0.0,45.5044274786981,0.0,2108.24,45.5044274786981,726.1998873159525,0.0,0.0,0.0,359.0,0.0,0.0,0.0,54.657447770772926,0.0,54.657447770772926,,0.0,
+2024-04-28,Run,Zone 2 Run,Warm up: 5 minutes in zone 1 Main Set: 70 minutes in zone 2 Cool Down: 5 minutes zone 1,,153.0,0.92325633764267,8434.76953125,43.34349569314338,0.0,0.0,2108.24,43.34349569314338,573.2030879868428,0.0,0.0,0.0,943.0,0.0,0.0,46.6174769596148,0.0,0.0,46.6174769596148,,0.0,
+2024-04-28,Bike,Endurance Step Ups,"Warm Up: -10 minutes low Zone 1 -15 minutes high Zone 1 Main Set: 3 x 12 minute step ups done as 5 minutes in low Zone 3, 5 minutes in high Zone 3, 2 minutes in low Zone 4 with 5 minutes of recovery in Zone 1 after each interval set Cool Down; 74 minutes in Zones 1-2. Base this effort off of how you are feeling but don't go above Zone 2",These are tough intervals that will really build strength and speed. Each Interval set is 12 minutes long Starting in low Zone 3 and building up to Zone 4 with 5 minutes of recovery after. The interval set is repeated a total of 3 times.,139.0,2.43942999839783,66615.546875,0.0,87.96014520189621,0.0,2108.24,87.96014520189621,1247.7783316696834,0.0,0.0,0.0,5.0,0.0,0.0,0.0,104.13276455920689,0.0,104.13276455920689,,0.0,
+2024-04-28,Bike,Cycling,,,138.0,2.49903130531311,57813.76953125,0.0,87.62591333481393,0.0,2108.24,87.62591333481393,1275.1095927698557,0.0,0.0,0.0,609.0,0.0,0.0,0.0,104.48879777587426,0.0,104.48879777587426,,0.0,
+2024-05-03,Bike,Endurance Step Ups,"Warm Up: -10 minutes low Zone 1 -15 minutes high Zone 1 Main Set: -3 x 15 minute step ups done as 7 minutes in low Zone 3, 5 minutes in high Zone 3, 3 minutes in low Zone 4 with 10 minutes of recovery in Zone 1 after each interval set Cool Down: 80 minutes in Zones 1-2. Base this effort off of how you are feeling but don't go above Zone 2",These are tough intervals that will really build strength and speed. Each Interval set is 15 minutes long Starting in low Zone 3 and building up to Zone 4 with 10 minutes of recovery after. The interval set is repeated a total of 3 times.,136.0,2.93690848350525,84161.2890625,0.0,97.30257600089053,0.0,2108.24,97.30257600089053,1473.3525668474103,0.0,0.0,0.0,886.0,0.0,0.0,0.0,117.733943411353,0.0,117.733943411353,,0.0,
+2024-05-03,Bike,Cycling,,,136.0,2.94186615943909,73142.65625,0.0,97.46682852767152,0.0,2108.24,97.46682852767152,1475.571351779379,0.0,0.0,0.0,105.0,0.0,0.0,0.0,117.93268529967699,0.0,117.93268529967699,,0.0,
+2024-05-06,Run,Zone 5 Hill Repeats,Warm up for 20 minutes in zone 1-2 then do: 15X30 seconds all out zone 5 sprint on 30 seconds recovery in-between. cool down for 20 minutes in zone1-2,"This is an excellent treadmill workout. We recommend increasing both the incline and the pace as the workout progresses. Because the rest interval is so short, standing on the side of the treadmill in-between intervals is recommended. If done outside, find a steep hill for repeats, and either jog slowly downhill or walk uphill in-between intervals.",149.0,0.637498915195465,4884.3798828125,27.083046949568764,0.0,0.0,2108.24,27.083046949568764,410.17627433445665,0.0,0.0,0.0,284.0,0.0,0.0,29.91076462020168,0.0,0.0,29.91076462020168,,0.0,
+2024-05-10,Bike,Muscular Endurance,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 after each interval Cool Down: -10 minutes Zone 1,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,136.0,0.737008333206177,21342.9609375,0.0,24.417788214324347,0.0,2108.24,24.417788214324347,431.9380710462332,0.0,0.0,0.0,377.0,0.0,0.0,0.0,29.544978293579344,0.0,29.544978293579344,,0.0,
+2024-05-13,Bike,Cycling,,,124.0,0.464208871126175,0.0,0.0,10.670926639931032,0.0,2108.24,10.670926639931032,294.88967490856817,0.0,0.0,0.0,553.0,0.0,0.0,0.0,14.161090885984427,0.0,14.161090885984427,,0.0,
+2024-05-13,Bike,Vo2 short recovery step up intervals,"Warm Up: -15 minutes Zone 1 Main Set: -4 x 3 minute step up sprints done as :30 seconds in low Zone 4, 1 minute in high Zone 4, 1 minute in low Zone 5, :30 seconds in high Zone 5 around 120% of FTP with 5 minutes of recovery in between sets in Zone 1 -63 minutes Zone 2 Cool Down: -10 minutes Zone 1",These are high intensity step up intervals starting in low Zone 4 and going to upper Zone 5 at or around 120% of FTP.,134.0,0.731908917427063,24157.83984375,0.0,22.886363962731004,0.0,2108.24,22.886363962731004,429.3922401976501,0.0,0.0,0.0,441.0,0.0,0.0,0.0,28.105302429199224,0.0,28.105302429199224,,0.0,
+2024-05-14,Run,Zone 5 Repeats,Warm up for 10 minutes in zone 1-2 then do: 8X1 minutes in zone 5 with 2 minutes easy recovery in-between cool down for 10 minutes in zone 1-2,These need to be FAST and all out!,148.0,0.710555255413055,4879.97998046875,29.42629270345388,0.0,0.0,2108.24,29.42629270345388,452.03763700012166,0.0,0.0,0.0,1070.0,0.0,0.0,32.71825223613586,0.0,0.0,32.71825223613586,,0.0,
+2024-05-15,Bike,Virtual Activity Cycling,,,0.0,0.535780847072601,13241.16015625,0.0,0.0,0.0,2108.24,0.0,331.0146770383798,0.0,0.0,0.0,662.0,0.0,0.0,0.0,4.287867285759099,0.0,4.287867285759099,,0.0,
+2024-05-15,Bike,Cycling,,,128.0,0.750836670398712,16716.470703125,0.0,19.597093104651513,0.0,2108.24,19.597093104651513,438.8386578527927,0.0,0.0,0.0,137.0,0.0,0.0,0.0,25.194047701786953,0.0,25.194047701786953,,0.0,
+2024-05-15,Bike,Easy Effort spin,45 minutes in Zone 1,This is designed as a low effort ride with a focus on active recovery. This is a great workout to work on maintaining a high cadence if you are used to keeping it under 88,125.0,0.448272496461868,14975.6298828125,0.0,10.642596583769327,0.0,2108.24,10.642596583769327,286.8296542044494,0.0,0.0,0.0,179.0,0.0,0.0,0.0,14.010506895088737,0.0,14.010506895088737,,0.0,
+2024-05-19,Bike,Race Pace Intervals,Warm Up: -20 minutes Zone 1 Main Set: -20 minutes Zone 2 -10 minutes Zone 1 -20 minutes high Zone 2 - low Zone 2b -10 minutes Zone 1 -20 minutes Zone 2 -10 minutes Zone 1 -10 minutes high Zone 2 - low Zone 2b -10 minutes Zone 3 -10 minutes Zone 1 Cool Down: -70 minutes Zones 1-2,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. The first 30 minutes of these race intervals are at or just below expected race pace, Second 30 minutes are just above race pace. Third 30 minutes at or just below expected race pace, The Last set is 40 minutes long giving you a longer push to get through the fatigue. Done as 30 minutes high Zone 2-low Zone 2b with the last 10 minutes being in Zone 3. These higher paced intervals will get your muscles used to higher intensity to better set you up on race day.",137.0,2.58684349060059,84165.46875,0.0,88.18145088837603,0.0,2108.24,88.18145088837603,1315.225720585251,0.0,0.0,0.0,438.0,0.0,0.0,0.0,105.91877127865553,0.0,105.91877127865553,,0.0,
+2024-05-19,Run,Zone 2 Run,"Warm up for 5 minutes in zone 1, 65 minutes in zone 2, 5 minutes zone 1 cool down",,135.0,1.04708671569824,8371.66015625,30.44714420151525,0.0,0.0,2108.24,30.44714420151525,643.2547180224635,0.0,0.0,0.0,247.0,0.0,0.0,37.11325594183762,0.0,0.0,37.11325594183762,,0.0,
+2024-05-19,Bike,Cycling,,,134.0,3.50875282287598,0.0,0.0,109.71664950045088,0.0,2108.24,109.71664950045088,1725.478778179045,0.0,0.0,0.0,298.0,0.0,0.0,0.0,134.73610839843766,0.0,134.73610839843766,,0.0,
+2024-05-21,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X4 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,139.0,0.904826402664185,8534.169921875,29.470518868039633,0.0,0.0,2108.24,29.470518868039633,562.7464224242933,0.0,0.0,0.0,99.0,0.0,0.0,34.88905794413216,0.0,0.0,34.88905794413216,,0.0,
+2024-05-23,Bike,Indoor Cycling,,,128.0,0.610420286655426,17055.849609375,0.0,15.932177612212383,0.0,2108.24,15.932177612212383,368.5600118862985,0.0,0.0,0.0,500.0,0.0,0.0,0.0,20.482427705573677,0.0,20.482427705573677,,0.0,
+2024-05-23,Bike,Virtual Activity Cycling,,,0.0,0.568418860435486,18635.30078125,0.0,0.0,0.0,2108.24,0.0,347.44840934242177,0.0,0.0,0.0,258.0,0.0,0.0,0.0,4.549070108770649,0.0,4.549070108770649,,0.0,
+2024-05-24,Bike,Virtual Activity Cycling,,,0.0,0.381479740142822,13241.16015625,0.0,0.0,0.0,2108.24,0.0,252.98360790995588,0.0,0.0,0.0,1239.0,0.0,0.0,0.0,3.0529917351014197,0.0,3.0529917351014197,,0.0,
+2024-05-24,Bike,Cycling,,,140.0,1.19820296764374,26121.419921875,0.0,44.41706795119858,0.0,2108.24,44.41706795119858,659.6638059632319,0.0,0.0,0.0,246.0,0.0,0.0,0.0,52.208126886580615,0.0,52.208126886580615,,0.0,
+2024-05-24,Bike,Endurance Step Ups,"Warm Up: -9 minutes Zone 1 Main Set: -3 x 12 minute step ups done as 5 minutes in low Zone 3, 5 minutes in high Zone 3, 2 minutes in low Zone 4 With 10 minutes of recovery in Zone 1 after each interval set",These are tough intervals that will really build strength and speed. Each Interval set is 12 minutes long Starting in low Zone 3 and building up to Zone 4 with 10 minutes of recovery after. The interval set is repeated a total of 3 times.,0.0,0.472653329372406,13238.7099609375,0.0,0.0,0.0,2108.24,0.0,299.1581517768209,0.0,0.0,0.0,1004.0,0.0,0.0,0.0,3.782656210266575,0.0,3.782656210266575,,0.0,
+2024-05-24,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x15 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,130.0,0.89782190322876,6960.41015625,22.50935971598981,0.0,0.0,2108.24,22.50935971598981,558.7701632819067,0.0,0.0,0.0,148.0,0.0,0.0,28.492860399987094,0.0,0.0,28.492860399987094,,0.0,
+2024-05-26,Bike,Race Pace Intervals,"Warm Up: -20 minutes Zone 1 Main Set: -4 x 30 minutes done as 25 minutes in high Zone 2 - mid Zone 2b, 5 minutes in Zone 3 with 10 minutes of recovery in Zone 1 after each interval set Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -20 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at.",0.0,2.93098616600037,84164.296875,0.0,0.0,0.0,2108.24,0.0,1470.7013057089098,0.0,0.0,0.0,314.0,0.0,0.0,0.0,23.456754314516385,0.0,23.456754314516385,,0.0,
+2024-05-26,Bike,Cycling,,,134.0,3.43102312088013,82315.890625,0.0,107.28608716102026,0.0,2108.24,107.28608716102026,1691.657975492942,0.0,0.0,0.0,438.0,0.0,0.0,0.0,131.75128784179702,0.0,131.75128784179702,,0.0,
+2024-05-26,Bike,Virtual Activity Cycling,,,0.0,0.465757787227631,10015.66015625,0.0,0.0,0.0,2108.24,0.0,295.67274110755557,0.0,0.0,0.0,593.0,0.0,0.0,0.0,3.7274710170262737,0.0,3.7274710170262737,,0.0,
+2024-05-28,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 8X4 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,130.0,1.13442468643188,9457.16015625,28.441245692229348,0.0,0.0,2108.24,28.441245692229348,692.4461645204854,0.0,0.0,0.0,478.0,0.0,0.0,36.00157682560677,0.0,0.0,36.00157682560677,,0.0,
+2024-05-30,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x20 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,139.0,0.87030416727066,8174.14990234375,28.346117340259084,0.0,0.0,2108.24,28.346117340259084,543.1379753664071,0.0,0.0,0.0,645.0,0.0,0.0,33.557920537598406,0.0,0.0,33.557920537598406,,0.0,
+2024-06-02,Bike,Virtual Activity Cycling,,,0.0,0.830900251865387,24050.94921875,0.0,0.0,0.0,2108.24,0.0,478.7036910211861,0.0,0.0,0.0,528.0,0.0,0.0,0.0,6.64971513477751,0.0,6.64971513477751,,0.0,
+2024-06-03,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",0.0,2.7251181602478,84165.46875,0.0,0.0,0.0,2108.24,0.0,1378.0286667367063,0.0,0.0,0.0,599.0,0.0,0.0,0.0,21.809187605340426,0.0,21.809187605340426,,0.0,
+2024-06-03,Run,Brick Run,"5 minutes in zone 1, 50 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,133.0,0.920588552951813,7039.240234375,25.25016641257761,0.0,0.0,2108.24,25.25016641257761,571.6899492979323,0.0,0.0,0.0,719.0,0.0,0.0,31.24128327434177,0.0,0.0,31.24128327434177,,0.0,
+2024-06-03,Bike,Cycling,,,134.0,4.37784671783447,105783.8828125,0.0,136.89270751014118,0.0,2108.24,136.89270751014118,2093.9821913429073,0.0,0.0,0.0,1510.0,0.0,0.0,0.0,168.10931396484366,0.0,168.10931396484366,,0.0,
+2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.65954864025116,13241.16015625,0.0,0.0,0.0,2108.24,0.0,393.2014121009501,0.0,0.0,0.0,239.0,0.0,0.0,0.0,5.278383976119681,0.0,5.278383976119681,,0.0,
+2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.605925559997559,13241.16015625,0.0,0.0,0.0,2108.24,0.0,366.3027580707365,0.0,0.0,0.0,526.0,0.0,0.0,0.0,4.849237147080655,0.0,4.849237147080655,,0.0,
+2024-06-03,Bike,Virtual Activity Cycling,,,0.0,0.149001941084862,2170.61010742188,0.0,0.0,0.0,2108.24,0.0,134.3640257157715,0.0,0.0,0.0,1175.0,0.0,0.0,0.0,1.192466196175561,0.0,1.192466196175561,,0.0,
+2024-06-07,Swim,Lap Swimming,,,126.0,0.213540000915527,525.0,0.0,0.0,2.8925552572014492,2108.24,2.8925552572014492,155.6676247813919,0.0,0.0,0.0,345.0,0.0,0.0,0.0,0.0,3.777699250916098,3.777699250916098,,0.0,
+2024-06-09,Run,Brick Run,"5 minutes in zone 1, 20 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,145.0,0.746568620204926,7126.2001953125,28.60068481967166,0.0,0.0,2108.24,28.60068481967166,472.6272889255292,0.0,0.0,0.0,284.0,0.0,0.0,32.45821935012934,0.0,0.0,32.45821935012934,,0.0,
+2024-06-18,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,149.0,1.06181001663208,9439.33984375,45.10917563389383,0.0,0.0,2108.24,45.10917563389383,651.5598692986755,0.0,0.0,0.0,555.0,0.0,0.0,49.81898591798656,0.0,0.0,49.81898591798656,,0.0,
+2024-06-23,Bike,Race Pace Intervals,"Warm Up: -30 minutes Zone 1 Main Set: 5 x 30 minutes done as 25 minutes at high Zone 2 - mid Zone 2b, 5 minutes Zone 3 with 15 minutes of recovery in Zone 1 after each interval set Cool Down: 105 minutes Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",0.0,2.95757389068604,84164.7265625,0.0,0.0,0.0,2108.24,0.0,1482.5974690557994,0.0,0.0,0.0,1178.0,0.0,0.0,0.0,23.66953652856034,0.0,23.66953652856034,,0.0,
+2024-06-23,Bike,Virtual Activity Cycling,,,0.0,1.52404129505157,39951.53125,0.0,0.0,0.0,2108.24,0.0,817.5480001937148,0.0,0.0,0.0,945.0,0.0,0.0,0.0,12.196939937108368,0.0,12.196939937108368,,0.0,
+2024-06-23,Bike,Cycling,,,141.0,4.74553346633911,109657.796875,0.0,180.80642158725655,0.0,2108.24,180.80642158725655,2244.553829614035,0.0,0.0,0.0,2001.0,0.0,0.0,0.0,211.0138684472875,0.0,211.0138684472875,,0.0,
+2024-06-24,Swim,Lap Swimming,,,136.0,0.380623890558879,1000.0,0.0,0.0,6.791074729063409,2108.24,6.791074729063409,256.85509883811346,0.0,0.0,0.0,629.0,0.0,0.0,0.0,0.0,8.217048722805687,8.217048722805687,,0.0,
+2024-06-25,Swim,Lap Swimming,,,123.0,0.178636667463515,525.0,0.0,0.0,4.034906678212704,2108.24,4.034906678212704,134.44721526581588,0.0,0.0,0.0,393.0,0.0,0.0,0.0,0.0,5.398146219693851,5.398146219693851,,0.0,
+2024-06-25,Run,Zone 3 Intervals,Warm up for 10 minutes in zone 1-2 then do: 8X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 5 minutes in zone 1-2,,144.0,0.487239450216293,4305.7900390625,18.178980711115468,0.0,0.0,2108.24,18.178980711115468,323.68408643844566,0.0,0.0,0.0,1148.0,0.0,0.0,20.77415165651381,0.0,0.0,20.77415165651381,,0.0,
+2024-06-30,Swim,Lap Swimming,,,144.0,0.518218613730537,1600.0,0.0,0.0,15.888690776133684,2108.24,15.888690776133684,339.69224359857577,0.0,0.0,0.0,398.0,0.0,0.0,0.0,0.0,18.156907532501574,18.156907532501574,,0.0,
+2024-07-03,Bike,Cycling,,,131.0,1.75054383277893,33028.12109375,0.0,50.079917800735515,0.0,2108.24,50.079917800735515,925.8327154615722,0.0,0.0,0.0,842.0,0.0,0.0,0.0,62.90839031882905,0.0,62.90839031882905,,0.0,
+2024-07-03,Bike,Race Pace Intervals,Warm Up: -30 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -25 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",0.0,1.63409972190857,40997.71875,0.0,0.0,0.0,2108.24,0.0,870.3141776157673,0.0,0.0,0.0,290.0,0.0,0.0,0.0,13.07774023189437,0.0,13.07774023189437,,0.0,
+2024-07-04,Swim,500s Swim,Warm up Zone 1: 200 swim Main Set: 4x500 Zone 2-3 #1: Moderate pace #2: Moderate pull #3: FAST pull #4: race pace Cool Down Zone 1: 100 easy,"This workout requires paddles as written, but can be done without. You may drill with or without fins",133.0,0.196872778998481,600.0,0.0,0.0,5.361986768982389,2108.24,5.361986768982389,145.5379070844392,0.0,0.0,0.0,527.0,0.0,0.0,0.0,0.0,6.634227467095371,6.634227467095371,,0.0,
+2024-07-04,Run,Zone 2b Long Run,Warm up in zone 1-2 for 10 minutes then do: 4x25 minutes in zone 2b with 3 minutes zone 1-2 recovery in-between cool down for 10 minutes in zone 1-2,,145.0,0.797847211360931,7401.490234375,30.565142987290777,0.0,0.0,2108.24,30.565142987290777,501.8919425112198,0.0,0.0,0.0,248.0,0.0,0.0,34.687634992123975,0.0,0.0,34.687634992123975,,0.0,
+2024-07-05,Swim,Endurance Swim,Warm up: 200 Zone 1 easy 8x50 Zone 5 sprint 2x1000 Zone 2b Race Pace! Record your time! 100 easy Zone 1 cool down,2700 yards,134.0,0.515355836020576,1350.0,0.0,0.0,8.98014597285449,2108.24,8.98014597285449,337.9732663000896,0.0,0.0,0.0,607.0,0.0,0.0,0.0,0.0,11.027951789826975,11.027951789826975,,0.0,
+2024-07-07,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -4 x 35 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down: -85 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be slightly above the pace you plan on racing at.",0.0,3.46738219261169,84165.46875,0.0,0.0,0.0,2108.24,0.0,1707.4957255166346,0.0,0.0,0.0,357.0,0.0,0.0,0.0,27.749544897241687,0.0,27.749544897241687,,0.0,
+2024-07-07,Bike,Cycling,,,140.0,5.00657558441162,92893.5234375,0.0,185.59243629059495,0.0,2108.24,185.59243629059495,2349.52941245315,0.0,0.0,0.0,1121.0,0.0,0.0,0.0,218.14662493469578,0.0,218.14662493469578,,0.0,
+2024-07-07,Bike,Virtual Activity Cycling,,,0.0,0.470521688461304,12016.419921875,0.0,0.0,0.0,2108.24,0.0,298.0808147133993,0.0,0.0,0.0,1419.0,0.0,0.0,0.0,3.7655966356706556,0.0,3.7655966356706556,,0.0,
+2024-07-07,Run,Brick Run,"5 minutes in zone 1, 50 minutes in zone 2, 5 minutes in zone 1",run right off the bike!,140.0,0.943612456321716,8238.1201171875,31.59643621783364,0.0,0.0,2108.24,31.59643621783364,584.7433647946717,0.0,0.0,0.0,2142.0,0.0,0.0,37.13866824880989,0.0,0.0,37.13866824880989,,0.0,
+2024-07-07,Bike,Virtual Activity Cycling,,,0.0,0.59652304649353,13241.16015625,0.0,0.0,0.0,2108.24,0.0,361.57927966043826,0.0,0.0,0.0,404.0,0.0,0.0,0.0,4.773988600444251,0.0,4.773988600444251,,0.0,
+2024-07-10,Swim,Long Endurance Swim,"Warm up Zone 1: 200 swim, 200 kick, 200 pull 500 Zone 2b 20 x 25 Zone 5 SPRINT 1000 Zone 2b 100 Zone 1 easy kick 500 Zone 2b 100 Zone 1 easy cool down","3300 yards. This workout requires paddles as written, but may be done without. You may kick with or without fins.",133.0,0.263868612713284,700.0,0.0,0.0,4.739821458071222,2108.24,4.739821458071222,186.2159576778364,0.0,0.0,0.0,1442.0,0.0,0.0,0.0,0.0,5.864440749493281,5.864440749493281,,0.0,
+2024-07-10,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 6X5 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,145.0,1.07429695129395,11098.6103515625,41.15579958110017,0.0,0.0,2108.24,41.15579958110017,658.5995433099034,0.0,0.0,0.0,258.0,0.0,0.0,46.70671275026645,0.0,0.0,46.70671275026645,,0.0,
+2024-07-14,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",132.0,1.33090174198151,33738.71875,0.0,39.23234361248352,0.0,2108.24,39.23234361248352,724.2631237349267,0.0,0.0,0.0,1004.0,0.0,0.0,0.0,48.90875210608801,0.0,48.90875210608801,,0.0,
+2024-07-14,Swim,Broken 1000,"Warm up Zone 1: 200 drill, 200 swim, 200 kick Broken 1000 Zone 3: 5x100 negative split (second half of the 100 is fatser than the first) 5x100 done as 100 SPRINT, 100 race pace, 100 kick, 100 SPRINT 3x300 Zone 3 as: first 100 FAST, 2nd 100 race pace, 3rd 100 easy 8x50 Zone 1 25 drill/25 sprint 100 Zone 1 cool down easy",3000 yards. You may drill and kick with or without fins.,139.0,0.593482780456543,1675.0,0.0,0.0,13.416359232967563,2108.24,13.416359232967563,384.8162721350503,0.0,0.0,0.0,1012.0,0.0,0.0,0.0,0.0,15.883131775665088,15.883131775665088,,0.0,
+2024-07-20,Bike,Race Pace Intervals,Warm Up: -15 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of Zone 1 after each interval Cool Down: 60 minutes Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts be slightly above the pace you plan on racing at.",151.0,3.39542126655579,90015.96875,0.0,167.9433903657645,0.0,2108.24,167.9433903657645,1676.1200316805634,0.0,0.0,0.0,437.0,0.0,0.0,0.0,183.02155040279473,0.0,183.02155040279473,,0.0,
+2024-07-20,Run,Brick Run Mile Repeats,Warm up for 10 minutes in zone 1-2 then do: 2X1 miles in zone 2b with .25 miles zone 1 recovery in-between 5 minutes in zone 1-2,,137.0,0.793654441833496,5904.22998046875,24.437877173041283,0.0,0.0,2108.24,24.437877173041283,499.5014463267393,0.0,0.0,0.0,372.0,0.0,0.0,29.353451284259148,0.0,0.0,29.353451284259148,,0.0,
+2024-07-21,Run,Running,,,133.0,0.229660555720329,2157.17993164063,6.299195478533069,0.0,0.0,2108.24,6.299195478533069,174.1853567087622,0.0,0.0,0.0,1000.0,0.0,0.0,7.793808053767004,0.0,0.0,7.793808053767004,,0.0,
+2024-07-29,Bike,Race Pace Intervals,"Warm Up: -30 minutes Zone 1 Main Set: 5 x 30 minutes done as 25 minutes at high Zone 2 - mid Zone 2b, 5 minutes Zone 3 with 15 minutes of recovery in Zone 1 after each interval set Cool Down: 105 minutes Zone 1","This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",143.0,5.11041021347046,116454.5,0.0,205.52935348189783,0.0,2108.24,205.52935348189783,2390.8413855174344,0.0,0.0,0.0,3297.0,0.0,0.0,0.0,236.51248962243707,0.0,236.51248962243707,,0.0,
+2024-07-30,Swim,Lap Swimming,,,130.0,0.618769713507758,875.0,0.0,0.0,1.6455121896006837,2108.24,1.6455121896006837,399.94704453743054,0.0,0.0,0.0,244.0,0.0,0.0,0.0,0.0,2.0829268222793464,2.0829268222793464,,0.0,
+2024-07-30,Swim,Lap Swimming,,,126.0,0.175857217576769,400.0,0.0,0.0,1.8863479894719,2108.24,1.8863479894719,132.75614703337783,0.0,0.0,0.0,313.0,0.0,0.0,0.0,0.0,2.463584876746504,2.463584876746504,,0.0,
+2024-07-30,Run,Running,,,140.0,0.433277487754822,3661.23999023438,14.50810066648902,0.0,0.0,2108.24,14.50810066648902,292.49337736388003,0.0,0.0,0.0,3122.0,0.0,0.0,17.05292121739216,0.0,0.0,17.05292121739216,,0.0,
+2024-07-30,Swim,Lap Swimming,,,118.0,0.0208802774217394,50.0,0.0,0.0,0.2447435079383973,2108.24,0.2447435079383973,38.17873983338427,0.0,0.0,0.0,355.0,0.0,0.0,0.0,0.0,0.34130718764204737,0.34130718764204737,,0.0,
+2024-08-03,Run,Brick Run Mile Repeats,Warm up for 10 minutes in zone 1-2 then do: 3X1 miles in zone 2b (race pace) with .25 miles zone 1 recovery in-between 5 minutes in zone 1-2,,108.0,2.4390766620636,10138.990234375,28.575992685549604,0.0,0.0,2108.24,28.575992685549604,1405.977808606524,0.0,0.0,0.0,405.0,0.0,0.0,43.54054206658988,0.0,0.0,43.54054206658988,,0.0,
+2024-08-05,Bike,Race Pace Intervals,Warm Up: -30 minutes Zone 1 Main Set: -5 x 30 minutes at high Zone 2 - mid Zone 2b with 15 minutes of recovery in Zone 1 after each interval Cool Down Pyramid: -20 minutes low Zone 1 -20 minutes high Zone 1 -25 minutes low Zone 2 -20 minutes high Zone 1 -20 minutes low Zone 1,"This is a race simulated workout. Simulate race day as much as possible by riding a route similar to the race course, using same race equipment, also practicing race nutrition. Have these interval efforts to be above the pace you plan on racing at. These are long race efforts, use them to be comfortable in aero and to get used to what race day will feel like",146.0,5.30361700057983,137148.46875,0.0,230.90375582273063,0.0,2108.24,230.90375582273063,2467.038490986354,0.0,0.0,0.0,49.0,0.0,0.0,0.0,260.25219574263036,0.0,260.25219574263036,,0.0,
+2024-08-08,Swim,Lap Swimming,,,139.0,1.19343747986688,4000.0,0.0,0.0,45.184254175683385,2108.24,45.184254175683385,739.7655352357444,0.0,0.0,0.0,122.0,0.0,0.0,0.0,0.0,53.49196833474949,53.49196833474949,,0.0,
+2024-08-18,Bike,Cycling,,,147.0,6.69041347503662,174859.09375,0.0,298.9428702633391,0.0,2108.24,298.9428702633391,2988.2792472865945,0.0,0.0,0.0,298.0,0.0,0.0,0.0,334.6471465963496,0.0,334.6471465963496,,0.0,
+2024-08-18,Run,Running,,,128.0,5.72749328613281,42693.83984375,135.03169202217288,0.0,0.0,2108.24,135.03169202217288,3027.401926414916,0.0,0.0,0.0,125.0,0.0,0.0,173.59691418989792,0.0,0.0,173.59691418989792,,0.0,
+2024-08-18,Swim,Lap Swimming,,,140.0,1.45642249001397,6350.0,0.0,0.0,122.25486418270944,2108.24,122.25486418270944,892.6942129594662,0.0,0.0,0.0,392.0,0.0,0.0,0.0,0.0,143.699207448031,143.699207448031,,0.0,
+2024-08-23,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,125.0,0.815555572509766,19062.240234375,0.0,19.362394566637885,0.0,2108.24,19.362394566637885,471.0749529171629,0.0,0.0,0.0,208.0,0.0,0.0,0.0,25.489734619371397,0.0,25.489734619371397,,0.0,
+2024-08-27,Swim,easy swim,20 minutes easy swim,,126.0,0.493931110170152,2100.0,0.0,0.0,34.60089691816811,2108.24,34.60089691816811,325.102522041833,0.0,0.0,0.0,406.0,0.0,0.0,0.0,0.0,45.189035557181576,45.189035557181576,,0.0,
+2024-08-29,Swim,Lap Swimming,,,115.0,0.197228889465332,1200.0,0.0,0.0,36.9566169953656,2108.24,36.9566169953656,145.75440587446053,0.0,0.0,0.0,632.0,0.0,0.0,0.0,0.0,52.88233582165688,52.88233582165688,,0.0,
+2024-09-04,Bike,Muscular Endurance,Warm Up: -10 minutes Zone 1 -10 minutes Zone 2 Main Set: -2 x 10 minutes in Zone 3 with 5 minutes of recovery in Zone 1 after each interval Cool Down: -10 minutes Zone 1,Longer steady Muscular endurance sets working on strengthening your maximum sustained power,130.0,0.663369417190552,14509.91015625,0.0,18.412105341603045,0.0,2108.24,18.412105341603045,395.1154348061333,0.0,0.0,0.0,298.0,0.0,0.0,0.0,23.306462457725374,0.0,23.306462457725374,,0.0,
+2024-11-04,Run,,,,0.0,16.666666666666668,0.0,0.0,0.0,0.0,0.0,0.0,6596.735629063261,,,,0.0,0.0,0.0,655.966122532614,0.0,0.0,655.966122532614,,,0.0
+2024-11-04,Swim,Simple Swim,"Warm Up Zone 1 (do this 2 times through) : 2x200 (50 kick, 50 swim, 50 kick, 50 swim), 3x100 Easy 1x200 Zone 3 2x75 Zone 4-5 1x150 Zone 3 2x125 Zone 3 1x100 Zone 4 2x75 Zone 5 1x50 Zone 5 cool down Zone 1 200 easy",2650 yards. You can kick with or without fins.,0.0,0.999949333932665,2423.16015625,0.0,0.0,0.0,2108.24,0.0,626.2146969540024,-66.95656805177734,-390.77579754497856,256.86266144142394,63.0,0.0,0.0,0.0,0.0,32.140283995697,32.140283995697,,0.0,
+2024-11-05,Run,Zone 3 Intervals,Warm up for 20 minutes in zone 1-2 then do: 4X3 minutes in zone 3 on 2 minutes recovery in-between. cool down for 10 minutes in zone 1-2,,0.0,0.833333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,522.1077529972836,205.4625673983726,-118.35666209482864,529.2817968915739,680.0,0.0,0.0,32.798306126630685,0.0,0.0,32.798306126630685,,0.0,
+2024-11-06,Bike,Base Building,Warm Up: -5 minutes Zone 1 Main Set: -4 x 9 minutes in Zone 2 with 1 minute of recovery in Zone 1 after each interval,This is a base building workout in Zone 2 broken up by short recoveries in Zone 1,0.0,0.75,0.0,0.0,0.0,0.0,2108.24,0.0,438.4212718267374,322.72615306947887,-1.0930764237223798,646.5453825626801,358.0,0.0,0.0,0.0,30.06578449905482,0.0,30.06578449905482,,0.0,
+2024-11-06,Swim,Sprints!,"Warm up with: 200 swim 100 kick 200 pull Really focus on your form during the warm-up because you MUST keep good form on these sprints. You will have slower times to start with, but they will begin to drop as good form becomes second nature. Main Set: 8x100 ALL OUT SPRINT! I want the recovery between these sets to be 2-3 minutes. I want your HR to come all the way back down, and the lactic acid to build up in your arms and legs. These need to be ALL OUT! As fast as humanly possible. That's the only reason you get such a long rest is because you need to be spent by the end of each 100. Also, these cannot get slower. I would prefer if they got faster. Record your times! 50s on one minute 15 seconds. I want you to do 10x50 sprints LEAVING on 1:15, so watch the clock! These are not necessarily all out, but still a sprint. 10x25 on 30 seconds. These ARE all out, and I want you leaving the wall at 30 seconds. Don't sandbag these because they're at the end of the workout. Cooldown: 200 easy swim",,0.0,0.5,1188.71997070313,0.0,0.0,0.0,2108.24,0.0,328.7494547911557,322.72615306947887,-1.0930764237223798,646.5453825626801,481.0,0.0,0.0,0.0,0.0,16.070956249999995,16.070956249999995,,0.0,
+2024-11-07,Bike,Muscular Endurance short intervals,Warm Up: -5 minutes Zone 1 -5 minutes Zone 2 -5 minutes Zone 1 Main Set: -4 x 2 minutes Zone 3 with 1 minute of recovery in Zone 1 after each interval Cool Down: -18 minutes in Zones 1-2,,0.0,0.75,0.0,0.0,0.0,0.0,2108.24,0.0,438.4212718267374,236.88026115465027,-117.99459481160574,591.7551171209063,285.0,0.0,0.0,0.0,30.06578449905482,0.0,30.06578449905482,,0.0,
+2024-11-07,Run,Zone 2 Run,"Warm up for 5 minutes in zone 1, 20 minutes in zone 2, 5 minutes zone 1 cool down",,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,331.04986782715616,236.88026115465027,-117.99459481160574,591.7551171209063,597.0,0.0,0.0,19.678983675978415,0.0,0.0,19.678983675978415,,0.0,
+2024-11-09,Run,Shake Out Run,5 minutes in zone 1 then do: 10X15 second zone 5 bursts with 45 seconds easy zone 1 jog in-between.,,0.0,0.25,0.0,0.0,0.0,0.0,2108.24,0.0,186.0469299381711,203.3662852028804,-151.5085707633756,558.2411411691364,294.0,0.0,0.0,9.839491837989208,0.0,0.0,9.839491837989208,,0.0,
+2024-11-09,Swim,Shake Out Swim,300 Easy Zone 1 Swim 5X30 seconds Zone 5 bursts on 20 seconds recovery in-between. 300 easy cool down,,0.0,0.288333333333333,662.940002441406,0.0,0.0,0.0,2108.24,0.0,201.04404191524785,203.3662852028804,-151.5085707633756,558.2411411691364,534.0,0.0,0.0,0.0,0.0,9.26758477083332,9.26758477083332,,0.0,
+2024-11-09,Bike,Test Ride,10 minutes Zone 1,A short ride to make sure that your bike is running smoothly. Go through all of gears and check that your brakes are not rubbing,0.0,0.166666666666667,0.0,0.0,0.0,0.0,2108.24,0.0,143.42176582934957,203.3662852028804,-151.5085707633756,558.2411411691364,479.0,0.0,0.0,0.0,6.681285444234418,0.0,6.681285444234418,,0.0,
+2024-11-14,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,193.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0,
+2024-11-15,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,578.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0,
+2024-11-17,Run,active recovery run,Nice and easy. You can go for a walk or hike or light jog. Just something easy to get your muscles moving,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,442.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0,
+2024-11-19,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,568.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0,
+2024-11-20,Run,active recovery run,Nice easy jog keeping it at a light jog,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,257.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0,
+2024-11-21,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,441.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0,
+2024-11-22,Swim,easy swim,20 minutes easy swim,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,228.28192995950803,0.0,0.0,0.0,369.0,0.0,0.0,0.0,0.0,10.71397083333332,10.71397083333332,,0.0,
+2024-11-23,Run,active recovery run,Nice easy jog keeping it at a light jog,,0.0,0.333333333333333,0.0,0.0,0.0,0.0,2108.24,0.0,234.54405437844105,0.0,0.0,0.0,309.0,0.0,0.0,13.119322450652264,0.0,0.0,13.119322450652264,,0.0,
+2024-11-24,Bike,easy ride,nice and easy ride for active recovery Don't worry about staying in a specific zones just ride,,0.0,0.5,0.0,0.0,0.0,0.0,2108.24,0.0,312.9697829772223,0.0,0.0,0.0,167.0,0.0,0.0,0.0,20.043856332703214,0.0,20.043856332703214,,0.0,
