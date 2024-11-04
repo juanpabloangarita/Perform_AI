@@ -6,12 +6,12 @@ from src.data_helpers import (
     create_models_and_predict,
     create_nixtla_and_predict
 )
-
 from src.tss_calculations import calculate_total_tss_and_metrics_from_tss
 from src.calorie_calculations import calculate_total_calories
 import pandas as pd
 from src.data_loader.files_extracting import FileLoader
 from src.data_processor import DataProcessor
+
 
 def process_data(user_data, workouts=None):
     """Process and prepare data, estimate calories, and combine results."""
@@ -19,7 +19,6 @@ def process_data(user_data, workouts=None):
     # NOTE: I am loading the csv files that i have by default, corresponding to my info, how should be the behaviour when running the app for someone that has not put their own info?
     sourcer.load_initial_csv_files()
     tmp_workouts, activities_df = sourcer.load_dfs(name_s=['workouts_df', 'activities_df'], file_path='data/raw/csv')
-
     workouts_df = workouts if workouts is not None else tmp_workouts
 
     data_processor = DataProcessor(workouts_df, activities_df)
@@ -50,7 +49,7 @@ def process_data(user_data, workouts=None):
     final_columns = ['WorkoutType', 'Title', 'WorkoutDescription', 'CoachComments', 'HeartRateAverage',
                      'TimeTotalInHours', 'DistanceInMeters', 'Run_Cal', 'Bike_Cal', 'Swim_Cal',
                      'TotalPassiveCal', 'CalculatedActiveCal', 'EstimatedActiveCal', 'AutoARIMA',
-                     'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed']
+                     'AutoARIMA-lo-95', 'AutoARIMA-hi-95', 'Calories', 'CaloriesSpent', 'CaloriesConsumed','Run_TSS Calculated', 'Bike_TSS Calculated', 'Swim_TSS Calculated', 'TOTAL TSS']
 
     w_df_calories_estimated_reset = process_date_column(w_df_calories_estimated, standardize=True)
     w_df_calories_calculated_reset = process_date_column(w_df_calories_calculated, standardize=True)

@@ -30,7 +30,7 @@ def calculate_total_calories(user_data, from_where=None, df=None):
     # Total passive calories (BMR + NEAT)
     passive_calories = bmr + neat
 
-    if from_where == 'streamlit':
+    if from_where == 'human settings':
         return passive_calories, bmr
     else:
         # Derive the K constant from VO2 max, MHR, and Resting HR

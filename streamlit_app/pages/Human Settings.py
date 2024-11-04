@@ -114,7 +114,7 @@ with st.container(border=True):
     )
 
 if st.button('Update Information'):
-    passive_calories, bmr = calculate_total_calories(st.session_state['user_data'], 'streamlit')
+    passive_calories, bmr = calculate_total_calories(st.session_state['user_data'], 'human settings')
     # Update the session state when user modifies the information
     st.session_state['user_data']['BMR'] = bmr # FIXME: this is wrong, as well as passive_calories, because despite inputing values in the above section
     st.session_state['user_data']['passive_calories'] = passive_calories # FIXME: it will still retrieve the same values from the function and putting them again
