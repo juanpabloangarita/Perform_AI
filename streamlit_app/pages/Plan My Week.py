@@ -1,4 +1,4 @@
-# Perform_AI.streamlit_app.plan my week.py
+# Perform_AI.streamlit_app.pages.plan my week.py
 
 from datetime import datetime, timedelta
 import streamlit as st

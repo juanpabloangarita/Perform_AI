@@ -1,4 +1,4 @@
-# Perform_AI.streamlit_app.nutrition.py
+# Perform_AI.streamlit_app.pages.nutrition.py
 
 import streamlit as st
 import numpy as np
