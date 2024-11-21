@@ -1,16 +1,17 @@
-import { request } from "./utils";
+import { request } from "@/api/fetcher";
 
-export const login = async (email: string, password: string) => {
-    const response = await request({
-        url: `/api/auth/login/`, 
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-    });
-    
-    if (!response.ok) {
-        throw new Error('Invalid credentials');
-    }
-    
-    const { accessToken } = await response.json();
-    localStorage.setItem('accessToken', accessToken);
-    }
+export const login = (email: string, password: string) => {
+  return request({
+    url: "/api/auth/login/",
+    method: "POST",
+    body: { email, password },
+  });
+};
+
+export const signup = (email: string, password: string) => {
+  return request({
+    url: "/api/auth/signup/",
+    method: "POST",
+    body: { email, password },
+  });
+};
