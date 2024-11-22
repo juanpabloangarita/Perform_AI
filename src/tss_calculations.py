@@ -33,8 +33,9 @@ def calculate_total_tss_and_metrics_from_tss(df, source, given_date=GIVEN_DATE):
         mask = df['WorkoutType'] == workout_type
 
         if workout_type == 'Swim':
-            average_pace_swimming = 30  # Average pace for swimming
-            calc_function(df, mask, average_pace_swimming, given_date, s_thrs, column_to_use, f"{workout_type}_")
+            # average_pace_swimming = 30  # Average pace for swimming
+            # calc_function(df, mask, average_pace_swimming, given_date, s_thrs, column_to_use, f"{workout_type}_")
+            calc_function(df, mask, avg_hr, given_date, s_thrs, column_to_use, f"{workout_type}_")
         else:
             calc_function(df, mask, avg_hr, given_date, column_to_use, f"{workout_type}_")
 

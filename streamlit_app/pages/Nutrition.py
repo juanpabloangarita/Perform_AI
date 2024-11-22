@@ -7,6 +7,7 @@ import os
 
 from PIL import Image
 import cv2
+import pdb
 
 # Add the 'src' directory to sys.path
 script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory where the script is located - pages
@@ -327,6 +328,7 @@ with st.container():
                         product_df['adjusted_quantity'] = product_df['quantity'].apply(extract_quantity)
 
                         # Ensure that 'product_quantity' and 'adjusted_quantity' are numeric types
+                        # pdb.set_trace()
                         product_df['product_quantity'] = pd.to_numeric(product_df['product_quantity'], errors='coerce')
                         product_df['adjusted_quantity'] = pd.to_numeric(product_df['adjusted_quantity'], errors='coerce')
 
