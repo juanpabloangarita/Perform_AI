@@ -1,2 +1,3 @@
-djangorestframework
 Django
+djangorestframework
+drf-spectacular[sidecar]

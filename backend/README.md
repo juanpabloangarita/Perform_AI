@@ -22,5 +22,7 @@ python manage.py migrate
 
 Run the development server
 ```bash
-python manage.py runserver
+python manage.py runserver localhost:5000
 ```
+
+Api documentation: [http://localhost:5000/swagger](http://localhost:5000/swagger)
